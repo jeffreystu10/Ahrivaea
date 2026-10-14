@@ -138,6 +138,16 @@ public class CreatureEntity extends TamableAnimal {
 		return super.mobInteract(player, hand);
 	}
 
+	@Override
+	public void tick() {
+		super.tick();
+		// a creature made without a species (for example /summon with extra data) picks one at random
+		if (!this.level().isClientSide() && getSpeciesId().isEmpty() && !Species.all().isEmpty()) {
+			var all = Species.all();
+			setup(all.get(this.random.nextInt(all.size())), 5, -1);
+		}
+	}
+
 	public CaughtCreature toCaught() {
 		return new CaughtCreature(getSpeciesId(), getCreatureLevel(), this.getHealth());
 	}

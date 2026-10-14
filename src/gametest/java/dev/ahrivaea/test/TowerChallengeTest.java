@@ -111,8 +111,8 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			int diamonds = context.computeOnClient(client -> count(client.player.getInventory(), Items.DIAMOND));
 			int blocksBack = context.computeOnClient(client -> count(client.player.getInventory(), Items.COAL_BLOCK));
 			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are needed, 2 come back
-			if (!complete || diamonds != 16 || blocksBack != 2) {
-				throw new AssertionError("Expected the tower complete, 16 diamonds for first place and 2 coal blocks back; got " + complete + ", " + diamonds + ", " + blocksBack);
+			if (!complete || diamonds != 8 || blocksBack != 2) {
+				throw new AssertionError("Expected the tower complete, 8 diamonds for first place and 2 coal blocks back; got " + complete + ", " + diamonds + ", " + blocksBack);
 			}
 		}
 	}

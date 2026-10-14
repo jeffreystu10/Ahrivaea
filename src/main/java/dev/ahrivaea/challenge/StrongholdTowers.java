@@ -2,6 +2,7 @@ package dev.ahrivaea.challenge;
 
 import dev.ahrivaea.Ahrivaea;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
@@ -35,14 +36,23 @@ public final class StrongholdTowers {
 			if (stronghold == null) return;
 			StructureStart start = chunk.getStartForStructure(stronghold);
 			if (start == null || !start.isValid()) return;
-			ChunkPos pos = chunk.getPos();
-			// build on the next tick, outside chunk loading
-			level.getServer().execute(() -> {
+			// build at the end of the tick, outside chunk loading
+			PENDING.add(chunk.getPos());
+		});
+		ServerTickEvents.END_SERVER_TICK.register(server -> {
+			if (PENDING.isEmpty()) return;
+			ServerLevel level = server.overworld();
+			List<ChunkPos> todo = List.copyOf(PENDING);
+			PENDING.clear();
+			for (ChunkPos pos : todo) {
 				int index = indexOf(level, pos);
-				if (index >= 0 && Challenges.state(level.getServer(), towerId(index)).isEmpty()) generate(level, index);
-			});
+				if (index >= 0 && Challenges.state(server, towerId(index)).isEmpty()) generate(level, index);
+			}
 		});
 	}
+
+	private static final java.util.Set<ChunkPos> PENDING = new java.util.LinkedHashSet<>();
+	private static boolean generating;
 
 	public static String towerId(int index) {
 		return "tower_" + (index + 1);
@@ -72,7 +82,16 @@ public final class StrongholdTowers {
 		var existing = Challenges.state(level.getServer(), id);
 		if (existing.isPresent()) return existing.get().origin;
 		var def = ChallengeDef.forTower(index);
-		if (def.isEmpty()) return null;
+		if (def.isEmpty() || generating) return null;
+		generating = true;
+		try {
+			return build(level, rings, index, id, def.get());
+		} finally {
+			generating = false;
+		}
+	}
+
+	private static BlockPos build(ServerLevel level, List<ChunkPos> rings, int index, String id, ChallengeDef def) {
 
 		ChunkPos cp = rings.get(index);
 		var chunk = level.getChunk(cp.x(), cp.z());
@@ -89,9 +108,9 @@ public final class StrongholdTowers {
 				}
 			}
 		}
-		Vec3i size = level.getServer().getStructureTemplateManager().get(def.get().ruined()).map(t -> t.getSize()).orElse(new Vec3i(1, 1, 1));
+		Vec3i size = level.getServer().getStructureTemplateManager().get(def.ruined()).map(t -> t.getSize()).orElse(new Vec3i(1, 1, 1));
 		int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
 		BlockPos origin = new BlockPos(x - size.getX() / 2, y - 1, z - size.getZ() / 2);
-		return Challenges.place(level, def.get(), origin, id) ? origin : null;
+		return Challenges.place(level, def, origin, id) ? origin : null;
 	}
 }

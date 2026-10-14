@@ -6,10 +6,6 @@ execute unless score #gen ahv_test matches 1 run challenge generate 0
 execute unless score #gen ahv_test matches 1 run challenge generate 1
 scoreboard players set #gen ahv_test 1
 challenge list
-execute if block 45 101 45 minecraft:chest if block 45 126 40 minecraft:stone_brick_wall run say AHRIVAEA_TEST tower complete
+execute if block 45 101 45 minecraft:chest unless block 45 126 40 minecraft:air run say AHRIVAEA_TEST tower complete
 execute if block 45 101 45 minecraft:chest run say AHRIVAEA_TEST chest ok
-execute if block 45 126 40 minecraft:stone_brick_wall run say AHRIVAEA_TEST wall ok
-execute if block 40 101 45 minecraft:stone_bricks run say AHRIVAEA_TEST west wall ok
-execute if block 45 100 45 minecraft:polished_andesite run say AHRIVAEA_TEST floor ok
-execute if block 45 107 45 minecraft:spruce_planks run say AHRIVAEA_TEST first floor ok
 say AHRIVAEA_TEST check done

@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "pokecraft",
+	"version": "${version}",
+	"name": "PokeCraft",
+	"description": "A creature-collecting mod: catch, train and battle creatures.",
+	"authors": ["jeffreystu10"],
+	"license": "All-Rights-Reserved",
+	"icon": "assets/pokecraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.pokecraft.PokeCraft"],
+		"client": ["dev.pokecraft.client.PokeCraftClient"]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

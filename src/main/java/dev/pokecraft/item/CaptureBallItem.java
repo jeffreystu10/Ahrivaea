@@ -26,11 +26,11 @@ public class CaptureBallItem extends Item {
 		if (!(player.level() instanceof ServerLevel level)) return InteractionResult.SUCCESS;
 		String name = creature.getSpecies().displayName();
 		if (creature.isTame()) {
-			player.displayClientMessage(Component.literal(name + " already has a trainer."), true);
+			player.sendOverlayMessage(Component.literal(name + " already has a trainer."));
 			return InteractionResult.FAIL;
 		}
 		if (Party.get(player).size() >= Party.MAX) {
-			player.displayClientMessage(Component.literal("Your party is full (6). Release one with /party release <slot>."), true);
+			player.sendOverlayMessage(Component.literal("Your party is full (6). Release one with /party release <slot>."));
 			return InteractionResult.FAIL;
 		}
 		if (!player.getAbilities().instabuild) stack.shrink(1);
@@ -43,11 +43,11 @@ public class CaptureBallItem extends Item {
 			level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 20, 0.4, 0.4, 0.4, 0.1);
 			level.playSound(null, x, y, z, SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.4f);
 			creature.discard();
-			player.displayClientMessage(Component.literal("Caught " + name + " (Lv." + creature.getCreatureLevel() + ")!"), false);
+			player.sendSystemMessage(Component.literal("Caught " + name + " (Lv." + creature.getCreatureLevel() + ")!"));
 		} else {
 			level.sendParticles(ParticleTypes.SMOKE, x, y, z, 15, 0.3, 0.3, 0.3, 0.02);
 			level.playSound(null, x, y, z, SoundEvents.ITEM_BREAK.value(), SoundSource.PLAYERS, 0.8f, 1.2f);
-			player.displayClientMessage(Component.literal(name + " broke free! (" + Math.round(chance * 100) + "% chance)"), true);
+			player.sendOverlayMessage(Component.literal(name + " broke free! (" + Math.round(chance * 100) + "% chance)"));
 		}
 		return InteractionResult.SUCCESS;
 	}

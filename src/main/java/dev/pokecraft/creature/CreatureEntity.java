@@ -98,11 +98,11 @@ public class CreatureEntity extends TamableAnimal {
 				if (player.isShiftKeyDown()) {
 					// sneak + right click: call it back into the party
 					Party.add(player, toCaught());
-					player.displayClientMessage(Component.literal(getSpecies().displayName() + " came back to your party."), true);
+					player.sendOverlayMessage(Component.literal(getSpecies().displayName() + " came back to your party."));
 					this.discard();
 				} else {
 					this.setOrderedToSit(!this.isOrderedToSit());
-					player.displayClientMessage(Component.literal(getSpecies().displayName() + (this.isOrderedToSit() ? " will wait here." : " will follow you.")), true);
+					player.sendOverlayMessage(Component.literal(getSpecies().displayName() + (this.isOrderedToSit() ? " will wait here." : " will follow you.")));
 				}
 			}
 			return InteractionResult.SUCCESS;

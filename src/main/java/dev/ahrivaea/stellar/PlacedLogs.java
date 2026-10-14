@@ -1,7 +1,6 @@
 package dev.ahrivaea.stellar;
 
 import com.mojang.serialization.Codec;
-import dev.ahrivaea.Ahrivaea;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.core.BlockPos;
@@ -18,7 +17,7 @@ import java.util.List;
 public final class PlacedLogs {
 	private PlacedLogs() {}
 
-	public static final AttachmentType<List<Long>> PLACED = AttachmentRegistry.create(Ahrivaea.id("placed_logs"),
+	public static final AttachmentType<List<Long>> PLACED = AttachmentRegistry.create(StellarMod.id("placed_logs"),
 			b -> b.persistent(Codec.LONG.listOf()).initializer(List::of));
 
 	static void init() {

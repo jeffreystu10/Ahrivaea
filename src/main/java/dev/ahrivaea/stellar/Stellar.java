@@ -1,6 +1,5 @@
 package dev.ahrivaea.stellar;
 
-import dev.ahrivaea.Ahrivaea;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -43,7 +42,7 @@ public final class Stellar {
 	public static final Item BOOTS = item("stellar_boots", p -> p.humanoidArmor(ARMOR, ArmorType.BOOTS));
 
 	private static Item item(String name, UnaryOperator<Item.Properties> kind) {
-		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Ahrivaea.id(name));
+		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, StellarMod.id(name));
 		Item.Properties props = kind.apply(new Item.Properties().setId(key)).fireResistant().rarity(Rarity.EPIC)
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 		return Registry.register(BuiltInRegistries.ITEM, key, new Item(props));

@@ -2,17 +2,27 @@
 	"schemaVersion": 1,
 	"id": "ahrivaea",
 	"version": "${version}",
-	"name": "Ahrivaea",
+	"name": "Ahrivaea (all mods, for development)",
 	"description": "A creature-collecting mod: catch, train and battle creatures.",
-	"authors": ["jeffreystu10"],
+	"authors": [
+		"jeffreystu10"
+	],
 	"license": "All-Rights-Reserved",
 	"icon": "assets/ahrivaea/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": ["dev.ahrivaea.Ahrivaea"],
-		"client": ["dev.ahrivaea.client.AhrivaeaClient"]
+		"main": [
+			"dev.ahrivaea.Ahrivaea",
+			"dev.ahrivaea.challenge.TowersMod",
+			"dev.ahrivaea.stellar.StellarMod"
+		],
+		"client": [
+			"dev.ahrivaea.client.AhrivaeaClient"
+		]
 	},
-	"mixins": ["ahrivaea.mixins.json"],
+	"mixins": [
+		"ahrivaea_stellar.mixins.json"
+	],
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",

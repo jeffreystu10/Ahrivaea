@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
@@ -94,4 +97,41 @@ publishing {
 // Let the CI server test type "stop" into the server console
 tasks.matching { it.name == 'runServer' }.configureEach {
 	standardInput = System.in
+}
+
+// ---- one jar per mod, as listed in mods.json (build/mods/) ----
+def modList = new JsonSlurper().parse(file('mods.json'))
+modList.mods.each { m ->
+	def key = m.key
+	def genDir = layout.buildDirectory.dir("packaging/${key}")
+	def modJson = JsonOutput.prettyPrint(JsonOutput.toJson([
+			schemaVersion: 1, id: m.id, version: project.version.toString(), name: m.name, description: m.summary,
+			authors: ['jeffreystu10'], license: 'All-Rights-Reserved', icon: 'assets/ahrivaea/icon.png', environment: '*',
+			entrypoints: m.entrypoints, mixins: m.mixins,
+			depends: [fabricloader: '>=0.19.5', minecraft: '~26.3', java: '>=25', 'fabric-api': '*']]))
+	def gen = tasks.register("${key}ModJson") {
+		inputs.property('json', modJson)
+		outputs.dir(genDir)
+		doLast {
+			def d = genDir.get().asFile
+			d.mkdirs()
+			new File(d, 'fabric.mod.json').text = modJson
+		}
+	}
+	def includes = m.include + modList.shared
+	def jarTask = tasks.register("${key}Jar", Jar) {
+		dependsOn gen
+		archiveBaseName = "ahrivaea-${key}"
+		archiveVersion = project.version.toString()
+		destinationDirectory = layout.buildDirectory.dir('mods')
+		from(sourceSets.main.output) {
+			include includes
+			exclude 'fabric.mod.json'
+		}
+		from(sourceSets.client.output) {
+			include includes
+		}
+		from(genDir)
+	}
+	tasks.named('build') { dependsOn jarTask }
 }

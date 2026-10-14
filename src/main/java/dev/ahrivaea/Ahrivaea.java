@@ -58,11 +58,6 @@ public class Ahrivaea implements ModInitializer {
 		Party.init();
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("creatures"), (ResourceManagerReloadListener) Species::reload);
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("influence_rules"), (ResourceManagerReloadListener) InfluenceRules::reload);
-		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("challenges"), (ResourceManagerReloadListener) dev.ahrivaea.challenge.ChallengeDef::reload);
-		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("tower_palettes"), (ResourceManagerReloadListener) dev.ahrivaea.challenge.TowerPalette::reload);
-		dev.ahrivaea.challenge.Challenges.init();
-		dev.ahrivaea.challenge.StrongholdTowers.init();
-		dev.ahrivaea.stellar.Stellar.init();
 		FabricDefaultAttributeRegistry.register(CREATURE, Animal.createAnimalAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.25));
@@ -78,7 +73,6 @@ public class Ahrivaea implements ModInitializer {
 
 	private void registerCommands() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			dev.ahrivaea.challenge.Challenges.registerCommands(dispatcher);
 			dispatcher.register(Commands.literal("party")
 					.executes(ctx -> listParty(ctx.getSource().getPlayerOrException(), ctx.getSource()))
 					.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {

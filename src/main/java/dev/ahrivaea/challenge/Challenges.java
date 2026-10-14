@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.serialization.Codec;
-import dev.ahrivaea.Ahrivaea;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
@@ -61,7 +60,7 @@ public final class Challenges {
 	private Challenges() {}
 
 	public static final AttachmentType<Map<String, ChallengeState>> STATE = AttachmentRegistry.create(
-			Ahrivaea.id("challenges"),
+			TowersMod.id("challenges"),
 			b -> b.persistent(Codec.unboundedMap(Codec.STRING, ChallengeState.CODEC)).initializer(Map::of));
 
 	public static void init() {
@@ -144,7 +143,7 @@ public final class Challenges {
 	public static boolean place(ServerLevel level, ChallengeDef def, BlockPos origin, String towerId) {
 		var ruined = template(level, def.ruined());
 		if (ruined.isEmpty()) {
-			Ahrivaea.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.ruined());
+			TowersMod.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.ruined());
 			return false;
 		}
 		Vec3i size = ruined.get().getSize();
@@ -164,7 +163,7 @@ public final class Challenges {
 		}
 		ruined.get().placeInWorld(level, origin, origin, palette.settings(), level.getRandom(), 2);
 		save(level.getServer(), towerId, ChallengeState.fresh(def.id(), palette.id(), level.dimension().identifier().toString(), origin));
-		Ahrivaea.LOGGER.info("Tower {} ({}) placed at {} in {} with the {} palette", towerId, def.id(), origin.toShortString(),
+		TowersMod.LOGGER.info("Tower {} ({}) placed at {} in {} with the {} palette", towerId, def.id(), origin.toShortString(),
 				level.getBiome(center).unwrapKey().map(k -> k.identifier().toString()).orElse("?"), palette.id());
 		return true;
 	}
@@ -173,7 +172,7 @@ public final class Challenges {
 	private static void buildStage(ServerLevel level, ChallengeDef def, ChallengeState s, int stage) {
 		var finished = template(level, def.finished());
 		if (finished.isEmpty()) {
-			Ahrivaea.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.finished());
+			TowersMod.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.finished());
 			return;
 		}
 		BoundingBox full = box(level, def, s);
@@ -235,14 +234,14 @@ public final class Challenges {
 		s.total = Math.min(def.goal(), s.total + amount);
 		s.donations.merge(key, amount, Integer::sum);
 		s.names.put(key, name);
-		Ahrivaea.LOGGER.info("Challenge {}: {} gave {} {} ({}/{})", id, name, amount, def.unit(), s.total, def.goal());
+		TowersMod.LOGGER.info("Challenge {}: {} gave {} {} ({}/{})", id, name, amount, def.unit(), s.total, def.goal());
 		server.getPlayerList().broadcastSystemMessage(Component.literal(name + " offered " + amount + " " + def.unit() + " to " + def.name()
 				+ " (" + s.total + "/" + def.goal() + ")").withStyle(ChatFormatting.YELLOW), false);
 
 		while (s.stage < def.stages() && s.total >= def.threshold(s.stage + 1)) {
 			s.stage++;
 			if (level != null) buildStage(level, def, s, s.stage);
-			Ahrivaea.LOGGER.info("Challenge {}: stage {}/{} built", id, s.stage, def.stages());
+			TowersMod.LOGGER.info("Challenge {}: stage {}/{} built", id, s.stage, def.stages());
 			if (s.stage < def.stages()) {
 				server.getPlayerList().broadcastSystemMessage(Component.literal(def.name() + " rises! Stage " + s.stage + " of " + def.stages() + " rebuilt.")
 						.withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), false);
@@ -259,7 +258,7 @@ public final class Challenges {
 
 	private static void complete(MinecraftServer server, ServerLevel level, String id, ChallengeDef def, ChallengeState s) {
 		List<String> ranking = s.ranking();
-		Ahrivaea.LOGGER.info("Challenge {} complete. Top donors: {}", id,
+		TowersMod.LOGGER.info("Challenge {} complete. Top donors: {}", id,
 				String.join(", ", ranking.stream().limit(5).map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 		server.getPlayerList().broadcastSystemMessage(Component.literal(def.name() + " has been fully rebuilt! Thank you all!")
 				.withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
@@ -338,7 +337,7 @@ public final class Challenges {
 					.withStyle(ChatFormatting.AQUA));
 		}
 		source.sendSuccess(() -> text, false);
-		Ahrivaea.LOGGER.info("Challenge {} leaderboard: {}/{} stage {}; {}", id, s.total, def.goal(), s.stage,
+		TowersMod.LOGGER.info("Challenge {} leaderboard: {}/{} stage {}; {}", id, s.total, def.goal(), s.stage,
 				String.join(", ", ranking.stream().map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 	}
 

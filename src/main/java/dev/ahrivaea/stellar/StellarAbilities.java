@@ -1,7 +1,6 @@
 package dev.ahrivaea.stellar;
 
 import com.mojang.serialization.Codec;
-import dev.ahrivaea.Ahrivaea;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -51,7 +50,7 @@ public final class StellarAbilities {
 	public static final int MAX_TREE = 256;
 
 	/** Whether flight currently comes from Stellar armor (so we know to take it away again). */
-	public static final AttachmentType<Boolean> FLIGHT = AttachmentRegistry.create(Ahrivaea.id("stellar_flight"),
+	public static final AttachmentType<Boolean> FLIGHT = AttachmentRegistry.create(StellarMod.id("stellar_flight"),
 			b -> b.persistent(Codec.BOOL).copyOnDeath().initializer(() -> false));
 
 	private static boolean busy;

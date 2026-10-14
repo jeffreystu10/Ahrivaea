@@ -1,0 +1,83 @@
+{
+  "_readme": "One entry per mod. The build makes one jar per entry (build/mods/), the mods spreadsheet is made from this file (tools/mods_sheet.py), and 'include' says which code and files go in each jar.",
+  "mods": [
+    {
+      "key": "creatures",
+      "id": "ahrivaea",
+      "name": "Ahrivaea Creatures",
+      "summary": "Creatures with elemental influences, stats and levels, caught in Vessels and kept in a party.",
+      "features": [
+        "Creatures spawn in the world; their influence (Fire, Frost, Storm ... Arcane) comes from the biome and time of day and sets their look, name and stats",
+        "Seven stats (HP, Attack, Defense, Speed, Magic, Luck, Charisma), levels 0-50, and the damage formula from the balance spreadsheet",
+        "Vessels to bind creatures; a party of 6 and a pool of XP to spend on them",
+        "Blockbench creature models with an animated form per influence (the 11 dragons so far)",
+        "Coming: Fire Emblem-style grid battles on the real terrain"
+      ],
+      "commands": "/party, /party send|release <slot>, /party xp <slot> <amount>; operators: /ahrivaea spawn|givexp|selftest",
+      "players_install": "Yes (new creatures, models and items)",
+      "status": "In development",
+      "added": "2026-10-14",
+      "docs": "docs/design.md, docs/creatures.md",
+      "entrypoints": {"main": ["dev.ahrivaea.Ahrivaea"], "client": ["dev.ahrivaea.client.AhrivaeaClient"]},
+      "mixins": [],
+      "include": [
+        "dev/ahrivaea/*.class", "dev/ahrivaea/creature/**", "dev/ahrivaea/battle/**", "dev/ahrivaea/party/**", "dev/ahrivaea/item/**", "dev/ahrivaea/client/**",
+        "assets/ahrivaea/geo/**", "assets/ahrivaea/textures/**", "assets/ahrivaea/items/vessel.json", "assets/ahrivaea/models/**",
+        "data/ahrivaea/creature/**", "data/ahrivaea/influence_rules/**", "data/ahrivaea/recipe/vessel.json"
+      ]
+    },
+    {
+      "key": "towers",
+      "id": "ahrivaea_towers",
+      "name": "Ahrivaea Tower Challenges",
+      "summary": "A ruined tower over every stronghold that the whole server rebuilds by donating items, with leaderboards and rewards.",
+      "features": [
+        "A tower generates above the End portal of all 128 strongholds, in blocks that match its biome",
+        "Each tower has its own challenge (what to bring and how much) and its own rewards, harder and richer farther from spawn",
+        "Offering chest; the tower rebuilds in 4 stages; fireworks and rewards for the top donors when finished",
+        "Per-tower leaderboards; towers can't be broken outside creative mode",
+        "Challenges are set in Tower_Challenges.xlsx"
+      ],
+      "commands": "/challenge, /challenge list, /challenge top <tower>; operators: /challenge generate|place|credit|remove",
+      "players_install": "Yes (it's part of the modpack), though it adds no new items or blocks",
+      "status": "Working (placeholder tower until the real build)",
+      "added": "2026-10-14",
+      "docs": "docs/challenges.md",
+      "entrypoints": {"main": ["dev.ahrivaea.challenge.TowersMod"]},
+      "mixins": [],
+      "include": [
+        "dev/ahrivaea/challenge/**",
+        "data/ahrivaea/challenge/**", "data/ahrivaea/challenge_order.json", "data/ahrivaea/tower_palette/**", "data/ahrivaea/structure/tower/**"
+      ]
+    },
+    {
+      "key": "stellar",
+      "id": "ahrivaea_stellar",
+      "name": "Ahrivaea Stellar Gear",
+      "summary": "Netherite tools and armor upgraded with a nether star into Stellar gear with special powers.",
+      "features": [
+        "Smithing table: nether star + any netherite tool or armor piece = its Stellar version (keeps enchantments)",
+        "Pickaxe and shovel mine 3x3; axe fells whole natural trees but never player-placed logs or builds",
+        "Hoe tills and harvests-and-replants 3x3; sword heals 20% of the damage it deals",
+        "Full Stellar armor set gives flight",
+        "Sneak to use the tools one block at a time"
+      ],
+      "commands": "(none)",
+      "players_install": "Yes (new items)",
+      "status": "Working (netherite look until there's art)",
+      "added": "2026-10-14",
+      "docs": "docs/stellar.md",
+      "entrypoints": {"main": ["dev.ahrivaea.stellar.StellarMod"]},
+      "mixins": ["ahrivaea_stellar.mixins.json"],
+      "include": [
+        "dev/ahrivaea/stellar/**", "dev/ahrivaea/mixin/**", "ahrivaea_stellar.mixins.json",
+        "assets/ahrivaea/items/stellar_*.json", "data/ahrivaea/recipe/stellar_*.json"
+      ]
+    }
+  ],
+  "shared": ["assets/ahrivaea/icon.png", "assets/ahrivaea/lang/**"],
+  "worlds": [
+    {"name": "Ahrivaea (modded world)", "notes": "The creature world, reached from the main world by portal", "mods": ["creatures", "towers", "stellar"]},
+    {"name": "Main world (vanilla)", "notes": "Stays fully vanilla", "mods": []}
+  ]
+}

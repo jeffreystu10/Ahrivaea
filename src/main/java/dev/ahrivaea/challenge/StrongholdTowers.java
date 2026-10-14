@@ -1,6 +1,5 @@
 package dev.ahrivaea.challenge;
 
-import dev.ahrivaea.Ahrivaea;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;

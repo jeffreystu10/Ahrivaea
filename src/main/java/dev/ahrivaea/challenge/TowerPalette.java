@@ -5,8 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.ahrivaea.Ahrivaea;
-import dev.ahrivaea.creature.BiomeList;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,16 +51,16 @@ public record TowerPalette(int priority, List<String> biomes, Map<Identifier, Id
 			try (Reader reader = resource.openAsReader()) {
 				TowerPalette p = CODEC.parse(JsonOps.INSTANCE, JsonParser.parseReader(reader)).getOrThrow();
 				for (var e : p.blocks.entrySet()) {
-					if (BuiltInRegistries.BLOCK.getOptional(e.getValue()).isEmpty()) Ahrivaea.LOGGER.warn("Tower palette {}: unknown block {}", id, e.getValue());
+					if (BuiltInRegistries.BLOCK.getOptional(e.getValue()).isEmpty()) TowersMod.LOGGER.warn("Tower palette {}: unknown block {}", id, e.getValue());
 				}
 				loaded.add(new TowerPalette(p.priority, p.biomes, p.blocks, p.foundation, id));
 			} catch (Exception e) {
-				Ahrivaea.LOGGER.error("Could not load tower palette {}: {}", path, e.getMessage());
+				TowersMod.LOGGER.error("Could not load tower palette {}: {}", path, e.getMessage());
 			}
 		});
 		loaded.sort(Comparator.comparingInt(TowerPalette::priority).reversed().thenComparing(TowerPalette::id));
 		all = List.copyOf(loaded);
-		Ahrivaea.LOGGER.info("Loaded {} tower palettes", all.size());
+		TowersMod.LOGGER.info("Loaded {} tower palettes", all.size());
 	}
 
 	public static TowerPalette get(String id) {
@@ -70,9 +69,21 @@ public record TowerPalette(int priority, List<String> biomes, Map<Identifier, Id
 	}
 
 	public static TowerPalette pick(Holder<Biome> biome) {
-		for (TowerPalette p : all) if (!p.biomes.isEmpty() && BiomeList.matches(p.biomes, biome)) return p;
+		for (TowerPalette p : all) if (!p.biomes.isEmpty() && TowerPalette.matchesBiome(p.biomes, biome)) return p;
 		for (TowerPalette p : all) if (p.biomes.isEmpty()) return p;
 		return get("none");
+	}
+
+	/** Biome ids ("minecraft:plains") or tags ("#minecraft:is_forest"). */
+	static boolean matchesBiome(List<String> entries, Holder<Biome> biome) {
+		for (String b : entries) {
+			if (b.startsWith("#")) {
+				if (biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME, Identifier.parse(b.substring(1))))) return true;
+			} else if (biome.is(Identifier.parse(b))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public BlockState foundationState() {

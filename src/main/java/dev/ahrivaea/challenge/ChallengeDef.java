@@ -4,7 +4,6 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.ahrivaea.Ahrivaea;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -61,31 +60,31 @@ public record ChallengeDef(String name, String unit, Map<String, Integer> items,
 				ChallengeDef d = CODEC.parse(JsonOps.INSTANCE, JsonParser.parseReader(reader)).getOrThrow();
 				for (String item : d.items.keySet()) {
 					if (!item.startsWith("#") && !net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(Identifier.parse(item))) {
-						Ahrivaea.LOGGER.warn("Challenge {}: unknown item {}", id, item);
+						TowersMod.LOGGER.warn("Challenge {}: unknown item {}", id, item);
 					}
 				}
 				for (Reward r : d.rewards) for (RewardItem it : r.items()) {
-					if (!net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(it.item())) Ahrivaea.LOGGER.warn("Challenge {}: unknown reward item {}", id, it.item());
+					if (!net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(it.item())) TowersMod.LOGGER.warn("Challenge {}: unknown reward item {}", id, it.item());
 				}
 				loaded.put(id, new ChallengeDef(d.name, d.unit, d.items, d.goal, d.stages, d.ruined, d.finished, d.chest, d.rewards, id));
 			} catch (Exception e) {
-				Ahrivaea.LOGGER.error("Could not load challenge {}: {}", path, e.getMessage());
+				TowersMod.LOGGER.error("Could not load challenge {}: {}", path, e.getMessage());
 			}
 		});
 		all = Map.copyOf(loaded);
 		List<String> newOrder = new java.util.ArrayList<>();
-		manager.getResourceStack(Ahrivaea.id("challenge_order.json")).forEach(resource -> {
+		manager.getResourceStack(TowersMod.id("challenge_order.json")).forEach(resource -> {
 			try (Reader reader = resource.openAsReader()) {
 				var json = JsonParser.parseReader(reader).getAsJsonObject();
 				newOrder.clear();
 				json.getAsJsonArray("towers").forEach(e -> newOrder.add(e.getAsString()));
 			} catch (Exception e) {
-				Ahrivaea.LOGGER.error("Could not load challenge_order.json: {}", e.getMessage());
+				TowersMod.LOGGER.error("Could not load challenge_order.json: {}", e.getMessage());
 			}
 		});
-		for (String id : newOrder) if (!all.containsKey(id)) Ahrivaea.LOGGER.warn("challenge_order.json lists {}, which has no challenge file", id);
+		for (String id : newOrder) if (!all.containsKey(id)) TowersMod.LOGGER.warn("challenge_order.json lists {}, which has no challenge file", id);
 		order = List.copyOf(newOrder);
-		Ahrivaea.LOGGER.info("Loaded {} challenges: {}; tower order: {}", all.size(), String.join(", ", all.keySet()), String.join(", ", order));
+		TowersMod.LOGGER.info("Loaded {} challenges: {}; tower order: {}", all.size(), String.join(", ", all.keySet()), String.join(", ", order));
 	}
 
 	public static Optional<ChallengeDef> get(String id) {

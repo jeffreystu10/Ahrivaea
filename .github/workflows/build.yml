@@ -25,6 +25,10 @@ jobs:
           # Turn compiler errors into one annotation so they can be read through the GitHub API
           msg=$(grep -E "error:|warning: \[removal\]|FAILURE|What went wrong" -A3 build.log | head -150 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
           echo "::error title=Build errors::${msg}"
+      - name: Check the mod jars
+        run: |
+          python3 tools/check_jars.py > jars.log 2>&1 || { msg=$(cat jars.log | head -40 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g'); echo "::error title=Mod jars::${msg}"; exit 1; }
+          cat jars.log
       - name: Server test
         run: .github/scripts/server-test.sh
       - name: Client screenshots
@@ -48,9 +52,19 @@ jobs:
           echo "${GITHUB_SHA}" > COMMIT
           git add -A && git -c user.name=ci -c user.email=ci@localhost commit -qm "Screenshots for ${GITHUB_SHA}"
           git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-screenshots
-      - name: Upload mod jar
+      - name: Upload mod jars
         if: success()
         uses: actions/upload-artifact@v5
         with:
-          name: ahrivaea-mod
-          path: build/libs/*.jar
+          name: ahrivaea-mods
+          path: build/mods/*.jar
+      - name: Publish the "latest" release (each mod's jar and the mods spreadsheet)
+        if: success() && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install --quiet openpyxl
+          python3 tools/mods_sheet.py Ahrivaea_Mods.xlsx
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+          gh release create latest build/mods/*.jar Ahrivaea_Mods.xlsx --target "$GITHUB_SHA" --title "Latest mods" \
+            --notes "Built from ${GITHUB_SHA}. Each .jar is one mod; Ahrivaea_Mods.xlsx lists what each does and which worlds use it."

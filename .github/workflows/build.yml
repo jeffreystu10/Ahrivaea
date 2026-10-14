@@ -7,16 +7,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 25
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Build
-        run: ./gradlew build --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew build --stacktrace 2>&1 | tee build.log
+      - name: Report errors
+        if: failure()
+        run: |
+          # Turn compiler errors into one annotation so they can be read through the GitHub API
+          msg=$(grep -E "error:|warning: \[removal\]|FAILURE|What went wrong" -A3 build.log | head -150 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=Build errors::${msg}"
       - name: Upload mod jar
-        uses: actions/upload-artifact@v4
+        if: success()
+        uses: actions/upload-artifact@v5
         with:
           name: pokecraft-mod
           path: build/libs/*.jar

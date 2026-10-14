@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 /**
  * Checks the battle maths against the worked example in the balance spreadsheet (Ashen vs Briar Dragon,
- * both level 30, a 40-power Fire magic move: 50 damage, 88% to hit, 10% to crit) and the favor chart's balance.
+ * both level 30, a 40-power Fire magic move: 69 damage, 89.5% to hit, 9.4% to crit) and the favor chart's balance.
  * Run with /ahrivaea selftest; the automatic server test runs it too.
  */
 public final class SelfTest {
@@ -46,10 +46,10 @@ public final class SelfTest {
 				new DamageCalc.Fighter(ashen, 30, Influence.FIRE, false),
 				new DamageCalc.Fighter(briar, 30, Influence.NATURE, false),
 				new DamageCalc.Move(40, DamageCalc.Category.MAGIC, Influence.FIRE, 0.9), false, 1.0, 0);
-		String line = String.format("damage %d x%.1f hit %.1f%% crit %.1f%% (spreadsheet: 50, x2.0, 88.1%%, 10.2%%) %s vs %s, max HP %d",
+		String line = String.format("damage %d x%.1f hit %.1f%% crit %.1f%% (spreadsheet: 69, x2.0, 89.5%%, 9.4%%) %s vs %s, max HP %d",
 				r.damage(), r.multiplier(), r.hitChance() * 100, r.critChance() * 100,
 				dragon.get().nameFor(Influence.FIRE), dragon.get().nameFor(Influence.NATURE), briar.maxHealth(30));
-		boolean match = r.damage() == 50 && Math.abs(r.hitChance() - 0.88075) < 1e-6 && Math.abs(r.critChance() - 0.10215) < 1e-6;
+		boolean match = r.damage() == 69 && Math.abs(r.hitChance() - 0.89475) < 1e-6 && Math.abs(r.critChance() - 0.09375) < 1e-6;
 		say.accept((match ? "PASS " : "FAIL ") + line);
 		ok &= match;
 

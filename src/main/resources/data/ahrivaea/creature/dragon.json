@@ -1,147 +1,159 @@
 {
   "name": "Dragon",
   "stats": {
-    "hp": 92,
-    "attack": 82,
-    "defense": 98,
-    "speed": 54,
-    "magic": 63,
-    "luck": 37,
-    "charisma": 98
+    "hp": 100,
+    "attack": 52,
+    "defense": 100,
+    "speed": 100,
+    "magic": 100,
+    "luck": 78,
+    "charisma": 66
   },
   "size": 1.6,
   "movement": "fly",
   "forms": {
+    "none": {
+      "name": "Old Dragon",
+      "stats": {
+        "hp": 100,
+        "attack": 52,
+        "defense": 100,
+        "speed": 100,
+        "magic": 100,
+        "luck": 78,
+        "charisma": 66
+      }
+    },
     "fire": {
       "name": "Ashen Dragon",
       "stats": {
-        "hp": 57,
-        "attack": 68,
-        "defense": 61,
-        "speed": 97,
-        "magic": 61,
-        "luck": 80,
-        "charisma": 82
+        "hp": 100,
+        "attack": 66,
+        "defense": 100,
+        "speed": 100,
+        "magic": 100,
+        "luck": 64,
+        "charisma": 70
       }
     },
     "frost": {
       "name": "Snowveil Dragon",
       "stats": {
         "hp": 98,
-        "attack": 81,
-        "defense": 81,
-        "speed": 62,
-        "magic": 81,
-        "luck": 47,
-        "charisma": 62
+        "attack": 55,
+        "defense": 100,
+        "speed": 100,
+        "magic": 88,
+        "luck": 70,
+        "charisma": 81
       }
     },
     "storm": {
       "name": "Squall Dragon",
       "stats": {
-        "hp": 84,
-        "attack": 73,
-        "defense": 99,
-        "speed": 96,
-        "magic": 94,
-        "luck": 63,
-        "charisma": 76
+        "hp": 100,
+        "attack": 57,
+        "defense": 100,
+        "speed": 100,
+        "magic": 97,
+        "luck": 75,
+        "charisma": 67
       }
     },
     "earth": {
       "name": "Mossback Dragon",
       "stats": {
-        "hp": 47,
-        "attack": 85,
-        "defense": 99,
-        "speed": 67,
-        "magic": 70,
-        "luck": 51,
-        "charisma": 98
+        "hp": 100,
+        "attack": 55,
+        "defense": 100,
+        "speed": 100,
+        "magic": 92,
+        "luck": 57,
+        "charisma": 78
       }
     },
     "water": {
       "name": "Coral Dragon",
       "stats": {
-        "hp": 67,
-        "attack": 100,
-        "defense": 37,
-        "speed": 57,
-        "magic": 97,
-        "luck": 88,
-        "charisma": 85
+        "hp": 97,
+        "attack": 57,
+        "defense": 100,
+        "speed": 100,
+        "magic": 100,
+        "luck": 70,
+        "charisma": 67
       }
     },
     "nature": {
       "name": "Briar Dragon",
       "stats": {
-        "hp": 66,
-        "attack": 57,
-        "defense": 94,
-        "speed": 93,
-        "magic": 87,
-        "luck": 91,
-        "charisma": 60
+        "hp": 100,
+        "attack": 56,
+        "defense": 100,
+        "speed": 100,
+        "magic": 97,
+        "luck": 67,
+        "charisma": 71
       }
     },
     "void": {
       "name": "Umbral Dragon",
       "stats": {
-        "hp": 85,
-        "attack": 42,
-        "defense": 86,
-        "speed": 95,
-        "magic": 67,
-        "luck": 78,
-        "charisma": 69
+        "hp": 100,
+        "attack": 61,
+        "defense": 100,
+        "speed": 100,
+        "magic": 94,
+        "luck": 69,
+        "charisma": 70
       }
     },
     "fae": {
       "name": "Gossamer Dragon",
       "stats": {
-        "hp": 65,
-        "attack": 47,
-        "defense": 90,
-        "speed": 55,
-        "magic": 95,
-        "luck": 90,
-        "charisma": 64
+        "hp": 100,
+        "attack": 61,
+        "defense": 100,
+        "speed": 100,
+        "magic": 92,
+        "luck": 73,
+        "charisma": 70
       }
     },
     "darkness": {
       "name": "Duskborn Dragon",
       "stats": {
-        "hp": 59,
-        "attack": 77,
-        "defense": 94,
-        "speed": 70,
-        "magic": 97,
-        "luck": 57,
-        "charisma": 56
+        "hp": 100,
+        "attack": 63,
+        "defense": 96,
+        "speed": 100,
+        "magic": 79,
+        "luck": 67,
+        "charisma": 80
+      }
+    },
+    "arcane": {
+      "name": "Arcane Dragon",
+      "stats": {
+        "hp": 88,
+        "attack": 56,
+        "defense": 100,
+        "speed": 100,
+        "magic": 100,
+        "luck": 75,
+        "charisma": 79
       }
     },
     "radiant": {
       "name": "Hallowed Dragon",
       "stats": {
-        "hp": 79,
-        "attack": 90,
-        "defense": 93,
-        "speed": 80,
-        "magic": 58,
-        "luck": 79,
-        "charisma": 82
-      }
-    },
-    "none": {
-      "name": "Old Dragon",
-      "stats": {
-        "hp": 92,
-        "attack": 82,
-        "defense": 98,
-        "speed": 54,
-        "magic": 63,
-        "luck": 37,
-        "charisma": 98
+        "hp": 100,
+        "attack": 58,
+        "defense": 99,
+        "speed": 100,
+        "magic": 90,
+        "luck": 69,
+        "charisma": 69
       }
     }
   },

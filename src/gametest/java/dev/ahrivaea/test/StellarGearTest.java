@@ -74,6 +74,8 @@ public class StellarGearTest implements FabricClientGameTest {
 			// ---- axe: a natural oak with player-placed logs against it, and a bare log pillar ----
 			BlockPos trunk = new BlockPos(x - 8, y, z + 8);
 			server.runCommand("place feature minecraft:oak %d %d %d".formatted(trunk.getX(), trunk.getY(), trunk.getZ()));
+			// make room next to the trunk (a short tree can have leaves there), then
+			server.runCommand("fill %d %d %d %d %d %d minecraft:air".formatted(trunk.getX() + 1, trunk.getY(), trunk.getZ(), trunk.getX() + 1, trunk.getY() + 1, trunk.getZ()));
 			// two logs placed by the player (through the normal placing code), leaning on the trunk
 			server.runOnServer(s -> {
 				ServerPlayer pl = player(s);

@@ -1,0 +1,59 @@
+{
+  "name": "The Clayworks",
+  "unit": "clay",
+  "items": {
+    "minecraft:clay_ball": 1,
+    "minecraft:clay": 4
+  },
+  "goal": 1500,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:decorated_pot",
+          "count": 4
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:emerald",
+          "count": 8
+        }
+      ]
+    }
+  ]
+}

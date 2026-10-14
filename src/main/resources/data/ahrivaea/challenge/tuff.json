@@ -1,0 +1,58 @@
+{
+  "name": "The Tuff Tower",
+  "unit": "tuff",
+  "items": {
+    "minecraft:tuff": 1
+  },
+  "goal": 3000,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:trial_key",
+          "count": 4
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

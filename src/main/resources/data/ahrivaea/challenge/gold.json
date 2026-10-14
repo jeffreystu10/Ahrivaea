@@ -28,8 +28,8 @@
       "rank": 2,
       "items": [
         {
-          "item": "minecraft:enchanted_golden_apple",
-          "count": 1
+          "item": "minecraft:diamond",
+          "count": 12
         }
       ]
     },
@@ -37,8 +37,8 @@
       "rank": 3,
       "items": [
         {
-          "item": "minecraft:golden_apple",
-          "count": 4
+          "item": "minecraft:diamond",
+          "count": 6
         }
       ]
     },
@@ -46,8 +46,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:golden_carrot",
-          "count": 16
+          "item": "minecraft:emerald",
+          "count": 10
         }
       ]
     }

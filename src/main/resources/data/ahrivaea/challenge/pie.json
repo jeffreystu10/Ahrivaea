@@ -1,0 +1,58 @@
+{
+  "name": "The Pie Tower",
+  "unit": "pumpkin pies",
+  "items": {
+    "minecraft:pumpkin_pie": 1
+  },
+  "goal": 200,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:cake",
+          "count": 8
+        },
+        {
+          "item": "minecraft:emerald_block",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

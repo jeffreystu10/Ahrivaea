@@ -23,7 +23,7 @@
         },
         {
           "item": "minecraft:emerald",
-          "count": 32
+          "count": 16
         }
       ]
     },
@@ -31,8 +31,8 @@
       "rank": 2,
       "items": [
         {
-          "item": "minecraft:emerald",
-          "count": 16
+          "item": "minecraft:diamond",
+          "count": 6
         }
       ]
     },
@@ -40,8 +40,8 @@
       "rank": 3,
       "items": [
         {
-          "item": "minecraft:emerald",
-          "count": 8
+          "item": "minecraft:diamond",
+          "count": 3
         }
       ]
     },
@@ -49,8 +49,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:oak_sapling",
-          "count": 8
+          "item": "minecraft:emerald",
+          "count": 4
         }
       ]
     }

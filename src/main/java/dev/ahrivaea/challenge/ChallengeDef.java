@@ -59,6 +59,14 @@ public record ChallengeDef(String name, String unit, Map<String, Integer> items,
 			String id = path.getPath().substring("challenge/".length(), path.getPath().length() - ".json".length());
 			try (Reader reader = resource.openAsReader()) {
 				ChallengeDef d = CODEC.parse(JsonOps.INSTANCE, JsonParser.parseReader(reader)).getOrThrow();
+				for (String item : d.items.keySet()) {
+					if (!item.startsWith("#") && !net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(Identifier.parse(item))) {
+						Ahrivaea.LOGGER.warn("Challenge {}: unknown item {}", id, item);
+					}
+				}
+				for (Reward r : d.rewards) for (RewardItem it : r.items()) {
+					if (!net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(it.item())) Ahrivaea.LOGGER.warn("Challenge {}: unknown reward item {}", id, it.item());
+				}
 				loaded.put(id, new ChallengeDef(d.name, d.unit, d.items, d.goal, d.stages, d.ruined, d.finished, d.chest, d.rewards, id));
 			} catch (Exception e) {
 				Ahrivaea.LOGGER.error("Could not load challenge {}: {}", path, e.getMessage());

@@ -19,8 +19,12 @@
       "rank": 1,
       "items": [
         {
-          "item": "minecraft:totem_of_undying",
+          "item": "minecraft:saddle",
           "count": 1
+        },
+        {
+          "item": "minecraft:name_tag",
+          "count": 2
         }
       ]
     },
@@ -46,8 +50,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:bone_meal",
-          "count": 32
+          "item": "minecraft:emerald",
+          "count": 6
         }
       ]
     }

@@ -19,12 +19,12 @@
       "rank": 1,
       "items": [
         {
-          "item": "minecraft:netherite_ingot",
-          "count": 2
-        },
-        {
           "item": "minecraft:anvil",
           "count": 1
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 12
         }
       ]
     },
@@ -33,7 +33,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 10
+          "count": 8
         }
       ]
     },
@@ -42,7 +42,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 5
+          "count": 4
         }
       ]
     },
@@ -50,8 +50,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:iron_block",
-          "count": 2
+          "item": "minecraft:emerald",
+          "count": 6
         }
       ]
     }

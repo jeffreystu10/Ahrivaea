@@ -1,0 +1,63 @@
+{
+  "name": "The Amethyst Spire",
+  "unit": "amethyst shards",
+  "items": {
+    "minecraft:amethyst_shard": 1,
+    "minecraft:amethyst_block": 4
+  },
+  "goal": 800,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:amethyst_block",
+          "count": 32
+        },
+        {
+          "item": "minecraft:spyglass",
+          "count": 2
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

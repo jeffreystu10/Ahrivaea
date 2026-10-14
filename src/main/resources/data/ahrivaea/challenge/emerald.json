@@ -1,0 +1,59 @@
+{
+  "name": "The Emerald Exchange",
+  "unit": "emeralds",
+  "items": {
+    "minecraft:emerald": 1,
+    "minecraft:emerald_block": 9
+  },
+  "goal": 500,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:nether_star",
+          "count": 2
+        },
+        {
+          "item": "minecraft:emerald_block",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ]
+    }
+  ]
+}

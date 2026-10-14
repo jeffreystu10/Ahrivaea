@@ -1,0 +1,62 @@
+{
+  "name": "The Librarian's Tower",
+  "unit": "bookshelves",
+  "items": {
+    "minecraft:bookshelf": 1
+  },
+  "goal": 150,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:enchanting_table",
+          "count": 1
+        },
+        {
+          "item": "minecraft:bookshelf",
+          "count": 15
+        },
+        {
+          "item": "minecraft:experience_bottle",
+          "count": 64
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

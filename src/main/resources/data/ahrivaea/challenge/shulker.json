@@ -1,0 +1,58 @@
+{
+  "name": "The Shulker Vault",
+  "unit": "shulker shells",
+  "items": {
+    "minecraft:shulker_shell": 1
+  },
+  "goal": 64,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:shulker_box",
+          "count": 8
+        },
+        {
+          "item": "minecraft:totem_of_undying",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ]
+    }
+  ]
+}

@@ -20,11 +20,11 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 16
+          "count": 8
         },
         {
-          "item": "minecraft:enchanted_golden_apple",
-          "count": 1
+          "item": "minecraft:golden_apple",
+          "count": 2
         }
       ]
     },
@@ -33,7 +33,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 8
+          "count": 6
         }
       ]
     },
@@ -42,7 +42,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 4
+          "count": 3
         }
       ]
     },
@@ -51,7 +51,7 @@
       "items": [
         {
           "item": "minecraft:emerald",
-          "count": 8
+          "count": 4
         }
       ]
     }

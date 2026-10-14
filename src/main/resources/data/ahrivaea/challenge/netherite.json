@@ -1,0 +1,60 @@
+{
+  "name": "The Ancient Forge",
+  "unit": "netherite scrap",
+  "items": {
+    "minecraft:netherite_scrap": 1,
+    "minecraft:ancient_debris": 1,
+    "minecraft:netherite_ingot": 4
+  },
+  "goal": 64,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:netherite_block",
+          "count": 2
+        },
+        {
+          "item": "minecraft:nether_star",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ]
+    }
+  ]
+}

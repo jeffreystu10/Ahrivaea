@@ -1,0 +1,58 @@
+{
+  "name": "The Blossom Tower",
+  "unit": "flowers",
+  "items": {
+    "#minecraft:small_flowers": 1
+  },
+  "goal": 1000,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:music_disc_pigstep",
+          "count": 1
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:emerald",
+          "count": 12
+        }
+      ]
+    }
+  ]
+}

@@ -29,7 +29,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 8
+          "count": 12
         }
       ]
     },
@@ -38,7 +38,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 4
+          "count": 6
         }
       ]
     },
@@ -46,8 +46,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:redstone_block",
-          "count": 4
+          "item": "minecraft:emerald",
+          "count": 10
         }
       ]
     }

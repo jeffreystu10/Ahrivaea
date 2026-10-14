@@ -20,7 +20,7 @@
       "items": [
         {
           "item": "minecraft:netherite_ingot",
-          "count": 4
+          "count": 6
         },
         {
           "item": "minecraft:elytra",
@@ -51,7 +51,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 2
+          "count": 5
         }
       ]
     }

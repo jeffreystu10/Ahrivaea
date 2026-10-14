@@ -1,0 +1,55 @@
+{
+  "name": "The Campfire Spire",
+  "unit": "campfires",
+  "items": {
+    "minecraft:campfire": 1,
+    "minecraft:soul_campfire": 1
+  },
+  "goal": 100,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:enchanted_golden_apple",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 3
+        }
+      ]
+    }
+  ]
+}

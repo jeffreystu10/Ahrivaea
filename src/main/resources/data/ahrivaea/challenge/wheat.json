@@ -32,8 +32,8 @@
       "rank": 2,
       "items": [
         {
-          "item": "minecraft:golden_carrot",
-          "count": 32
+          "item": "minecraft:diamond",
+          "count": 8
         }
       ]
     },
@@ -41,8 +41,8 @@
       "rank": 3,
       "items": [
         {
-          "item": "minecraft:golden_carrot",
-          "count": 16
+          "item": "minecraft:diamond",
+          "count": 4
         }
       ]
     },
@@ -50,8 +50,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:cake",
-          "count": 1
+          "item": "minecraft:emerald",
+          "count": 6
         }
       ]
     }

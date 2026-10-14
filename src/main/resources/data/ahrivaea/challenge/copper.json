@@ -19,8 +19,16 @@
       "rank": 1,
       "items": [
         {
-          "item": "minecraft:trident",
+          "item": "minecraft:spyglass",
           "count": 1
+        },
+        {
+          "item": "minecraft:lightning_rod",
+          "count": 4
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 10
         }
       ]
     },
@@ -46,8 +54,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:lightning_rod",
-          "count": 2
+          "item": "minecraft:emerald",
+          "count": 6
         }
       ]
     }

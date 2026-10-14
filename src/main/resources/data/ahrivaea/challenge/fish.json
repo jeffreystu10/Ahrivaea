@@ -1,0 +1,62 @@
+{
+  "name": "The Fisher's Lighthouse",
+  "unit": "fish",
+  "items": {
+    "#minecraft:fishes": 1
+  },
+  "goal": 800,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:fishing_rod",
+          "count": 1
+        },
+        {
+          "item": "minecraft:nautilus_shell",
+          "count": 4
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:emerald",
+          "count": 12
+        }
+      ]
+    }
+  ]
+}

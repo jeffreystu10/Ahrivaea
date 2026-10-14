@@ -32,8 +32,8 @@
       "rank": 2,
       "items": [
         {
-          "item": "minecraft:experience_bottle",
-          "count": 32
+          "item": "minecraft:diamond",
+          "count": 12
         }
       ]
     },
@@ -41,8 +41,8 @@
       "rank": 3,
       "items": [
         {
-          "item": "minecraft:experience_bottle",
-          "count": 16
+          "item": "minecraft:diamond",
+          "count": 6
         }
       ]
     },
@@ -50,8 +50,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:bookshelf",
-          "count": 4
+          "item": "minecraft:emerald",
+          "count": 10
         }
       ]
     }

@@ -18,7 +18,7 @@
       "rank": 1,
       "items": [
         {
-          "item": "minecraft:netherite_ingot",
+          "item": "minecraft:totem_of_undying",
           "count": 1
         }
       ]
@@ -28,7 +28,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 6
+          "count": 8
         }
       ]
     },
@@ -37,7 +37,7 @@
       "items": [
         {
           "item": "minecraft:diamond",
-          "count": 3
+          "count": 4
         }
       ]
     },
@@ -46,7 +46,7 @@
       "items": [
         {
           "item": "minecraft:emerald",
-          "count": 4
+          "count": 6
         }
       ]
     }

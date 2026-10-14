@@ -1,0 +1,55 @@
+{
+  "name": "The Nether Brick Keep",
+  "unit": "nether bricks",
+  "items": {
+    "minecraft:nether_brick": 1,
+    "minecraft:nether_bricks": 4
+  },
+  "goal": 3000,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond_block",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 3
+        }
+      ]
+    }
+  ]
+}

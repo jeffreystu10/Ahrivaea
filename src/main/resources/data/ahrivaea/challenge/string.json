@@ -2,8 +2,7 @@
   "name": "The Weaver's Spire",
   "unit": "string",
   "items": {
-    "minecraft:string": 1,
-    "#minecraft:wool": 4
+    "minecraft:string": 1
   },
   "goal": 600,
   "stages": 4,
@@ -19,8 +18,12 @@
       "rank": 1,
       "items": [
         {
-          "item": "minecraft:elytra",
-          "count": 1
+          "item": "minecraft:bundle",
+          "count": 2
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 10
         }
       ]
     },
@@ -46,8 +49,8 @@
       "rank": 0,
       "items": [
         {
-          "item": "minecraft:white_wool",
-          "count": 16
+          "item": "minecraft:emerald",
+          "count": 6
         }
       ]
     }

@@ -37,11 +37,15 @@ public class StrongholdTowerScreenshots implements FabricClientGameTest {
 				var origin = server.computeOnServer(s -> Challenges.state(s, StrongholdTowers.towerId(n)).map(st -> st.origin).orElse(null));
 				if (origin == null) throw new AssertionError("No tower was built for stronghold " + n);
 				String palette = server.computeOnServer(s -> Challenges.state(s, StrongholdTowers.towerId(n)).map(st -> st.palette + "_" + st.challenge).orElse("?"));
-				server.runCommand("tp @a %.1f %.1f %.1f -25 18".formatted(origin.getX() + 15.5, origin.getY() + 13.0, origin.getZ() - 14.0));
-				context.runOnClient(client -> client.player.getAbilities().flying = true);
+				String tp = "tp @a %.1f %.1f %.1f facing %.1f %.1f %.1f".formatted(origin.getX() + 22.5, origin.getY() + 16.0, origin.getZ() - 18.0,
+						origin.getX() + 5.5, origin.getY() + 9.0, origin.getZ() + 5.5);
+				server.runCommand(tp);
 				context.waitTicks(20);
 				sp.getConnection().waitForChunksRender();
-				context.waitTicks(10);
+				// look again from the same spot (the player may have drifted while chunks loaded)
+				context.runOnClient(client -> client.player.getAbilities().flying = true);
+				server.runCommand(tp);
+				context.waitTicks(4);
 				context.takeScreenshot(TestScreenshotOptions.of("stronghold_tower_" + (n + 1) + "_" + palette).withSize(1600, 900));
 			}
 		}

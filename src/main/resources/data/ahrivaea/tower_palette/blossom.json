@@ -1,0 +1,24 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:cherry_grove",
+    "minecraft:meadow",
+    "minecraft:flower_forest",
+    "minecraft:sunflower_plains"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:quartz_bricks",
+    "minecraft:cracked_stone_bricks": "minecraft:calcite",
+    "minecraft:mossy_stone_bricks": "minecraft:calcite",
+    "minecraft:chiseled_stone_bricks": "minecraft:chiseled_quartz_block",
+    "minecraft:cobblestone": "minecraft:calcite",
+    "minecraft:mossy_cobblestone": "minecraft:moss_block",
+    "minecraft:cobblestone_slab": "minecraft:smooth_quartz_slab",
+    "minecraft:stone_brick_wall": "minecraft:cherry_fence",
+    "minecraft:stone_brick_stairs": "minecraft:quartz_stairs",
+    "minecraft:stone_brick_slab": "minecraft:smooth_quartz_slab",
+    "minecraft:polished_andesite": "minecraft:smooth_quartz",
+    "minecraft:spruce_planks": "minecraft:cherry_planks"
+  },
+  "foundation": "minecraft:calcite"
+}

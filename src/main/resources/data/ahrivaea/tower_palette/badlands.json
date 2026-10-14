@@ -1,0 +1,22 @@
+{
+  "priority": 10,
+  "biomes": [
+    "#minecraft:is_badlands"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:cut_red_sandstone",
+    "minecraft:cracked_stone_bricks": "minecraft:red_sandstone",
+    "minecraft:mossy_stone_bricks": "minecraft:terracotta",
+    "minecraft:chiseled_stone_bricks": "minecraft:chiseled_red_sandstone",
+    "minecraft:cobblestone": "minecraft:red_sandstone",
+    "minecraft:mossy_cobblestone": "minecraft:orange_terracotta",
+    "minecraft:cobblestone_slab": "minecraft:red_sandstone_slab",
+    "minecraft:stone_brick_wall": "minecraft:red_sandstone_wall",
+    "minecraft:stone_brick_stairs": "minecraft:red_sandstone_stairs",
+    "minecraft:stone_brick_slab": "minecraft:red_sandstone_slab",
+    "minecraft:polished_andesite": "minecraft:smooth_red_sandstone",
+    "minecraft:spruce_planks": "minecraft:acacia_planks",
+    "minecraft:gravel": "minecraft:red_sand"
+  },
+  "foundation": "minecraft:red_sandstone"
+}

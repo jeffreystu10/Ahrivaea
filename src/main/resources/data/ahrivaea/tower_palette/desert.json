@@ -1,0 +1,23 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:desert",
+    "#minecraft:is_beach"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:cut_sandstone",
+    "minecraft:cracked_stone_bricks": "minecraft:sandstone",
+    "minecraft:mossy_stone_bricks": "minecraft:smooth_sandstone",
+    "minecraft:chiseled_stone_bricks": "minecraft:chiseled_sandstone",
+    "minecraft:cobblestone": "minecraft:sandstone",
+    "minecraft:mossy_cobblestone": "minecraft:smooth_sandstone",
+    "minecraft:cobblestone_slab": "minecraft:sandstone_slab",
+    "minecraft:stone_brick_wall": "minecraft:sandstone_wall",
+    "minecraft:stone_brick_stairs": "minecraft:sandstone_stairs",
+    "minecraft:stone_brick_slab": "minecraft:sandstone_slab",
+    "minecraft:polished_andesite": "minecraft:smooth_sandstone",
+    "minecraft:spruce_planks": "minecraft:birch_planks",
+    "minecraft:gravel": "minecraft:sand"
+  },
+  "foundation": "minecraft:sandstone"
+}

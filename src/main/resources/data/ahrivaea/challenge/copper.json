@@ -1,0 +1,55 @@
+{
+  "name": "The Verdigris Tower",
+  "unit": "copper ingots",
+  "items": {
+    "minecraft:copper_ingot": 1,
+    "minecraft:copper_block": 9
+  },
+  "goal": 2000,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:trident",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:lightning_rod",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

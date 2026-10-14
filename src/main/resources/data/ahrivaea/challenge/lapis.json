@@ -1,0 +1,59 @@
+{
+  "name": "The Azure Sanctum",
+  "unit": "lapis lazuli",
+  "items": {
+    "minecraft:lapis_lazuli": 1,
+    "minecraft:lapis_block": 9
+  },
+  "goal": 1000,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:enchanting_table",
+          "count": 1
+        },
+        {
+          "item": "minecraft:experience_bottle",
+          "count": 64
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:experience_bottle",
+          "count": 32
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:experience_bottle",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:bookshelf",
+          "count": 4
+        }
+      ]
+    }
+  ]
+}

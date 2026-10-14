@@ -1,0 +1,25 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:stony_peaks",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:windswept_forest",
+    "minecraft:stony_shore",
+    "minecraft:dripstone_caves"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:tuff_bricks",
+    "minecraft:cracked_stone_bricks": "minecraft:tuff",
+    "minecraft:mossy_stone_bricks": "minecraft:polished_tuff",
+    "minecraft:chiseled_stone_bricks": "minecraft:chiseled_tuff_bricks",
+    "minecraft:cobblestone": "minecraft:tuff",
+    "minecraft:mossy_cobblestone": "minecraft:cobblestone",
+    "minecraft:cobblestone_slab": "minecraft:tuff_slab",
+    "minecraft:stone_brick_wall": "minecraft:tuff_brick_wall",
+    "minecraft:stone_brick_stairs": "minecraft:tuff_brick_stairs",
+    "minecraft:stone_brick_slab": "minecraft:tuff_brick_slab",
+    "minecraft:polished_andesite": "minecraft:polished_tuff"
+  },
+  "foundation": "minecraft:tuff"
+}

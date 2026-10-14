@@ -1,0 +1,59 @@
+{
+  "name": "The Iron Bastion",
+  "unit": "iron ingots",
+  "items": {
+    "minecraft:iron_ingot": 1,
+    "minecraft:iron_block": 9
+  },
+  "goal": 500,
+  "stages": 4,
+  "ruined": "ahrivaea:tower/ruined",
+  "finished": "ahrivaea:tower/finished",
+  "chest": [
+    5,
+    1,
+    5
+  ],
+  "rewards": [
+    {
+      "rank": 1,
+      "items": [
+        {
+          "item": "minecraft:netherite_ingot",
+          "count": 2
+        },
+        {
+          "item": "minecraft:anvil",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "items": [
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "rank": 0,
+      "items": [
+        {
+          "item": "minecraft:iron_block",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

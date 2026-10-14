@@ -1,0 +1,10 @@
+{
+  "priority": 5,
+  "biomes": [
+    "#minecraft:is_taiga"
+  ],
+  "blocks": {
+    "minecraft:polished_andesite": "minecraft:podzol"
+  },
+  "foundation": "minecraft:cobblestone"
+}

@@ -76,7 +76,7 @@ public final class Challenges {
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
 			if (!(level instanceof ServerLevel server) || player.isCreative()) return true;
 			for (var e : states(server.getServer()).entrySet()) {
-				var def = ChallengeDef.get(e.getKey());
+				var def = defOf(e.getKey(), e.getValue());
 				if (def.isPresent() && inLevel(e.getValue(), server) && box(server, def.get(), e.getValue()).isInside(pos)) {
 					player.sendOverlayMessage(Component.literal(def.get().name() + " is protected. Help rebuild it at its chest!"));
 					return false;
@@ -104,6 +104,11 @@ public final class Challenges {
 		server.overworld().setAttached(STATE, copy);
 	}
 
+	/** The challenge a tower runs (older saves used the tower id as the challenge id). */
+	static Optional<ChallengeDef> defOf(String towerId, ChallengeState s) {
+		return ChallengeDef.get(s.challenge.isEmpty() ? towerId : s.challenge);
+	}
+
 	private static boolean inLevel(ChallengeState s, ServerLevel level) {
 		return s.dimension.equals(level.dimension().identifier().toString());
 	}
@@ -114,7 +119,7 @@ public final class Challenges {
 
 	private static String chestAt(ServerLevel level, BlockPos pos) {
 		for (var e : states(level.getServer()).entrySet()) {
-			var def = ChallengeDef.get(e.getKey());
+			var def = defOf(e.getKey(), e.getValue());
 			if (def.isPresent() && inLevel(e.getValue(), level) && e.getValue().origin.offset(def.get().chest()).equals(pos)) return e.getKey();
 		}
 		return null;
@@ -132,20 +137,35 @@ public final class Challenges {
 
 	// ---- placing and building ----
 
-	/** Places the ruined structure with its corner at {@code origin} and starts the challenge from zero. */
-	public static boolean place(ServerLevel level, ChallengeDef def, BlockPos origin) {
+	/**
+	 * Places the ruined structure with its corner at {@code origin}, in the palette for the biome there, on a
+	 * foundation reaching down to solid ground, and starts the challenge from zero under {@code towerId}.
+	 */
+	public static boolean place(ServerLevel level, ChallengeDef def, BlockPos origin, String towerId) {
 		var ruined = template(level, def.ruined());
 		if (ruined.isEmpty()) {
 			Ahrivaea.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.ruined());
 			return false;
 		}
-		boolean placed = ruined.get().placeInWorld(level, origin, origin, new StructurePlaceSettings(), level.getRandom(), 2);
-		int solid = 0;
-		for (BlockPos p : BlockPos.betweenClosed(origin, origin.offset(ruined.get().getSize()).offset(-1, -1, -1))) if (!level.getBlockState(p).isAir()) solid++;
-		Ahrivaea.LOGGER.info("Challenge {}: ruined structure {} size {} placed={} chest block now {}, {} solid blocks in its box, chunk loaded {}", def.id(), def.ruined(),
-				ruined.get().getSize(), placed, level.getBlockState(origin.offset(def.chest())), solid, level.isLoaded(origin));
-		save(level.getServer(), def.id(), ChallengeState.fresh(level.dimension().identifier().toString(), origin));
-		Ahrivaea.LOGGER.info("Challenge {} placed at {}", def.id(), origin.toShortString());
+		Vec3i size = ruined.get().getSize();
+		BlockPos center = origin.offset(size.getX() / 2, 1, size.getZ() / 2);
+		TowerPalette palette = TowerPalette.pick(level.getBiome(center));
+		// foundation: fill under the floor down to solid ground (or the sea floor), at most 64 blocks
+		var foundation = palette.foundationState();
+		for (int x = 0; x < size.getX(); x++) {
+			for (int z = 0; z < size.getZ(); z++) {
+				BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos(origin.getX() + x, origin.getY() - 1, origin.getZ() + z);
+				for (int d = 0; d < 64 && p.getY() > level.getMinY(); d++, p.move(0, -1, 0)) {
+					var st = level.getBlockState(p);
+					if (!st.canBeReplaced() && !st.is(net.minecraft.tags.BlockTags.LEAVES) && !st.is(net.minecraft.tags.BlockTags.LOGS) && st.getFluidState().isEmpty()) break;
+					level.setBlock(p, foundation, 2);
+				}
+			}
+		}
+		ruined.get().placeInWorld(level, origin, origin, palette.settings(), level.getRandom(), 2);
+		save(level.getServer(), towerId, ChallengeState.fresh(def.id(), palette.id(), level.dimension().identifier().toString(), origin));
+		Ahrivaea.LOGGER.info("Tower {} ({}) placed at {} in {} with the {} palette", towerId, def.id(), origin.toShortString(),
+				level.getBiome(center).unwrapKey().map(k -> k.identifier().toString()).orElse("?"), palette.id());
 		return true;
 	}
 
@@ -160,8 +180,7 @@ public final class Challenges {
 		int height = full.getYSpan();
 		int top = s.origin.getY() + (int) Math.ceil(height * (double) stage / def.stages()) - 1;
 		BoundingBox clip = new BoundingBox(full.minX(), full.minY(), full.minZ(), full.maxX(), Math.min(top, full.maxY()), full.maxZ());
-		boolean placed = finished.get().placeInWorld(level, s.origin, s.origin, new StructurePlaceSettings().setBoundingBox(clip), level.getRandom(), 2);
-		Ahrivaea.LOGGER.info("Challenge {}: stage {} up to y={} placed={}", def.id(), stage, top, placed);
+		finished.get().placeInWorld(level, s.origin, s.origin, TowerPalette.get(s.palette).settings().setBoundingBox(clip), level.getRandom(), 2);
 		var c = full.getCenter();
 		level.sendParticles(ParticleTypes.CLOUD, c.getX() + 0.5, top, c.getZ() + 0.5, 120, full.getXSpan() / 2.0, 1, full.getZSpan() / 2.0, 0.05);
 		level.playSound(null, c, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.5f, 0.7f);
@@ -170,11 +189,11 @@ public final class Challenges {
 	// ---- offerings ----
 
 	private static void open(ServerPlayer player, String id) {
-		var def = ChallengeDef.get(id).orElseThrow();
 		var s = state(player.level().getServer(), id).orElseThrow();
+		var def = defOf(id, s).orElseThrow();
 		if (s.complete) {
 			player.sendSystemMessage(Component.literal(def.name() + " is complete! Thank you to everyone who helped.").withStyle(ChatFormatting.GOLD));
-			sendLeaderboard(player.createCommandSourceStack(), def, s, player);
+			sendLeaderboard(player.createCommandSourceStack(), id, def, s, player);
 			return;
 		}
 		Component title = Component.literal("Offer " + def.unit() + ": " + s.total + "/" + def.goal());
@@ -183,13 +202,13 @@ public final class Challenges {
 
 	/** Counts what a player put in; accepted items are used up, the rest is handed back. */
 	static void offer(ServerPlayer player, String id, List<ItemStack> stacks) {
-		var def = ChallengeDef.get(id).orElse(null);
 		var s = state(player.level().getServer(), id).orElse(null);
+		var def = s == null ? null : defOf(id, s).orElse(null);
 		int given = 0;
 		List<ItemStack> back = new ArrayList<>();
 		for (ItemStack stack : stacks) {
-			Integer worth = def == null ? null : def.items().get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-			if (worth == null || worth <= 0 || s == null || s.complete) {
+			int worth = def == null ? 0 : def.worth(stack);
+			if (worth <= 0 || s == null || s.complete) {
 				back.add(stack);
 				continue;
 			}
@@ -209,8 +228,8 @@ public final class Challenges {
 
 	/** Records a donation, rebuilds any stages it completes and finishes the challenge at the goal. */
 	public static void credit(MinecraftServer server, String id, String key, String name, int amount) {
-		var def = ChallengeDef.get(id).orElse(null);
 		var s = state(server, id).orElse(null);
+		var def = s == null ? null : defOf(id, s).orElse(null);
 		if (def == null || s == null || s.complete || amount <= 0) return;
 		ServerLevel level = level(server, s);
 		s.total = Math.min(def.goal(), s.total + amount);
@@ -232,15 +251,15 @@ public final class Challenges {
 		if (s.total >= def.goal()) {
 			s.complete = true;
 			save(server, id, s);
-			complete(server, level, def, s);
+			complete(server, level, id, def, s);
 		} else {
 			save(server, id, s);
 		}
 	}
 
-	private static void complete(MinecraftServer server, ServerLevel level, ChallengeDef def, ChallengeState s) {
+	private static void complete(MinecraftServer server, ServerLevel level, String id, ChallengeDef def, ChallengeState s) {
 		List<String> ranking = s.ranking();
-		Ahrivaea.LOGGER.info("Challenge {} complete. Top donors: {}", def.id(),
+		Ahrivaea.LOGGER.info("Challenge {} complete. Top donors: {}", id,
 				String.join(", ", ranking.stream().limit(5).map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 		server.getPlayerList().broadcastSystemMessage(Component.literal(def.name() + " has been fully rebuilt! Thank you all!")
 				.withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
@@ -273,7 +292,7 @@ public final class Challenges {
 				}
 			}
 		}
-		save(server, def.id(), s);
+		save(server, id, s);
 		for (ServerPlayer p : server.getPlayerList().getPlayers()) deliverPending(p);
 	}
 
@@ -288,7 +307,7 @@ public final class Challenges {
 				var item = BuiltInRegistries.ITEM.getValue(it.item());
 				player.getInventory().placeItemBackInInventory(new ItemStack(item, it.count()), Prediction.SERVER_ONLY);
 			}
-			String name = ChallengeDef.get(e.getKey()).map(ChallengeDef::name).orElse(e.getKey());
+			String name = defOf(e.getKey(), e.getValue()).map(ChallengeDef::name).orElse(e.getKey());
 			player.sendSystemMessage(Component.literal("You received your reward for helping rebuild " + name + "!").withStyle(ChatFormatting.GOLD));
 			save(server, e.getKey(), e.getValue());
 		}
@@ -296,10 +315,11 @@ public final class Challenges {
 
 	// ---- leaderboard and commands ----
 
-	static void sendLeaderboard(CommandSourceStack source, ChallengeDef def, ChallengeState s, ServerPlayer viewer) {
+	static void sendLeaderboard(CommandSourceStack source, String id, ChallengeDef def, ChallengeState s, ServerPlayer viewer) {
 		int pct = (int) (100L * s.total / def.goal());
 		int bars = pct / 5;
-		MutableComponent text = Component.literal("\n" + def.name() + "\n").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
+		MutableComponent text = Component.literal("\n" + def.name()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
+				.append(Component.literal("  " + id + " at " + s.origin.getX() + ", " + s.origin.getZ() + "\n").withStyle(ChatFormatting.DARK_GRAY))
 				.append(Component.literal("█".repeat(bars)).withStyle(ChatFormatting.GREEN))
 				.append(Component.literal("█".repeat(20 - bars)).withStyle(ChatFormatting.DARK_GRAY))
 				.append(Component.literal(" " + s.total + "/" + def.goal() + " " + def.unit() + " (" + pct + "%), stage " + s.stage + "/" + def.stages()
@@ -318,69 +338,97 @@ public final class Challenges {
 					.withStyle(ChatFormatting.AQUA));
 		}
 		source.sendSuccess(() -> text, false);
-		Ahrivaea.LOGGER.info("Challenge {} leaderboard: {}/{} stage {}; {}", def.id(), s.total, def.goal(), s.stage,
+		Ahrivaea.LOGGER.info("Challenge {} leaderboard: {}/{} stage {}; {}", id, s.total, def.goal(), s.stage,
 				String.join(", ", ranking.stream().map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 	}
 
 	public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
-		var ids = (com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack>) (ctx, b) -> SharedSuggestionProvider.suggest(ChallengeDef.all().keySet(), b);
+		var challenges = (com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack>) (ctx, b) -> SharedSuggestionProvider.suggest(ChallengeDef.all().keySet(), b);
+		var towers = (com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack>) (ctx, b) -> SharedSuggestionProvider.suggest(states(ctx.getSource().getServer()).keySet(), b);
 		dispatcher.register(Commands.literal("challenge")
+				// the nearest tower's leaderboard
 				.executes(ctx -> {
-					var server = ctx.getSource().getServer();
-					int shown = 0;
-					for (var e : states(server).entrySet()) {
-						var def = ChallengeDef.get(e.getKey());
-						if (def.isEmpty()) continue;
-						sendLeaderboard(ctx.getSource(), def.get(), e.getValue(), ctx.getSource().getPlayer());
-						shown++;
+					var src = ctx.getSource();
+					String best = null;
+					double bestDist = Double.MAX_VALUE;
+					for (var e : states(src.getServer()).entrySet()) {
+						if (!inLevel(e.getValue(), src.getLevel()) || defOf(e.getKey(), e.getValue()).isEmpty()) continue;
+						double d = e.getValue().origin.distToCenterSqr(src.getPosition());
+						if (d < bestDist) {
+							bestDist = d;
+							best = e.getKey();
+						}
 					}
-					if (shown == 0) ctx.getSource().sendSuccess(() -> Component.literal("There are no challenges running right now."), false);
-					return shown;
-				})
-				.then(Commands.literal("top").then(Commands.argument("id", StringArgumentType.word()).suggests(ids).executes(ctx -> {
-					String id = StringArgumentType.getString(ctx, "id");
-					var def = ChallengeDef.get(id);
-					var s = state(ctx.getSource().getServer(), id);
-					if (def.isEmpty() || s.isEmpty()) {
-						ctx.getSource().sendFailure(Component.literal("No challenge called " + id + " is running."));
+					if (best == null) {
+						src.sendSuccess(() -> Component.literal("No towers have been found yet. They stand above the strongholds: follow an Eye of Ender."), false);
 						return 0;
 					}
-					sendLeaderboard(ctx.getSource(), def.get(), s.get(), ctx.getSource().getPlayer());
+					var s = states(src.getServer()).get(best);
+					sendLeaderboard(src, best, defOf(best, s).get(), s, src.getPlayer());
+					int count = states(src.getServer()).size();
+					if (count > 1) src.sendSuccess(() -> Component.literal(count + " towers found so far: /challenge list").withStyle(ChatFormatting.GRAY), false);
+					return 1;
+				})
+				.then(Commands.literal("list").executes(ctx -> {
+					var src = ctx.getSource();
+					MutableComponent text = Component.literal("Towers found so far:").withStyle(ChatFormatting.GOLD);
+					List<String> ids = new ArrayList<>(states(src.getServer()).keySet());
+					ids.sort(java.util.Comparator.naturalOrder());
+					for (String id : ids) {
+						var s = states(src.getServer()).get(id);
+						var def = defOf(id, s);
+						if (def.isEmpty()) continue;
+						text.append(Component.literal("\n " + def.get().name() + " (" + id + ") at " + s.origin.getX() + ", " + s.origin.getZ() + ": "
+								+ (s.complete ? "complete" : s.total + "/" + def.get().goal() + " " + def.get().unit())).withStyle(s.complete ? ChatFormatting.GREEN : ChatFormatting.WHITE));
+					}
+					if (ids.isEmpty()) text.append(Component.literal("\n none yet").withStyle(ChatFormatting.GRAY));
+					src.sendSuccess(() -> text, false);
+					return ids.size();
+				}))
+				.then(Commands.literal("top").then(Commands.argument("tower", StringArgumentType.word()).suggests(towers).executes(ctx -> {
+					String id = StringArgumentType.getString(ctx, "tower");
+					var s = state(ctx.getSource().getServer(), id);
+					var def = s.flatMap(st -> defOf(id, st));
+					if (def.isEmpty()) {
+						ctx.getSource().sendFailure(Component.literal("No tower called " + id + "."));
+						return 0;
+					}
+					sendLeaderboard(ctx.getSource(), id, def.get(), s.get(), ctx.getSource().getPlayer());
 					return 1;
 				})))
 				// operator tools
 				.then(Commands.literal("place").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-						.then(Commands.argument("id", StringArgumentType.word()).suggests(ids).executes(ctx -> {
-							String id = StringArgumentType.getString(ctx, "id");
-							var def = ChallengeDef.get(id);
-							if (def.isEmpty()) {
-								ctx.getSource().sendFailure(Component.literal("No challenge called " + id + "."));
+						.then(Commands.argument("challenge", StringArgumentType.word()).suggests(challenges)
+								.executes(ctx -> placeCommand(ctx.getSource(), StringArgumentType.getString(ctx, "challenge"), StringArgumentType.getString(ctx, "challenge")))
+								.then(Commands.argument("tower", StringArgumentType.word())
+										.executes(ctx -> placeCommand(ctx.getSource(), StringArgumentType.getString(ctx, "challenge"), StringArgumentType.getString(ctx, "tower"))))))
+				.then(Commands.literal("generate").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+						.then(Commands.literal("nearest").executes(ctx -> {
+							var src = ctx.getSource();
+							BlockPos found = src.getLevel().findNearestMapStructure(net.minecraft.tags.StructureTags.EYE_OF_ENDER_LOCATED, BlockPos.containing(src.getPosition()), 100, false);
+							if (found == null) {
+								src.sendFailure(Component.literal("No stronghold nearby."));
 								return 0;
 							}
-							BlockPos origin = BlockPos.containing(ctx.getSource().getPosition());
-							if (!place(ctx.getSource().getLevel(), def.get(), origin)) {
-								ctx.getSource().sendFailure(Component.literal("Couldn't find the structure files for " + id + "."));
-								return 0;
-							}
-							ctx.getSource().sendSuccess(() -> Component.literal("Placed " + def.get().name() + " at " + origin.toShortString()
-									+ ". Its offering chest is at " + origin.offset(def.get().chest()).toShortString() + "."), true);
-							return 1;
-						})))
+							return generateCommand(src, StrongholdTowers.indexOf(src.getLevel(), net.minecraft.world.level.ChunkPos.containing(found)));
+						}))
+						.then(Commands.argument("number", IntegerArgumentType.integer(0)).executes(ctx ->
+								generateCommand(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "number")))))
 				.then(Commands.literal("remove").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-						.then(Commands.argument("id", StringArgumentType.word()).suggests(ids).executes(ctx -> {
-							String id = StringArgumentType.getString(ctx, "id");
+						.then(Commands.argument("tower", StringArgumentType.word()).suggests(towers).executes(ctx -> {
+							String id = StringArgumentType.getString(ctx, "tower");
 							save(ctx.getSource().getServer(), id, null);
 							ctx.getSource().sendSuccess(() -> Component.literal("Stopped " + id + " (the blocks stay where they are)."), true);
 							return 1;
 						})))
 				.then(Commands.literal("credit").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-						.then(Commands.argument("id", StringArgumentType.word()).suggests(ids)
+						.then(Commands.argument("tower", StringArgumentType.word()).suggests(towers)
 								.then(Commands.argument("player", StringArgumentType.word())
 										.then(Commands.argument("amount", IntegerArgumentType.integer(1)).executes(ctx -> {
-											String id = StringArgumentType.getString(ctx, "id"), name = StringArgumentType.getString(ctx, "player");
+											String id = StringArgumentType.getString(ctx, "tower"), name = StringArgumentType.getString(ctx, "player");
 											var server = ctx.getSource().getServer();
 											if (state(server, id).isEmpty()) {
-												ctx.getSource().sendFailure(Component.literal("No challenge called " + id + " is running."));
+												ctx.getSource().sendFailure(Component.literal("No tower called " + id + "."));
 												return 0;
 											}
 											ServerPlayer online = server.getPlayerList().getPlayerByName(name);
@@ -389,5 +437,31 @@ public final class Challenges {
 											credit(server, id, key, online != null ? online.getPlainTextName() : name, IntegerArgumentType.getInteger(ctx, "amount"));
 											return 1;
 										}))))));
+	}
+
+	private static int placeCommand(CommandSourceStack src, String challenge, String tower) {
+		var def = ChallengeDef.get(challenge);
+		if (def.isEmpty()) {
+			src.sendFailure(Component.literal("No challenge called " + challenge + "."));
+			return 0;
+		}
+		BlockPos origin = BlockPos.containing(src.getPosition());
+		if (!place(src.getLevel(), def.get(), origin, tower)) {
+			src.sendFailure(Component.literal("Couldn't find the structure files for " + challenge + "."));
+			return 0;
+		}
+		src.sendSuccess(() -> Component.literal("Placed " + def.get().name() + " as " + tower + " at " + origin.toShortString()
+				+ ". Its offering chest is at " + origin.offset(def.get().chest()).toShortString() + "."), true);
+		return 1;
+	}
+
+	private static int generateCommand(CommandSourceStack src, int index) {
+		BlockPos pos = StrongholdTowers.generate(src.getLevel(), index);
+		if (pos == null) {
+			src.sendFailure(Component.literal("Couldn't build a tower for stronghold " + index + "."));
+			return 0;
+		}
+		src.sendSuccess(() -> Component.literal("Tower " + StrongholdTowers.towerId(index) + " stands at " + pos.toShortString() + "."), true);
+		return 1;
 	}
 }

@@ -1,0 +1,16 @@
+{
+  "towers": [
+    "coal",
+    "iron",
+    "wheat",
+    "logs",
+    "copper",
+    "bones",
+    "redstone",
+    "lapis",
+    "string",
+    "gold",
+    "flesh",
+    "diamond"
+  ]
+}

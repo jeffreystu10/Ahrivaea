@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public final class ChallengeState {
 	public static final Codec<ChallengeState> CODEC = RecordCodecBuilder.create(i -> i.group(
+			Codec.STRING.optionalFieldOf("challenge", "").forGetter(s -> s.challenge),
+			Codec.STRING.optionalFieldOf("palette", "none").forGetter(s -> s.palette),
 			Codec.STRING.fieldOf("dimension").forGetter(s -> s.dimension),
 			BlockPos.CODEC.fieldOf("origin").forGetter(s -> s.origin),
 			Codec.INT.fieldOf("total").forGetter(s -> s.total),
@@ -26,6 +28,10 @@ public final class ChallengeState {
 			Codec.unboundedMap(Codec.STRING, ChallengeDef.RewardItem.CODEC.listOf()).fieldOf("pending_rewards").forGetter(s -> s.pendingRewards)
 	).apply(i, ChallengeState::new));
 
+	/** Which challenge file this tower uses. */
+	public String challenge;
+	/** The biome palette chosen when it was placed, reused for every stage. */
+	public final String palette;
 	public final String dimension;
 	public final BlockPos origin;
 	public int total;
@@ -35,8 +41,10 @@ public final class ChallengeState {
 	public final Map<String, String> names;
 	public final Map<String, List<ChallengeDef.RewardItem>> pendingRewards;
 
-	public ChallengeState(String dimension, BlockPos origin, int total, int stage, boolean complete,
+	public ChallengeState(String challenge, String palette, String dimension, BlockPos origin, int total, int stage, boolean complete,
 			Map<String, Integer> donations, Map<String, String> names, Map<String, List<ChallengeDef.RewardItem>> pendingRewards) {
+		this.challenge = challenge;
+		this.palette = palette;
 		this.dimension = dimension;
 		this.origin = origin;
 		this.total = total;
@@ -48,8 +56,8 @@ public final class ChallengeState {
 		pendingRewards.forEach((k, v) -> this.pendingRewards.put(k, new ArrayList<>(v)));
 	}
 
-	public static ChallengeState fresh(String dimension, BlockPos origin) {
-		return new ChallengeState(dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of());
+	public static ChallengeState fresh(String challenge, String palette, String dimension, BlockPos origin) {
+		return new ChallengeState(challenge, palette, dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of());
 	}
 
 	/** Donor keys, most generous first (ties broken by name). */

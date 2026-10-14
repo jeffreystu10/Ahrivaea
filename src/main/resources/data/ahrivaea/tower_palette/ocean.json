@@ -1,0 +1,22 @@
+{
+  "priority": 10,
+  "biomes": [
+    "#minecraft:is_ocean",
+    "#minecraft:is_river"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:prismarine_bricks",
+    "minecraft:cracked_stone_bricks": "minecraft:prismarine",
+    "minecraft:mossy_stone_bricks": "minecraft:prismarine",
+    "minecraft:chiseled_stone_bricks": "minecraft:dark_prismarine",
+    "minecraft:cobblestone": "minecraft:prismarine",
+    "minecraft:mossy_cobblestone": "minecraft:prismarine",
+    "minecraft:cobblestone_slab": "minecraft:prismarine_slab",
+    "minecraft:stone_brick_wall": "minecraft:prismarine_wall",
+    "minecraft:stone_brick_stairs": "minecraft:prismarine_brick_stairs",
+    "minecraft:stone_brick_slab": "minecraft:prismarine_brick_slab",
+    "minecraft:polished_andesite": "minecraft:dark_prismarine",
+    "minecraft:gravel": "minecraft:sand"
+  },
+  "foundation": "minecraft:prismarine"
+}

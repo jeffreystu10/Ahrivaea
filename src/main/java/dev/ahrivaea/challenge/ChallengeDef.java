@@ -20,7 +20,7 @@ import java.util.Optional;
  * the offering chest; every {@code goal / stages} worth rebuilds the next slice of the finished structure,
  * from the bottom up. See docs/challenges.md.
  */
-public record ChallengeDef(String name, String unit, Map<Identifier, Integer> items, int goal, int stages,
+public record ChallengeDef(String name, String unit, Map<String, Integer> items, int goal, int stages,
 		Identifier ruined, Identifier finished, BlockPos chest, List<Reward> rewards, String id) {
 
 	/** Items for the donor at this rank (1 = top); rank 0 means everyone who gave anything. */
@@ -41,7 +41,7 @@ public record ChallengeDef(String name, String unit, Map<Identifier, Integer> it
 	public static final Codec<ChallengeDef> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Codec.STRING.fieldOf("name").forGetter(ChallengeDef::name),
 			Codec.STRING.optionalFieldOf("unit", "items").forGetter(ChallengeDef::unit),
-			Codec.unboundedMap(Identifier.CODEC, Codec.INT).fieldOf("items").forGetter(ChallengeDef::items),
+			Codec.unboundedMap(Codec.STRING, Codec.INT).fieldOf("items").forGetter(ChallengeDef::items),
 			Codec.INT.fieldOf("goal").forGetter(ChallengeDef::goal),
 			Codec.intRange(1, 64).optionalFieldOf("stages", 4).forGetter(ChallengeDef::stages),
 			Identifier.CODEC.fieldOf("ruined").forGetter(ChallengeDef::ruined),
@@ -65,7 +65,19 @@ public record ChallengeDef(String name, String unit, Map<Identifier, Integer> it
 			}
 		});
 		all = Map.copyOf(loaded);
-		Ahrivaea.LOGGER.info("Loaded {} challenges: {}", all.size(), String.join(", ", all.keySet()));
+		List<String> newOrder = new java.util.ArrayList<>();
+		manager.getResourceStack(Ahrivaea.id("challenge_order.json")).forEach(resource -> {
+			try (Reader reader = resource.openAsReader()) {
+				var json = JsonParser.parseReader(reader).getAsJsonObject();
+				newOrder.clear();
+				json.getAsJsonArray("towers").forEach(e -> newOrder.add(e.getAsString()));
+			} catch (Exception e) {
+				Ahrivaea.LOGGER.error("Could not load challenge_order.json: {}", e.getMessage());
+			}
+		});
+		for (String id : newOrder) if (!all.containsKey(id)) Ahrivaea.LOGGER.warn("challenge_order.json lists {}, which has no challenge file", id);
+		order = List.copyOf(newOrder);
+		Ahrivaea.LOGGER.info("Loaded {} challenges: {}; tower order: {}", all.size(), String.join(", ", all.keySet()), String.join(", ", order));
 	}
 
 	public static Optional<ChallengeDef> get(String id) {
@@ -74,6 +86,39 @@ public record ChallengeDef(String name, String unit, Map<Identifier, Integer> it
 
 	public static Map<String, ChallengeDef> all() {
 		return all;
+	}
+
+	/** How much one of this item counts for (0 if it isn't accepted). Keys are item ids or #item tags. */
+	public int worth(net.minecraft.world.item.ItemStack stack) {
+		Integer direct = items.get(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+		if (direct != null) return direct;
+		for (var e : items.entrySet()) {
+			if (e.getKey().startsWith("#") && stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.parse(e.getKey().substring(1))))) {
+				return e.getValue();
+			}
+		}
+		return 0;
+	}
+
+	private static List<String> order = List.of();
+
+	/**
+	 * Which challenge each stronghold tower gets, from data/<namespace>/challenge_order.json
+	 * ({"towers": ["coal", "iron", …]}). Tower n (counting from the nearest ring of strongholds outward)
+	 * gets entry n, starting over when the list runs out.
+	 */
+	public static Optional<ChallengeDef> forTower(int index) {
+		if (!order.isEmpty()) {
+			var d = get(order.get(index % order.size()));
+			if (d.isPresent()) return d;
+		}
+		if (all.isEmpty()) return Optional.empty();
+		var list = List.copyOf(all.values());
+		return Optional.of(list.get(index % list.size()));
+	}
+
+	public static List<String> order() {
+		return order;
 	}
 
 	/** Progress needed to complete stage {@code k} (1..stages). */

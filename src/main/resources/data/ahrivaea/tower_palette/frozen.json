@@ -1,0 +1,31 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:snowy_plains",
+    "minecraft:ice_spikes",
+    "minecraft:snowy_taiga",
+    "minecraft:snowy_slopes",
+    "minecraft:frozen_peaks",
+    "minecraft:jagged_peaks",
+    "minecraft:grove",
+    "minecraft:frozen_river",
+    "minecraft:snowy_beach",
+    "minecraft:frozen_ocean",
+    "minecraft:deep_frozen_ocean"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:polished_diorite",
+    "minecraft:cracked_stone_bricks": "minecraft:diorite",
+    "minecraft:mossy_stone_bricks": "minecraft:packed_ice",
+    "minecraft:chiseled_stone_bricks": "minecraft:quartz_pillar",
+    "minecraft:cobblestone": "minecraft:diorite",
+    "minecraft:mossy_cobblestone": "minecraft:snow_block",
+    "minecraft:cobblestone_slab": "minecraft:polished_diorite_slab",
+    "minecraft:stone_brick_wall": "minecraft:diorite_wall",
+    "minecraft:stone_brick_stairs": "minecraft:polished_diorite_stairs",
+    "minecraft:stone_brick_slab": "minecraft:polished_diorite_slab",
+    "minecraft:polished_andesite": "minecraft:packed_ice",
+    "minecraft:gravel": "minecraft:snow_block"
+  },
+  "foundation": "minecraft:polished_diorite"
+}

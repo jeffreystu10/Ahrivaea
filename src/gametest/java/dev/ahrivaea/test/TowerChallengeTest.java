@@ -34,7 +34,7 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			server.runCommand("time set noon");
 			server.runCommand("gamerule doDaylightCycle false");
 			server.runCommand("gamerule doMobSpawning false");
-			server.runCommand("execute positioned %d %d %d run challenge place tower".formatted(origin.getX(), origin.getY(), origin.getZ()));
+			server.runCommand("execute positioned %d %d %d run challenge place coal".formatted(origin.getX(), origin.getY(), origin.getZ()));
 			context.runOnClient(client -> {
 				if (!client.gui.hud.isHidden()) client.gui.hud.toggle();
 			});
@@ -66,7 +66,7 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			context.runOnClient(client -> client.player.closeContainer());
 			context.waitTicks(10);
 
-			int total = server.computeOnServer(s -> Challenges.state(s, "tower").map(st -> st.total).orElse(-1));
+			int total = server.computeOnServer(s -> Challenges.state(s, "coal").map(st -> st.total).orElse(-1));
 			int coalLeft = context.computeOnClient(client -> count(client.player.getInventory(), Items.COAL));
 			int dirtBack = context.computeOnClient(client -> count(client.player.getInventory(), Items.DIRT));
 			if (total != 300 || coalLeft != 0 || dirtBack != 10) {
@@ -75,10 +75,10 @@ public class TowerChallengeTest implements FabricClientGameTest {
 
 			outside(context, server, origin);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_1_quarter").withSize(1600, 900));
-			server.runCommand("challenge credit tower Bob 250");
+			server.runCommand("challenge credit coal Bob 250");
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_2_half").withSize(1600, 900));
-			server.runCommand("challenge credit tower Cara 200");
+			server.runCommand("challenge credit coal Cara 200");
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_3_three_quarters").withSize(1600, 900));
 
@@ -107,7 +107,7 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			context.waitTicks(80);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_leaderboard").withSize(1600, 900));
 
-			boolean complete = server.computeOnServer(s -> Challenges.state(s, "tower").map(st -> st.complete).orElse(false));
+			boolean complete = server.computeOnServer(s -> Challenges.state(s, "coal").map(st -> st.complete).orElse(false));
 			int diamonds = context.computeOnClient(client -> count(client.player.getInventory(), Items.DIAMOND));
 			int blocksBack = context.computeOnClient(client -> count(client.player.getInventory(), Items.COAL_BLOCK));
 			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are needed, 2 come back

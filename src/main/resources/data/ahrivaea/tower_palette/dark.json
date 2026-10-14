@@ -1,0 +1,23 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:dark_forest",
+    "minecraft:pale_garden",
+    "minecraft:deep_dark"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:deepslate_bricks",
+    "minecraft:cracked_stone_bricks": "minecraft:cracked_deepslate_bricks",
+    "minecraft:mossy_stone_bricks": "minecraft:deepslate_tiles",
+    "minecraft:chiseled_stone_bricks": "minecraft:chiseled_deepslate",
+    "minecraft:cobblestone": "minecraft:cobbled_deepslate",
+    "minecraft:mossy_cobblestone": "minecraft:cobbled_deepslate",
+    "minecraft:cobblestone_slab": "minecraft:cobbled_deepslate_slab",
+    "minecraft:stone_brick_wall": "minecraft:deepslate_brick_wall",
+    "minecraft:stone_brick_stairs": "minecraft:deepslate_brick_stairs",
+    "minecraft:stone_brick_slab": "minecraft:deepslate_brick_slab",
+    "minecraft:polished_andesite": "minecraft:polished_deepslate",
+    "minecraft:spruce_planks": "minecraft:dark_oak_planks"
+  },
+  "foundation": "minecraft:cobbled_deepslate"
+}

@@ -1,0 +1,18 @@
+{
+  "priority": 10,
+  "biomes": [
+    "minecraft:mushroom_fields"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:mushroom_stem",
+    "minecraft:cracked_stone_bricks": "minecraft:mushroom_stem",
+    "minecraft:mossy_stone_bricks": "minecraft:red_mushroom_block",
+    "minecraft:chiseled_stone_bricks": "minecraft:brown_mushroom_block",
+    "minecraft:cobblestone": "minecraft:mycelium",
+    "minecraft:mossy_cobblestone": "minecraft:red_mushroom_block",
+    "minecraft:polished_andesite": "minecraft:mycelium",
+    "minecraft:stone_brick_wall": "minecraft:red_mushroom_block",
+    "minecraft:spruce_planks": "minecraft:brown_mushroom_block"
+  },
+  "foundation": "minecraft:mushroom_stem"
+}

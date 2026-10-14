@@ -1,0 +1,21 @@
+{
+  "priority": 10,
+  "biomes": [
+    "#minecraft:is_savanna"
+  ],
+  "blocks": {
+    "minecraft:stone_bricks": "minecraft:polished_granite",
+    "minecraft:cracked_stone_bricks": "minecraft:granite",
+    "minecraft:mossy_stone_bricks": "minecraft:granite",
+    "minecraft:chiseled_stone_bricks": "minecraft:polished_granite",
+    "minecraft:cobblestone": "minecraft:granite",
+    "minecraft:mossy_cobblestone": "minecraft:coarse_dirt",
+    "minecraft:cobblestone_slab": "minecraft:polished_granite_slab",
+    "minecraft:stone_brick_wall": "minecraft:granite_wall",
+    "minecraft:stone_brick_stairs": "minecraft:polished_granite_stairs",
+    "minecraft:stone_brick_slab": "minecraft:polished_granite_slab",
+    "minecraft:polished_andesite": "minecraft:smooth_red_sandstone",
+    "minecraft:spruce_planks": "minecraft:acacia_planks"
+  },
+  "foundation": "minecraft:granite"
+}

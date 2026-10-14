@@ -33,7 +33,7 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			}
 			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
 			context.runOnClient(client -> {
-				client.options.hideGui = true;
+				if (!client.gui.hud.isHidden()) client.gui.hud.toggle();
 				client.player.getAbilities().flying = true;
 			});
 			context.waitTicks(40);

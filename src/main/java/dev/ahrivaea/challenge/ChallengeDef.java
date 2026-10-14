@@ -1,0 +1,83 @@
+package dev.ahrivaea.challenge;
+
+import com.google.gson.JsonParser;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.ahrivaea.Ahrivaea;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.ResourceManager;
+
+import java.io.Reader;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * A server building challenge, loaded from data/<namespace>/challenge/<id>.json. Players put items into
+ * the offering chest; every {@code goal / stages} worth rebuilds the next slice of the finished structure,
+ * from the bottom up. See docs/challenges.md.
+ */
+public record ChallengeDef(String name, String unit, Map<Identifier, Integer> items, int goal, int stages,
+		Identifier ruined, Identifier finished, BlockPos chest, List<Reward> rewards, String id) {
+
+	/** Items for the donor at this rank (1 = top); rank 0 means everyone who gave anything. */
+	public record Reward(int rank, List<RewardItem> items) {
+		public static final Codec<Reward> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.INT.fieldOf("rank").forGetter(Reward::rank),
+				RewardItem.CODEC.listOf().fieldOf("items").forGetter(Reward::items)
+		).apply(i, Reward::new));
+	}
+
+	public record RewardItem(Identifier item, int count) {
+		public static final Codec<RewardItem> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Identifier.CODEC.fieldOf("item").forGetter(RewardItem::item),
+				Codec.INT.optionalFieldOf("count", 1).forGetter(RewardItem::count)
+		).apply(i, RewardItem::new));
+	}
+
+	public static final Codec<ChallengeDef> CODEC = RecordCodecBuilder.create(i -> i.group(
+			Codec.STRING.fieldOf("name").forGetter(ChallengeDef::name),
+			Codec.STRING.optionalFieldOf("unit", "items").forGetter(ChallengeDef::unit),
+			Codec.unboundedMap(Identifier.CODEC, Codec.INT).fieldOf("items").forGetter(ChallengeDef::items),
+			Codec.INT.fieldOf("goal").forGetter(ChallengeDef::goal),
+			Codec.intRange(1, 64).optionalFieldOf("stages", 4).forGetter(ChallengeDef::stages),
+			Identifier.CODEC.fieldOf("ruined").forGetter(ChallengeDef::ruined),
+			Identifier.CODEC.fieldOf("finished").forGetter(ChallengeDef::finished),
+			BlockPos.CODEC.fieldOf("chest").forGetter(ChallengeDef::chest),
+			Reward.CODEC.listOf().optionalFieldOf("rewards", List.of()).forGetter(ChallengeDef::rewards),
+			Codec.STRING.optionalFieldOf("id", "").forGetter(ChallengeDef::id)
+	).apply(i, ChallengeDef::new));
+
+	private static Map<String, ChallengeDef> all = Map.of();
+
+	public static void reload(ResourceManager manager) {
+		Map<String, ChallengeDef> loaded = new LinkedHashMap<>();
+		manager.listResources("challenge", path -> path.getPath().endsWith(".json")).forEach((path, resource) -> {
+			String id = path.getPath().substring("challenge/".length(), path.getPath().length() - ".json".length());
+			try (Reader reader = resource.openAsReader()) {
+				ChallengeDef d = CODEC.parse(JsonOps.INSTANCE, JsonParser.parseReader(reader)).getOrThrow();
+				loaded.put(id, new ChallengeDef(d.name, d.unit, d.items, d.goal, d.stages, d.ruined, d.finished, d.chest, d.rewards, id));
+			} catch (Exception e) {
+				Ahrivaea.LOGGER.error("Could not load challenge {}: {}", path, e.getMessage());
+			}
+		});
+		all = Map.copyOf(loaded);
+		Ahrivaea.LOGGER.info("Loaded {} challenges: {}", all.size(), String.join(", ", all.keySet()));
+	}
+
+	public static Optional<ChallengeDef> get(String id) {
+		return Optional.ofNullable(all.get(id));
+	}
+
+	public static Map<String, ChallengeDef> all() {
+		return all;
+	}
+
+	/** Progress needed to complete stage {@code k} (1..stages). */
+	public int threshold(int k) {
+		return (int) Math.ceil(goal * (double) k / stages);
+	}
+}

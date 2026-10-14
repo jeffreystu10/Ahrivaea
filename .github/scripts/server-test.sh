@@ -26,8 +26,8 @@ run_once () {
 }
 run_once; first=$?
 run_once; second=$?
-report=$(grep -E "AHRIVAEA_TEST|Ahrivaea|ahrivaea|ERROR|Exception|Caused by|Crash|at dev\.ahrivaea" server-all.log | grep -v "^\s*$" | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
-if [ $first -eq 0 ] && [ $second -eq 0 ] && grep -q "AHRIVAEA_TEST creature present" server-all.log && [ "$(grep -c "AHRIVAEA_TEST selftest passed" server-all.log)" -ge 2 ] && ! grep -q "Could not load" server-all.log; then
+report=$(grep -E "AHRIVAEA_TEST|Challenge|Ahrivaea|ahrivaea|ERROR|Exception|Caused by|Crash|at dev\.ahrivaea" server-all.log | grep -v "^\s*$" | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+if [ $first -eq 0 ] && [ $second -eq 0 ] && grep -q "AHRIVAEA_TEST creature present" server-all.log && [ "$(grep -c "AHRIVAEA_TEST selftest passed" server-all.log)" -ge 2 ] && ! grep -q "Could not load" server-all.log && [ "$(grep -c "leaderboard: 1000/1000 stage 4; Alice 600, Bob 450" server-all.log)" -ge 2 ] && grep -q "AHRIVAEA_TEST tower complete" server-all.log; then
   echo "::notice title=Server test::${report}"
 else
   echo "::error title=Server test::${report}"

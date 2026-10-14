@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.ahrivaea.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["BlockItemMixin"],
+  "injectors": {"defaultRequire": 1}
+}

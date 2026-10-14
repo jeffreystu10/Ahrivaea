@@ -62,6 +62,7 @@ public class Ahrivaea implements ModInitializer {
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("tower_palettes"), (ResourceManagerReloadListener) dev.ahrivaea.challenge.TowerPalette::reload);
 		dev.ahrivaea.challenge.Challenges.init();
 		dev.ahrivaea.challenge.StrongholdTowers.init();
+		dev.ahrivaea.stellar.Stellar.init();
 		FabricDefaultAttributeRegistry.register(CREATURE, Animal.createAnimalAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.25));

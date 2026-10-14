@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:nether_star",
+  "base": "minecraft:netherite_sword",
+  "result": {
+    "id": "ahrivaea:stellar_sword"
+  }
+}

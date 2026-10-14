@@ -1,4 +1,13 @@
 {
   "item.ahrivaea.vessel": "Vessel",
-  "entity.ahrivaea.creature": "Creature"
+  "entity.ahrivaea.creature": "Creature",
+  "item.ahrivaea.stellar_pickaxe": "Stellar Pickaxe",
+  "item.ahrivaea.stellar_shovel": "Stellar Shovel",
+  "item.ahrivaea.stellar_axe": "Stellar Axe",
+  "item.ahrivaea.stellar_hoe": "Stellar Hoe",
+  "item.ahrivaea.stellar_sword": "Stellar Sword",
+  "item.ahrivaea.stellar_helmet": "Stellar Helmet",
+  "item.ahrivaea.stellar_chestplate": "Stellar Chestplate",
+  "item.ahrivaea.stellar_leggings": "Stellar Leggings",
+  "item.ahrivaea.stellar_boots": "Stellar Boots"
 }

@@ -31,8 +31,8 @@ jobs:
         if: success()
         run: |
           set -o pipefail
-          ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
-            msg=$(grep -E "ERROR|Exception|Caused by|at dev\.ahrivaea|FAILURE|What went wrong|error:" -A2 client.log | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+          timeout 480 ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
+            msg=$( (grep -E "ERROR|Exception|Caused by|at dev\.ahrivaea|FAILURE|What went wrong|error:" -A2 client.log | head -50; echo "--- last lines ---"; grep -v "^\s*at " client.log | tail -40) | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
             echo "::error title=Client test::${msg}"
             exit 1
           }

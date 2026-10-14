@@ -1,27 +1,57 @@
 # Creature files
 
-Each creature is one JSON file in `src/main/resources/data/ahrivaea/creature/`. The file name is its id
-(`emberkit.json` → `emberkit`), and its texture is `assets/ahrivaea/textures/entity/creature/<id>.png`.
-Creatures can also be added from any data pack at `data/<namespace>/creature/<id>.json`; `/reload` picks up changes.
+Each creature species is one JSON file in `src/main/resources/data/ahrivaea/creature/`. The file name is
+its id (`dragon.json` → `dragon`). Creatures can also be added from any data pack at
+`data/<namespace>/creature/<id>.json`; `/reload` picks up changes.
 
 ```json
 {
-  "name": "Emberkit",
-  "types": ["fire"],
-  "base_stats": {"hp": 42, "attack": 50, "defense": 40, "special_attack": 58, "special_defense": 46, "speed": 64},
-  "catch_rate": 0.45,
-  "scale": 0.9,
-  "spawn": {"biomes": ["#minecraft:is_savanna", "minecraft:desert"], "min_level": 2, "max_level": 9, "weight": 10},
-  "evolution": {"into": "emberfox", "level": 16}
+  "name": "Dragon",
+  "stats": {"hp": 92, "attack": 82, "defense": 98, "speed": 54, "magic": 63, "luck": 37, "charisma": 98},
+  "size": 1.6,
+  "movement": "fly",
+  "forms": {
+    "none": {"name": "Old Dragon"},
+    "fire": {"name": "Ashen Dragon", "stats": {"hp": 57, "attack": 68, "defense": 61, "speed": 97, "magic": 61, "luck": 80, "charisma": 82}}
+  },
+  "spawn": {"biomes": ["#minecraft:is_overworld"], "min_level": 3, "max_level": 15, "weight": 10}
 }
 ```
 
 | Field | Meaning |
 |---|---|
-| `name` | Name shown in game. |
-| `types` | One or two of: normal, fire, water, grass, electric, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dragon, dark, steel, fairy. |
-| `base_stats` | Base values (roughly 20–150). Stats at a level follow the usual curve: HP = 2·base·level/100 + level + 10, others = 2·base·level/100 + 5. Speed also sets how fast it walks. |
-| `catch_rate` | 0–1. Chance to bind at full health; a weakened creature is up to 60% easier. Optional, default 0.45. |
-| `scale` | Size multiplier. Optional, default 1. |
-| `spawn` | Optional. Biome ids or `#tags`, level range and how common it is compared with others in the same biome. Without it, the creature never appears in the wild. |
-| `evolution` | Optional. The creature it becomes, and at what level (evolving arrives with leveling). |
+| `name` | The species name. A form without its own name is called "<Influence> <name>", e.g. "Frost Dragon". |
+| `stats` | The seven stats at level 50, each 0–100, adding up to 500–600 (the log warns if not). |
+| `forms` | One entry per influence the species can have: none, fire, frost, storm, earth, water, nature, void, fae, darkness, radiant, arcane. Each can have its own `name` and `stats`. A creature whose spawn influence isn't listed becomes its None form. Optional; default is just None. |
+| `size` | Size multiplier for the creature's hitbox and model. Optional, default 1. |
+| `movement` | `walk`, `fly` or `swim` (for the battle grid). Optional, default walk. |
+| `spawn` | Optional. Biome ids or `#tags`, level range (0–50) and how common it is compared with others in the same biome. Without it, the creature never appears in the wild. |
+
+## Models and textures
+
+Models are Blockbench **Bedrock entity** models (`.geo.json`), one per form:
+
+- `assets/ahrivaea/geo/creature/<species>/<influence>.geo.json`
+- `assets/ahrivaea/textures/entity/creature/<species>/<influence>.png`
+- optional `assets/ahrivaea/geo/creature/<species>/settings.json`: `{"model_scale": 0.15}` shrinks or grows the model
+  (the dragons are modelled about 17 blocks long, so they're drawn at 0.15 × size 1.6).
+
+A missing form falls back to the None model and texture. Bones named `front_left_leg`, `head`, `neck`,
+`wing_left`, `tail`, `tail_2` … are animated automatically.
+
+## Where influences come from
+
+Rules in `data/ahrivaea/influence_rules/*.json` map biomes and time of day (`day`, `night`, `dawn`, `dusk`
+or `any`) to an influence. `draft.json` is a placeholder until the real list is written.
+
+```json
+[{"biomes": ["minecraft:desert", "#minecraft:is_badlands"], "influence": "fire"},
+ {"biomes": ["minecraft:meadow"], "time": "night", "influence": "arcane", "weight": 2}]
+```
+
+## Commands
+
+- `/party` — your creatures, their stats and your unspent XP. `/party send|release <slot>`.
+- `/party xp <slot> <amount>` — spend XP on a creature (100 XP per level, up to 50).
+- `/ahrivaea spawn <species> <influence> <level>` — (operators) put a creature here.
+- `/ahrivaea givexp <amount>`, `/ahrivaea selftest` — (operators) testing tools.

@@ -200,7 +200,6 @@ public class BattleScreen extends Screen {
 			}
 		}
 		return true;
-		return super.keyPressed(event);
 	}
 
 	private void back() {

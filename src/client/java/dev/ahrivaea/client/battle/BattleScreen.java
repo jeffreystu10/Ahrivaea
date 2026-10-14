@@ -179,11 +179,27 @@ public class BattleScreen extends Screen {
 	}
 
 	@Override
+	public boolean mouseScrolled(double mx, double my, double sx, double sy) {
+		BattleClient.zoom(sy);
+		return true;
+	}
+
+	@Override
 	public boolean keyPressed(KeyEvent event) {
 		if (event.key() == 256) { // escape
 			back();
 			return true;
 		}
+		switch (event.key()) {
+			case 87, 265 -> BattleClient.pan(0, -2); // W, up
+			case 83, 264 -> BattleClient.pan(0, 2); // S, down
+			case 65, 263 -> BattleClient.pan(-2, 0); // A, left
+			case 68, 262 -> BattleClient.pan(2, 0); // D, right
+			default -> {
+				return super.keyPressed(event);
+			}
+		}
+		return true;
 		return super.keyPressed(event);
 	}
 
@@ -410,7 +426,7 @@ public class BattleScreen extends Screen {
 			g.centeredText(font, banner, width / 2, 7, "PLAYER".equals(phase()) ? 0xFF7FC8FF : 0xFFFF8080);
 		}
 		JsonArray log = state().getAsJsonArray("log");
-		int ly = 22;
+		int ly = 38;
 		for (int i = Math.max(0, log.size() - 6); i < log.size(); i++) {
 			String line = log.get(i).getAsString();
 			g.fill(4, ly - 1, 8 + font.width(line), ly + 9, 0x80000000);
@@ -443,8 +459,8 @@ public class BattleScreen extends Screen {
 		};
 		if (!hint.isEmpty() && !state().has("result")) {
 			int w = font.width(hint) + 12;
-			g.fill(width / 2 - w / 2, height - 46, width / 2 + w / 2, height - 33, 0xA0000000);
-			g.centeredText(font, hint, width / 2, height - 43, 0xFFFFFFA0);
+			g.fill(width / 2 - w / 2, 20, width / 2 + w / 2, 32, 0xA0000000);
+			g.centeredText(font, hint, width / 2, 22, 0xFFFFFFA0);
 		}
 
 		// results

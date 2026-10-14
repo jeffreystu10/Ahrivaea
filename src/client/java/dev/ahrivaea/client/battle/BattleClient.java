@@ -40,6 +40,19 @@ public final class BattleClient {
 		return camY;
 	}
 
+	private static int maxHeight;
+
+	/** Scroll to zoom (closer or farther), WASD/arrows to pan; kept over the battlefield. */
+	public static void zoom(double steps) {
+		camY = Math.clamp(camY - steps * 2, maxHeight + 7, maxHeight + 30);
+	}
+
+	public static void pan(double dx, double dz) {
+		if (grid == null) return;
+		camX = Math.clamp(camX + dx, grid.originX, grid.originX + grid.size);
+		camZ = Math.clamp(camZ + dz, grid.originZ, grid.originZ + grid.size);
+	}
+
 	public static double camZ() {
 		return camZ;
 	}
@@ -68,6 +81,7 @@ public final class BattleClient {
 			camX = grid.originX + size / 2.0;
 			camZ = grid.originZ + size / 2.0;
 			camY = max + 17;
+			maxHeight = max;
 			hudWasHidden = mc.gui.hud.isHidden();
 			if (!hudWasHidden) mc.gui.hud.toggle();
 		}

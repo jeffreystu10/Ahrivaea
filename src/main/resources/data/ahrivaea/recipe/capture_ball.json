@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["RRR", "BIB", "WWW"],
+  "key": {"R": "minecraft:red_dye", "B": "minecraft:stone_button", "I": "minecraft:iron_ingot", "W": "minecraft:white_dye"},
+  "result": {"id": "ahrivaea:capture_ball", "count": 4}
+}

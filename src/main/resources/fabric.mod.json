@@ -1,16 +1,16 @@
 {
 	"schemaVersion": 1,
-	"id": "pokecraft",
+	"id": "ahrivaea",
 	"version": "${version}",
-	"name": "PokeCraft",
+	"name": "Ahrivaea",
 	"description": "A creature-collecting mod: catch, train and battle creatures.",
 	"authors": ["jeffreystu10"],
 	"license": "All-Rights-Reserved",
-	"icon": "assets/pokecraft/icon.png",
+	"icon": "assets/ahrivaea/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": ["dev.pokecraft.PokeCraft"],
-		"client": ["dev.pokecraft.client.PokeCraftClient"]
+		"main": ["dev.ahrivaea.Ahrivaea"],
+		"client": ["dev.ahrivaea.client.AhrivaeaClient"]
 	},
 	"depends": {
 		"fabricloader": ">=0.19.5",

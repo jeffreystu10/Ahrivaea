@@ -23,9 +23,11 @@ jobs:
           # Turn compiler errors into one annotation so they can be read through the GitHub API
           msg=$(grep -E "error:|warning: \[removal\]|FAILURE|What went wrong" -A3 build.log | head -150 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
           echo "::error title=Build errors::${msg}"
+      - name: Server test
+        run: .github/scripts/server-test.sh
       - name: Upload mod jar
         if: success()
         uses: actions/upload-artifact@v5
         with:
-          name: pokecraft-mod
+          name: ahrivaea-mod
           path: build/libs/*.jar

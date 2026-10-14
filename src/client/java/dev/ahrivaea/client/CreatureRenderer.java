@@ -1,5 +1,6 @@
 package dev.ahrivaea.client;
 
+import dev.ahrivaea.Ahrivaea;
 import dev.ahrivaea.creature.CreatureEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -18,7 +19,7 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 	@Override
 	public void extractRenderState(CreatureEntity entity, CreatureRenderState state, float partialTick) {
 		super.extractRenderState(entity, state, partialTick);
-		state.texture = entity.getSpecies().texture();
+		state.texture = Ahrivaea.id("textures/entity/creature/" + (entity.getSpeciesId().isEmpty() ? "emberkit" : entity.getSpeciesId()) + ".png");
 		state.sitting = entity.isInSittingPose();
 	}
 

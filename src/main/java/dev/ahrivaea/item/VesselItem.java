@@ -14,9 +14,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-/** Use on a wild creature to try to catch it. Weaker creatures are easier to catch. */
-public class CaptureBallItem extends Item {
-	public CaptureBallItem(Properties properties) {
+/** A Mithrile-bound vessel. Use it on a wild creature to try to bind it; weakened creatures are easier to catch. */
+public class VesselItem extends Item {
+	public VesselItem(Properties properties) {
 		super(properties);
 	}
 
@@ -24,7 +24,7 @@ public class CaptureBallItem extends Item {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
 		if (!(target instanceof CreatureEntity creature)) return InteractionResult.PASS;
 		if (!(player.level() instanceof ServerLevel level)) return InteractionResult.SUCCESS;
-		String name = creature.getSpecies().displayName();
+		String name = creature.displayName();
 		if (creature.isTame()) {
 			player.sendOverlayMessage(Component.literal(name + " already has a trainer."));
 			return InteractionResult.FAIL;
@@ -35,7 +35,7 @@ public class CaptureBallItem extends Item {
 		}
 		if (!player.getAbilities().instabuild) stack.shrink(1);
 		float hpLeft = creature.getHealth() / creature.getMaxHealth();
-		float chance = creature.getSpecies().catchRate() * (1.6f - hpLeft);
+		float chance = creature.getSpecies().map(sp -> sp.catchRate()).orElse(0.45f) * (1.6f - hpLeft);
 		boolean caught = level.getRandom().nextFloat() < chance;
 		double x = creature.getX(), y = creature.getY() + creature.getBbHeight() / 2, z = creature.getZ();
 		if (caught) {
@@ -43,11 +43,11 @@ public class CaptureBallItem extends Item {
 			level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 20, 0.4, 0.4, 0.4, 0.1);
 			level.playSound(null, x, y, z, SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.4f);
 			creature.discard();
-			player.sendSystemMessage(Component.literal("Caught " + name + " (Lv." + creature.getCreatureLevel() + ")!"));
+			player.sendSystemMessage(Component.literal("Bound " + name + " (Lv." + creature.getCreatureLevel() + ")!"));
 		} else {
 			level.sendParticles(ParticleTypes.SMOKE, x, y, z, 15, 0.3, 0.3, 0.3, 0.02);
 			level.playSound(null, x, y, z, SoundEvents.ITEM_BREAK.value(), SoundSource.PLAYERS, 0.8f, 1.2f);
-			player.sendOverlayMessage(Component.literal(name + " broke free! (" + Math.round(chance * 100) + "% chance)"));
+			player.sendOverlayMessage(Component.literal(name + " broke free of the vessel! (" + Math.round(chance * 100) + "% chance)"));
 		}
 		return InteractionResult.SUCCESS;
 	}

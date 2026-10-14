@@ -1,0 +1,8 @@
+{
+  "name": "Emberkit",
+  "types": ["fire"],
+  "base_stats": {"hp": 42, "attack": 50, "defense": 40, "special_attack": 58, "special_defense": 46, "speed": 64},
+  "catch_rate": 0.45,
+  "scale": 0.9,
+  "spawn": {"biomes": ["#minecraft:is_savanna", "#minecraft:is_badlands", "minecraft:desert"], "min_level": 2, "max_level": 9, "weight": 10}
+}

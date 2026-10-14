@@ -43,7 +43,7 @@ public class CreatureEntity extends TamableAnimal {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(SPECIES, Species.EMBERKIT.id());
+		builder.define(SPECIES, "");
 		builder.define(LEVEL, 5);
 	}
 
@@ -58,8 +58,18 @@ public class CreatureEntity extends TamableAnimal {
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 	}
 
-	public Species getSpecies() {
-		return Species.get(this.entityData.get(SPECIES));
+	/** The species id; known on both server and client. */
+	public String getSpeciesId() {
+		return this.entityData.get(SPECIES);
+	}
+
+	/** The species data (server side; the client only knows the id). */
+	public java.util.Optional<Species> getSpecies() {
+		return Species.get(getSpeciesId());
+	}
+
+	public String displayName() {
+		return getSpecies().map(Species::name).orElse(getSpeciesId());
 	}
 
 	public int getCreatureLevel() {
@@ -73,22 +83,40 @@ public class CreatureEntity extends TamableAnimal {
 		var maxHealth = this.getAttribute(Attributes.MAX_HEALTH);
 		if (maxHealth != null) maxHealth.setBaseValue(species.healthAt(level));
 		var speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
-		if (speed != null) speed.setBaseValue(species.speed());
+		if (speed != null) speed.setBaseValue(species.walkSpeed());
+		var scale = this.getAttribute(Attributes.SCALE);
+		if (scale != null) scale.setBaseValue(species.scale());
 		this.setHealth(health > 0 ? Math.min(health, this.getMaxHealth()) : this.getMaxHealth());
 		refreshName();
 	}
 
 	private void refreshName() {
-		this.setCustomName(Component.literal(getSpecies().displayName() + " Lv." + getCreatureLevel()));
+		this.setCustomName(Component.literal(displayName() + " Lv." + getCreatureLevel()));
 		this.setCustomNameVisible(true);
 	}
 
 	@Override
 	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		var all = Species.all();
-		Species species = all.get(this.random.nextInt(all.size()));
-		setup(species, 2 + this.random.nextInt(8), -1);
+		// wild creatures are chosen by the biome they appear in; summoned ones fall back to any species
+		var picked = Species.pickFor(level.getBiome(this.blockPosition()), this.random);
+		if (picked.isEmpty() && !Species.all().isEmpty()) {
+			var all = Species.all();
+			picked = java.util.Optional.of(all.get(this.random.nextInt(all.size())));
+		}
+		picked.ifPresent(species -> {
+			int lo = species.spawn().map(Species.Spawn::minLevel).orElse(2);
+			int hi = species.spawn().map(Species.Spawn::maxLevel).orElse(10);
+			setup(species, lo + this.random.nextInt(Math.max(1, hi - lo + 1)), -1);
+		});
 		return super.finalizeSpawn(level, difficulty, reason, data);
+	}
+
+	@Override
+	public boolean checkSpawnRules(net.minecraft.world.level.LevelAccessor level, EntitySpawnReason reason) {
+		if (reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION) {
+			if (Species.pickFor(level.getBiome(this.blockPosition()), this.random).isEmpty()) return false;
+		}
+		return super.checkSpawnRules(level, reason);
 	}
 
 	@Override
@@ -98,11 +126,11 @@ public class CreatureEntity extends TamableAnimal {
 				if (player.isShiftKeyDown()) {
 					// sneak + right click: call it back into the party
 					Party.add(player, toCaught());
-					player.sendOverlayMessage(Component.literal(getSpecies().displayName() + " came back to your party."));
+					player.sendOverlayMessage(Component.literal(displayName() + " came back to your party."));
 					this.discard();
 				} else {
 					this.setOrderedToSit(!this.isOrderedToSit());
-					player.sendOverlayMessage(Component.literal(getSpecies().displayName() + (this.isOrderedToSit() ? " will wait here." : " will follow you.")));
+					player.sendOverlayMessage(Component.literal(displayName() + (this.isOrderedToSit() ? " will wait here." : " will follow you.")));
 				}
 			}
 			return InteractionResult.SUCCESS;
@@ -111,20 +139,20 @@ public class CreatureEntity extends TamableAnimal {
 	}
 
 	public CaughtCreature toCaught() {
-		return new CaughtCreature(getSpecies().id(), getCreatureLevel(), this.getHealth());
+		return new CaughtCreature(getSpeciesId(), getCreatureLevel(), this.getHealth());
 	}
 
 	@Override
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
-		output.putString("Species", getSpecies().id());
+		output.putString("Species", getSpeciesId());
 		output.putInt("CreatureLevel", getCreatureLevel());
 	}
 
 	@Override
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
-		this.entityData.set(SPECIES, input.getStringOr("Species", Species.EMBERKIT.id()));
+		this.entityData.set(SPECIES, input.getStringOr("Species", ""));
 		this.entityData.set(LEVEL, input.getIntOr("CreatureLevel", 5));
 		refreshName();
 	}

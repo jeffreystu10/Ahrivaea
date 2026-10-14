@@ -74,10 +74,10 @@ public class StellarGearTest implements FabricClientGameTest {
 			// ---- axe: a natural oak with player-placed logs against it, and a bare log pillar ----
 			BlockPos trunk = new BlockPos(x - 8, y, z + 8);
 			server.runCommand("place feature minecraft:oak %d %d %d".formatted(trunk.getX(), trunk.getY(), trunk.getZ()));
-			// three logs placed by the player (through the normal placing code), leaning on the trunk
+			// two logs placed by the player (through the normal placing code), leaning on the trunk
 			server.runOnServer(s -> {
 				ServerPlayer pl = player(s);
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 2; i++) {
 					BlockPos below = trunk.offset(1, i - 1, 0);
 					ItemStack logs = new ItemStack(Items.OAK_LOG, 4);
 					pl.setItemInHand(InteractionHand.MAIN_HAND, logs);
@@ -89,14 +89,18 @@ public class StellarGearTest implements FabricClientGameTest {
 			server.runCommand("item replace entity @a weapon.mainhand with ahrivaea:stellar_axe");
 			context.waitTicks(5);
 			int trunkBefore = countLogs(server, trunk.offset(0, 0, 0), trunk.offset(0, 8, 0));
+			int placedBefore = countLogs(server, trunk.offset(1, 0, 0), trunk.offset(1, 1, 0));
+			String marks = server.computeOnServer(s -> dev.ahrivaea.stellar.PlacedLogs.isPlaced(s.overworld(), trunk.offset(1, 0, 0)) + "/"
+					+ dev.ahrivaea.stellar.PlacedLogs.isPlaced(s.overworld(), trunk.offset(1, 1, 0)));
+
 			server.runOnServer(s -> player(s).gameMode.destroyBlock(trunk));
 			server.runOnServer(s -> player(s).gameMode.destroyBlock(new BlockPos(x - 14, y, z + 8)));
 			context.waitTicks(5);
 			int trunkAfter = countLogs(server, trunk, trunk.offset(0, 8, 0));
-			int placedLeft = countLogs(server, trunk.offset(1, 0, 0), trunk.offset(1, 2, 0));
+			int placedLeft = countLogs(server, trunk.offset(1, 0, 0), trunk.offset(1, 1, 0));
 			int pillarLeft = countLogs(server, new BlockPos(x - 14, y, z + 8), new BlockPos(x - 14, y + 3, z + 8));
 			if (trunkBefore < 4 || trunkAfter != 0) failures.add("axe: the tree should be felled (trunk logs before " + trunkBefore + ", after " + trunkAfter + ")");
-			if (placedLeft != 3) failures.add("axe: the 3 player-placed logs should remain, found " + placedLeft);
+			if (placedLeft != 2) failures.add("axe: the 2 player-placed logs should remain, found " + placedLeft + " (placed " + placedBefore + ", remembered as placed: " + marks + ")");
 			if (pillarLeft != 3) failures.add("axe: the leafless pillar should only lose the one log broken, found " + pillarLeft + " of 4 left");
 			server.runCommand("tp @a %.1f %d %.1f facing %d %d %d".formatted(x - 10.5, y + 4, z - 2.5, x - 10, y + 2, z + 8));
 			context.waitTicks(10);

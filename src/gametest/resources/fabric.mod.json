@@ -5,7 +5,7 @@
   "name": "Ahrivaea client tests",
   "environment": "*",
   "entrypoints": {
-    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots"]
+    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots", "dev.ahrivaea.test.TowerChallengeTest"]
   },
   "depends": {"ahrivaea": "*"}
 }

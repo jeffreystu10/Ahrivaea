@@ -426,7 +426,7 @@ public class BattleScreen extends Screen {
 		}
 		JsonArray log = state().getAsJsonArray("log");
 		int ly = 38;
-		for (int i = Math.max(0, log.size() - 6); i < log.size(); i++) {
+		for (int i = state().has("result") ? log.size() : Math.max(0, log.size() - 6); i < log.size(); i++) {
 			String line = log.get(i).getAsString();
 			g.fill(4, ly - 1, 8 + font.width(line), ly + 9, 0x80000000);
 			g.text(font, line, 6, ly, 0xFFFFFFFF);
@@ -435,7 +435,7 @@ public class BattleScreen extends Screen {
 
 		// details of the selected or hovered unit
 		JsonObject info = u != null ? u : unitAt(hoverX, hoverZ);
-		if (info != null) {
+		if (info != null && !state().has("result")) {
 			List<String> lines = new ArrayList<>();
 			lines.add(info.get("name").getAsString() + "  Lv." + info.get("level").getAsInt() + (info.get("player").getAsBoolean() ? "" : "  " + info.get("influence").getAsString()));
 			lines.add("HP " + info.get("hp").getAsInt() + "/" + info.get("max").getAsInt() + "   Moves " + info.get("squares").getAsInt() + " squares" + (info.get("flies").getAsBoolean() ? " (flies)" : ""));

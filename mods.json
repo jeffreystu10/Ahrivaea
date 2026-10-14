@@ -18,7 +18,7 @@
       "players_install": "Yes (new creatures, models and items)",
       "status": "Battles playable (placeholder moves until the move list)",
       "added": "2026-10-14",
-      "docs": "docs/design.md, docs/creatures.md",
+      "docs": "docs/design.md, docs/battles.md, docs/creatures.md",
       "entrypoints": {
         "main": [
           "dev.ahrivaea.Ahrivaea"

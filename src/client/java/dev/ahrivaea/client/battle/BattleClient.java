@@ -80,7 +80,7 @@ public final class BattleClient {
 			grid = new BattleGrid(size, g.get("ox").getAsInt(), g.get("oz").getAsInt(), h, t);
 			camX = grid.originX + size / 2.0;
 			camZ = grid.originZ + size / 2.0;
-			camY = max + 17;
+			camY = max + 13;
 			maxHeight = max;
 			hudWasHidden = mc.gui.hud.isHidden();
 			if (!hudWasHidden) mc.gui.hud.toggle();

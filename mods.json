@@ -27,7 +27,10 @@
         ]
       },
       "mixins": [
-        "ahrivaea.client.mixins.json"
+        {
+          "config": "ahrivaea.client.mixins.json",
+          "environment": "client"
+        }
       ],
       "include": [
         "dev/ahrivaea/*.class",

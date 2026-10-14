@@ -22,7 +22,10 @@
 	},
 	"mixins": [
 		"ahrivaea_stellar.mixins.json",
-		"ahrivaea.client.mixins.json"
+		{
+			"config": "ahrivaea.client.mixins.json",
+			"environment": "client"
+		}
 	],
 	"depends": {
 		"fabricloader": ">=0.19.5",

@@ -55,28 +55,61 @@ Which biome and time of day gives which influence: list to come (a draft is in
 
 ## Battles (Fire Emblem style)
 
-- **Turns**: player phase (all your creatures act), then enemy phase.
-- **Field**: the real Minecraft terrain around the encounter, seen from above. The player's
-  character stands still while the battle runs.
-- **Your side**: 4 creatures from your party of 6.
-- **Wild encounters**: you meet one creature in the world; when the battle starts, 1–4 more
-  wild creatures join it.
-- **Trainer battles**: against people met in the overworld.
-- **Fainting**: no permadeath. A creature at 0 HP faints and recovers after the battle.
-- **Terrain**
-  - Lava cannot be crossed, except by Fire creatures.
-  - Water halves all damage, except magic from a Water-influence move.
-    *(Assumed: applies to attacks made by a creature standing in water.)*
-- **Damage** = Power × level scale × stat ratio × influence × same-influence bonus × crit ×
-  support × roll *(all tunable)*
-  - Stat ratio: (Attack + 10) ÷ (Defense + 10) for physical, (Magic + 10) ÷ (Magic + 10) for magic.
-  - Same-influence bonus ×1.2; crit ×1.5; roll 0.9–1.1.
-  - Hit chance = move accuracy + 0.25% per point of (attacker Luck − defender Luck).
-  - Crit chance = 5% + 0.15% × attacker Luck − 0.05% × defender Luck.
+### Starting
+- Hitting a wild creature starts a battle (a wild creature reaching you will too, once wild creatures can be
+  aggressive). Trainers are NPCs you talk to (later).
+- The battlefield is the real terrain in a 21×21 square around you, seen from above. Your Minecraft
+  character stands still in the world; in the battle you control them as a unit.
+- Wild encounters: the creature you hit plus 1–4 more wild creatures of the area.
+
+### Units
+- **Your side: you plus 4 creatures** (the first 4 in your party).
+- **You are a unit.** Your stats are the same 7 as a creature's and come from your character level (below).
+  Your attack uses the weapon in your hand; armor adds to your Defense.
+- **If you're knocked out, the battle is lost** and you retreat (like a Fire Emblem lord).
+
+### Turns
+- Player phase: each of your units may **move, then do one thing**: attack (with one of its moves), use an
+  item, rally (you only), or wait. Then enemy phase. Repeat.
+- Movement: squares per turn = 3 + ⌊Speed ÷ 25⌋. Stepping up 1 block costs a square like any other;
+  2+ blocks up is a wall and drops of 4+ are too far, unless the unit flies. Lava can't be crossed except by
+  Fire creatures. Units can pass through allies but not enemies, and can't stop on an occupied square.
+- No swapping in bench creatures during a battle.
+
+### Combat
+- Damage formula as below. Moves have a range: melee (1 square) or ranged (e.g. 1–2 or 2–3).
+- **Counterattack:** a unit that is attacked and survives hits back once if the attacker is within one of its
+  moves' range.
+- **High ground:** attacking from 2+ blocks higher gives +10% hit chance.
+- **Water:** a unit standing in water deals half damage, except magic from a Water-influence move.
+- **Items** (your action): use a healing potion (heals 40%) or a golden apple (heals 50%) on yourself or a
+  unit next to you.
+- **Rally** (your action): a creature next to you gets +(your Charisma ÷ 2)% damage on its next attack.
+- **Support:** each attack also gets +0.1% damage per point of Charisma of the attacker's neighbouring allies.
+- **Flee** (instead of acting): chance = 50% + (your side's average Speed − theirs) ÷ 2 %, between 10% and 95%.
+  Failing ends your phase.
+- Until there is a move list, every creature has *Strike* (melee, physical, power 40) and *<Influence> Bolt*
+  (range 1–2, magic, power 35, its own influence).
+
+### Ending
+- Win: every enemy knocked out. Lose: you are knocked out, or all your creatures have fainted.
+- Creatures keep their damage after a battle; fainted ones come back at 1 HP.
+
+### Other players
+- Can watch but can't interfere: battle units can't be hurt from outside and the battlefield's blocks can't
+  be broken by others. Co-op battles later.
+
+## Your character (MMO-style levels)
+- Levels 1–50. XP for now comes from battles: 15 per enemy knocked out, +25 for winning. XP to the next
+  level = 100 + 25 × level.
+- Start with 30 in each stat. **Each level gives 6 points to spend on any stat** (`/character spend <stat> <n>`),
+  up to 100 each. (At level 50 that is about 500, like a creature.)
+- Speed sets your squares per turn the same way as for creatures. Armor adds 1.5 Defense per armor point.
+- Classes or skill trees (e.g. the Seven Schools of the Dread Circle) can come later.
 
 ## After a battle
 
-- **XP** goes to the player, not the creatures: 10 XP per creature defeated. The player chooses
+- **XP** goes to the player's pool, not the creatures: 10 XP per creature defeated. The player chooses
   which creatures to spend it on. Levelling is linear: 100 XP per level.
 - **Recruiting**: instead of catching mid-battle, pay XP to recruit one of the creatures you
   defeated. Cost: 10 XP × its level *(placeholder)*.

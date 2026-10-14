@@ -11,11 +11,23 @@ public final class DamageCalc {
 
 	public enum Category { PHYSICAL, MAGIC }
 
-	/** One side of an exchange: a creature's stats, level and influence, and whether it stands in water. */
-	public record Fighter(Stats stats, int level, Influence influence, boolean inWater) {
-		double eff(int base) {
-			return stats.effective(base, level);
+	/**
+	 * One side of an exchange: stats, level, influence, and whether it stands in water. Creatures' stats scale
+	 * with level; a player character's are {@code raw} (already what they are, from spent points).
+	 */
+	public record Fighter(Stats stats, int level, Influence influence, boolean inWater, boolean raw) {
+		public Fighter(Stats stats, int level, Influence influence, boolean inWater) {
+			this(stats, level, influence, inWater, false);
 		}
+
+		double eff(int base) {
+			return raw ? base : stats.effective(base, level);
+		}
+	}
+
+	/** Situational extras: added hit chance (high ground) and a damage multiplier (rally). */
+	public record Extras(double hitBonus, double damageMultiplier) {
+		public static final Extras NONE = new Extras(0, 1);
 	}
 
 	/** A move as far as damage is concerned. Accuracy is 0–1. */
@@ -29,6 +41,10 @@ public final class DamageCalc {
 	 * @param allyCharisma total effective Charisma of allies next to the attacker
 	 */
 	public static Result calculate(Fighter attacker, Fighter defender, Move move, boolean crit, double roll, double allyCharisma) {
+		return calculate(attacker, defender, move, crit, roll, allyCharisma, Extras.NONE);
+	}
+
+	public static Result calculate(Fighter attacker, Fighter defender, Move move, boolean crit, double roll, double allyCharisma, Extras extras) {
 		double base = move.power() * Stats.levelScale(attacker.level());
 		double ratio = move.category() == Category.PHYSICAL
 				? (attacker.eff(attacker.stats().attack()) + STAT_OFFSET) / (defender.eff(defender.stats().defense()) + STAT_OFFSET)
@@ -39,11 +55,11 @@ public final class DamageCalc {
 		// standing in water halves damage, except magic from a Water move
 		boolean waterExempt = move.category() == Category.MAGIC && move.influence() == Influence.WATER;
 		double water = attacker.inWater() && !waterExempt ? WATER_PENALTY : 1;
-		double noCrit = base * ratio * influence * same * support * water * roll;
+		double noCrit = base * ratio * influence * same * support * water * roll * extras.damageMultiplier();
 		int damage = Math.max(1, (int) Math.round(noCrit * (crit ? CRIT_MULTIPLIER : 1)));
 
 		double luckA = attacker.eff(attacker.stats().luck()), luckD = defender.eff(defender.stats().luck());
-		double hit = Math.clamp(move.accuracy() + (luckA - luckD) * HIT_PER_LUCK_DIFFERENCE, 0, 1);
+		double hit = Math.clamp(move.accuracy() + (luckA - luckD) * HIT_PER_LUCK_DIFFERENCE + extras.hitBonus(), 0, 1);
 		double critChance = Math.clamp(BASE_CRIT + luckA * CRIT_PER_ATTACKER_LUCK - luckD * CRIT_PER_DEFENDER_LUCK, 0, 1);
 		double expected = hit * noCrit * (1 + critChance * (CRIT_MULTIPLIER - 1));
 		return new Result(damage, influence, hit, critChance, expected);

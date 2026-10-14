@@ -56,6 +56,8 @@ public class Ahrivaea implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Party.init();
+		dev.ahrivaea.character.PlayerCharacter.init();
+		dev.ahrivaea.battle.Battles.init();
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("creatures"), (ResourceManagerReloadListener) Species::reload);
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("influence_rules"), (ResourceManagerReloadListener) InfluenceRules::reload);
 		FabricDefaultAttributeRegistry.register(CREATURE, Animal.createAnimalAttributes()
@@ -73,6 +75,8 @@ public class Ahrivaea implements ModInitializer {
 
 	private void registerCommands() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			dev.ahrivaea.character.PlayerCharacter.registerCommands(dispatcher);
+			dev.ahrivaea.battle.Battles.registerCommands(dispatcher);
 			dispatcher.register(Commands.literal("party")
 					.executes(ctx -> listParty(ctx.getSource().getPlayerOrException(), ctx.getSource()))
 					.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {

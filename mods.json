@@ -18,12 +18,30 @@
       "status": "In development",
       "added": "2026-10-14",
       "docs": "docs/design.md, docs/creatures.md",
-      "entrypoints": {"main": ["dev.ahrivaea.Ahrivaea"], "client": ["dev.ahrivaea.client.AhrivaeaClient"]},
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.Ahrivaea"
+        ],
+        "client": [
+          "dev.ahrivaea.client.AhrivaeaClient"
+        ]
+      },
       "mixins": [],
       "include": [
-        "dev/ahrivaea/*.class", "dev/ahrivaea/creature/**", "dev/ahrivaea/battle/**", "dev/ahrivaea/party/**", "dev/ahrivaea/item/**", "dev/ahrivaea/client/**",
-        "assets/ahrivaea/geo/**", "assets/ahrivaea/textures/**", "assets/ahrivaea/items/vessel.json", "assets/ahrivaea/models/**",
-        "data/ahrivaea/creature/**", "data/ahrivaea/influence_rules/**", "data/ahrivaea/recipe/vessel.json"
+        "dev/ahrivaea/*.class",
+        "dev/ahrivaea/creature/**",
+        "dev/ahrivaea/battle/**",
+        "dev/ahrivaea/character/**",
+        "dev/ahrivaea/party/**",
+        "dev/ahrivaea/item/**",
+        "dev/ahrivaea/client/**",
+        "assets/ahrivaea/geo/**",
+        "assets/ahrivaea/textures/**",
+        "assets/ahrivaea/items/vessel.json",
+        "assets/ahrivaea/models/**",
+        "data/ahrivaea/creature/**",
+        "data/ahrivaea/influence_rules/**",
+        "data/ahrivaea/recipe/vessel.json"
       ]
     },
     {
@@ -43,11 +61,18 @@
       "status": "Working (placeholder tower until the real build)",
       "added": "2026-10-14",
       "docs": "docs/challenges.md",
-      "entrypoints": {"main": ["dev.ahrivaea.challenge.TowersMod"]},
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.challenge.TowersMod"
+        ]
+      },
       "mixins": [],
       "include": [
         "dev/ahrivaea/challenge/**",
-        "data/ahrivaea/challenge/**", "data/ahrivaea/challenge_order.json", "data/ahrivaea/tower_palette/**", "data/ahrivaea/structure/tower/**"
+        "data/ahrivaea/challenge/**",
+        "data/ahrivaea/challenge_order.json",
+        "data/ahrivaea/tower_palette/**",
+        "data/ahrivaea/structure/tower/**"
       ]
     },
     {
@@ -67,17 +92,41 @@
       "status": "Working (netherite look until there's art)",
       "added": "2026-10-14",
       "docs": "docs/stellar.md",
-      "entrypoints": {"main": ["dev.ahrivaea.stellar.StellarMod"]},
-      "mixins": ["ahrivaea_stellar.mixins.json"],
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.stellar.StellarMod"
+        ]
+      },
+      "mixins": [
+        "ahrivaea_stellar.mixins.json"
+      ],
       "include": [
-        "dev/ahrivaea/stellar/**", "dev/ahrivaea/mixin/**", "ahrivaea_stellar.mixins.json",
-        "assets/ahrivaea/items/stellar_*.json", "data/ahrivaea/recipe/stellar_*.json"
+        "dev/ahrivaea/stellar/**",
+        "dev/ahrivaea/mixin/**",
+        "ahrivaea_stellar.mixins.json",
+        "assets/ahrivaea/items/stellar_*.json",
+        "data/ahrivaea/recipe/stellar_*.json"
       ]
     }
   ],
-  "shared": ["assets/ahrivaea/icon.png", "assets/ahrivaea/lang/**"],
+  "shared": [
+    "assets/ahrivaea/icon.png",
+    "assets/ahrivaea/lang/**"
+  ],
   "worlds": [
-    {"name": "Ahrivaea (modded world)", "notes": "The creature world, reached from the main world by portal", "mods": ["creatures", "towers", "stellar"]},
-    {"name": "Main world (vanilla)", "notes": "Stays fully vanilla", "mods": []}
+    {
+      "name": "Ahrivaea (modded world)",
+      "notes": "The creature world, reached from the main world by portal",
+      "mods": [
+        "creatures",
+        "towers",
+        "stellar"
+      ]
+    },
+    {
+      "name": "Main world (vanilla)",
+      "notes": "Stays fully vanilla",
+      "mods": []
+    }
   ]
 }

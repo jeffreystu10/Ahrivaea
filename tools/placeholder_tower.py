@@ -67,9 +67,9 @@ def save(B, name):
     for pos, s in sorted(B.items()):
         if s not in idx:
             n, _, props = s.partition('[')
-            c = Compound({'Name': String(n)})
+            c = Compound({'id': String(n)})   # 26.x block state keys: id, properties
             if props:
-                c['Properties'] = Compound({k: String(v) for k, v in (p.split('=') for p in props.rstrip(']').split(','))})
+                c['properties'] = Compound({k: String(v) for k, v in (p.split('=') for p in props.rstrip(']').split(','))})
             idx[s] = len(palette); palette.append(c)
         blocks.append(Compound({'state': Int(idx[s]), 'pos': List[Int]([Int(v) for v in pos])}))
     f = File({'DataVersion': Int(5023), 'size': List[Int]([Int(W), Int(H), Int(W)]), 'palette': List[Compound](palette),

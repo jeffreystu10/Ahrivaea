@@ -33,6 +33,7 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
 		state.geo = species.isEmpty() ? null : GeoModels.model(species, influence);
 		state.modelScale = state.geo != null ? GeoModels.scale(species) : 1f;
+		state.extent = (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
 		state.texture = GeoModels.texture(species, influence);
 		state.sitting = entity.isInSittingPose();
 	}
@@ -46,7 +47,10 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 
 	@Override
 	protected void scale(CreatureRenderState state, PoseStack poseStack) {
-		poseStack.scale(state.modelScale, state.modelScale, state.modelScale);
+		float s = state.modelScale;
+		// in a battle seen from above, every creature fits its square
+		if (dev.ahrivaea.client.battle.BattleClient.active() && state.extent > 1.3f) s *= 1.3f / state.extent;
+		poseStack.scale(s, s, s);
 	}
 
 	@Override

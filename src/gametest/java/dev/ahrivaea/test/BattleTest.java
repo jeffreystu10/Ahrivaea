@@ -30,6 +30,9 @@ public class BattleTest implements FabricClientGameTest {
 		List<String> failures = new ArrayList<>();
 		try (TestSingleplayerContext sp = context.worldBuilder().create()) {
 			sp.getConnection().waitForChunksRender();
+			// a real window size, so the battle screen's layout matches the picture
+			context.getInput().resizeWindow(1600, 900);
+			context.waitTicks(2);
 			var server = sp.getServer();
 			server.runCommand("time set noon");
 			server.runCommand("gamerule doDaylightCycle false");
@@ -62,7 +65,7 @@ public class BattleTest implements FabricClientGameTest {
 			});
 			context.waitFor(c -> c.gui.screen() instanceof BattleScreen, 100);
 			context.waitTicks(20);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_1_start").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_1_start"));
 
 			// select our first creature by clicking it, then click a square two steps away
 			JsonObject state = context.computeOnClient(c -> BattleClient.state());
@@ -79,7 +82,7 @@ public class BattleTest implements FabricClientGameTest {
 			int id = creature.get("id").getAsInt();
 			click(context, cx, cz);
 			context.waitTicks(3);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_2_move_range").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_2_move_range"));
 			int tx = cx, tz = cz + 2;
 			int[] dest = context.computeOnClient(c -> {
 				// pick a square 1-2 steps away that the screen shows as reachable
@@ -104,9 +107,9 @@ public class BattleTest implements FabricClientGameTest {
 			// end the turn and let the enemy phase play out
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).endTurn());
 			context.waitTicks(15);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_3_enemy_phase").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_3_enemy_phase"));
 			context.waitFor(c -> BattleClient.state() != null && "PLAYER".equals(BattleClient.state().get("phase").getAsString()), 600);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_4_turn_2").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_4_turn_2"));
 
 			// finish the enemies off (the rules of hitting are covered by the self-test), then recruit one
 			server.runOnServer(s -> {
@@ -170,8 +173,10 @@ public class BattleTest implements FabricClientGameTest {
 			}
 			context.waitFor(c -> BattleClient.state() != null && BattleClient.state().has("result"), 200);
 			context.waitTicks(5);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_5_victory").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_5_victory"));
 			int poolBefore = server.computeOnServer(s -> Party.xp(s.getPlayerList().getPlayers().getFirst()));
+			// recruiting costs 10 XP per level; top the pool up so the test can afford one
+			server.runOnServer(s -> Party.addXp(s.getPlayerList().getPlayers().getFirst(), 500));
 			int partyBefore = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).size());
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).recruit(0));
 			context.waitTicks(10);
@@ -186,7 +191,7 @@ public class BattleTest implements FabricClientGameTest {
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).leave());
 			context.waitFor(c -> !(c.gui.screen() instanceof BattleScreen), 100);
 			context.waitTicks(10);
-			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after").withSize(1600, 900));
+			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after"));
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

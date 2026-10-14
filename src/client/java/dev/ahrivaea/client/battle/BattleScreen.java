@@ -441,7 +441,11 @@ public class BattleScreen extends Screen {
 			case ACTION -> "Pick a move, then a target - or click an enemy in red";
 			case TARGET -> pending >= 0 ? "Click a target in red" : "Click a unit in green";
 		};
-		if (!hint.isEmpty() && !state().has("result")) g.centeredText(font, hint, width / 2, 20, 0xFFFFFFA0);
+		if (!hint.isEmpty() && !state().has("result")) {
+			int w = font.width(hint) + 12;
+			g.fill(width / 2 - w / 2, height - 46, width / 2 + w / 2, height - 33, 0xA0000000);
+			g.centeredText(font, hint, width / 2, height - 43, 0xFFFFFFA0);
+		}
 
 		// results
 		if (state().has("result")) {

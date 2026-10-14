@@ -32,11 +32,14 @@ public final class GeoModels {
 	private GeoModels() {}
 
 	private static Map<String, GeoCreatureModel> models = Map.of();
+	/** Each model's longest horizontal size, in blocks, before scaling. */
+	private static Map<String, Float> extents = Map.of();
 	private static Map<String, Float> scales = Map.of();
 	private static Set<String> textures = Set.of();
 
 	public static void reload(ResourceManager manager) {
 		Map<String, GeoCreatureModel> loadedModels = new HashMap<>();
+		Map<String, Float> loadedExtents = new HashMap<>();
 		Map<String, Float> loadedScales = new HashMap<>();
 		manager.listResources("geo/creature", path -> path.getPath().endsWith(".json")).forEach((path, resource) -> {
 			String rest = path.getPath().substring("geo/creature/".length());
@@ -50,6 +53,7 @@ public final class GeoModels {
 				} else if (file.endsWith(".geo.json")) {
 					String influence = file.substring(0, file.length() - ".geo.json".length());
 					loadedModels.put(species + "/" + influence, new GeoCreatureModel(build(json).bakeRoot()));
+					loadedExtents.put(species + "/" + influence, extent(json));
 				}
 			} catch (Exception e) {
 				Ahrivaea.LOGGER.error("Could not load creature model {}: {}", path, e.toString());
@@ -61,6 +65,7 @@ public final class GeoModels {
 			loadedTextures.add(p.substring(0, p.length() - ".png".length()));
 		});
 		models = Map.copyOf(loadedModels);
+		extents = Map.copyOf(loadedExtents);
 		scales = Map.copyOf(loadedScales);
 		textures = Set.copyOf(loadedTextures);
 		Ahrivaea.LOGGER.info("Loaded {} creature models: {}", models.size(), String.join(", ", new java.util.TreeSet<>(models.keySet())));
@@ -70,6 +75,29 @@ public final class GeoModels {
 	public static GeoCreatureModel model(String species, String influence) {
 		GeoCreatureModel m = models.get(species + "/" + influence);
 		return m != null ? m : models.get(species + "/none");
+	}
+
+	/** Longest horizontal size of a form's model in blocks (unscaled), falling back to the None form. */
+	public static float extent(String species, String influence) {
+		Float e = extents.get(species + "/" + influence);
+		return e != null ? e : extents.getOrDefault(species + "/none", 1f);
+	}
+
+	private static float extent(JsonObject file) {
+		float minX = Float.MAX_VALUE, maxX = -Float.MAX_VALUE, minZ = Float.MAX_VALUE, maxZ = -Float.MAX_VALUE;
+		JsonObject geo = file.getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();
+		for (JsonElement e : geo.getAsJsonArray("bones")) {
+			JsonObject b = e.getAsJsonObject();
+			if (!b.has("cubes")) continue;
+			for (JsonElement ce : b.getAsJsonArray("cubes")) {
+				float[] o = vec(ce.getAsJsonObject(), "origin"), sz = vec(ce.getAsJsonObject(), "size");
+				minX = Math.min(minX, o[0]);
+				maxX = Math.max(maxX, o[0] + sz[0]);
+				minZ = Math.min(minZ, o[2]);
+				maxZ = Math.max(maxZ, o[2] + sz[2]);
+			}
+		}
+		return minX > maxX ? 1f : Math.max(maxX - minX, maxZ - minZ) / 16f;
 	}
 
 	public static float scale(String species) {

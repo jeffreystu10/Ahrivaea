@@ -140,8 +140,10 @@ public final class Challenges {
 			return false;
 		}
 		boolean placed = ruined.get().placeInWorld(level, origin, origin, new StructurePlaceSettings(), level.getRandom(), 2);
-		Ahrivaea.LOGGER.info("Challenge {}: ruined structure {} size {} placed={} chest block now {}", def.id(), def.ruined(), ruined.get().getSize(), placed,
-				level.getBlockState(origin.offset(def.chest())));
+		int solid = 0;
+		for (BlockPos p : BlockPos.betweenClosed(origin, origin.offset(ruined.get().getSize()).offset(-1, -1, -1))) if (!level.getBlockState(p).isAir()) solid++;
+		Ahrivaea.LOGGER.info("Challenge {}: ruined structure {} size {} placed={} chest block now {}, {} solid blocks in its box, chunk loaded {}", def.id(), def.ruined(),
+				ruined.get().getSize(), placed, level.getBlockState(origin.offset(def.chest())), solid, level.isLoaded(origin));
 		save(level.getServer(), def.id(), ChallengeState.fresh(level.dimension().identifier().toString(), origin));
 		Ahrivaea.LOGGER.info("Challenge {} placed at {}", def.id(), origin.toShortString());
 		return true;

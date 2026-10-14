@@ -1,7 +1,44 @@
 # Server challenges
 
-A challenge is a ruined structure that the whole server rebuilds by putting items into its offering chest.
-The first one is **The Old Tower**: 1000 coal, rebuilt in 4 stages.
+Every stronghold has a ruined tower standing on the surface above its End portal room. Each tower runs its
+own challenge — what to bring, how much, and what the top donors win — and the whole server rebuilds it
+together by putting items into its offering chest. Eyes of Ender lead players to the towers.
+
+## Which tower gets which challenge
+
+Strongholds are numbered from the centre of the world outward, in the order the game lays out its
+stronghold rings (3 in the first ring, 6 in the second, … 128 in all). `data/ahrivaea/challenge_order.json`
+lists challenge ids; tower 1 gets the first, tower 2 the second, and so on. When the list runs out it starts
+over, so with 12 challenges tower 13 repeats the first one (as its own separate tower and leaderboard).
+
+```json
+{"towers": ["coal", "iron", "wheat", "logs", "copper", "bones", "redstone", "lapis", "string", "gold", "flesh", "diamond"]}
+```
+
+A tower is built the first time its stronghold's chunk loads, so towers appear as the world is explored —
+in new worlds and in existing ones.
+
+## Biome blocks
+
+Each tower takes on the blocks of the biome it stands in: sandstone in deserts, red sandstone in badlands,
+prismarine at sea, granite in savannas, deepslate in dark forests, mud bricks in swamps, quartz and cherry
+in blossom biomes, tuff in the mountains, diorite and ice in snowy biomes, mushroom blocks on mushroom
+islands, mossy stone in jungles, plain stone bricks elsewhere. The choice is made once when the tower is
+built and used for every stage. Towers stand on a foundation down to solid ground (or the sea floor).
+
+Palettes are `data/ahrivaea/tower_palette/<name>.json`:
+
+```json
+{
+  "priority": 10,
+  "biomes": ["minecraft:desert", "#minecraft:is_beach"],
+  "blocks": {"minecraft:stone_bricks": "minecraft:cut_sandstone", "minecraft:spruce_planks": "minecraft:birch_planks"},
+  "foundation": "minecraft:sandstone"
+}
+```
+
+`blocks` maps a block used in the tower's structure files to its replacement (stairs, slabs and walls keep
+their facing). The highest-priority palette whose biomes match wins; one with no `biomes` is the fallback.
 
 ## How it plays
 
@@ -12,23 +49,28 @@ The first one is **The Old Tower**: 1000 coal, rebuilt in 4 stages.
 - At 1000 the tower is complete: title on every screen, fireworks, and rewards for the top donors.
   Offline winners get theirs the next time they log in. After that the chest just shows the final results.
 - Players outside creative mode can't break the tower's blocks.
-- `/challenge` shows the leaderboard: progress bar, top 10 and your own total and rank.
+
+- `/challenge` shows the leaderboard of the nearest tower; `/challenge list` lists every tower found so far
+  with its location and progress; `/challenge top <tower>` shows a particular one.
 
 ## Commands for operators
 
 | Command | What it does |
 |---|---|
-| `/challenge place tower` | Places the ruined tower with its north-west bottom corner where you stand and starts it from 0. |
-| `/challenge credit tower <player> <amount>` | Adds coal to someone's total by hand (e.g. if a chest offering got lost). |
-| `/challenge remove tower` | Stops tracking it (the blocks stay). |
+| `/challenge generate nearest` | Builds the tower over the nearest stronghold now. |
+| `/challenge generate <n>` | Builds tower n+1 (0 = the first stronghold). |
+| `/challenge place <challenge> [tower id]` | Places an extra tower for a challenge where you stand (corner), anywhere. |
+| `/challenge credit <tower> <player> <amount>` | Adds to someone's total by hand. |
+| `/challenge remove <tower>` | Stops tracking a tower (the blocks stay). |
 
 ## Files
 
-`data/ahrivaea/challenge/tower.json`:
+One file per challenge, `data/ahrivaea/challenge/<id>.json` (12 starters: coal, iron, wheat, logs, copper,
+bones, redstone, lapis, string, gold, flesh, diamond):
 
 ```json
 {
-  "name": "The Old Tower",
+  "name": "The Ember Spire",
   "unit": "coal",
   "items": {"minecraft:coal": 1, "minecraft:coal_block": 9},
   "goal": 1000,
@@ -43,6 +85,7 @@ The first one is **The Old Tower**: 1000 coal, rebuilt in 4 stages.
 }
 ```
 
+- `items`: item ids, or `#tags` (e.g. `"#minecraft:logs": 1` accepts every kind of log), and what each counts for.
 - `ruined` / `finished`: structure files (`data/ahrivaea/structure/tower/ruined.nbt` and `finished.nbt`). Both
   should be the same size; the finished one is revealed in horizontal slices from the bottom.
 - `chest`: where the offering chest is, counted from the structure's corner.

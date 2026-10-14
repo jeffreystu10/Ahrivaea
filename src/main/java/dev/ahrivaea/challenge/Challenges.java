@@ -139,7 +139,9 @@ public final class Challenges {
 			Ahrivaea.LOGGER.error("Challenge {}: structure {} not found", def.id(), def.ruined());
 			return false;
 		}
-		ruined.get().placeInWorld(level, origin, origin, new StructurePlaceSettings(), level.getRandom(), 2);
+		boolean placed = ruined.get().placeInWorld(level, origin, origin, new StructurePlaceSettings(), level.getRandom(), 2);
+		Ahrivaea.LOGGER.info("Challenge {}: ruined structure {} size {} placed={} chest block now {}", def.id(), def.ruined(), ruined.get().getSize(), placed,
+				level.getBlockState(origin.offset(def.chest())));
 		save(level.getServer(), def.id(), ChallengeState.fresh(level.dimension().identifier().toString(), origin));
 		Ahrivaea.LOGGER.info("Challenge {} placed at {}", def.id(), origin.toShortString());
 		return true;
@@ -156,7 +158,8 @@ public final class Challenges {
 		int height = full.getYSpan();
 		int top = s.origin.getY() + (int) Math.ceil(height * (double) stage / def.stages()) - 1;
 		BoundingBox clip = new BoundingBox(full.minX(), full.minY(), full.minZ(), full.maxX(), Math.min(top, full.maxY()), full.maxZ());
-		finished.get().placeInWorld(level, s.origin, s.origin, new StructurePlaceSettings().setBoundingBox(clip), level.getRandom(), 2);
+		boolean placed = finished.get().placeInWorld(level, s.origin, s.origin, new StructurePlaceSettings().setBoundingBox(clip), level.getRandom(), 2);
+		Ahrivaea.LOGGER.info("Challenge {}: stage {} up to y={} placed={}", def.id(), stage, top, placed);
 		var c = full.getCenter();
 		level.sendParticles(ParticleTypes.CLOUD, c.getX() + 0.5, top, c.getZ() + 0.5, 120, full.getXSpan() / 2.0, 1, full.getZSpan() / 2.0, 0.05);
 		level.playSound(null, c, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.5f, 0.7f);

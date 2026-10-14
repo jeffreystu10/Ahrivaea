@@ -1,0 +1,156 @@
+{
+  "name": "Dragon",
+  "stats": {
+    "hp": 92,
+    "attack": 82,
+    "defense": 98,
+    "speed": 54,
+    "magic": 63,
+    "luck": 37,
+    "charisma": 98
+  },
+  "size": 1.6,
+  "movement": "fly",
+  "forms": {
+    "fire": {
+      "name": "Ashen Dragon",
+      "stats": {
+        "hp": 57,
+        "attack": 68,
+        "defense": 61,
+        "speed": 97,
+        "magic": 61,
+        "luck": 80,
+        "charisma": 82
+      }
+    },
+    "frost": {
+      "name": "Snowveil Dragon",
+      "stats": {
+        "hp": 98,
+        "attack": 81,
+        "defense": 81,
+        "speed": 62,
+        "magic": 81,
+        "luck": 47,
+        "charisma": 62
+      }
+    },
+    "storm": {
+      "name": "Squall Dragon",
+      "stats": {
+        "hp": 84,
+        "attack": 73,
+        "defense": 99,
+        "speed": 96,
+        "magic": 94,
+        "luck": 63,
+        "charisma": 76
+      }
+    },
+    "earth": {
+      "name": "Mossback Dragon",
+      "stats": {
+        "hp": 47,
+        "attack": 85,
+        "defense": 99,
+        "speed": 67,
+        "magic": 70,
+        "luck": 51,
+        "charisma": 98
+      }
+    },
+    "water": {
+      "name": "Coral Dragon",
+      "stats": {
+        "hp": 67,
+        "attack": 100,
+        "defense": 37,
+        "speed": 57,
+        "magic": 97,
+        "luck": 88,
+        "charisma": 85
+      }
+    },
+    "nature": {
+      "name": "Briar Dragon",
+      "stats": {
+        "hp": 66,
+        "attack": 57,
+        "defense": 94,
+        "speed": 93,
+        "magic": 87,
+        "luck": 91,
+        "charisma": 60
+      }
+    },
+    "void": {
+      "name": "Umbral Dragon",
+      "stats": {
+        "hp": 85,
+        "attack": 42,
+        "defense": 86,
+        "speed": 95,
+        "magic": 67,
+        "luck": 78,
+        "charisma": 69
+      }
+    },
+    "fae": {
+      "name": "Gossamer Dragon",
+      "stats": {
+        "hp": 65,
+        "attack": 47,
+        "defense": 90,
+        "speed": 55,
+        "magic": 95,
+        "luck": 90,
+        "charisma": 64
+      }
+    },
+    "darkness": {
+      "name": "Duskborn Dragon",
+      "stats": {
+        "hp": 59,
+        "attack": 77,
+        "defense": 94,
+        "speed": 70,
+        "magic": 97,
+        "luck": 57,
+        "charisma": 56
+      }
+    },
+    "radiant": {
+      "name": "Hallowed Dragon",
+      "stats": {
+        "hp": 79,
+        "attack": 90,
+        "defense": 93,
+        "speed": 80,
+        "magic": 58,
+        "luck": 79,
+        "charisma": 82
+      }
+    },
+    "none": {
+      "name": "Old Dragon",
+      "stats": {
+        "hp": 92,
+        "attack": 82,
+        "defense": 98,
+        "speed": 54,
+        "magic": 63,
+        "luck": 37,
+        "charisma": 98
+      }
+    }
+  },
+  "spawn": {
+    "biomes": [
+      "#minecraft:is_overworld"
+    ],
+    "min_level": 3,
+    "max_level": 15,
+    "weight": 10
+  }
+}

@@ -35,6 +35,7 @@ import org.jspecify.annotations.Nullable;
 public class CreatureEntity extends TamableAnimal {
 	private static final EntityDataAccessor<String> SPECIES = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Integer> LEVEL = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<String> INFLUENCE = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.STRING);
 
 	public CreatureEntity(EntityType<? extends TamableAnimal> type, Level level) {
 		super(type, level);
@@ -45,6 +46,7 @@ public class CreatureEntity extends TamableAnimal {
 		super.defineSynchedData(builder);
 		builder.define(SPECIES, "");
 		builder.define(LEVEL, 5);
+		builder.define(INFLUENCE, "none");
 	}
 
 	@Override
@@ -68,53 +70,70 @@ public class CreatureEntity extends TamableAnimal {
 		return Species.get(getSpeciesId());
 	}
 
+	public Influence getInfluence() {
+		return Influence.byName(this.entityData.get(INFLUENCE));
+	}
+
+	/** The form's name, e.g. "Ashen Dragon". */
 	public String displayName() {
-		return getSpecies().map(Species::name).orElse(getSpeciesId());
+		return getSpecies().map(s -> s.nameFor(getInfluence())).orElse(getSpeciesId());
+	}
+
+	public Stats getStats() {
+		return getSpecies().map(s -> s.statsFor(getInfluence())).orElse(new Stats(50, 50, 50, 50, 50, 50, 50));
 	}
 
 	public int getCreatureLevel() {
 		return this.entityData.get(LEVEL);
 	}
 
-	/** Sets species and level, resets health to full and updates the name tag. */
-	public void setup(Species species, int level, float health) {
+	/** Sets species, influence and level; health below 0 means full. Updates the name tag. */
+	public void setup(Species species, Influence influence, int level, float health) {
+		influence = species.formOrDefault(influence);
+		level = Math.clamp(level, 0, Stats.MAX_LEVEL);
 		this.entityData.set(SPECIES, species.id());
+		this.entityData.set(INFLUENCE, influence.getSerializedName());
 		this.entityData.set(LEVEL, level);
 		var maxHealth = this.getAttribute(Attributes.MAX_HEALTH);
-		if (maxHealth != null) maxHealth.setBaseValue(species.healthAt(level));
+		if (maxHealth != null) maxHealth.setBaseValue(species.statsFor(influence).maxHealth(level));
 		var speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
-		if (speed != null) speed.setBaseValue(species.walkSpeed());
+		if (speed != null) speed.setBaseValue(species.walkSpeed(influence));
 		var scale = this.getAttribute(Attributes.SCALE);
-		if (scale != null) scale.setBaseValue(species.scale());
+		if (scale != null) scale.setBaseValue(species.size());
 		this.setHealth(health > 0 ? Math.min(health, this.getMaxHealth()) : this.getMaxHealth());
 		refreshName();
 	}
 
 	private void refreshName() {
-		this.setCustomName(Component.literal(displayName() + " Lv." + getCreatureLevel()));
+		this.setCustomName(Component.literal(displayName() + " Lv." + getCreatureLevel()).withColor(getInfluence().color()));
 		this.setCustomNameVisible(true);
 	}
 
 	@Override
 	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		// wild creatures are chosen by the biome they appear in; summoned ones fall back to any species
-		var picked = Species.pickFor(level.getBiome(this.blockPosition()), this.random);
-		if (picked.isEmpty() && !Species.all().isEmpty()) {
-			var all = Species.all();
-			picked = java.util.Optional.of(all.get(this.random.nextInt(all.size())));
+		// wild creatures are chosen by the biome they appear in, and take its influence; if nothing lives
+		// here (e.g. a spawn egg), any species will do
+		if (getSpeciesId().isEmpty()) {
+			var picked = Species.pickFor(level.getBiome(this.blockPosition()), level.getLevel(), this.random);
+			if (picked.isEmpty() && !Species.all().isEmpty()) {
+				var all = Species.all();
+				Species s = all.get(this.random.nextInt(all.size()));
+				var inf = InfluenceRules.pick(level.getBiome(this.blockPosition()), level.getLevel(), s.forms().keySet(), this.random);
+				picked = java.util.Optional.of(new Species.Pick(s, inf.orElse(s.formOrDefault(Influence.NONE))));
+			}
+			picked.ifPresent(p -> {
+				int lo = p.species().spawn().map(Species.Spawn::minLevel).orElse(2);
+				int hi = p.species().spawn().map(Species.Spawn::maxLevel).orElse(10);
+				setup(p.species(), p.influence(), lo + this.random.nextInt(Math.max(1, hi - lo + 1)), -1);
+			});
 		}
-		picked.ifPresent(species -> {
-			int lo = species.spawn().map(Species.Spawn::minLevel).orElse(2);
-			int hi = species.spawn().map(Species.Spawn::maxLevel).orElse(10);
-			setup(species, lo + this.random.nextInt(Math.max(1, hi - lo + 1)), -1);
-		});
 		return super.finalizeSpawn(level, difficulty, reason, data);
 	}
 
 	@Override
 	public boolean checkSpawnRules(net.minecraft.world.level.LevelAccessor level, EntitySpawnReason reason) {
-		if (reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION) {
-			if (Species.pickFor(level.getBiome(this.blockPosition()), this.random).isEmpty()) return false;
+		if ((reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION) && level instanceof ServerLevelAccessor server) {
+			if (Species.pickFor(level.getBiome(this.blockPosition()), server.getLevel(), this.random).isEmpty()) return false;
 		}
 		return super.checkSpawnRules(level, reason);
 	}
@@ -144,12 +163,13 @@ public class CreatureEntity extends TamableAnimal {
 		// a creature made without a species (for example /summon with extra data) picks one at random
 		if (!this.level().isClientSide() && getSpeciesId().isEmpty() && !Species.all().isEmpty()) {
 			var all = Species.all();
-			setup(all.get(this.random.nextInt(all.size())), 5, -1);
+			Species s = all.get(this.random.nextInt(all.size()));
+			setup(s, s.formOrDefault(Influence.NONE), 5, -1);
 		}
 	}
 
 	public CaughtCreature toCaught() {
-		return new CaughtCreature(getSpeciesId(), getCreatureLevel(), this.getHealth());
+		return new CaughtCreature(getSpeciesId(), getInfluence(), getCreatureLevel(), 0, this.getHealth());
 	}
 
 	@Override
@@ -157,6 +177,7 @@ public class CreatureEntity extends TamableAnimal {
 		super.addAdditionalSaveData(output);
 		output.putString("Species", getSpeciesId());
 		output.putInt("CreatureLevel", getCreatureLevel());
+		output.putString("Influence", getInfluence().getSerializedName());
 	}
 
 	@Override
@@ -164,6 +185,7 @@ public class CreatureEntity extends TamableAnimal {
 		super.readAdditionalSaveData(input);
 		this.entityData.set(SPECIES, input.getStringOr("Species", ""));
 		this.entityData.set(LEVEL, input.getIntOr("CreatureLevel", 5));
+		this.entityData.set(INFLUENCE, input.getStringOr("Influence", "none"));
 		refreshName();
 	}
 

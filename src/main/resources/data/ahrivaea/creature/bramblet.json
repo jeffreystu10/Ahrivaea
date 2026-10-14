@@ -1,8 +1,0 @@
-{
-  "name": "Bramblet",
-  "types": ["grass"],
-  "base_stats": {"hp": 46, "attack": 48, "defense": 50, "special_attack": 52, "special_defense": 54, "speed": 40},
-  "catch_rate": 0.5,
-  "scale": 0.85,
-  "spawn": {"biomes": ["#minecraft:is_forest", "minecraft:plains", "minecraft:meadow", "minecraft:sunflower_plains"], "min_level": 2, "max_level": 8, "weight": 12}
-}

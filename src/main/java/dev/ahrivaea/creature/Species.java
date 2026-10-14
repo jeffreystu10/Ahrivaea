@@ -6,11 +6,9 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ahrivaea.Ahrivaea;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
 import java.io.Reader;
@@ -22,58 +20,49 @@ import java.util.Optional;
 
 /**
  * A kind of creature, loaded from data/<namespace>/creature/<id>.json in the mod or any data pack.
- * The file name is the creature's id; reloading data packs (/reload) picks up changes.
+ * The file name is the creature's id; /reload picks up changes. See docs/creatures.md.
+ *
+ * @param forms one entry per influence the species can have; each may rename it and override its stats.
+ *              Its model and texture are found by convention: geo/creature/<id>/<influence>.geo.json and
+ *              textures/entity/creature/<id>/<influence>.png in a resource pack.
  */
-public record Species(String name, List<CreatureType> types, BaseStats baseStats, float catchRate, float scale,
-		Optional<Spawn> spawn, Optional<Evolution> evolution, String id) {
+public record Species(String name, Stats stats, Map<Influence, Form> forms, float size, Movement movement,
+		Optional<Spawn> spawn, String id) {
 
-	public record BaseStats(int hp, int attack, int defense, int specialAttack, int specialDefense, int speed) {
-		public static final Codec<BaseStats> CODEC = RecordCodecBuilder.create(i -> i.group(
-				Codec.INT.fieldOf("hp").forGetter(BaseStats::hp),
-				Codec.INT.fieldOf("attack").forGetter(BaseStats::attack),
-				Codec.INT.fieldOf("defense").forGetter(BaseStats::defense),
-				Codec.INT.fieldOf("special_attack").forGetter(BaseStats::specialAttack),
-				Codec.INT.fieldOf("special_defense").forGetter(BaseStats::specialDefense),
-				Codec.INT.fieldOf("speed").forGetter(BaseStats::speed)
-		).apply(i, BaseStats::new));
-	}
+	public enum Movement implements net.minecraft.util.StringRepresentable {
+		WALK, FLY, SWIM;
+		public static final Codec<Movement> CODEC = net.minecraft.util.StringRepresentable.fromEnum(Movement::values);
 
-	/** Where and how a creature appears in the wild. Biomes are ids ("minecraft:plains") or tags ("#minecraft:is_forest"). */
-	public record Spawn(List<String> biomes, int minLevel, int maxLevel, int weight) {
-		public static final Codec<Spawn> CODEC = RecordCodecBuilder.create(i -> i.group(
-				Codec.STRING.listOf().fieldOf("biomes").forGetter(Spawn::biomes),
-				Codec.INT.optionalFieldOf("min_level", 2).forGetter(Spawn::minLevel),
-				Codec.INT.optionalFieldOf("max_level", 10).forGetter(Spawn::maxLevel),
-				Codec.INT.optionalFieldOf("weight", 10).forGetter(Spawn::weight)
-		).apply(i, Spawn::new));
-
-		public boolean matches(Holder<Biome> biome) {
-			for (String b : biomes) {
-				if (b.startsWith("#")) {
-					if (biome.is(TagKey.create(Registries.BIOME, Identifier.parse(b.substring(1))))) return true;
-				} else if (biome.is(Identifier.parse(b))) {
-					return true;
-				}
-			}
-			return false;
+		@Override
+		public String getSerializedName() {
+			return name().toLowerCase(java.util.Locale.ROOT);
 		}
 	}
 
-	public record Evolution(String into, int level) {
-		public static final Codec<Evolution> CODEC = RecordCodecBuilder.create(i -> i.group(
-				Codec.STRING.fieldOf("into").forGetter(Evolution::into),
-				Codec.INT.fieldOf("level").forGetter(Evolution::level)
-		).apply(i, Evolution::new));
+	public record Form(Optional<String> name, Optional<Stats> stats) {
+		public static final Codec<Form> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.STRING.optionalFieldOf("name").forGetter(Form::name),
+				Stats.CODEC.optionalFieldOf("stats").forGetter(Form::stats)
+		).apply(i, Form::new));
+	}
+
+	/** Where a creature appears in the wild. Biomes are ids ("minecraft:plains") or tags ("#minecraft:is_forest"). */
+	public record Spawn(List<String> biomes, int minLevel, int maxLevel, int weight) {
+		public static final Codec<Spawn> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.STRING.listOf().fieldOf("biomes").forGetter(Spawn::biomes),
+				Codec.intRange(0, Stats.MAX_LEVEL).optionalFieldOf("min_level", 2).forGetter(Spawn::minLevel),
+				Codec.intRange(0, Stats.MAX_LEVEL).optionalFieldOf("max_level", 10).forGetter(Spawn::maxLevel),
+				Codec.INT.optionalFieldOf("weight", 10).forGetter(Spawn::weight)
+		).apply(i, Spawn::new));
 	}
 
 	public static final Codec<Species> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Codec.STRING.fieldOf("name").forGetter(Species::name),
-			CreatureType.CODEC.listOf(1, 2).fieldOf("types").forGetter(Species::types),
-			BaseStats.CODEC.fieldOf("base_stats").forGetter(Species::baseStats),
-			Codec.FLOAT.optionalFieldOf("catch_rate", 0.45f).forGetter(Species::catchRate),
-			Codec.FLOAT.optionalFieldOf("scale", 1f).forGetter(Species::scale),
+			Stats.CODEC.fieldOf("stats").forGetter(Species::stats),
+			Codec.unboundedMap(Influence.CODEC, Form.CODEC).optionalFieldOf("forms", Map.of(Influence.NONE, new Form(Optional.empty(), Optional.empty()))).forGetter(Species::forms),
+			Codec.FLOAT.optionalFieldOf("size", 1f).forGetter(Species::size),
+			Movement.CODEC.optionalFieldOf("movement", Movement.WALK).forGetter(Species::movement),
 			Spawn.CODEC.optionalFieldOf("spawn").forGetter(Species::spawn),
-			Evolution.CODEC.optionalFieldOf("evolution").forGetter(Species::evolution),
 			Codec.STRING.optionalFieldOf("id", "").forGetter(Species::id)
 	).apply(i, Species::new));
 
@@ -85,7 +74,14 @@ public record Species(String name, List<CreatureType> types, BaseStats baseStats
 			String id = path.getPath().substring("creature/".length(), path.getPath().length() - ".json".length());
 			try (Reader reader = resource.openAsReader()) {
 				Species s = CODEC.parse(JsonOps.INSTANCE, JsonParser.parseReader(reader)).getOrThrow();
-				loaded.put(id, new Species(s.name, s.types, s.baseStats, s.catchRate, s.scale, s.spawn, s.evolution, id));
+				s = new Species(s.name, s.stats, s.forms, s.size, s.movement, s.spawn, id);
+				for (Influence inf : s.forms.keySet()) {
+					int total = s.statsFor(inf).total();
+					if (total < Stats.MIN_TOTAL || total > Stats.MAX_TOTAL) {
+						Ahrivaea.LOGGER.warn("{} ({}) has a stat total of {}; it should be {}–{}", s.nameFor(inf), id, total, Stats.MIN_TOTAL, Stats.MAX_TOTAL);
+					}
+				}
+				loaded.put(id, s);
 			} catch (Exception e) {
 				Ahrivaea.LOGGER.error("Could not load creature {}: {}", path, e.getMessage());
 			}
@@ -102,45 +98,52 @@ public record Species(String name, List<CreatureType> types, BaseStats baseStats
 		return List.copyOf(all.values());
 	}
 
-	/** Picks a wild creature for a biome, weighted by each species' spawn weight; empty if none live there. */
-	public static Optional<Species> pickFor(Holder<Biome> biome, RandomSource random) {
-		List<Species> candidates = new ArrayList<>();
+	/** A wild creature for this biome, weighted by spawn weight, with the influence it gets here and now. */
+	public record Pick(Species species, Influence influence) {}
+
+	public static Optional<Pick> pickFor(Holder<Biome> biome, Level level, RandomSource random) {
+		List<Pick> candidates = new ArrayList<>();
+		List<Integer> weights = new ArrayList<>();
 		int total = 0;
 		for (Species s : all.values()) {
-			if (s.spawn.isPresent() && s.spawn.get().matches(biome)) {
-				candidates.add(s);
-				total += s.spawn.get().weight();
-			}
+			if (s.spawn.isEmpty() || !BiomeList.matches(s.spawn.get().biomes(), biome)) continue;
+			var inf = InfluenceRules.pick(biome, level, s.forms.keySet(), random);
+			if (inf.isEmpty()) continue;
+			candidates.add(new Pick(s, inf.get()));
+			weights.add(s.spawn.get().weight());
+			total += s.spawn.get().weight();
 		}
 		if (total <= 0) return Optional.empty();
 		int roll = random.nextInt(total);
-		for (Species s : candidates) {
-			roll -= s.spawn.get().weight();
-			if (roll < 0) return Optional.of(s);
+		for (int k = 0; k < candidates.size(); k++) {
+			roll -= weights.get(k);
+			if (roll < 0) return Optional.of(candidates.get(k));
 		}
 		return Optional.of(candidates.getLast());
 	}
 
-	public Identifier texture() {
-		return Ahrivaea.id("textures/entity/creature/" + id + ".png");
+	/** The form's own stats, or the species' if the form doesn't override them. */
+	public Stats statsFor(Influence influence) {
+		Form f = forms.get(influence);
+		return f != null && f.stats().isPresent() ? f.stats().get() : stats;
 	}
 
-	public String typeLabel() {
-		return String.join("/", types.stream().map(CreatureType::displayName).toList());
+	/** "Ashen Dragon" if the form has its own name, otherwise "Fire Dragon" (or just "Dragon" for None). */
+	public String nameFor(Influence influence) {
+		Form f = forms.get(influence);
+		if (f != null && f.name().isPresent()) return f.name().get();
+		return influence == Influence.NONE ? name : influence.displayName() + " " + name;
 	}
 
-	/** Max health at a level (follows the usual creature-game stat curve). */
-	public float healthAt(int level) {
-		return (2f * baseStats.hp * level) / 100f + level + 10f;
+	/** The form to use for an influence: that one if the species has it, else None, else any. */
+	public Influence formOrDefault(Influence influence) {
+		if (forms.containsKey(influence)) return influence;
+		if (forms.containsKey(Influence.NONE)) return Influence.NONE;
+		return forms.keySet().iterator().next();
 	}
 
-	/** Any other stat at a level. */
-	public static int statAt(int base, int level) {
-		return (2 * base * level) / 100 + 5;
-	}
-
-	/** Walking speed in Minecraft units from the speed stat. */
-	public float walkSpeed() {
-		return 0.2f + baseStats.speed / 1000f;
+	/** Walking speed in Minecraft units, from the Speed stat. */
+	public float walkSpeed(Influence influence) {
+		return 0.2f + statsFor(influence).speed() / 1000f;
 	}
 }

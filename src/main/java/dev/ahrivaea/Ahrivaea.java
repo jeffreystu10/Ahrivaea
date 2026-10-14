@@ -1,6 +1,11 @@
 package dev.ahrivaea;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import dev.ahrivaea.creature.BattleSettings;
+import dev.ahrivaea.creature.Influence;
+import dev.ahrivaea.creature.InfluenceRules;
+import dev.ahrivaea.creature.Stats;
 import dev.ahrivaea.creature.CreatureEntity;
 import dev.ahrivaea.creature.Species;
 import dev.ahrivaea.item.VesselItem;
@@ -52,12 +57,13 @@ public class Ahrivaea implements ModInitializer {
 	public void onInitialize() {
 		Party.init();
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("creatures"), (ResourceManagerReloadListener) Species::reload);
+		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("influence_rules"), (ResourceManagerReloadListener) InfluenceRules::reload);
 		FabricDefaultAttributeRegistry.register(CREATURE, Animal.createAnimalAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.25));
 
 		// one spawn entry for all creatures; which species appears (if any) is decided by each species' biome list
-		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.CREATURE, CREATURE, 12, 1, 2);
+		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.CREATURE, CREATURE, 6, 1, 1);
 
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(VESSEL));
 
@@ -66,59 +72,131 @@ public class Ahrivaea implements ModInitializer {
 	}
 
 	private void registerCommands() {
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-				Commands.literal("party")
-						.executes(ctx -> {
-							ServerPlayer player = ctx.getSource().getPlayerOrException();
-							List<CaughtCreature> party = Party.get(player);
-							if (party.isEmpty()) {
-								ctx.getSource().sendSuccess(() -> Component.literal("Your party is empty. Bind a creature with a Vessel."), false);
-								return 0;
-							}
-							StringBuilder sb = new StringBuilder("Your party:");
-							for (int i = 0; i < party.size(); i++) {
-								CaughtCreature c = party.get(i);
-								var sp = Species.get(c.species());
-								sb.append("\n ").append(i + 1).append(". ").append(sp.map(Species::name).orElse(c.species()))
-										.append(" Lv.").append(c.level()).append(" (").append(sp.map(Species::typeLabel).orElse("?")).append(")  ")
-										.append(Math.round(c.health())).append(" HP");
-							}
-							String text = sb.toString();
-							ctx.getSource().sendSuccess(() -> Component.literal(text), false);
-							return party.size();
-						})
-						.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
-							ServerPlayer player = ctx.getSource().getPlayerOrException();
-							int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
-							if (slot >= Party.get(player).size()) {
-								ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
-								return 0;
-							}
-							CaughtCreature c = Party.remove(player, slot);
-							ServerLevel level = (ServerLevel) player.level();
-							CreatureEntity e = CREATURE.create(level, EntitySpawnReason.MOB_SUMMONED);
-							if (e == null) return 0;
-							e.setPos(player.getX(), player.getY(), player.getZ());
-							Species species = Species.get(c.species()).orElse(null);
-							if (species == null) { Party.add(player, c); ctx.getSource().sendFailure(Component.literal("That creature's species no longer exists.")); return 0; }
-							e.setup(species, c.level(), c.health());
-							e.tame(player);
-							level.addFreshEntity(e);
-							ctx.getSource().sendSuccess(() -> Component.literal("Go, " + species.name() + "! (sneak + right-click it to call it back)"), false);
-							return 1;
-						})))
-						.then(Commands.literal("release").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
-							ServerPlayer player = ctx.getSource().getPlayerOrException();
-							int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
-							if (slot >= Party.get(player).size()) {
-								ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
-								return 0;
-							}
-							CaughtCreature c = Party.remove(player, slot);
-							ctx.getSource().sendSuccess(() -> Component.literal("Released " + Species.get(c.species()).map(Species::name).orElse(c.species()) + " into the wild for good."), false);
-							return 1;
-						})))
-		));
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			dispatcher.register(Commands.literal("party")
+					.executes(ctx -> listParty(ctx.getSource().getPlayerOrException(), ctx.getSource()))
+					.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
+						ServerPlayer player = ctx.getSource().getPlayerOrException();
+						int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
+						if (slot >= Party.get(player).size()) {
+							ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
+							return 0;
+						}
+						CaughtCreature c = Party.get(player).get(slot);
+						Species species = Species.get(c.species()).orElse(null);
+						if (species == null) {
+							ctx.getSource().sendFailure(Component.literal("That creature's species no longer exists."));
+							return 0;
+						}
+						CreatureEntity e = spawn((ServerLevel) player.level(), species, c.influence(), c.level(), c.health(), player.getX(), player.getY(), player.getZ());
+						if (e == null) return 0;
+						Party.remove(player, slot);
+						e.tame(player);
+						ctx.getSource().sendSuccess(() -> Component.literal("Go, " + e.displayName() + "! (sneak + right-click it to call it back)"), false);
+						return 1;
+					})))
+					.then(Commands.literal("release").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
+						ServerPlayer player = ctx.getSource().getPlayerOrException();
+						int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
+						if (slot >= Party.get(player).size()) {
+							ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
+							return 0;
+						}
+						CaughtCreature c = Party.remove(player, slot);
+						ctx.getSource().sendSuccess(() -> Component.literal("Released " + formName(c) + " into the wild for good."), false);
+						return 1;
+					})))
+					.then(Commands.literal("xp")
+							.executes(ctx -> {
+								int xp = Party.xp(ctx.getSource().getPlayerOrException());
+								ctx.getSource().sendSuccess(() -> Component.literal("You have " + xp + " XP to give out. Use /party xp <slot> <amount>."), false);
+								return xp;
+							})
+							.then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).then(Commands.argument("amount", IntegerArgumentType.integer(1)).executes(ctx -> {
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
+								if (slot >= Party.get(player).size()) {
+									ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
+									return 0;
+								}
+								int before = Party.get(player).get(slot).level();
+								int spent = Party.feed(player, slot, IntegerArgumentType.getInteger(ctx, "amount"));
+								CaughtCreature c = Party.get(player).get(slot);
+								String grew = c.level() > before ? " It grew to level " + c.level() + "!" : "";
+								ctx.getSource().sendSuccess(() -> Component.literal("Gave " + spent + " XP to " + formName(c) + " (" + c.xp() + "/" + BattleSettings.XP_PER_LEVEL + ")." + grew), false);
+								return spent;
+							}))))
+			);
+
+			// tools for building and testing (operators only)
+			dispatcher.register(Commands.literal("ahrivaea").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+					.then(Commands.literal("spawn").then(Commands.argument("species", StringArgumentType.word())
+							.suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(Species.all().stream().map(Species::id), b))
+							.then(Commands.argument("influence", StringArgumentType.word())
+									.suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(java.util.Arrays.stream(Influence.values()).map(Influence::getSerializedName), b))
+									.then(Commands.argument("level", IntegerArgumentType.integer(0, Stats.MAX_LEVEL)).executes(ctx -> {
+										var species = Species.get(StringArgumentType.getString(ctx, "species"));
+										if (species.isEmpty()) {
+											ctx.getSource().sendFailure(Component.literal("No such creature."));
+											return 0;
+										}
+										var pos = ctx.getSource().getPosition();
+										CreatureEntity e = spawn(ctx.getSource().getLevel(), species.get(), Influence.byName(StringArgumentType.getString(ctx, "influence")),
+												IntegerArgumentType.getInteger(ctx, "level"), -1, pos.x, pos.y, pos.z);
+										if (e == null) return 0;
+										ctx.getSource().sendSuccess(() -> Component.literal("Spawned " + e.displayName() + " Lv." + e.getCreatureLevel()), true);
+										return 1;
+									})))))
+					.then(Commands.literal("givexp").then(Commands.argument("amount", IntegerArgumentType.integer(1)).executes(ctx -> {
+						ServerPlayer player = ctx.getSource().getPlayerOrException();
+						Party.addXp(player, IntegerArgumentType.getInteger(ctx, "amount"));
+						ctx.getSource().sendSuccess(() -> Component.literal("You now have " + Party.xp(player) + " XP."), false);
+						return 1;
+					})))
+					.then(Commands.literal("selftest").executes(ctx -> {
+						SelfTest.run(msg -> ctx.getSource().sendSuccess(() -> Component.literal(msg), false));
+						return 1;
+					})));
+		});
+	}
+
+	private static String formName(CaughtCreature c) {
+		return Species.get(c.species()).map(s -> s.nameFor(c.influence())).orElse(c.species());
+	}
+
+	private static int listParty(ServerPlayer player, net.minecraft.commands.CommandSourceStack source) {
+		List<CaughtCreature> party = Party.get(player);
+		if (party.isEmpty()) {
+			source.sendSuccess(() -> Component.literal("Your party is empty. Bind a creature with a Vessel."), false);
+			return 0;
+		}
+		StringBuilder sb = new StringBuilder("Your party (" + Party.xp(player) + " XP to give out):");
+		for (int i = 0; i < party.size(); i++) {
+			CaughtCreature c = party.get(i);
+			var sp = Species.get(c.species());
+			sb.append("\n ").append(i + 1).append(". ").append(formName(c)).append(" Lv.").append(c.level())
+					.append(" (").append(c.influence().displayName()).append(")  ").append(Math.round(c.health())).append(" HP  ")
+					.append(c.xp()).append("/").append(BattleSettings.XP_PER_LEVEL).append(" XP");
+			sp.ifPresent(s -> {
+				Stats st = s.statsFor(c.influence());
+				sb.append("\n    HP ").append(st.hp()).append(" Atk ").append(st.attack()).append(" Def ").append(st.defense())
+						.append(" Spd ").append(st.speed()).append(" Mag ").append(st.magic()).append(" Lck ").append(st.luck())
+						.append(" Cha ").append(st.charisma()).append("  (moves ").append(st.squaresPerTurn()).append(" squares)");
+			});
+		}
+		String text = sb.toString();
+		source.sendSuccess(() -> Component.literal(text), false);
+		return party.size();
+	}
+
+	/** Puts a creature of a given species, influence and level into the world; health below 0 means full. */
+	public static CreatureEntity spawn(ServerLevel level, Species species, Influence influence, int lvl, float health, double x, double y, double z) {
+		CreatureEntity e = CREATURE.create(level, EntitySpawnReason.MOB_SUMMONED);
+		if (e == null) return null;
+		e.snapTo(x, y, z);
+		e.setup(species, influence, lvl, health);
+		level.addFreshEntity(e);
+		return e;
 	}
 
 	public static Identifier id(String path) {

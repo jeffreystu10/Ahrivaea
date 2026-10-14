@@ -1,8 +1,0 @@
-{
-  "name": "Puddlepup",
-  "types": ["water"],
-  "base_stats": {"hp": 48, "attack": 46, "defense": 52, "special_attack": 50, "special_defense": 52, "speed": 42},
-  "catch_rate": 0.45,
-  "scale": 1.0,
-  "spawn": {"biomes": ["#minecraft:is_river", "#minecraft:is_beach", "minecraft:swamp", "minecraft:mangrove_swamp"], "min_level": 2, "max_level": 9, "weight": 10}
-}

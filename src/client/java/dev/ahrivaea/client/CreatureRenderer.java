@@ -1,14 +1,25 @@
 package dev.ahrivaea.client;
 
-import dev.ahrivaea.Ahrivaea;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ahrivaea.creature.CreatureEntity;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 
-public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRenderState, CreatureModel> {
+/** Draws each creature with the model and texture of its species and influence (see {@link GeoModels}). */
+public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRenderState, EntityModel<CreatureRenderState>> {
+	private final CreatureModel placeholder;
+
 	public CreatureRenderer(EntityRendererProvider.Context context) {
-		super(context, new CreatureModel(context.bakeLayer(AhrivaeaClient.CREATURE_LAYER)), 0.4f);
+		this(context, new CreatureModel(context.bakeLayer(AhrivaeaClient.CREATURE_LAYER)));
+	}
+
+	private CreatureRenderer(EntityRendererProvider.Context context, CreatureModel placeholder) {
+		super(context, placeholder, 0.4f);
+		this.placeholder = placeholder;
 	}
 
 	@Override
@@ -19,8 +30,28 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 	@Override
 	public void extractRenderState(CreatureEntity entity, CreatureRenderState state, float partialTick) {
 		super.extractRenderState(entity, state, partialTick);
-		state.texture = Ahrivaea.id("textures/entity/creature/" + (entity.getSpeciesId().isEmpty() ? "emberkit" : entity.getSpeciesId()) + ".png");
+		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
+		state.geo = species.isEmpty() ? null : GeoModels.model(species, influence);
+		state.modelScale = state.geo != null ? GeoModels.scale(species) : 1f;
+		state.texture = GeoModels.texture(species, influence);
 		state.sitting = entity.isInSittingPose();
+	}
+
+	@Override
+	public void submit(CreatureRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+		// one renderer serves every species, so pick this creature's model before drawing
+		this.model = state.geo != null ? state.geo : placeholder;
+		super.submit(state, poseStack, collector, camera);
+	}
+
+	@Override
+	protected void scale(CreatureRenderState state, PoseStack poseStack) {
+		poseStack.scale(state.modelScale, state.modelScale, state.modelScale);
+	}
+
+	@Override
+	protected float getShadowRadius(CreatureRenderState state) {
+		return super.getShadowRadius(state) * (state.geo != null ? 2.5f : 1f);
 	}
 
 	@Override

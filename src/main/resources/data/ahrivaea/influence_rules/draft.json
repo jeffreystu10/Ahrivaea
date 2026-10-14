@@ -1,0 +1,132 @@
+[
+  {
+    "biomes": [
+      "minecraft:desert",
+      "#minecraft:is_badlands",
+      "#minecraft:is_nether"
+    ],
+    "influence": "fire"
+  },
+  {
+    "biomes": [
+      "minecraft:savanna",
+      "minecraft:savanna_plateau"
+    ],
+    "time": "day",
+    "influence": "fire"
+  },
+  {
+    "biomes": [
+      "minecraft:snowy_plains",
+      "minecraft:ice_spikes",
+      "minecraft:snowy_taiga",
+      "minecraft:snowy_slopes",
+      "minecraft:frozen_peaks",
+      "minecraft:jagged_peaks",
+      "minecraft:grove",
+      "minecraft:frozen_river",
+      "minecraft:snowy_beach",
+      "minecraft:frozen_ocean",
+      "minecraft:deep_frozen_ocean"
+    ],
+    "influence": "frost"
+  },
+  {
+    "biomes": [
+      "minecraft:windswept_hills",
+      "minecraft:windswept_gravelly_hills",
+      "minecraft:windswept_forest",
+      "minecraft:windswept_savanna"
+    ],
+    "influence": "storm"
+  },
+  {
+    "biomes": [
+      "minecraft:stony_peaks",
+      "minecraft:stony_shore",
+      "minecraft:dripstone_caves",
+      "minecraft:savanna_plateau"
+    ],
+    "influence": "earth"
+  },
+  {
+    "biomes": [
+      "#minecraft:is_ocean",
+      "#minecraft:is_river",
+      "minecraft:beach"
+    ],
+    "influence": "water"
+  },
+  {
+    "biomes": [
+      "#minecraft:is_forest",
+      "#minecraft:is_jungle",
+      "#minecraft:is_taiga",
+      "minecraft:swamp",
+      "minecraft:mangrove_swamp",
+      "minecraft:lush_caves"
+    ],
+    "influence": "nature"
+  },
+  {
+    "biomes": [
+      "minecraft:deep_dark",
+      "#minecraft:is_end"
+    ],
+    "influence": "void"
+  },
+  {
+    "biomes": [
+      "minecraft:mushroom_fields",
+      "minecraft:cherry_grove",
+      "minecraft:flower_forest"
+    ],
+    "influence": "fae"
+  },
+  {
+    "biomes": [
+      "minecraft:dark_forest",
+      "minecraft:pale_garden"
+    ],
+    "influence": "darkness"
+  },
+  {
+    "biomes": [
+      "#minecraft:is_overworld"
+    ],
+    "time": "night",
+    "influence": "darkness",
+    "weight": 1
+  },
+  {
+    "biomes": [
+      "minecraft:sunflower_plains",
+      "minecraft:meadow"
+    ],
+    "time": "day",
+    "influence": "radiant"
+  },
+  {
+    "biomes": [
+      "minecraft:meadow",
+      "minecraft:cherry_grove",
+      "minecraft:ice_spikes"
+    ],
+    "time": "night",
+    "influence": "arcane"
+  },
+  {
+    "biomes": [
+      "minecraft:plains"
+    ],
+    "time": "dawn",
+    "influence": "radiant"
+  },
+  {
+    "biomes": [
+      "minecraft:plains"
+    ],
+    "time": "dusk",
+    "influence": "arcane"
+  }
+]

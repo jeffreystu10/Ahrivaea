@@ -35,7 +35,7 @@ public class VesselItem extends Item {
 		}
 		if (!player.getAbilities().instabuild) stack.shrink(1);
 		float hpLeft = creature.getHealth() / creature.getMaxHealth();
-		float chance = creature.getSpecies().map(sp -> sp.catchRate()).orElse(0.45f) * (1.6f - hpLeft);
+		float chance = 0.45f * (1.6f - hpLeft);
 		boolean caught = level.getRandom().nextFloat() < chance;
 		double x = creature.getX(), y = creature.getY() + creature.getBbHeight() / 2, z = creature.getZ();
 		if (caught) {

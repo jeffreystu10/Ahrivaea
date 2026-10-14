@@ -22,6 +22,17 @@ loom {
 	}
 }
 
+fabricApi {
+	// a separate "gametest" source set whose client tests start the game and take screenshots
+	configureTests {
+		createSourceSet = true
+		modId = "ahrivaea-test"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

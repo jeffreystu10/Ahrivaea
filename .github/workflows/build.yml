@@ -3,6 +3,8 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,6 +27,26 @@ jobs:
           echo "::error title=Build errors::${msg}"
       - name: Server test
         run: .github/scripts/server-test.sh
+      - name: Client screenshots
+        if: success()
+        run: |
+          set -o pipefail
+          ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
+            msg=$(grep -E "ERROR|Exception|Caused by|at dev\.ahrivaea|FAILURE|What went wrong|error:" -A2 client.log | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+            echo "::error title=Client test::${msg}"
+            exit 1
+          }
+      - name: Publish screenshots
+        if: always()
+        run: |
+          shots=$(find . -path ./.git -prune -o -type d -name screenshots -print | head -5)
+          echo "found: $shots"
+          [ -z "$shots" ] && exit 0
+          mkdir -p /tmp/shots && for d in $shots; do cp -r "$d"/. /tmp/shots/; done
+          cd /tmp/shots && git init -q && git checkout -q -b ci-screenshots
+          echo "${GITHUB_SHA}" > COMMIT
+          git add -A && git -c user.name=ci -c user.email=ci@localhost commit -qm "Screenshots for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-screenshots
       - name: Upload mod jar
         if: success()
         uses: actions/upload-artifact@v5

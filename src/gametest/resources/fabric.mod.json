@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "ahrivaea-test",
+  "version": "1.0.0",
+  "name": "Ahrivaea client tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots"]
+  },
+  "depends": {"ahrivaea": "*"}
+}

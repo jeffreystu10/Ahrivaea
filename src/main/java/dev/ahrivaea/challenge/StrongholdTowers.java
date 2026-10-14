@@ -109,6 +109,8 @@ public final class StrongholdTowers {
 			}
 		}
 		Vec3i size = level.getServer().getStructureTemplateManager().get(def.ruined()).map(t -> t.getSize()).orElse(new Vec3i(1, 1, 1));
+		// load the chunk under the tower's centre first: heights aren't known in unloaded chunks
+		level.getChunk(x >> 4, z >> 4);
 		int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
 		BlockPos origin = new BlockPos(x - size.getX() / 2, y - 1, z - size.getZ() / 2);
 		return Challenges.place(level, def, origin, id) ? origin : null;

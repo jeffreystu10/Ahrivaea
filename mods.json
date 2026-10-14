@@ -26,7 +26,9 @@
           "dev.ahrivaea.client.AhrivaeaClient"
         ]
       },
-      "mixins": [],
+      "mixins": [
+        "ahrivaea.client.mixins.json"
+      ],
       "include": [
         "dev/ahrivaea/*.class",
         "dev/ahrivaea/creature/**",
@@ -41,7 +43,8 @@
         "assets/ahrivaea/models/**",
         "data/ahrivaea/creature/**",
         "data/ahrivaea/influence_rules/**",
-        "data/ahrivaea/recipe/vessel.json"
+        "data/ahrivaea/recipe/vessel.json",
+        "ahrivaea.client.mixins.json"
       ]
     },
     {

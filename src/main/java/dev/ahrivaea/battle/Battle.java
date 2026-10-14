@@ -471,7 +471,7 @@ public final class Battle {
 		StringBuilder t = new StringBuilder();
 		for (int i = 0; i < grid.heights.length; i++) {
 			h.add(grid.heights[i]);
-			t.append(grid.terrain[i].name().charAt(0));
+			t.append(grid.terrain[i].code());
 		}
 		g.add("h", h);
 		g.addProperty("t", t.toString());

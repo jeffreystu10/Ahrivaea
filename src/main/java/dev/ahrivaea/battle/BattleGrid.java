@@ -13,7 +13,25 @@ import net.minecraft.world.level.block.state.BlockState;
  * server and in the client's highlights.
  */
 public final class BattleGrid {
-	public enum Terrain { GROUND, WATER, DEEP_WATER, LAVA, WALL }
+	public enum Terrain {
+		GROUND('G'), WATER('W'), DEEP_WATER('D'), LAVA('L'), WALL('X');
+
+		private final char code;
+
+		Terrain(char code) {
+			this.code = code;
+		}
+
+		/** One letter per cell when the grid is sent to the client. */
+		public char code() {
+			return code;
+		}
+
+		public static Terrain of(char c) {
+			for (Terrain t : values()) if (t.code == c) return t;
+			return WALL;
+		}
+	}
 
 	public final int size, originX, originZ;
 	public final int[] heights;

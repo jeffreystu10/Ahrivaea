@@ -33,7 +33,7 @@ jobs:
           set -o pipefail
           sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-vulkan-drivers > /dev/null
           timeout 900 xvfb-run -a -s "-screen 0 1920x1080x24" ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
-            msg=$( (grep -E "ERROR|Exception|Caused by|at dev\.ahrivaea|FAILURE|What went wrong|error:" -A2 client.log | head -50; echo "--- last lines ---"; grep -v "^\s*at " client.log | tail -40) | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+            msg=$( (grep -E "AssertionError|Exception|Caused by|at dev\.ahrivaea|FAILURE|What went wrong|error:|Test failed|FAILED" -A1 client.log | grep -vE "flite|GLX|Realms|Narrator|resource path|Anisotropic|SignedJWT|BackendCreation|renderpearl|text2speech" | cut -c1-400 | head -40; echo "--- last lines ---"; grep -v "^\s*at " client.log | grep -vE "flite|resource path" | cut -c1-300 | tail -25) | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
             echo "::error title=Client test::${msg}"
             exit 1
           }

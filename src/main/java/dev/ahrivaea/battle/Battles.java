@@ -263,7 +263,14 @@ public final class Battles {
 			if (species.isPresent()) Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.hp, b.wild.x(), b.wild.y(), b.wild.z());
 			b.wild = null;
 		}
-		if (p != null && p.hasAttached(ArenaReturn.ATTACHMENT)) ArenaReturn.sendBack(p);
+		if (p != null) {
+			Ahrivaea.LOGGER.info("Battle over for {}: back from {} (return point {})", p.getPlainTextName(), p.level().dimension().identifier(), p.getAttached(ArenaReturn.ATTACHMENT));
+			try {
+				ArenaReturn.sendBack(p);
+			} catch (RuntimeException e) {
+				Ahrivaea.LOGGER.error("Couldn't send {} back from the arena", p.getPlainTextName(), e);
+			}
+		}
 	}
 
 	// ---- running ----

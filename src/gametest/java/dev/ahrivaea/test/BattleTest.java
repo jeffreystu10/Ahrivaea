@@ -192,7 +192,9 @@ public class BattleTest implements FabricClientGameTest {
 			});
 			if (charLevelXp <= 1000) failures.add("the player character should have gained XP");
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).leave());
-			context.waitFor(c -> !(c.gui.screen() instanceof BattleScreen) && !c.level.dimension().equals(Arena.DIMENSION), 400);
+			for (int t = 0; t < 400 && !context.computeOnClient(c -> c.level != null && !(c.gui.screen() instanceof BattleScreen) && !c.level.dimension().equals(Arena.DIMENSION)); t++) context.waitTick();
+			String where = context.computeOnClient(c -> "dimension " + (c.level == null ? "none" : c.level.dimension().identifier()) + ", screen " + (c.gui.screen() == null ? "none" : c.gui.screen().getClass().getSimpleName()) + ", battle state " + BattleClient.active());
+			if (!where.contains("minecraft:overworld") || where.contains("BattleScreen")) throw new AssertionError("after leaving: " + where + "; " + String.join("; ", failures));
 			sp.getConnection().waitForChunksRender();
 			context.waitTicks(10);
 			double away = context.computeOnClient(c -> Math.sqrt(c.player.blockPosition().distSqr(pos)));

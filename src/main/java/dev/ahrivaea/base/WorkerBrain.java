@@ -420,7 +420,7 @@ public final class WorkerBrain {
 		List<BlockPos> logs = naturalTree(level, base);
 		if (logs == null) return;
 		Block kind = level.getBlockState(base).getBlock();
-		logs.sort(Comparator.comparingInt(BlockPos::getY).reversed());
+		logs.sort(Comparator.comparingInt((BlockPos p) -> p.getY()).reversed());
 		for (BlockPos p : logs) level.destroyBlock(p, true, self);
 		// replant where it stood (the leaves left behind decay and drop more saplings and apples)
 		Block sapling = SAPLINGS.get(kind);

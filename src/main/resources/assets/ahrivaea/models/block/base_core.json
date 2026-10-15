@@ -1,0 +1,1 @@
+{"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "ahrivaea:block/base_core_top", "bottom": "ahrivaea:block/base_core", "side": "ahrivaea:block/base_core"}}

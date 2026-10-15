@@ -24,6 +24,7 @@
 		]
 	},
 	"mixins": [
+		"ahrivaea.mixins.json",
 		"ahrivaea_stellar.mixins.json",
 		"ahrivaea_horses.mixins.json",
 		"ahrivaea_minecarts.mixins.json",

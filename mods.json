@@ -28,6 +28,7 @@
         ]
       },
       "mixins": [
+        "ahrivaea.mixins.json",
         {
           "config": "ahrivaea.client.mixins.json",
           "environment": "client"
@@ -63,6 +64,15 @@
         "data/ahrivaea/recipe/vessel.json",
         "data/ahrivaea/dimension/**",
         "data/ahrivaea/dimension_type/**",
+        "dev/ahrivaea/base/**",
+        "ahrivaea.mixins.json",
+        "assets/ahrivaea/blockstates/**",
+        "assets/ahrivaea/models/block/**",
+        "assets/ahrivaea/textures/block/**",
+        "assets/ahrivaea/items/base_core.json",
+        "assets/ahrivaea/items/mining_post.json",
+        "data/ahrivaea/recipe/base_core.json",
+        "data/ahrivaea/recipe/mining_post.json",
         "ahrivaea.client.mixins.json"
       ]
     },

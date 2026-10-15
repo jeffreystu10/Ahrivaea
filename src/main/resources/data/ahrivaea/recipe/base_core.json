@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IAI",
+    "AVA",
+    "IAI"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "A": "minecraft:amethyst_shard",
+    "V": "ahrivaea:vessel"
+  },
+  "result": {
+    "id": "ahrivaea:base_core",
+    "count": 1
+  }
+}

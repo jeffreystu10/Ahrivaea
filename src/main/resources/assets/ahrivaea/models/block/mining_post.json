@@ -1,0 +1,1 @@
+{"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "ahrivaea:block/mining_post_top", "bottom": "minecraft:block/oak_planks", "side": "ahrivaea:block/mining_post_side"}}

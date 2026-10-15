@@ -52,12 +52,44 @@ public class CreatureEntity extends TamableAnimal {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
+		// at a base, work comes before anything else (following the owner, wandering ...)
+		this.goalSelector.addGoal(1, new WorkGoal());
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
 		this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 		this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.1, 6f, 2f));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.9));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6f));
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+	}
+
+	private dev.ahrivaea.base.WorkerBrain brain;
+
+	/** What it's doing at its base, if it's a base worker (server side). */
+	public dev.ahrivaea.base.WorkerBrain brain() {
+		if (brain == null && !this.level().isClientSide() && this.hasAttached(dev.ahrivaea.base.Bases.WORKER_OF))
+			brain = new dev.ahrivaea.base.WorkerBrain(this, this.getAttached(dev.ahrivaea.base.Bases.WORKER_OF));
+		return brain;
+	}
+
+	private class WorkGoal extends net.minecraft.world.entity.ai.goal.Goal {
+		WorkGoal() {
+			setFlags(java.util.EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+		}
+
+		@Override
+		public boolean canUse() {
+			return brain() != null;
+		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
+		}
+
+		@Override
+		public void tick() {
+			brain().tick((net.minecraft.server.level.ServerLevel) level());
+		}
 	}
 
 	/** The species id; known on both server and client. */
@@ -145,6 +177,11 @@ public class CreatureEntity extends TamableAnimal {
 
 	@Override
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		if (this.isTame() && this.isOwnedBy(player) && this.hasAttached(dev.ahrivaea.base.Bases.WORKER_OF)) {
+			if (!this.level().isClientSide()) player.sendOverlayMessage(Component.literal(displayName() + ": "
+					+ (brain() != null ? brain().status() : "working") + ". (Use the base core to send it away.)"));
+			return InteractionResult.SUCCESS;
+		}
 		if (this.isTame() && this.isOwnedBy(player)) {
 			if (!this.level().isClientSide()) {
 				if (player.isShiftKeyDown()) {

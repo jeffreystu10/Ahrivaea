@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "CLC",
+    "CLC"
+  ],
+  "key": {
+    "P": "minecraft:stone_pickaxe",
+    "C": "minecraft:cobblestone",
+    "L": "#minecraft:logs"
+  },
+  "result": {
+    "id": "ahrivaea:mining_post",
+    "count": 1
+  }
+}

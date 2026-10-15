@@ -159,8 +159,8 @@ public final class Battles {
 			grid = BattleGrid.read(arena, c, RADIUS);
 			level = arena;
 			// you line up on the south edge, the wild creatures on the north edge
-			playerCell = new int[] {RADIUS, grid.size - 2};
-			enemyCell = new int[] {RADIUS, 1};
+			playerCell = new int[] {RADIUS, grid.size - 4};
+			enemyCell = new int[] {RADIUS, 3};
 			Ahrivaea.LOGGER.info("Arena {} ({}) for {}", slot, theme, player.getPlainTextName());
 		} else {
 			// no arena dimension (or already in one): fight on the spot
@@ -344,6 +344,7 @@ public final class Battles {
 			else {
 				FINISHED.remove(p.getUUID());
 				ServerPlayNetworking.send(p, new StatePayload("{}"));
+				goHome(p, done);
 			}
 			if (msg != null) p.sendSystemMessage(Component.literal(msg).withStyle(ChatFormatting.RED));
 			else if (FINISHED.containsKey(p.getUUID())) send(done);

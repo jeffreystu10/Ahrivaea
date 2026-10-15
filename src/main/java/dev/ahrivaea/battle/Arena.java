@@ -188,7 +188,7 @@ public final class Arena {
 			}
 		}
 		// keep the two starting edges level, so both sides have room to line up
-		for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) if (Math.abs(z) >= FIELD - 2) h[x + r][z + r] = 0;
+		for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) if (Math.abs(z) >= FIELD - 4) h[x + r][z + r] = 0;
 		for (int x = -r; x <= r; x++) {
 			for (int z = -r; z <= r; z++) {
 				int top = h[x + r][z + r];
@@ -210,7 +210,7 @@ public final class Arena {
 				for (int z = -size; z <= size; z++) {
 					if (x * x + z * z > size * size + 1) continue;
 					int ax = px + x, az = pz + z;
-					if (Math.abs(ax) > FIELD || Math.abs(az) > FIELD - 3) continue;
+					if (Math.abs(ax) > FIELD || Math.abs(az) > FIELD - 5) continue;
 					int top = h[ax + r][az + r];
 					BlockPos surface = c.offset(ax, top - 1, az);
 					BlockState liquid = switch (theme.liquid) {
@@ -229,7 +229,7 @@ public final class Arena {
 		// obstacles in the field (not on the starting rows)
 		int count = 6 + rnd.nextInt(6);
 		for (int i = 0; i < count; i++) {
-			int ox = rnd.nextInt(2 * FIELD + 1) - FIELD, oz = rnd.nextInt(2 * FIELD - 5) - FIELD + 3;
+			int ox = rnd.nextInt(2 * FIELD + 1) - FIELD, oz = rnd.nextInt(2 * FIELD - 9) - FIELD + 5;
 			BlockPos base = c.offset(ox, h[ox + r][oz + r], oz);
 			if (!level.getBlockState(base.below()).isSolid() || !level.getBlockState(base).isAir()) continue;
 			obstacle(level, base, theme.obstacle, rnd);

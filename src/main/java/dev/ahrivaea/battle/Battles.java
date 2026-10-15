@@ -82,6 +82,8 @@ public final class Battles {
 	}
 
 	private static final Map<UUID, Battle> ACTIVE = new HashMap<>();
+	/** Operators looking at an arena with /battle arena (the only other people allowed in the arena dimension). */
+	private static final Set<UUID> PREVIEWING = new HashSet<>();
 	/** Finished battles whose results screen is still open (for recruiting). */
 	private static final Map<UUID, Battle> FINISHED = new HashMap<>();
 
@@ -110,12 +112,20 @@ public final class Battles {
 		// nothing outside the battle can hurt its units, and nobody can dig up the battlefield
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !inBattle(entity));
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, be) -> {
+			if (level.dimension().equals(Arena.DIMENSION)) return false;
 			for (Battle b : ACTIVE.values()) {
 				if (b.level == level && pos.getX() >= b.grid.originX && pos.getZ() >= b.grid.originZ
 						&& pos.getX() < b.grid.originX + b.grid.size && pos.getZ() < b.grid.originZ + b.grid.size) return false;
 			}
 			return true;
 		});
+		// and nothing in an arena can be used, placed or broken
+		net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player, level, hand, hit) ->
+				level.dimension().equals(Arena.DIMENSION) ? InteractionResult.FAIL : InteractionResult.PASS);
+		net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((player, level, hand) ->
+				level.dimension().equals(Arena.DIMENSION) && !player.isCreative() ? InteractionResult.FAIL : InteractionResult.PASS);
+		net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register((player, level, hand, pos, dir) ->
+				level.dimension().equals(Arena.DIMENSION) ? InteractionResult.FAIL : InteractionResult.PASS);
 		ServerTickEvents.END_SERVER_TICK.register(Battles::tick);
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(server -> {
 			if (server.getLevel(Arena.DIMENSION) != null) Ahrivaea.LOGGER.info("Battle arena dimension ready");
@@ -129,6 +139,7 @@ public final class Battles {
 				b.phase = Battle.Phase.OVER;
 				cleanUp(b);
 			}
+			PREVIEWING.remove(handler.getPlayer().getUUID());
 			Battle done = FINISHED.remove(handler.getPlayer().getUUID());
 			if (done != null) goHome(null, done);
 		});
@@ -153,6 +164,8 @@ public final class Battles {
 		ServerLevel arena = home.getServer().getLevel(Arena.DIMENSION);
 		List<CaughtCreature> party = Party.get(player);
 		var biome = home.getBiome(wild.blockPosition());
+		// 1-4 more wild creatures of the area join in
+		int extra = 1 + home.getRandom().nextInt(4);
 
 		ServerLevel level;
 		BattleGrid grid;
@@ -162,13 +175,14 @@ public final class Battles {
 			// off to an arena built for this battle, themed after where it happened
 			slot = freeSlot();
 			Arena.Theme theme = Arena.Theme.of(home, wild.blockPosition());
-			BlockPos c = Arena.build(arena, slot, theme, biome, home.getRandom().nextLong());
-			grid = BattleGrid.read(arena, c, RADIUS);
+			int field = arenaField(theme, 1 + extra, Math.min(Party.BATTLE_SIZE, party.size()) + 1);
+			BlockPos c = Arena.build(arena, slot, theme, biome, home.getRandom().nextLong(), field);
+			grid = BattleGrid.read(arena, c, field);
 			level = arena;
 			// you line up on the south edge, the wild creatures on the north edge
-			playerCell = new int[] {RADIUS, grid.size - 4};
-			enemyCell = new int[] {RADIUS, 3};
-			Ahrivaea.LOGGER.info("Arena {} ({}) for {}", slot, theme, player.getPlainTextName());
+			playerCell = new int[] {field, grid.size - 4};
+			enemyCell = new int[] {field, 3};
+			Ahrivaea.LOGGER.info("Arena {} ({}, {}x{}) for {}", slot, theme, grid.size, grid.size, player.getPlainTextName());
 		} else {
 			// no arena dimension (or already in one): fight on the spot
 			BlockPos center = BlockPos.containing(player.position().add(wild.position()).scale(0.5));
@@ -222,8 +236,6 @@ public final class Battles {
 				}
 				wild.discard();
 			}
-			// 1-4 more wild creatures of the area join in
-			int extra = 1 + b.random.nextInt(4);
 			for (int i = 0; i < extra; i++) {
 				var pick = Species.pickFor(biome, home, b.random);
 				Species s = pick.map(Species.Pick::species).orElse(wildSpecies.get());
@@ -250,6 +262,13 @@ public final class Battles {
 		return b;
 	}
 
+	/** Arena size (half-width): the biome's usual size, a bit bigger for crowded battles and smaller for small ones. */
+	static int arenaField(Arena.Theme theme, int enemies, int allies) {
+		int units = enemies + allies;
+		int f = theme.baseField() + (units >= 9 ? 1 : units <= 4 ? -1 : 0);
+		return Math.clamp(f, Arena.MIN_FIELD, Arena.MAX_FIELD);
+	}
+
 	/** True while a battle is putting its creatures into the arena (anything else turning up there is removed). */
 	private static boolean SPAWNING;
 
@@ -267,7 +286,8 @@ public final class Battles {
 	static void goHome(ServerPlayer p, Battle b) {
 		if (b != null && b.wild != null && b.lead != null && b.lead.alive()) {
 			var species = Species.get(b.wild.species());
-			if (species.isPresent()) Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.hp, b.wild.x(), b.wild.y(), b.wild.z());
+			var at = ArenaReturn.safeSpot(b.wild.level(), new net.minecraft.world.phys.Vec3(b.wild.x(), b.wild.y(), b.wild.z()));
+			if (species.isPresent() && at != null) Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.hp, at.x, at.y, at.z);
 			b.wild = null;
 		}
 		if (p != null) {
@@ -283,6 +303,16 @@ public final class Battles {
 	// ---- running ----
 
 	private static void tick(MinecraftServer server) {
+		// the arenas are only for battles: anyone else who turns up there (e.g. by /tp) is sent back
+		ServerLevel arenaLevel = server.getLevel(Arena.DIMENSION);
+		if (arenaLevel != null && server.getTickCount() % 20 == 0) {
+			for (ServerPlayer p : List.copyOf(arenaLevel.players())) {
+				UUID id = p.getUUID();
+				if (ACTIVE.containsKey(id) || FINISHED.containsKey(id) || PREVIEWING.contains(id)) continue;
+				Ahrivaea.LOGGER.info("{} is in the battle arenas without a battle; sending them back", p.getPlainTextName());
+				ArenaReturn.sendBack(p);
+			}
+		}
 		for (Battle b : List.copyOf(ACTIVE.values())) {
 			ServerPlayer p = b.player();
 			if (p == null) continue;
@@ -400,9 +430,10 @@ public final class Battles {
 		if (of(p) != null) return "Not during a battle.";
 		var biome = arena.registryAccess().lookupOrThrow(Registries.BIOME)
 				.get(ResourceKey.create(Registries.BIOME, Identifier.withDefaultNamespace(theme.sampleBiome())));
-		BlockPos c = Arena.build(arena, 1000 + theme.ordinal(), theme, biome.<Holder<Biome>>map(h -> h).orElse(null), theme.ordinal() * 31L + 7);
+		BlockPos c = Arena.build(arena, 1000 + theme.ordinal(), theme, biome.<Holder<Biome>>map(h -> h).orElse(null), theme.ordinal() * 31L + 7, theme.baseField());
+		PREVIEWING.add(p.getUUID());
 		if (!p.hasAttached(ArenaReturn.ATTACHMENT) && !p.level().dimension().equals(Arena.DIMENSION)) p.setAttached(ArenaReturn.ATTACHMENT, ArenaReturn.of(p));
-		p.teleportTo(arena, c.getX() + 0.5, c.getY() + 18, c.getZ() + Arena.FIELD + 8.5, Set.of(), 180, 45, true);
+		p.teleportTo(arena, c.getX() + 0.5, c.getY() + 18, c.getZ() + theme.baseField() + 8.5, Set.of(), 180, 45, true);
 		if (p.getAbilities().mayfly) {
 			p.getAbilities().flying = true;
 			p.onUpdateAbilities();
@@ -442,6 +473,7 @@ public final class Battles {
 				.then(Commands.literal("home").executes(ctx -> {
 					ServerPlayer p = ctx.getSource().getPlayerOrException();
 					if (of(p) != null) return 0;
+					PREVIEWING.remove(p.getUUID());
 					goHome(p, FINISHED.remove(p.getUUID()));
 					return 1;
 				}))

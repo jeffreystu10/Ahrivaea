@@ -68,6 +68,10 @@ public class BattleTest implements FabricClientGameTest {
 			context.waitTicks(20);
 			boolean wildGone = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(20)).isEmpty());
 			if (!wildGone) failures.add("the wild dragon should have gone into the arena with us");
+			long[] times = server.computeOnServer(s -> new long[]{s.overworld().getDefaultClockTime(), s.getLevel(Arena.DIMENSION).getDefaultClockTime()});
+			if (times[0] != times[1]) failures.add("the arena's time of day should match the world's: " + times[0] + " vs " + times[1]);
+			// while we're away, someone builds over the spot we left from: we must still come back somewhere safe
+			server.runCommand("fill %d %d %d %d %d %d minecraft:stone".formatted(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
 			context.takeScreenshot(TestScreenshotOptions.of("battle_1_start"));
 
 			// select our first creature by clicking it, then click a square two steps away
@@ -208,7 +212,12 @@ public class BattleTest implements FabricClientGameTest {
 			sp.getConnection().waitForChunksRender();
 			context.waitTicks(10);
 			double away = context.computeOnClient(c -> Math.sqrt(c.player.blockPosition().distSqr(pos)));
-			if (away > 3) failures.add("after the battle we should be back where we started, but are " + away + " blocks away");
+			boolean stuck = server.computeOnServer(s -> {
+				ServerPlayer pl = s.getPlayerList().getPlayers().getFirst();
+				return !pl.level().noCollision(pl.getBoundingBox()) || pl.level().getBlockState(pl.blockPosition().below()).isAir();
+			});
+			if (away > 10) failures.add("after the battle we should be back near where we started, but are " + away + " blocks away");
+			if (stuck) failures.add("after the battle we should be standing on the ground with room around us");
 			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after"));
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));

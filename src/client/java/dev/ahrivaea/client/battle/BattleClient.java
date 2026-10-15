@@ -54,7 +54,7 @@ public final class BattleClient {
 
 	/** Scroll to zoom (closer or farther), WASD/arrows to pan; kept over the battlefield. */
 	public static void zoom(double steps) {
-		camY = Math.clamp(camY - steps * 2, maxHeight + 7, maxHeight + 30);
+		camY = Math.clamp(camY - steps * 2, maxHeight + 7, maxHeight + 7 + (grid == null ? 23 : grid.size));
 	}
 
 	public static void pan(double dx, double dz) {
@@ -90,7 +90,8 @@ public final class BattleClient {
 			grid = new BattleGrid(size, g.get("ox").getAsInt(), g.get("oz").getAsInt(), h, t);
 			camX = grid.originX + size / 2.0;
 			camZ = grid.originZ + size / 2.0;
-			camY = max + 13;
+			// high enough to see the whole field, whatever its size (13 above the top for 21×21)
+			camY = max + Math.round(size * 0.62f);
 			maxHeight = max;
 			hudWasHidden = mc.gui.hud.isHidden();
 			if (!hudWasHidden) mc.gui.hud.toggle();

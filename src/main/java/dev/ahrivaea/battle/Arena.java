@@ -27,7 +27,11 @@ public final class Arena {
 	private Arena() {}
 
 	public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, Ahrivaea.id("battle_arena"));
-	public static final int FIELD = 10, BORDER = 6, GROUND = 64, SPACING = 256;
+	/** Half-widths of the battlefield: the field is (2 × field + 1) squares across. */
+	public static final int MIN_FIELD = 7, MAX_FIELD = 13;
+	public static final int BORDER = 6, GROUND = 64;
+	/** Arenas are this far apart, so nobody in one can see another (render distance is at most 32 chunks). */
+	public static final int SPACING = 1024;
 
 	/** How each kind of biome looks as an arena. */
 	public enum Theme {
@@ -72,6 +76,16 @@ public final class Arena {
 			this.obstacle = obstacle;
 			this.decor = decor;
 			this.border = border;
+		}
+
+		/** How big this kind of arena usually is (half-width): open country is wide, woods are middling, caves are tight. */
+		public int baseField() {
+			return switch (this) {
+				case PLAINS, MEADOW, DESERT, BADLANDS, SAVANNA, SNOWY, OCEAN, MOUNTAIN, END, BASALT -> 12;
+				case CAVE, LUSH_CAVE, DEEP_DARK -> 8;
+				case NETHER, SOUL_VALLEY, CRIMSON, WARPED -> 9;
+				default -> 10;
+			};
 		}
 
 		/** A biome that looks like this theme (for previewing arenas with /battle arena). */
@@ -163,10 +177,10 @@ public final class Arena {
 	}
 
 	/** Builds an arena (replacing whatever was there) and returns its centre square, at standing height. */
-	public static BlockPos build(ServerLevel level, int slot, Theme theme, Holder<Biome> biome, long seed) {
+	public static BlockPos build(ServerLevel level, int slot, Theme theme, Holder<Biome> biome, long seed, int field) {
 		BlockPos c = center(slot);
 		RandomSource rnd = RandomSource.create(seed);
-		int r = FIELD + BORDER;
+		int r = field + BORDER;
 		// clear the space and anything left from an earlier battle
 		for (Entity e : level.getEntities((Entity) null, new AABB(c).inflate(r + 4, 40, r + 4), e -> !(e instanceof net.minecraft.world.entity.player.Player))) e.discard();
 		BlockState air = Blocks.AIR.defaultBlockState();
@@ -176,7 +190,7 @@ public final class Arena {
 		int[][] h = new int[2 * r + 1][2 * r + 1];
 		int hills = theme.hills == 0 ? 0 : 1 + rnd.nextInt(theme.hills + 1);
 		for (int i = 0; i < hills; i++) {
-			int hx = rnd.nextInt(2 * FIELD + 1) - FIELD, hz = rnd.nextInt(2 * FIELD + 1) - FIELD;
+			int hx = rnd.nextInt(2 * field + 1) - field, hz = rnd.nextInt(2 * field + 1) - field;
 			int height = 1 + rnd.nextInt(Math.max(1, theme.hills));
 			double rad = 2.5 + rnd.nextDouble() * 3;
 			for (int x = -r; x <= r; x++) {
@@ -188,7 +202,7 @@ public final class Arena {
 			}
 		}
 		// keep the two starting edges level, so both sides have room to line up
-		for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) if (Math.abs(z) >= FIELD - 4) h[x + r][z + r] = 0;
+		for (int x = -r; x <= r; x++) for (int z = -r; z <= r; z++) if (Math.abs(z) >= field - 4) h[x + r][z + r] = 0;
 		for (int x = -r; x <= r; x++) {
 			for (int z = -r; z <= r; z++) {
 				int top = h[x + r][z + r];
@@ -204,13 +218,13 @@ public final class Arena {
 			default -> 1 + rnd.nextInt(2);
 		};
 		for (int i = 0; i < pools; i++) {
-			int px = rnd.nextInt(2 * FIELD - 3) - FIELD + 2, pz = rnd.nextInt(2 * FIELD - 9) - FIELD + 5;
+			int px = rnd.nextInt(2 * field - 3) - field + 2, pz = rnd.nextInt(2 * field - 9) - field + 5;
 			int size = theme.liquid == Liquid.SHALLOWS ? 3 + rnd.nextInt(3) : 1 + rnd.nextInt(2);
 			for (int x = -size; x <= size; x++) {
 				for (int z = -size; z <= size; z++) {
 					if (x * x + z * z > size * size + 1) continue;
 					int ax = px + x, az = pz + z;
-					if (Math.abs(ax) > FIELD || Math.abs(az) > FIELD - 5) continue;
+					if (Math.abs(ax) > field || Math.abs(az) > field - 5) continue;
 					int top = h[ax + r][az + r];
 					BlockPos surface = c.offset(ax, top - 1, az);
 					BlockState liquid = switch (theme.liquid) {
@@ -227,17 +241,17 @@ public final class Arena {
 		}
 
 		// obstacles in the field (not on the starting rows)
-		int count = 6 + rnd.nextInt(6);
+		int count = (6 + rnd.nextInt(6)) * field * field / 100;
 		for (int i = 0; i < count; i++) {
-			int ox = rnd.nextInt(2 * FIELD + 1) - FIELD, oz = rnd.nextInt(2 * FIELD - 9) - FIELD + 5;
+			int ox = rnd.nextInt(2 * field + 1) - field, oz = rnd.nextInt(2 * field - 9) - field + 5;
 			BlockPos base = c.offset(ox, h[ox + r][oz + r], oz);
 			if (!level.getBlockState(base.below()).isSolid() || !level.getBlockState(base).isAir()) continue;
 			obstacle(level, base, theme.obstacle, rnd);
 		}
 
 		// passable decoration
-		for (int x = -FIELD; x <= FIELD; x++) {
-			for (int z = -FIELD; z <= FIELD; z++) {
+		for (int x = -field; x <= field; x++) {
+			for (int z = -field; z <= field; z++) {
 				BlockPos p = c.offset(x, h[x + r][z + r], z);
 				if (!level.getBlockState(p).isAir() || !level.getBlockState(p.below()).isSolid()) continue;
 				if (rnd.nextInt(5) != 0) continue;
@@ -250,8 +264,8 @@ public final class Arena {
 		for (int x = -r; x <= r; x++) {
 			for (int z = -r; z <= r; z++) {
 				int ring = Math.max(Math.abs(x), Math.abs(z));
-				if (ring <= FIELD) continue;
-				border(level, c.offset(x, h[x + r][z + r], z), theme.border, ring - FIELD, rnd);
+				if (ring <= field) continue;
+				border(level, c.offset(x, h[x + r][z + r], z), theme.border, ring - field, rnd);
 			}
 		}
 

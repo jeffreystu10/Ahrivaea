@@ -35,6 +35,11 @@ public class ArenaScreenshots implements FabricClientGameTest {
 			}
 			server.runCommand("execute as @p run battle home");
 			context.waitFor(c -> c.level != null && !c.level.dimension().equals(Arena.DIMENSION), 400);
+			context.waitTicks(20);
+			// the arenas can't be visited outside a battle: someone teleported in is sent straight back
+			server.runCommand("execute in ahrivaea:battle_arena run tp @p 0 80 0");
+			context.waitFor(c -> c.level != null && c.level.dimension().equals(Arena.DIMENSION), 200);
+			context.waitFor(c -> c.level != null && !c.level.dimension().equals(Arena.DIMENSION), 400);
 		}
 	}
 }

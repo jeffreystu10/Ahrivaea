@@ -1,0 +1,73 @@
+{
+  "name": "Long",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 85,
+        "attack": 71,
+        "defense": 91,
+        "speed": 95,
+        "magic": 97,
+        "luck": 42,
+        "charisma": 86
+      },
+      "rarity": "Super Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 30
+      },
+      "drops": [
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.65,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:heart_of_the_sea",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        },
+        {
+          "job": "fishing",
+          "text": "Kelp harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 85,
+    "attack": 71,
+    "defense": 91,
+    "speed": 95,
+    "magic": 97,
+    "luck": 42,
+    "charisma": 86
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

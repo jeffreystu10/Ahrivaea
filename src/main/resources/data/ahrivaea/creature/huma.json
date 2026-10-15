@@ -1,0 +1,66 @@
+{
+  "name": "Huma",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 60,
+        "attack": 66,
+        "defense": 92,
+        "speed": 92,
+        "magic": 92,
+        "luck": 79,
+        "charisma": 62
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:stony_peaks"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.75,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:breeze_rod",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:golden_apple",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "transport",
+          "text": "Item courier"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 60,
+    "attack": 66,
+    "defense": 92,
+    "speed": 92,
+    "magic": 92,
+    "luck": 79,
+    "charisma": 62
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

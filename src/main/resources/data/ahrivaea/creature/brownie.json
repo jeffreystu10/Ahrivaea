@@ -1,0 +1,71 @@
+{
+  "name": "Brownie",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 55,
+        "attack": 98,
+        "defense": 93,
+        "speed": 73,
+        "magic": 51,
+        "luck": 93,
+        "charisma": 62
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove",
+          "minecraft:meadow",
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_pickaxe",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:wheat",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:cookie",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Crafting-table assistance"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 55,
+    "attack": 98,
+    "defense": 93,
+    "speed": 73,
+    "magic": 51,
+    "luck": 93,
+    "charisma": 62
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

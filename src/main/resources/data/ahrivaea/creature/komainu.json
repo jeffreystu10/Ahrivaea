@@ -1,0 +1,66 @@
+{
+  "name": "Komainu",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 62,
+        "attack": 84,
+        "defense": 59,
+        "speed": 77,
+        "magic": 94,
+        "luck": 60,
+        "charisma": 96
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 10
+      },
+      "drops": [
+        {
+          "item": "minecraft:pumpkin_seeds",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:melon_seeds",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:emerald",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Farm defense"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 62,
+    "attack": 84,
+    "defense": 59,
+    "speed": 77,
+    "magic": 94,
+    "luck": 60,
+    "charisma": 96
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

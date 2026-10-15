@@ -1,0 +1,70 @@
+{
+  "name": "Sahuagin",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 61,
+        "attack": 76,
+        "defense": 48,
+        "speed": 64,
+        "magic": 94,
+        "luck": 96,
+        "charisma": 78
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:trident",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Underwater farm defense"
+        },
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 61,
+    "attack": 76,
+    "defense": 48,
+    "speed": 64,
+    "magic": 94,
+    "luck": 96,
+    "charisma": 78
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

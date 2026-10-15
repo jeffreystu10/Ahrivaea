@@ -1,0 +1,66 @@
+{
+  "name": "Ogre",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 82,
+        "attack": 76,
+        "defense": 40,
+        "speed": 94,
+        "magic": 96,
+        "luck": 49,
+        "charisma": 68
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:swamp"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 270
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_spear",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 82,
+    "attack": 76,
+    "defense": 40,
+    "speed": 94,
+    "magic": 96,
+    "luck": 49,
+    "charisma": 68
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

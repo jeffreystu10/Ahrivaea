@@ -1,0 +1,119 @@
+{
+  "name": "Wyrm",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 81,
+        "attack": 64,
+        "defense": 61,
+        "speed": 79,
+        "magic": 53,
+        "luck": 90,
+        "charisma": 75
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:beef",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:raw_iron",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:flint",
+          "chance": 0.25,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Tunnel and ore mining"
+        },
+        {
+          "job": "mining",
+          "text": "Cave resource gathering"
+        }
+      ]
+    },
+    "void": {
+      "stats": {
+        "hp": 93,
+        "attack": 81,
+        "defense": 54,
+        "speed": 51,
+        "magic": 78,
+        "luck": 99,
+        "charisma": 44
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:chicken",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "End resource gathering"
+        },
+        {
+          "job": "transport",
+          "text": "Dimensional item routing"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 81,
+    "attack": 64,
+    "defense": 61,
+    "speed": 79,
+    "magic": 53,
+    "luck": 90,
+    "charisma": 75
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

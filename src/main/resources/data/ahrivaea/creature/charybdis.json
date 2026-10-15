@@ -1,0 +1,66 @@
+{
+  "name": "Charybdis",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 99,
+        "attack": 100,
+        "defense": 64,
+        "speed": 57,
+        "magic": 71,
+        "luck": 100,
+        "charisma": 100
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 10
+      },
+      "drops": [
+        {
+          "item": "minecraft:heart_of_the_sea",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.8,
+          "min": 3,
+          "max": 6
+        },
+        {
+          "item": "minecraft:trident",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Water-channel control"
+        },
+        {
+          "job": "fishing",
+          "text": "Aquatic harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 99,
+    "attack": 100,
+    "defense": 64,
+    "speed": 57,
+    "magic": 71,
+    "luck": 100,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

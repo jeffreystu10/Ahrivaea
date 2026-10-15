@@ -1,0 +1,72 @@
+{
+  "name": "Giant Snake",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 41,
+        "attack": 72,
+        "defense": 100,
+        "speed": 72,
+        "magic": 45,
+        "luck": 100,
+        "charisma": 89
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:cod",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "mining",
+          "text": "Cave resource gathering"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 41,
+    "attack": 72,
+    "defense": 100,
+    "speed": 72,
+    "magic": 45,
+    "luck": 100,
+    "charisma": 89
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

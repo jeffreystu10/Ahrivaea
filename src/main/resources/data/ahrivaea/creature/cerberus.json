@@ -1,0 +1,60 @@
+{
+  "name": "Cerberus",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 78,
+        "attack": 75,
+        "defense": 76,
+        "speed": 54,
+        "magic": 95,
+        "luck": 85,
+        "charisma": 99
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:soul_sand_valley"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 6
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.8,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:coal",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob farm support"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 78,
+    "attack": 75,
+    "defense": 76,
+    "speed": 54,
+    "magic": 95,
+    "luck": 85,
+    "charisma": 99
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Thunderstripe",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 98,
+        "attack": 61,
+        "defense": 58,
+        "speed": 95,
+        "magic": 80,
+        "luck": 73,
+        "charisma": 44
+      },
+      "rarity": "Super Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills"
+        ],
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 30
+      },
+      "drops": [
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:breeze_rod",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone power generation"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 98,
+    "attack": 61,
+    "defense": 58,
+    "speed": 95,
+    "magic": 80,
+    "luck": 73,
+    "charisma": 44
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

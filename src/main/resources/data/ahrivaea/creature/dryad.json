@@ -1,0 +1,122 @@
+{
+  "name": "Dryad",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 67,
+        "attack": 63,
+        "defense": 86,
+        "speed": 81,
+        "magic": 72,
+        "luck": 85,
+        "charisma": 90
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:pale_garden"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:oak_sapling",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glow_berries",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree planting and harvesting"
+        },
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        }
+      ]
+    },
+    "fae": {
+      "stats": {
+        "hp": 72,
+        "attack": 62,
+        "defense": 90,
+        "speed": 77,
+        "magic": 72,
+        "luck": 83,
+        "charisma": 96
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:cherry_sapling",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:oak_sapling",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree planting and harvesting"
+        },
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 67,
+    "attack": 63,
+    "defense": 86,
+    "speed": 81,
+    "magic": 72,
+    "luck": 85,
+    "charisma": 90
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

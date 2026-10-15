@@ -1,0 +1,66 @@
+{
+  "name": "Sasquatch",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 61,
+        "attack": 90,
+        "defense": 95,
+        "speed": 57,
+        "magic": 85,
+        "luck": 100,
+        "charisma": 46
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:sweet_berries",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 61,
+    "attack": 90,
+    "defense": 95,
+    "speed": 57,
+    "magic": 85,
+    "luck": 100,
+    "charisma": 46
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

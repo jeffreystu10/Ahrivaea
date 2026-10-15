@@ -25,8 +25,8 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			var server = sp.getServer();
 			server.runCommand("time set noon");
 			server.runCommand("weather clear");
-			server.runCommand("gamerule doDaylightCycle false");
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule advance_time false");
+			server.runCommand("gamerule spawn_mobs false");
 			for (int i = 0; i < FORMS.length; i++) {
 				int dx = (i % 4) * 7 - 10, dz = 10 + (i / 4) * 8;
 				server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon %s 30".formatted(x + dx, y, z + dz, FORMS[i]));

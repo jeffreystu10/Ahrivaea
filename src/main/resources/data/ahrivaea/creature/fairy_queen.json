@@ -1,0 +1,66 @@
+{
+  "name": "Fairy Queen",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 63,
+        "attack": 82,
+        "defense": 99,
+        "speed": 60,
+        "magic": 41,
+        "luck": 77,
+        "charisma": 80
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 6
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.7,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Advanced crop growth support"
+        },
+        {
+          "job": "logging",
+          "text": "Sapling replanting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 63,
+    "attack": 82,
+    "defense": 99,
+    "speed": 60,
+    "magic": 41,
+    "luck": 77,
+    "charisma": 80
+  },
+  "size": 0.7,
+  "movement": "fly"
+}

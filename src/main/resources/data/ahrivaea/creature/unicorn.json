@@ -1,0 +1,117 @@
+{
+  "name": "Unicorn",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 100,
+        "attack": 56,
+        "defense": 100,
+        "speed": 85,
+        "magic": 62,
+        "luck": 77,
+        "charisma": 88
+      },
+      "rarity": "Super Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove"
+        ],
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 18
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "ranching",
+          "text": "Livestock healing and ranching"
+        }
+      ]
+    },
+    "radiant": {
+      "stats": {
+        "hp": 72,
+        "attack": 76,
+        "defense": 78,
+        "speed": 41,
+        "magic": 85,
+        "luck": 54,
+        "charisma": 96
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:golden_carrot",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "ranching",
+          "text": "Animal husbandry"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 56,
+    "defense": 100,
+    "speed": 85,
+    "magic": 62,
+    "luck": 77,
+    "charisma": 88
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

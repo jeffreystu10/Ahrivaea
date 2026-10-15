@@ -1,0 +1,67 @@
+{
+  "name": "Giant Frog",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 71,
+        "attack": 47,
+        "defense": 92,
+        "speed": 69,
+        "magic": 54,
+        "luck": 96,
+        "charisma": 75
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:seagrass",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:lily_pad",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Slimeball collection"
+        },
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 71,
+    "attack": 47,
+    "defense": 92,
+    "speed": 69,
+    "magic": 54,
+    "luck": 96,
+    "charisma": 75
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

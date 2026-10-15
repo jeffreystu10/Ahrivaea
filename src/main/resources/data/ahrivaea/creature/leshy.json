@@ -1,0 +1,68 @@
+{
+  "name": "Leshy",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 93,
+        "attack": 54,
+        "defense": 85,
+        "speed": 66,
+        "magic": 88,
+        "luck": 42,
+        "charisma": 98
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:old_growth_birch_forest"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:oak_sapling",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Sapling replanting"
+        },
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 93,
+    "attack": 54,
+    "defense": 85,
+    "speed": 66,
+    "magic": 88,
+    "luck": 42,
+    "charisma": 98
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

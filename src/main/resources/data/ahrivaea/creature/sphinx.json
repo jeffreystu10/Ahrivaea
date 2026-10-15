@@ -1,0 +1,66 @@
+{
+  "name": "Sphinx",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 100,
+        "attack": 100,
+        "defense": 100,
+        "speed": 80,
+        "magic": 72,
+        "luck": 60,
+        "charisma": 69
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:emerald",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:ender_eye",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:sandstone",
+          "chance": 0.5,
+          "min": 1,
+          "max": 4
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Ore sorting"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 100,
+    "defense": 100,
+    "speed": 80,
+    "magic": 72,
+    "luck": 60,
+    "charisma": 69
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

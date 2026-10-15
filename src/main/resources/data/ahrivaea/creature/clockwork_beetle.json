@@ -1,0 +1,66 @@
+{
+  "name": "Clockwork Beetle",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 59,
+        "attack": 87,
+        "defense": 85,
+        "speed": 88,
+        "magic": 78,
+        "luck": 52,
+        "charisma": 96
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:dripstone_caves"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone component gathering"
+        },
+        {
+          "job": "mining",
+          "text": "Copper and stone gathering"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 59,
+    "attack": 87,
+    "defense": 85,
+    "speed": 88,
+    "magic": 78,
+    "luck": 52,
+    "charisma": 96
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Fallen Angel",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 58,
+        "attack": 43,
+        "defense": 67,
+        "speed": 59,
+        "magic": 93,
+        "luck": 95,
+        "charisma": 93
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:end_barrens"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 58,
+    "attack": 43,
+    "defense": 67,
+    "speed": 59,
+    "magic": 93,
+    "luck": 95,
+    "charisma": 93
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

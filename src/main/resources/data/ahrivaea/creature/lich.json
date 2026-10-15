@@ -1,0 +1,67 @@
+{
+  "name": "Lich",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 91,
+        "attack": 70,
+        "defense": 91,
+        "speed": 43,
+        "magic": 89,
+        "luck": 90,
+        "charisma": 100
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:soul_sand_valley"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:enchanted_book",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1,
+          "enchant": true
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing and enchanting"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 91,
+    "attack": 70,
+    "defense": 91,
+    "speed": 43,
+    "magic": 89,
+    "luck": 90,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

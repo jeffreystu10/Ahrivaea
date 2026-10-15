@@ -18,7 +18,7 @@ public class ArenaScreenshots implements FabricClientGameTest {
 			sp.getConnection().waitForChunksRender();
 			context.getInput().resizeWindow(1600, 900);
 			var server = sp.getServer();
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule spawn_mobs false");
 			context.runOnClient(c -> {
 				if (!c.gui.hud.isHidden()) c.gui.hud.toggle();
 			});

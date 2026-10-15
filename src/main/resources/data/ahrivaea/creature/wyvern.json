@@ -1,0 +1,68 @@
+{
+  "name": "Wyvern",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 94,
+        "attack": 75,
+        "defense": 44,
+        "speed": 72,
+        "magic": 81,
+        "luck": 73,
+        "charisma": 73
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:turtle_scute",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:packed_ice",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Ice harvesting"
+        },
+        {
+          "job": "transport",
+          "text": "Courier between farm and storage"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 94,
+    "attack": 75,
+    "defense": 44,
+    "speed": 72,
+    "magic": 81,
+    "luck": 73,
+    "charisma": 73
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

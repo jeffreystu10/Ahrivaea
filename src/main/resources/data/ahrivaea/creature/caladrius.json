@@ -1,0 +1,66 @@
+{
+  "name": "Caladrius",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 64,
+        "attack": 90,
+        "defense": 40,
+        "speed": 98,
+        "magic": 98,
+        "luck": 59,
+        "charisma": 65
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:ghast_tear",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Healing and farm support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 64,
+    "attack": 90,
+    "defense": 40,
+    "speed": 98,
+    "magic": 98,
+    "luck": 59,
+    "charisma": 65
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

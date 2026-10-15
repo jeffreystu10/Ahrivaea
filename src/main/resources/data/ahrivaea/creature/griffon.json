@@ -1,0 +1,69 @@
+{
+  "name": "Griffon",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 100,
+        "attack": 48,
+        "defense": 100,
+        "speed": 78,
+        "magic": 69,
+        "luck": 69,
+        "charisma": 46
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:jagged_peaks",
+          "minecraft:windswept_hills",
+          "minecraft:frozen_peaks",
+          "minecraft:snowy_slopes"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.75,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.1,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Courier between farm and storage"
+        },
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 48,
+    "defense": 100,
+    "speed": 78,
+    "magic": 69,
+    "luck": 69,
+    "charisma": 46
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

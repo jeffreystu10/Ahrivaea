@@ -1,0 +1,66 @@
+{
+  "name": "Pegasus",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 84,
+        "attack": 97,
+        "defense": 70,
+        "speed": 80,
+        "magic": 43,
+        "luck": 62,
+        "charisma": 73
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:cherry_grove"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:golden_apple",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Courier between farm and storage"
+        },
+        {
+          "job": "farming",
+          "text": "Crop and seed delivery"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 84,
+    "attack": 97,
+    "defense": 70,
+    "speed": 80,
+    "magic": 43,
+    "luck": 62,
+    "charisma": 73
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

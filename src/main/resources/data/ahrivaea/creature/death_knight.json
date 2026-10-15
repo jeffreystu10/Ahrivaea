@@ -1,0 +1,112 @@
+{
+  "name": "Death Knight",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 66,
+        "attack": 62,
+        "defense": 95,
+        "speed": 69,
+        "magic": 70,
+        "luck": 55,
+        "charisma": 83
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:wither_skeleton_skull",
+          "chance": 0.04,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    },
+    "darkness": {
+      "stats": {
+        "hp": 100,
+        "attack": 100,
+        "defense": 100,
+        "speed": 46,
+        "magic": 95,
+        "luck": 100,
+        "charisma": 44
+      },
+      "rarity": "Super Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes"
+        ],
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 18
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob farming and drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 66,
+    "attack": 62,
+    "defense": 95,
+    "speed": 69,
+    "magic": 70,
+    "luck": 55,
+    "charisma": 83
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

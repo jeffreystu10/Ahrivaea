@@ -1,0 +1,66 @@
+{
+  "name": "Crab",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 73,
+        "attack": 76,
+        "defense": 98,
+        "speed": 95,
+        "magic": 88,
+        "luck": 52,
+        "charisma": 87
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:armadillo_scute",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Beach resource gathering"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 73,
+    "attack": 76,
+    "defense": 98,
+    "speed": 95,
+    "magic": 88,
+    "luck": 52,
+    "charisma": 87
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

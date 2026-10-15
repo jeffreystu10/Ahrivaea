@@ -1,0 +1,66 @@
+{
+  "name": "Enchanted Axe",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 72,
+        "attack": 68,
+        "defense": 48,
+        "speed": 81,
+        "magic": 96,
+        "luck": 77,
+        "charisma": 97
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:stick",
+          "chance": 0.6,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:oak_log",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming and logging"
+        },
+        {
+          "job": "logging",
+          "text": "Wood processing"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 72,
+    "attack": 68,
+    "defense": 48,
+    "speed": 81,
+    "magic": 96,
+    "luck": 77,
+    "charisma": 97
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Living Spellbook",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 88,
+        "attack": 94,
+        "defense": 71,
+        "speed": 41,
+        "magic": 43,
+        "luck": 91,
+        "charisma": 80
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:book",
+          "chance": 0.6,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:paper",
+          "chance": 0.5,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:lapis_lazuli",
+          "chance": 0.2,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing and enchanting support"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 88,
+    "attack": 94,
+    "defense": 71,
+    "speed": 41,
+    "magic": 43,
+    "luck": 91,
+    "charisma": 80
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

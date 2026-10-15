@@ -305,6 +305,10 @@ public final class Battles {
 			} catch (RuntimeException e) {
 				Ahrivaea.LOGGER.error("Couldn't send {} back from the arena", p.getPlainTextName(), e);
 			}
+			if (b != null) {
+				for (var stack : b.loot) if (!p.getInventory().add(stack) || !stack.isEmpty()) p.spawnAtLocation(p.level(), stack);
+				b.loot.clear();
+			}
 		}
 	}
 
@@ -414,11 +418,10 @@ public final class Battles {
 		if (Party.xp(p) < d.cost()) return "Recruiting " + d.name() + " costs " + d.cost() + " XP; you have " + Party.xp(p) + ".";
 		var species = Species.get(d.species());
 		if (species.isEmpty()) return "That creature no longer exists.";
-		if (!Party.add(p, new CaughtCreature(d.species(), d.influence(), d.level(), 0, species.get().statsFor(d.influence()).maxHealth(d.level())))) {
-			return "Your party is full (6).";
-		}
+		boolean party = Party.addAnywhere(p, new CaughtCreature(d.species(), d.influence(), d.level(), 0, species.get().statsFor(d.influence()).maxHealth(d.level())));
 		Party.addXp(p, -d.cost());
 		b.defeated.remove(index);
+		if (!party) p.sendSystemMessage(Component.literal("Your party is full, so " + d.name() + " went to your box (/party box).").withStyle(ChatFormatting.YELLOW));
 		p.sendSystemMessage(Component.literal(d.name() + " joined your party! (-" + d.cost() + " XP)").withStyle(ChatFormatting.GREEN));
 		return null;
 	}

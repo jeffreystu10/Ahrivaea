@@ -1,0 +1,70 @@
+{
+  "name": "Mermaid",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 77,
+        "attack": 92,
+        "defense": 50,
+        "speed": 78,
+        "magic": 100,
+        "luck": 48,
+        "charisma": 100
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:heart_of_the_sea",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 77,
+    "attack": 92,
+    "defense": 50,
+    "speed": 78,
+    "magic": 100,
+    "luck": 48,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

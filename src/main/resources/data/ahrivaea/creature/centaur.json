@@ -1,0 +1,68 @@
+{
+  "name": "Centaur",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 100,
+        "attack": 100,
+        "defense": 70,
+        "speed": 75,
+        "magic": 100,
+        "luck": 46,
+        "charisma": 59
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:old_growth_birch_forest"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:wheat",
+          "chance": 0.2,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Crop planting and harvesting"
+        },
+        {
+          "job": "ranching",
+          "text": "Animal husbandry"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 100,
+    "defense": 70,
+    "speed": 75,
+    "magic": 100,
+    "luck": 46,
+    "charisma": 59
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

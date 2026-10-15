@@ -1,0 +1,114 @@
+{
+  "name": "Stirge",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 72,
+        "attack": 79,
+        "defense": 92,
+        "speed": 84,
+        "magic": 53,
+        "luck": 86,
+        "charisma": 86
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop pollination"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup and routing"
+        }
+      ]
+    },
+    "radiant": {
+      "stats": {
+        "hp": 61,
+        "attack": 90,
+        "defense": 75,
+        "speed": 91,
+        "magic": 69,
+        "luck": 90,
+        "charisma": 98
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.65,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "defense",
+          "text": "Hostile-mob detection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 72,
+    "attack": 79,
+    "defense": 92,
+    "speed": 84,
+    "magic": 53,
+    "luck": 86,
+    "charisma": 86
+  },
+  "size": 0.7,
+  "movement": "fly"
+}

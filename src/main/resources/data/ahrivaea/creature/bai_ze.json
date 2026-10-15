@@ -1,0 +1,70 @@
+{
+  "name": "Bai Ze",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 78,
+        "attack": 93,
+        "defense": 86,
+        "speed": 51,
+        "magic": 66,
+        "luck": 60,
+        "charisma": 93
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:mutton",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 78,
+    "attack": 93,
+    "defense": 86,
+    "speed": 51,
+    "magic": 66,
+    "luck": 60,
+    "charisma": 93
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

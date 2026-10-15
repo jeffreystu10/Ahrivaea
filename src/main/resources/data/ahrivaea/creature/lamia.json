@@ -1,0 +1,66 @@
+{
+  "name": "Lamia",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 80,
+        "attack": 54,
+        "defense": 78,
+        "speed": 89,
+        "magic": 96,
+        "luck": 74,
+        "charisma": 76
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:rabbit_hide",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Livestock pen protection"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 80,
+    "attack": 54,
+    "defense": 78,
+    "speed": 89,
+    "magic": 96,
+    "luck": 74,
+    "charisma": 76
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

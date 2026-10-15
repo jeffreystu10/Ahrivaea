@@ -1,0 +1,68 @@
+{
+  "name": "Wild Hunt Rider",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 94,
+        "attack": 48,
+        "defense": 81,
+        "speed": 96,
+        "magic": 74,
+        "luck": 78,
+        "charisma": 53
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_sword",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "defense",
+          "text": "Farm patrol"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 94,
+    "attack": 48,
+    "defense": 81,
+    "speed": 96,
+    "magic": 74,
+    "luck": 78,
+    "charisma": 53
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

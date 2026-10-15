@@ -1,0 +1,71 @@
+{
+  "name": "Couatl",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 45,
+        "attack": 57,
+        "defense": 100,
+        "speed": 87,
+        "magic": 96,
+        "luck": 97,
+        "charisma": 61
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove",
+          "minecraft:meadow",
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 45,
+    "attack": 57,
+    "defense": 100,
+    "speed": 87,
+    "magic": 96,
+    "luck": 97,
+    "charisma": 61
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

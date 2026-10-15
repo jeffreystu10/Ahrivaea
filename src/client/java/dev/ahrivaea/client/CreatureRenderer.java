@@ -36,6 +36,8 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		state.extent = (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
 		state.texture = GeoModels.texture(species, influence);
 		state.sitting = entity.isInSittingPose();
+		// creatures without their own model yet: the placeholder, tinted the colour of their influence
+		state.tint = state.geo == null ? 0xFF000000 | entity.getInfluence().color() : -1;
 	}
 
 	@Override
@@ -56,6 +58,11 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 	@Override
 	protected float getShadowRadius(CreatureRenderState state) {
 		return super.getShadowRadius(state) * (state.geo != null ? 2.5f : 1f);
+	}
+
+	@Override
+	protected int getModelTint(CreatureRenderState state) {
+		return state.tint;
 	}
 
 	@Override

@@ -1,0 +1,66 @@
+{
+  "name": "Gelatinous Cube",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 79,
+        "attack": 74,
+        "defense": 85,
+        "speed": 65,
+        "magic": 59,
+        "luck": 60,
+        "charisma": 87
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.1,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup and chest sorting"
+        },
+        {
+          "job": "growth",
+          "text": "Trash-to-compost processing"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 74,
+    "defense": 85,
+    "speed": 65,
+    "magic": 59,
+    "luck": 60,
+    "charisma": 87
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

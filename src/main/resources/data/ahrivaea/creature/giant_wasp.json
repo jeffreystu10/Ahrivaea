@@ -1,0 +1,70 @@
+{
+  "name": "Giant Wasp",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 40,
+        "attack": 58,
+        "defense": 88,
+        "speed": 82,
+        "magic": 72,
+        "luck": 100,
+        "charisma": 65
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:honey_bottle",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop pollination"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 40,
+    "attack": 58,
+    "defense": 88,
+    "speed": 82,
+    "magic": 72,
+    "luck": 100,
+    "charisma": 65
+  },
+  "size": 1.6,
+  "movement": "fly"
+}

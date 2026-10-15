@@ -1,0 +1,182 @@
+{
+  "name": "Zombie",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 43,
+        "attack": 86,
+        "defense": 87,
+        "speed": 80,
+        "magic": 95,
+        "luck": 54,
+        "charisma": 59
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.65,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.25,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.1,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Snow and ice harvesting"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    },
+    "nature": {
+      "stats": {
+        "hp": 42,
+        "attack": 92,
+        "defense": 82,
+        "speed": 76,
+        "magic": 100,
+        "luck": 48,
+        "charisma": 67
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:pale_garden",
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:wheat_seeds",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        },
+        {
+          "job": "growth",
+          "text": "Composting"
+        }
+      ]
+    },
+    "darkness": {
+      "stats": {
+        "hp": 83,
+        "attack": 52,
+        "defense": 100,
+        "speed": 79,
+        "magic": 88,
+        "luck": 73,
+        "charisma": 54
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld",
+          "#minecraft:is_nether",
+          "#minecraft:is_end"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.75,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.12,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:potato",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 42,
+    "attack": 92,
+    "defense": 82,
+    "speed": 76,
+    "magic": 100,
+    "luck": 48,
+    "charisma": 67
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

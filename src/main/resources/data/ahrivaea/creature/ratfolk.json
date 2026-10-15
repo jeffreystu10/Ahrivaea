@@ -1,0 +1,66 @@
+{
+  "name": "Ratfolk",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 48,
+        "attack": 51,
+        "defense": 77,
+        "speed": 89,
+        "magic": 94,
+        "luck": 96,
+        "charisma": 64
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:dripstone_caves"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 48,
+    "attack": 51,
+    "defense": 77,
+    "speed": 89,
+    "magic": 94,
+    "luck": 96,
+    "charisma": 64
+  },
+  "size": 0.7,
+  "movement": "walk"
+}

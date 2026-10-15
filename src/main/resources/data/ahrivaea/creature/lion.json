@@ -1,0 +1,66 @@
+{
+  "name": "Lion",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 50,
+        "attack": 100,
+        "defense": 45,
+        "speed": 100,
+        "magic": 100,
+        "luck": 57,
+        "charisma": 78
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Livestock and farm defense"
+        },
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 50,
+    "attack": 100,
+    "defense": 45,
+    "speed": 100,
+    "magic": 100,
+    "luck": 57,
+    "charisma": 78
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

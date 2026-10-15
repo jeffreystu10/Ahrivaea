@@ -1,0 +1,66 @@
+{
+  "name": "Gilded Sentinel",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 54,
+        "attack": 92,
+        "defense": 81,
+        "speed": 78,
+        "magic": 95,
+        "luck": 55,
+        "charisma": 61
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:savanna"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 3
+      },
+      "drops": [
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.45,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.18,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:totem_of_undying",
+          "chance": 0.01,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "High-level base defense"
+        },
+        {
+          "job": "defense",
+          "text": "Valuable-item security"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 54,
+    "attack": 92,
+    "defense": 81,
+    "speed": 78,
+    "magic": 95,
+    "luck": 55,
+    "charisma": 61
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

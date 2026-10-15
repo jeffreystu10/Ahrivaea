@@ -1,0 +1,66 @@
+{
+  "name": "Enchanted Lantern",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 87,
+        "attack": 51,
+        "defense": 41,
+        "speed": 82,
+        "magic": 79,
+        "luck": 80,
+        "charisma": 96
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 24
+      },
+      "drops": [
+        {
+          "item": "minecraft:lantern",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:glow_ink_sac",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "lighting",
+          "text": "Dark-area exploration and lighting"
+        },
+        {
+          "job": "defense",
+          "text": "Mob detection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 87,
+    "attack": 51,
+    "defense": 41,
+    "speed": 82,
+    "magic": 79,
+    "luck": 80,
+    "charisma": 96
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

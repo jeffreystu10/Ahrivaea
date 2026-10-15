@@ -1,0 +1,66 @@
+{
+  "name": "Lamassu",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 95,
+        "attack": 73,
+        "defense": 76,
+        "speed": 59,
+        "magic": 46,
+        "luck": 72,
+        "charisma": 86
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "defense",
+          "text": "Storage-room protection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 95,
+    "attack": 73,
+    "defense": 76,
+    "speed": 59,
+    "magic": 46,
+    "luck": 72,
+    "charisma": 86
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

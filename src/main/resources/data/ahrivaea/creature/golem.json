@@ -1,0 +1,72 @@
+{
+  "name": "Golem",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 91,
+        "attack": 55,
+        "defense": 89,
+        "speed": 68,
+        "magic": 52,
+        "luck": 81,
+        "charisma": 72
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:clay_ball",
+          "chance": 0.65,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:stone",
+          "chance": 0.5,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 91,
+    "attack": 55,
+    "defense": 89,
+    "speed": 68,
+    "magic": 52,
+    "luck": 81,
+    "charisma": 72
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

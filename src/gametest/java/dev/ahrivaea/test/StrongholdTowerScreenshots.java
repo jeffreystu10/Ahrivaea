@@ -26,7 +26,7 @@ public class StrongholdTowerScreenshots implements FabricClientGameTest {
 			sp.getConnection().waitForChunksRender();
 			var server = sp.getServer();
 			server.runCommand("time set noon");
-			server.runCommand("gamerule doDaylightCycle false");
+			server.runCommand("gamerule advance_time false");
 			server.runCommand("weather clear");
 			context.runOnClient(client -> {
 				if (!client.gui.hud.isHidden()) client.gui.hud.toggle();

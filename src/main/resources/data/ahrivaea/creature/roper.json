@@ -1,0 +1,66 @@
+{
+  "name": "Roper",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 81,
+        "attack": 54,
+        "defense": 92,
+        "speed": 81,
+        "magic": 98,
+        "luck": 55,
+        "charisma": 82
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:end_highlands"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:shulker_shell",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 81,
+    "attack": 54,
+    "defense": 92,
+    "speed": 81,
+    "magic": 98,
+    "luck": 55,
+    "charisma": 82
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

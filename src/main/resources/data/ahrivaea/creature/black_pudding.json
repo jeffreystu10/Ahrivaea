@@ -1,0 +1,66 @@
+{
+  "name": "Black Pudding",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 58,
+        "attack": 80,
+        "defense": 100,
+        "speed": 75,
+        "magic": 60,
+        "luck": 45,
+        "charisma": 96
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:poisonous_potato",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.12,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Cobblestone and stone gathering"
+        },
+        {
+          "job": "smelting",
+          "text": "Furnace feeding"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 58,
+    "attack": 80,
+    "defense": 100,
+    "speed": 75,
+    "magic": 60,
+    "luck": 45,
+    "charisma": 96
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,624 @@
+{
+  "name": "Elemental",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 96,
+        "attack": 66,
+        "defense": 58,
+        "speed": 78,
+        "magic": 91,
+        "luck": 80,
+        "charisma": 72
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest",
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:desert"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:magma_block",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:blaze_powder",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting and cooking"
+        },
+        {
+          "job": "smelting",
+          "text": "Fueling furnaces"
+        }
+      ]
+    },
+    "frost": {
+      "stats": {
+        "hp": 77,
+        "attack": 68,
+        "defense": 67,
+        "speed": 87,
+        "magic": 88,
+        "luck": 87,
+        "charisma": 74
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.75,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "item": "minecraft:packed_ice",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:blue_ice",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Ice production"
+        },
+        {
+          "job": "ice",
+          "text": "Snow harvesting"
+        }
+      ]
+    },
+    "storm": {
+      "stats": {
+        "hp": 78,
+        "attack": 76,
+        "defense": 63,
+        "speed": 81,
+        "magic": 93,
+        "luck": 83,
+        "charisma": 66
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:wind_charge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:breeze_rod",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone power generation"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ]
+    },
+    "earth": {
+      "stats": {
+        "hp": 84,
+        "attack": 80,
+        "defense": 61,
+        "speed": 90,
+        "magic": 91,
+        "luck": 85,
+        "charisma": 68
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:cobblestone",
+          "chance": 0.65,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:clay_ball",
+          "chance": 0.5,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.1,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "crafting",
+          "text": "Stonecutting and block processing"
+        }
+      ]
+    },
+    "water": {
+      "stats": {
+        "hp": 86,
+        "attack": 74,
+        "defense": 61,
+        "speed": 88,
+        "magic": 93,
+        "luck": 89,
+        "charisma": 66
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:water_bucket",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:heart_of_the_sea",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        },
+        {
+          "job": "fishing",
+          "text": "Fishing and aquatic harvesting"
+        }
+      ]
+    },
+    "nature": {
+      "stats": {
+        "hp": 96,
+        "attack": 75,
+        "defense": 55,
+        "speed": 85,
+        "magic": 83,
+        "luck": 80,
+        "charisma": 73
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:dappled_forest",
+          "minecraft:pale_garden"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:wheat_seeds",
+          "chance": 0.45,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:carrot",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:potato",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:beetroot_seeds",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "logging",
+          "text": "Tree planting and harvesting"
+        }
+      ]
+    },
+    "void": {
+      "stats": {
+        "hp": 81,
+        "attack": 68,
+        "defense": 60,
+        "speed": 86,
+        "magic": 100,
+        "luck": 100,
+        "charisma": 60
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:end_stone",
+          "chance": 0.45,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:chorus_fruit",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Dimensional item routing"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    },
+    "fae": {
+      "stats": {
+        "hp": 85,
+        "attack": 65,
+        "defense": 58,
+        "speed": 90,
+        "magic": 98,
+        "luck": 84,
+        "charisma": 71
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove",
+          "minecraft:meadow",
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glow_berries",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "logging",
+          "text": "Tree planting and harvesting"
+        }
+      ]
+    },
+    "darkness": {
+      "stats": {
+        "hp": 79,
+        "attack": 70,
+        "defense": 63,
+        "speed": 78,
+        "magic": 100,
+        "luck": 92,
+        "charisma": 74
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark",
+          "minecraft:dark_forest",
+          "minecraft:soul_sand_valley",
+          "minecraft:dripstone_caves",
+          "minecraft:nether_wastes",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:coal",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Soul sand and Nether wart gathering"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob farm support"
+        }
+      ]
+    },
+    "radiant": {
+      "stats": {
+        "hp": 100,
+        "attack": 68,
+        "defense": 61,
+        "speed": 85,
+        "magic": 83,
+        "luck": 81,
+        "charisma": 59
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 24
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nether_star",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Specialized resource gathering"
+        },
+        {
+          "job": "smelting",
+          "text": "Machine operation"
+        }
+      ]
+    },
+    "arcane": {
+      "stats": {
+        "hp": 92,
+        "attack": 72,
+        "defense": 61,
+        "speed": 94,
+        "magic": 99,
+        "luck": 73,
+        "charisma": 59
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 24
+      },
+      "drops": [
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Specialized resource gathering"
+        },
+        {
+          "job": "smelting",
+          "text": "Machine operation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 96,
+    "attack": 66,
+    "defense": 58,
+    "speed": 78,
+    "magic": 91,
+    "luck": 80,
+    "charisma": 72
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

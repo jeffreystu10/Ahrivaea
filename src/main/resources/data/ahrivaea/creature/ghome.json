@@ -1,0 +1,66 @@
+{
+  "name": "Ghome",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 79,
+        "attack": 68,
+        "defense": 43,
+        "speed": 98,
+        "magic": 100,
+        "luck": 72,
+        "charisma": 74
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:glow_ink_sac",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:brown_mushroom",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Mushroom farming"
+        },
+        {
+          "job": "growth",
+          "text": "Composting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 68,
+    "defense": 43,
+    "speed": 98,
+    "magic": 100,
+    "luck": 72,
+    "charisma": 74
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

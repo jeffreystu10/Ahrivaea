@@ -1,0 +1,66 @@
+{
+  "name": "Yurei",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 85,
+        "attack": 85,
+        "defense": 40,
+        "speed": 94,
+        "magic": 97,
+        "luck": 80,
+        "charisma": 82
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 85,
+    "attack": 85,
+    "defense": 40,
+    "speed": 94,
+    "magic": 97,
+    "luck": 80,
+    "charisma": 82
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

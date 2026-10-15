@@ -1,0 +1,66 @@
+{
+  "name": "Nidhogg",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 77,
+        "attack": 90,
+        "defense": 88,
+        "speed": 69,
+        "magic": 62,
+        "luck": 47,
+        "charisma": 74
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:obsidian",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:dragon_breath",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Nether resource gathering"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 77,
+    "attack": 90,
+    "defense": 88,
+    "speed": 69,
+    "magic": 62,
+    "luck": 47,
+    "charisma": 74
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

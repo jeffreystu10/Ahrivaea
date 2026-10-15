@@ -1,0 +1,69 @@
+{
+  "name": "Bugbear",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 61,
+        "attack": 74,
+        "defense": 49,
+        "speed": 95,
+        "magic": 86,
+        "luck": 98,
+        "charisma": 44
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:wooded_badlands",
+          "minecraft:desert",
+          "minecraft:windswept_hills"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 61,
+    "attack": 74,
+    "defense": 49,
+    "speed": 95,
+    "magic": 86,
+    "luck": 98,
+    "charisma": 44
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

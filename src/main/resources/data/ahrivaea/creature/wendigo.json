@@ -1,0 +1,66 @@
+{
+  "name": "Wendigo",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 40,
+        "attack": 78,
+        "defense": 82,
+        "speed": 88,
+        "magic": 87,
+        "luck": 53,
+        "charisma": 82
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:pale_garden"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:powder_snow_bucket",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Mushroom and berry gathering"
+        },
+        {
+          "job": "defense",
+          "text": "Farm defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 40,
+    "attack": 78,
+    "defense": 82,
+    "speed": 88,
+    "magic": 87,
+    "luck": 53,
+    "charisma": 82
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

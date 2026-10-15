@@ -1,0 +1,66 @@
+{
+  "name": "Night Hag",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 100,
+        "attack": 58,
+        "defense": 74,
+        "speed": 82,
+        "magic": 96,
+        "luck": 68,
+        "charisma": 86
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:ominous_bottle",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        },
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 58,
+    "defense": 74,
+    "speed": 82,
+    "magic": 96,
+    "luck": 68,
+    "charisma": 86
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

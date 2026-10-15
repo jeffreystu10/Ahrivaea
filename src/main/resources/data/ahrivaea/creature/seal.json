@@ -1,0 +1,67 @@
+{
+  "name": "Seal",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 67,
+        "attack": 82,
+        "defense": 53,
+        "speed": 92,
+        "magic": 86,
+        "luck": 84,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:frozen_ocean",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:cod",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.2,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "fishing",
+          "text": "Aquatic item collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 67,
+    "attack": 82,
+    "defense": 53,
+    "speed": 92,
+    "magic": 86,
+    "luck": 84,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

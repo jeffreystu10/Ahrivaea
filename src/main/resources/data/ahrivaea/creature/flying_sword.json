@@ -1,0 +1,68 @@
+{
+  "name": "Flying Sword",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 100,
+        "attack": 98,
+        "defense": 53,
+        "speed": 75,
+        "magic": 93,
+        "luck": 60,
+        "charisma": 74
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:old_growth_spruce_taiga",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.55,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:enchanted_book",
+          "chance": 0.04,
+          "min": 1,
+          "max": 1,
+          "enchant": true
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Hostile-mob hunting"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 98,
+    "defense": 53,
+    "speed": 75,
+    "magic": 93,
+    "luck": 60,
+    "charisma": 74
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

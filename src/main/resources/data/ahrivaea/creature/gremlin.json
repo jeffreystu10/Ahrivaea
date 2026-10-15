@@ -1,0 +1,71 @@
+{
+  "name": "Gremlin",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 47,
+        "attack": 100,
+        "defense": 44,
+        "speed": 76,
+        "magic": 80,
+        "luck": 98,
+        "charisma": 88
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark",
+          "minecraft:dark_forest",
+          "minecraft:soul_sand_valley",
+          "minecraft:dripstone_caves",
+          "minecraft:nether_wastes",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:coal",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 47,
+    "attack": 100,
+    "defense": 44,
+    "speed": 76,
+    "magic": 80,
+    "luck": 98,
+    "charisma": 88
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

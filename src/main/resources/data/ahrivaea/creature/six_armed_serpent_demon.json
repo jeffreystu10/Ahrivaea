@@ -1,0 +1,67 @@
+{
+  "name": "Six-Armed Serpent Demon",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 69,
+        "attack": 64,
+        "defense": 92,
+        "speed": 48,
+        "magic": 65,
+        "luck": 86,
+        "charisma": 84
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:savanna",
+          "minecraft:windswept_savanna"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_sword",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Multi-station crafting support"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 69,
+    "attack": 64,
+    "defense": 92,
+    "speed": 48,
+    "magic": 65,
+    "luck": 86,
+    "charisma": 84
+  },
+  "size": 1.6,
+  "movement": "swim"
+}

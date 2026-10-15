@@ -1,0 +1,68 @@
+{
+  "name": "Treasure Goblin",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 84,
+        "attack": 87,
+        "defense": 74,
+        "speed": 82,
+        "magic": 87,
+        "luck": 83,
+        "charisma": 72
+      },
+      "rarity": "Super Rare",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld",
+          "#minecraft:is_nether",
+          "#minecraft:is_end"
+        ],
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 45
+      },
+      "drops": [
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:emerald",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Rare item pickup"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 84,
+    "attack": 87,
+    "defense": 74,
+    "speed": 82,
+    "magic": 87,
+    "luck": 83,
+    "charisma": 72
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

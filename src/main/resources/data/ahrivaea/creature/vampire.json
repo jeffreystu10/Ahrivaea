@@ -1,0 +1,67 @@
+{
+  "name": "Vampire",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 79,
+        "attack": 48,
+        "defense": 100,
+        "speed": 57,
+        "magic": 88,
+        "luck": 90,
+        "charisma": 75
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 48,
+    "defense": 100,
+    "speed": 57,
+    "magic": 88,
+    "luck": 90,
+    "charisma": 75
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

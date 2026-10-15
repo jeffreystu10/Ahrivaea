@@ -1,0 +1,117 @@
+{
+  "name": "Giant Snail",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 84,
+        "attack": 65,
+        "defense": 67,
+        "speed": 77,
+        "magic": 48,
+        "luck": 78,
+        "charisma": 82
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:armadillo_scute",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone circuit maintenance"
+        },
+        {
+          "job": "mining",
+          "text": "Stone and ore gathering"
+        }
+      ]
+    },
+    "fae": {
+      "stats": {
+        "hp": 88,
+        "attack": 48,
+        "defense": 83,
+        "speed": 81,
+        "magic": 49,
+        "luck": 94,
+        "charisma": 89
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:armadillo_scute",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glow_berries",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Moss and mushroom farming"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 84,
+    "attack": 65,
+    "defense": 67,
+    "speed": 77,
+    "magic": 48,
+    "luck": 78,
+    "charisma": 82
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

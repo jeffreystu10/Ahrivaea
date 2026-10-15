@@ -1,0 +1,130 @@
+{
+  "name": "Fish",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 90,
+        "attack": 62,
+        "defense": 49,
+        "speed": 46,
+        "magic": 97,
+        "luck": 67,
+        "charisma": 93
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:cod",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:salmon",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:tropical_fish",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "fishing",
+          "text": "Aquatic item collection"
+        }
+      ]
+    },
+    "water": {
+      "stats": {
+        "hp": 84,
+        "attack": 67,
+        "defense": 70,
+        "speed": 50,
+        "magic": 89,
+        "luck": 80,
+        "charisma": 68
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:cod",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:salmon",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:tropical_fish",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "fishing",
+          "text": "Aquatic item collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 84,
+    "attack": 67,
+    "defense": 70,
+    "speed": 50,
+    "magic": 89,
+    "luck": 80,
+    "charisma": 68
+  },
+  "size": 0.7,
+  "movement": "swim"
+}

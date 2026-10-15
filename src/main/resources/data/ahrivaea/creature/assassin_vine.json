@@ -1,0 +1,70 @@
+{
+  "name": "Assassin Vine",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 85,
+        "attack": 48,
+        "defense": 99,
+        "speed": 94,
+        "magic": 47,
+        "luck": 74,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:apple",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:vine",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:poisonous_potato",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 85,
+    "attack": 48,
+    "defense": 99,
+    "speed": 94,
+    "magic": 47,
+    "luck": 74,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

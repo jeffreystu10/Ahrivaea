@@ -1,0 +1,60 @@
+{
+  "name": "Hraesvelgr",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 90,
+        "attack": 46,
+        "defense": 48,
+        "speed": 98,
+        "magic": 92,
+        "luck": 72,
+        "charisma": 87
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.8,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Nighttime courier"
+        },
+        {
+          "job": "defense",
+          "text": "Hostile-mob patrol"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 90,
+    "attack": 46,
+    "defense": 48,
+    "speed": 98,
+    "magic": 92,
+    "luck": 72,
+    "charisma": 87
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

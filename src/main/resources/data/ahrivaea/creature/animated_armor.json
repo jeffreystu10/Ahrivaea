@@ -1,0 +1,66 @@
+{
+  "name": "Animated Armor",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 67,
+        "attack": 100,
+        "defense": 78,
+        "speed": 64,
+        "magic": 63,
+        "luck": 56,
+        "charisma": 80
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.55,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:shield",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 67,
+    "attack": 100,
+    "defense": 78,
+    "speed": 64,
+    "magic": 63,
+    "luck": 56,
+    "charisma": 80
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

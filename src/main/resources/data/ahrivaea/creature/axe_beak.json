@@ -1,0 +1,71 @@
+{
+  "name": "Axe Beak",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 79,
+        "attack": 97,
+        "defense": 72,
+        "speed": 90,
+        "magic": 70,
+        "luck": 63,
+        "charisma": 95
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest",
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:desert"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.85,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:chicken",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:blaze_powder",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Cooking raw food"
+        },
+        {
+          "job": "smelting",
+          "text": "Smelting ores"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 97,
+    "defense": 72,
+    "speed": 90,
+    "magic": 70,
+    "luck": 63,
+    "charisma": 95
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

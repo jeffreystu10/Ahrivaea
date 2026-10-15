@@ -56,6 +56,7 @@ public class Ahrivaea implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Party.init();
+		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.character.PlayerCharacter.init();
 		dev.ahrivaea.battle.Battles.init();
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("creatures"), (ResourceManagerReloadListener) Species::reload);
@@ -64,8 +65,9 @@ public class Ahrivaea implements ModInitializer {
 				.add(Attributes.MAX_HEALTH, 20.0)
 				.add(Attributes.MOVEMENT_SPEED, 0.25));
 
-		// one spawn entry for all creatures; which species appears (if any) is decided by each species' biome list
-		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.CREATURE, CREATURE, 6, 1, 1);
+		// wild creatures are put around players by our own spawner (land, water, caves, Nether, End), not Minecraft's
+		dev.ahrivaea.creature.WildSpawner.SKIP.add(dev.ahrivaea.battle.Arena.DIMENSION);
+		dev.ahrivaea.creature.WildSpawner.init();
 
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(VESSEL));
 
@@ -110,6 +112,44 @@ public class Ahrivaea implements ModInitializer {
 						ctx.getSource().sendSuccess(() -> Component.literal("Released " + formName(c) + " into the wild for good."), false);
 						return 1;
 					})))
+					.then(Commands.literal("box")
+							.executes(ctx -> {
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								var box = Party.box(player);
+								StringBuilder sb = new StringBuilder("Box (" + box.size() + "):");
+								for (int i = 0; i < box.size(); i++) sb.append("\n ").append(i + 1).append(". ").append(formName(box.get(i))).append(" Lv.").append(box.get(i).level());
+								if (box.isEmpty()) sb.append(" empty. Recruits go here when your party is full.");
+								ctx.getSource().sendSuccess(() -> Component.literal(sb.toString()), false);
+								return box.size();
+							})
+							.then(Commands.literal("take").then(Commands.argument("number", IntegerArgumentType.integer(1)).executes(ctx -> {
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								int i = IntegerArgumentType.getInteger(ctx, "number") - 1;
+								if (i >= Party.box(player).size()) {
+									ctx.getSource().sendFailure(Component.literal("There's no creature with that number in your box."));
+									return 0;
+								}
+								if (Party.get(player).size() >= Party.MAX) {
+									ctx.getSource().sendFailure(Component.literal("Your party is full; /party box store <slot> first."));
+									return 0;
+								}
+								CaughtCreature c = Party.removeFromBox(player, i);
+								Party.add(player, c);
+								ctx.getSource().sendSuccess(() -> Component.literal(formName(c) + " joined your party."), false);
+								return 1;
+							})))
+							.then(Commands.literal("store").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;
+								if (slot >= Party.get(player).size()) {
+									ctx.getSource().sendFailure(Component.literal("There's no creature in that slot."));
+									return 0;
+								}
+								CaughtCreature c = Party.remove(player, slot);
+								Party.addToBox(player, c);
+								ctx.getSource().sendSuccess(() -> Component.literal(formName(c) + " went to your box."), false);
+								return 1;
+							}))))
 					.then(Commands.literal("xp")
 							.executes(ctx -> {
 								int xp = Party.xp(ctx.getSource().getPlayerOrException());

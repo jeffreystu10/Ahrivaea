@@ -1,0 +1,66 @@
+{
+  "name": "Terrasque",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 93,
+        "attack": 43,
+        "defense": 43,
+        "speed": 85,
+        "magic": 79,
+        "luck": 77,
+        "charisma": 94
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 10
+      },
+      "drops": [
+        {
+          "item": "minecraft:obsidian",
+          "chance": 0.75,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.08,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:ancient_debris",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Large-area quarry mining"
+        },
+        {
+          "job": "mining",
+          "text": "Ore gathering"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 93,
+    "attack": 43,
+    "defense": 43,
+    "speed": 85,
+    "magic": 79,
+    "luck": 77,
+    "charisma": 94
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

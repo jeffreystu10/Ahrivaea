@@ -32,8 +32,8 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			BlockPos origin = p.offset(-5, -1, 8);
 			BlockPos chest = origin.offset(5, 1, 5);
 			server.runCommand("time set noon");
-			server.runCommand("gamerule doDaylightCycle false");
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule advance_time false");
+			server.runCommand("gamerule spawn_mobs false");
 			server.runCommand("execute positioned %d %d %d run challenge place coal".formatted(origin.getX(), origin.getY(), origin.getZ()));
 			context.runOnClient(client -> {
 				if (!client.gui.hud.isHidden()) client.gui.hud.toggle();

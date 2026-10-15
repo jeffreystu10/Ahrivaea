@@ -1,0 +1,66 @@
+{
+  "name": "Minotaur",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 79,
+        "attack": 98,
+        "defense": 100,
+        "speed": 75,
+        "magic": 69,
+        "luck": 76,
+        "charisma": 61
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:plains"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 79,
+    "attack": 98,
+    "defense": 100,
+    "speed": 75,
+    "magic": 69,
+    "luck": 76,
+    "charisma": 61
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

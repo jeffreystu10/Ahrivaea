@@ -1,0 +1,72 @@
+{
+  "name": "Lizardfolk",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 88,
+        "attack": 82,
+        "defense": 83,
+        "speed": 99,
+        "magic": 65,
+        "luck": 88,
+        "charisma": 84
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 88,
+    "attack": 82,
+    "defense": 83,
+    "speed": 99,
+    "magic": 65,
+    "luck": 88,
+    "charisma": 84
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

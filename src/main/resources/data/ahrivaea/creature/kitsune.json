@@ -1,0 +1,66 @@
+{
+  "name": "Kitsune",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 96,
+        "attack": 48,
+        "defense": 65,
+        "speed": 99,
+        "magic": 84,
+        "luck": 63,
+        "charisma": 89
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:warped_forest"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:rabbit_foot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:flint",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Furnace operation"
+        },
+        {
+          "job": "transport",
+          "text": "Item sorting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 96,
+    "attack": 48,
+    "defense": 65,
+    "speed": 99,
+    "magic": 84,
+    "luck": 63,
+    "charisma": 89
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

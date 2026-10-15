@@ -1,0 +1,66 @@
+{
+  "name": "Wraith",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 53,
+        "attack": 100,
+        "defense": 57,
+        "speed": 100,
+        "magic": 63,
+        "luck": 57,
+        "charisma": 100
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:end_barrens"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:ominous_bottle",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        },
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 53,
+    "attack": 100,
+    "defense": 57,
+    "speed": 100,
+    "magic": 63,
+    "luck": 57,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

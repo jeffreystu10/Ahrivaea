@@ -1,0 +1,66 @@
+{
+  "name": "Empyrean",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 100,
+        "attack": 97,
+        "defense": 74,
+        "speed": 58,
+        "magic": 61,
+        "luck": 83,
+        "charisma": 51
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Lighting and dark-area patrol"
+        },
+        {
+          "job": "defense",
+          "text": "Hostile-mob detection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 97,
+    "defense": 74,
+    "speed": 58,
+    "magic": 61,
+    "luck": 83,
+    "charisma": 51
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

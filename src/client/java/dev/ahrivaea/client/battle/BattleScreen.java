@@ -316,7 +316,7 @@ public class BattleScreen extends Screen {
 		if (state().has("result")) {
 			JsonObject r = state().getAsJsonObject("result");
 			JsonArray rec = r.getAsJsonArray("recruits");
-			int y = height / 2 - 10;
+			int y = height / 2 + 4;
 			for (int i = 0; i < rec.size(); i++) {
 				JsonObject d = rec.get(i).getAsJsonObject();
 				final int idx = i;
@@ -467,11 +467,18 @@ public class BattleScreen extends Screen {
 			JsonObject r = state().getAsJsonObject("result");
 			String o = r.get("outcome").getAsString();
 			String title = o.equals("WON") ? "Victory!" : o.equals("LOST") ? "Defeated" : "Escaped";
-			g.fill(width / 2 - 130, height / 2 - 60, width / 2 + 130, height / 2 + 30 + r.getAsJsonArray("recruits").size() * 22, 0xC0000000);
+			g.fill(width / 2 - 130, height / 2 - 60, width / 2 + 130, height / 2 + 44 + r.getAsJsonArray("recruits").size() * 22, 0xC0000000);
 			g.centeredText(font, title, width / 2, height / 2 - 52, o.equals("WON") ? 0xFFFFD040 : 0xFFFF8080);
 			if (o.equals("WON")) {
 				g.centeredText(font, "+" + r.get("xp").getAsInt() + " XP to give your creatures (/party xp)", width / 2, height / 2 - 38, 0xFFFFFFFF);
 				g.centeredText(font, "+" + r.get("charXp").getAsInt() + " XP for you (/character)", width / 2, height / 2 - 27, 0xFFFFFFFF);
+				// what the defeated creatures dropped (it's in your inventory)
+				StringBuilder drops = new StringBuilder();
+				JsonArray loot = r.has("loot") ? r.getAsJsonArray("loot") : new JsonArray();
+				for (int i = 0; i < loot.size(); i++) drops.append(i > 0 ? ", " : "").append(loot.get(i).getAsString());
+				String line = loot.isEmpty() ? "No drops" : "Drops: " + drops;
+				if (font.width(line) > 250) line = font.plainSubstrByWidth(line, 240) + "...";
+				g.centeredText(font, line, width / 2, height / 2 - 12, 0xFF9FE09F);
 			}
 		}
 		super.extractRenderState(g, mouseX, mouseY, partialTick);

@@ -1,0 +1,72 @@
+{
+  "name": "T-Rex",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 80,
+        "attack": 98,
+        "defense": 70,
+        "speed": 77,
+        "magic": 65,
+        "luck": 55,
+        "charisma": 76
+      },
+      "rarity": "Legendary",
+      "spawn": {
+        "biomes": [
+          "minecraft:plains"
+        ],
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 15
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.75,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 80,
+    "attack": 98,
+    "defense": 70,
+    "speed": 77,
+    "magic": 65,
+    "luck": 55,
+    "charisma": 76
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

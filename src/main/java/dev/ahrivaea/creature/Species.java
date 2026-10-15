@@ -39,11 +39,41 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 		}
 	}
 
-	public record Form(Optional<String> name, Optional<Stats> stats) {
+	/**
+	 * One influence's version of the species. Each may have its own name and stats, and (for creatures from the
+	 * creature list) its own rarity, where it spawns, what it drops when defeated and what work it does at a base.
+	 */
+	public record Form(Optional<String> name, Optional<Stats> stats, Optional<String> rarity, Optional<Spawn> spawn,
+			List<Drop> drops, List<JobEntry> jobs) {
 		public static final Codec<Form> CODEC = RecordCodecBuilder.create(i -> i.group(
 				Codec.STRING.optionalFieldOf("name").forGetter(Form::name),
-				Stats.CODEC.optionalFieldOf("stats").forGetter(Form::stats)
+				Stats.CODEC.optionalFieldOf("stats").forGetter(Form::stats),
+				Codec.STRING.optionalFieldOf("rarity").forGetter(Form::rarity),
+				Spawn.CODEC.optionalFieldOf("spawn").forGetter(Form::spawn),
+				Drop.CODEC.listOf().optionalFieldOf("drops", List.of()).forGetter(Form::drops),
+				JobEntry.CODEC.listOf().optionalFieldOf("jobs", List.of()).forGetter(Form::jobs)
 		).apply(i, Form::new));
+
+		public static final Form EMPTY = new Form(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), List.of(), List.of());
+	}
+
+	/** Something a defeated creature may drop: the item, the chance (0-1) and how many. "enchant" makes it a random enchanted book or item. */
+	public record Drop(String item, float chance, int min, int max, boolean enchant) {
+		public static final Codec<Drop> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.STRING.fieldOf("item").forGetter(Drop::item),
+				Codec.floatRange(0, 1).fieldOf("chance").forGetter(Drop::chance),
+				Codec.INT.optionalFieldOf("min", 1).forGetter(Drop::min),
+				Codec.INT.optionalFieldOf("max", 1).forGetter(Drop::max),
+				Codec.BOOL.optionalFieldOf("enchant", false).forGetter(Drop::enchant)
+		).apply(i, Drop::new));
+	}
+
+	/** A job the creature can do at a base, with the creature list's wording of it. */
+	public record JobEntry(Job job, String text) {
+		public static final Codec<JobEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Job.CODEC.fieldOf("job").forGetter(JobEntry::job),
+				Codec.STRING.optionalFieldOf("text", "").forGetter(JobEntry::text)
+		).apply(i, JobEntry::new));
 	}
 
 	/** Where a creature appears in the wild. Biomes are ids ("minecraft:plains") or tags ("#minecraft:is_forest"). */
@@ -59,7 +89,7 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 	public static final Codec<Species> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Codec.STRING.fieldOf("name").forGetter(Species::name),
 			Stats.CODEC.fieldOf("stats").forGetter(Species::stats),
-			Codec.unboundedMap(Influence.CODEC, Form.CODEC).optionalFieldOf("forms", Map.of(Influence.NONE, new Form(Optional.empty(), Optional.empty()))).forGetter(Species::forms),
+			Codec.unboundedMap(Influence.CODEC, Form.CODEC).optionalFieldOf("forms", Map.of(Influence.NONE, Form.EMPTY)).forGetter(Species::forms),
 			Codec.FLOAT.optionalFieldOf("size", 1f).forGetter(Species::size),
 			Movement.CODEC.optionalFieldOf("movement", Movement.WALK).forGetter(Species::movement),
 			Spawn.CODEC.optionalFieldOf("spawn").forGetter(Species::spawn),
@@ -102,13 +132,28 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 	public record Pick(Species species, Influence influence) {}
 
 	public static Optional<Pick> pickFor(Holder<Biome> biome, Level level, RandomSource random) {
+		return pickFor(biome, level, random, (s, inf) -> true);
+	}
+
+	/**
+	 * A wild creature for this biome, weighted by spawn weight. Forms with their own spawn are chosen directly (with
+	 * that influence); a species-wide spawn gets its influence from the biome and time of day ({@link InfluenceRules}).
+	 */
+	public static Optional<Pick> pickFor(Holder<Biome> biome, Level level, RandomSource random, java.util.function.BiPredicate<Species, Influence> allowed) {
 		List<Pick> candidates = new ArrayList<>();
 		List<Integer> weights = new ArrayList<>();
 		int total = 0;
 		for (Species s : all.values()) {
+			for (var e : s.forms.entrySet()) {
+				var sp = e.getValue().spawn();
+				if (sp.isEmpty() || !allowed.test(s, e.getKey()) || !BiomeList.matches(sp.get().biomes(), biome)) continue;
+				candidates.add(new Pick(s, e.getKey()));
+				weights.add(sp.get().weight());
+				total += sp.get().weight();
+			}
 			if (s.spawn.isEmpty() || !BiomeList.matches(s.spawn.get().biomes(), biome)) continue;
 			var inf = InfluenceRules.pick(biome, level, s.forms.keySet(), random);
-			if (inf.isEmpty()) continue;
+			if (inf.isEmpty() || !allowed.test(s, inf.get())) continue;
 			candidates.add(new Pick(s, inf.get()));
 			weights.add(s.spawn.get().weight());
 			total += s.spawn.get().weight();
@@ -120,6 +165,21 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 			if (roll < 0) return Optional.of(candidates.get(k));
 		}
 		return Optional.of(candidates.getLast());
+	}
+
+	public Form form(Influence influence) {
+		return forms.getOrDefault(influence, Form.EMPTY);
+	}
+
+	/** Level range for a wild one of this form: the form's spawn, else the species', else 2-10. */
+	public int[] levelRange(Influence influence) {
+		var sp = form(influence).spawn().or(() -> spawn);
+		return sp.map(x -> new int[] {x.minLevel(), x.maxLevel()}).orElse(new int[] {2, 10});
+	}
+
+	/** The jobs this form can do at a base. */
+	public List<Job> jobsFor(Influence influence) {
+		return form(influence).jobs().stream().map(JobEntry::job).distinct().toList();
 	}
 
 	/** The form's own stats, or the species' if the form doesn't override them. */

@@ -27,7 +27,7 @@ public class WoodcuttingTest implements FabricClientGameTest {
 			sp.getConnection().waitForChunksRender();
 			context.getInput().resizeWindow(1600, 900);
 			var server = sp.getServer();
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule spawn_mobs false");
 			BlockPos pos = context.computeOnClient(c -> c.player.blockPosition());
 			BlockPos cutter = pos.north(2);
 			server.runCommand("setblock %d %d %d minecraft:stonecutter".formatted(cutter.getX(), cutter.getY(), cutter.getZ()));

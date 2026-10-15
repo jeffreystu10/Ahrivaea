@@ -36,8 +36,8 @@ public class BattleTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			var server = sp.getServer();
 			server.runCommand("time set noon");
-			server.runCommand("gamerule doDaylightCycle false");
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule advance_time false");
+			server.runCommand("gamerule spawn_mobs false");
 			server.runCommand("item replace entity @a weapon.mainhand with minecraft:netherite_sword");
 			server.runCommand("give @a minecraft:golden_apple 2");
 			// a party of two, and a little hill and pond on the field

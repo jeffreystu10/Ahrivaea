@@ -1,0 +1,66 @@
+{
+  "name": "Jellyfish",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 73,
+        "attack": 79,
+        "defense": 78,
+        "speed": 93,
+        "magic": 82,
+        "luck": 66,
+        "charisma": 75
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:glow_ink_sac",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "fishing",
+          "text": "Aquatic item collection"
+        },
+        {
+          "job": "fishing",
+          "text": "Glow ink and aquatic drop gathering"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 73,
+    "attack": 79,
+    "defense": 78,
+    "speed": 93,
+    "magic": 82,
+    "luck": 66,
+    "charisma": 75
+  },
+  "size": 0.7,
+  "movement": "swim"
+}

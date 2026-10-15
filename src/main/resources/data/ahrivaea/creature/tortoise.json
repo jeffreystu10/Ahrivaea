@@ -1,0 +1,66 @@
+{
+  "name": "Tortoise",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 94,
+        "attack": 86,
+        "defense": 68,
+        "speed": 77,
+        "magic": 56,
+        "luck": 73,
+        "charisma": 57
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:turtle_scute",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:seagrass",
+          "chance": 0.3,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:cod",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        },
+        {
+          "job": "defense",
+          "text": "Farm defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 94,
+    "attack": 86,
+    "defense": 68,
+    "speed": 77,
+    "magic": 56,
+    "luck": 73,
+    "charisma": 57
+  },
+  "size": 1.0,
+  "movement": "swim"
+}

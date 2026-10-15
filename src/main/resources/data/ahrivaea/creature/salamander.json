@@ -1,0 +1,66 @@
+{
+  "name": "Salamander",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 73,
+        "attack": 86,
+        "defense": 39,
+        "speed": 71,
+        "magic": 56,
+        "luck": 86,
+        "charisma": 90
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:magma_cream",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:fire_charge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting ores"
+        },
+        {
+          "job": "smelting",
+          "text": "Cooking food"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 73,
+    "attack": 86,
+    "defense": 39,
+    "speed": 71,
+    "magic": 56,
+    "luck": 86,
+    "charisma": 90
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

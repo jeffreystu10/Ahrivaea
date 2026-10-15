@@ -1,0 +1,68 @@
+{
+  "name": "Skeleton",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 58,
+        "attack": 100,
+        "defense": 87,
+        "speed": 68,
+        "magic": 57,
+        "luck": 52,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld",
+          "#minecraft:is_nether",
+          "#minecraft:is_end"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Arrow and bone collection"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 58,
+    "attack": 100,
+    "defense": 87,
+    "speed": 68,
+    "magic": 57,
+    "luck": 52,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

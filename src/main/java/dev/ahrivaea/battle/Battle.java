@@ -68,6 +68,9 @@ public final class Battle {
 	int arenaSlot = -1;
 	/** The wild creature that started it, taken out of the world for the battle; put back unless it was defeated. */
 	Wild wild;
+	/** Drops still owed to the player (didn't fit in the inventory), and everything dropped, for the results screen. */
+	final List<net.minecraft.world.item.ItemStack> loot = new ArrayList<>();
+	final List<String> lootNames = new ArrayList<>();
 	/** The unit standing in for that wild creature. */
 	Unit lead;
 
@@ -396,7 +399,17 @@ public final class Battle {
 			poolXp = BattleSettings.XP_PER_DEFEAT * defeated.size();
 			characterXp = 15 * defeated.size() + 25;
 			say("Victory! +" + poolXp + " XP for your creatures, +" + characterXp + " XP for you.");
+			// what the defeated creatures drop; anything that doesn't fit in your inventory waits until you're home
+			for (Defeated d : defeated) {
+				var sp = dev.ahrivaea.creature.Species.get(d.species());
+				if (sp.isPresent()) loot.addAll(dev.ahrivaea.creature.Drops.roll(sp.get(), d.influence(), d.level(), random, level.registryAccess()));
+			}
+			for (var stack : loot) lootNames.add(dev.ahrivaea.creature.Drops.describe(stack));
 			if (p != null) {
+				for (var it = loot.iterator(); it.hasNext(); ) {
+					var stack = it.next();
+					if (p.getInventory().add(stack) && stack.isEmpty()) it.remove();
+				}
 				Party.addXp(p, poolXp);
 				PlayerCharacter.addXp(p, characterXp);
 			}
@@ -517,6 +530,9 @@ public final class Battle {
 			r.addProperty("outcome", outcome.name());
 			r.addProperty("xp", poolXp);
 			r.addProperty("charXp", characterXp);
+			JsonArray lootJson = new JsonArray();
+			for (String l : lootNames) lootJson.add(l);
+			r.add("loot", lootJson);
 			JsonArray rec = new JsonArray();
 			for (Defeated d : defeated) {
 				JsonObject dj = new JsonObject();

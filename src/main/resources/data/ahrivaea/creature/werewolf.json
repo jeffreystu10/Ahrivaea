@@ -1,0 +1,66 @@
+{
+  "name": "Werewolf",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 90,
+        "attack": 43,
+        "defense": 84,
+        "speed": 88,
+        "magic": 69,
+        "luck": 57,
+        "charisma": 71
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:rabbit_foot",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 90,
+    "attack": 43,
+    "defense": 84,
+    "speed": 88,
+    "magic": 69,
+    "luck": 57,
+    "charisma": 71
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

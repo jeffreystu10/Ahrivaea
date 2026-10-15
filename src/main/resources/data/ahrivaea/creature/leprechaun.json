@@ -1,0 +1,68 @@
+{
+  "name": "Leprechaun",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 76,
+        "attack": 88,
+        "defense": 100,
+        "speed": 63,
+        "magic": 64,
+        "luck": 71,
+        "charisma": 65
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:cherry_grove"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:gold_nugget",
+          "chance": 0.6,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:emerald",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Valuables sorting"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 76,
+    "attack": 88,
+    "defense": 100,
+    "speed": 63,
+    "magic": 64,
+    "luck": 71,
+    "charisma": 65
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

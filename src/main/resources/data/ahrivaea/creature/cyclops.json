@@ -1,0 +1,66 @@
+{
+  "name": "Cyclops",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 98,
+        "attack": 63,
+        "defense": 51,
+        "speed": 88,
+        "magic": 97,
+        "luck": 44,
+        "charisma": 89
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "minecraft:dripstone_caves"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Mining stone and ores"
+        },
+        {
+          "job": "crafting",
+          "text": "Stonecutting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 98,
+    "attack": 63,
+    "defense": 51,
+    "speed": 88,
+    "magic": 97,
+    "luck": 44,
+    "charisma": 89
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

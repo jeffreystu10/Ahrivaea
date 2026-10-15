@@ -1,0 +1,66 @@
+{
+  "name": "Dark Elf",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 82,
+        "attack": 72,
+        "defense": 96,
+        "speed": 85,
+        "magic": 78,
+        "luck": 58,
+        "charisma": 41
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:end_midlands"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_spear",
+          "chance": 0.3,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:chorus_fruit",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        },
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 82,
+    "attack": 72,
+    "defense": 96,
+    "speed": 85,
+    "magic": 78,
+    "luck": 58,
+    "charisma": 41
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

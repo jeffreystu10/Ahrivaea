@@ -1,0 +1,66 @@
+{
+  "name": "Homunculus",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 81,
+        "attack": 92,
+        "defense": 70,
+        "speed": 98,
+        "magic": 63,
+        "luck": 65,
+        "charisma": 74
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:plains"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:clay_ball",
+          "chance": 0.65,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Item sorting and crafting assistance"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone component assembly"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 81,
+    "attack": 92,
+    "defense": 70,
+    "speed": 98,
+    "magic": 63,
+    "luck": 65,
+    "charisma": 74
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

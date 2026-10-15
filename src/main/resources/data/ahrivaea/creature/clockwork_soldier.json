@@ -1,0 +1,66 @@
+{
+  "name": "Clockwork Soldier",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 74,
+        "attack": 93,
+        "defense": 97,
+        "speed": 64,
+        "magic": 49,
+        "luck": 80,
+        "charisma": 78
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "smelting",
+          "text": "Furnace and machine operation"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 74,
+    "attack": 93,
+    "defense": 97,
+    "speed": 64,
+    "magic": 49,
+    "luck": 80,
+    "charisma": 78
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

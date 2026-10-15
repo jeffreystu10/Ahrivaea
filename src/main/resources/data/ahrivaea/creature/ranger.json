@@ -1,0 +1,507 @@
+{
+  "name": "Ranger",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 86,
+        "attack": 96,
+        "defense": 50,
+        "speed": 76,
+        "magic": 49,
+        "luck": 83,
+        "charisma": 72
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:plains",
+          "minecraft:forest",
+          "minecraft:meadow"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bow",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    },
+    "fire": {
+      "stats": {
+        "hp": 70,
+        "attack": 90,
+        "defense": 93,
+        "speed": 59,
+        "magic": 86,
+        "luck": 75,
+        "charisma": 63
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest",
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:wooded_badlands",
+          "minecraft:desert"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.7,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        },
+        {
+          "job": "ranching",
+          "text": "Arrow and bone collection"
+        }
+      ]
+    },
+    "frost": {
+      "stats": {
+        "hp": 85,
+        "attack": 99,
+        "defense": 92,
+        "speed": 60,
+        "magic": 69,
+        "luck": 65,
+        "charisma": 93
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:stick",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.25,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Cold-biome hunting"
+        },
+        {
+          "job": "ice",
+          "text": "Snow and ice harvesting"
+        }
+      ]
+    },
+    "storm": {
+      "stats": {
+        "hp": 75,
+        "attack": 70,
+        "defense": 74,
+        "speed": 66,
+        "magic": 98,
+        "luck": 99,
+        "charisma": 59
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:stick",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:wind_charge",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Mob-farm control"
+        },
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ]
+    },
+    "earth": {
+      "stats": {
+        "hp": 85,
+        "attack": 93,
+        "defense": 52,
+        "speed": 99,
+        "magic": 96,
+        "luck": 66,
+        "charisma": 65
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:stick",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:flint",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Ore mining"
+        },
+        {
+          "job": "mining",
+          "text": "Cave resource gathering"
+        }
+      ]
+    },
+    "nature": {
+      "stats": {
+        "hp": 46,
+        "attack": 61,
+        "defense": 84,
+        "speed": 86,
+        "magic": 90,
+        "luck": 89,
+        "charisma": 94
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:pale_garden",
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:stick",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:sweet_berries",
+          "chance": 0.25,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "farming",
+          "text": "Crop harvesting"
+        }
+      ]
+    },
+    "void": {
+      "stats": {
+        "hp": 72,
+        "attack": 100,
+        "defense": 54,
+        "speed": 97,
+        "magic": 82,
+        "luck": 53,
+        "charisma": 69
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:stick",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bow",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "End resource gathering"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    },
+    "darkness": {
+      "stats": {
+        "hp": 80,
+        "attack": 85,
+        "defense": 48,
+        "speed": 50,
+        "magic": 96,
+        "luck": 73,
+        "charisma": 68
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark",
+          "minecraft:dark_forest",
+          "minecraft:soul_sand_valley",
+          "minecraft:dripstone_caves",
+          "minecraft:nether_wastes",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Hostile-mob farming and drop collection"
+        },
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        }
+      ]
+    },
+    "radiant": {
+      "stats": {
+        "hp": 83,
+        "attack": 80,
+        "defense": 84,
+        "speed": 41,
+        "magic": 94,
+        "luck": 60,
+        "charisma": 73
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bow",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Ranged base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 70,
+    "attack": 90,
+    "defense": 93,
+    "speed": 59,
+    "magic": 86,
+    "luck": 75,
+    "charisma": 63
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

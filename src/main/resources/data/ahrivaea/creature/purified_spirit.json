@@ -1,0 +1,66 @@
+{
+  "name": "Purified Spirit",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 71,
+        "attack": 97,
+        "defense": 69,
+        "speed": 99,
+        "magic": 63,
+        "luck": 66,
+        "charisma": 75
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.5,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:ghast_tear",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing support"
+        },
+        {
+          "job": "growth",
+          "text": "Crop and animal-area care"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 71,
+    "attack": 97,
+    "defense": 69,
+    "speed": 99,
+    "magic": 63,
+    "luck": 66,
+    "charisma": 75
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

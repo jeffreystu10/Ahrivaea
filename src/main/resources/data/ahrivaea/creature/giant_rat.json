@@ -1,0 +1,74 @@
+{
+  "name": "Giant Rat",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 86,
+        "attack": 45,
+        "defense": 59,
+        "speed": 74,
+        "magic": 88,
+        "luck": 64,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:dripstone_caves",
+          "minecraft:plains",
+          "minecraft:forest",
+          "minecraft:meadow",
+          "minecraft:savanna",
+          "minecraft:taiga",
+          "minecraft:dark_forest",
+          "minecraft:swamp",
+          "minecraft:windswept_hills"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "ahrivaea:raw_rat",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item pickup and chest sorting"
+        },
+        {
+          "job": "farming",
+          "text": "Crop and seed collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 86,
+    "attack": 45,
+    "defense": 59,
+    "speed": 74,
+    "magic": 88,
+    "luck": 64,
+    "charisma": 100
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

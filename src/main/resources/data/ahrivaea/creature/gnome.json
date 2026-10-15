@@ -1,0 +1,70 @@
+{
+  "name": "Gnome",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 100,
+        "attack": 53,
+        "defense": 88,
+        "speed": 100,
+        "magic": 42,
+        "luck": 63,
+        "charisma": 98
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_pickaxe",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:end_stone",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        },
+        {
+          "job": "crafting",
+          "text": "Crafting-table assistance"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 53,
+    "defense": 88,
+    "speed": 100,
+    "magic": 42,
+    "luck": 63,
+    "charisma": 98
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

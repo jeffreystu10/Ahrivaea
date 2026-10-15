@@ -1,0 +1,68 @@
+{
+  "name": "Ghost",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 42,
+        "attack": 100,
+        "defense": 64,
+        "speed": 100,
+        "magic": 96,
+        "luck": 69,
+        "charisma": 61
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld",
+          "#minecraft:is_nether",
+          "#minecraft:is_end"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 42,
+    "attack": 100,
+    "defense": 64,
+    "speed": 100,
+    "magic": 96,
+    "luck": 69,
+    "charisma": 61
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

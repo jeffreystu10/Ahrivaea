@@ -27,7 +27,36 @@ public final class Party {
 			Ahrivaea.id("xp"),
 			builder -> builder.persistent(Codec.INT).copyOnDeath().initializer(() -> 0));
 
+	/** Creatures that don't fit in the party (and workers sent back from a base): no limit. */
+	public static final AttachmentType<List<CaughtCreature>> BOX = AttachmentRegistry.create(
+			Ahrivaea.id("box"),
+			builder -> builder.persistent(CaughtCreature.CODEC.listOf()).copyOnDeath().initializer(List::of));
+
 	private Party() {}
+
+	public static List<CaughtCreature> box(Player player) {
+		return player.getAttachedOrCreate(BOX);
+	}
+
+	public static void addToBox(Player player, CaughtCreature creature) {
+		List<CaughtCreature> list = new ArrayList<>(box(player));
+		list.add(creature);
+		player.setAttached(BOX, List.copyOf(list));
+	}
+
+	public static CaughtCreature removeFromBox(Player player, int index) {
+		List<CaughtCreature> list = new ArrayList<>(box(player));
+		CaughtCreature c = list.remove(index);
+		player.setAttached(BOX, List.copyOf(list));
+		return c;
+	}
+
+	/** Into the party if there's room, else the box. Returns true if it went into the party. */
+	public static boolean addAnywhere(Player player, CaughtCreature creature) {
+		if (add(player, creature)) return true;
+		addToBox(player, creature);
+		return false;
+	}
 
 	public static void init() {
 		// touching this class registers the attachments

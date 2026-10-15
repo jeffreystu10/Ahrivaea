@@ -122,12 +122,17 @@ public class CreatureEntity extends TamableAnimal {
 				picked = java.util.Optional.of(new Species.Pick(s, inf.orElse(s.formOrDefault(Influence.NONE))));
 			}
 			picked.ifPresent(p -> {
-				int lo = p.species().spawn().map(Species.Spawn::minLevel).orElse(2);
-				int hi = p.species().spawn().map(Species.Spawn::maxLevel).orElse(10);
-				setup(p.species(), p.influence(), lo + this.random.nextInt(Math.max(1, hi - lo + 1)), -1);
+				int[] range = p.species().levelRange(p.influence());
+				setup(p.species(), p.influence(), range[0] + this.random.nextInt(Math.max(1, range[1] - range[0] + 1)), -1);
 			});
 		}
 		return super.finalizeSpawn(level, difficulty, reason, data);
+	}
+
+	/** Wild creatures wander off when nobody is near (tamed ones and ones in a battle stay). */
+	@Override
+	public boolean removeWhenFarAway(double distanceSqr) {
+		return !this.isTame() && !dev.ahrivaea.battle.Battles.inBattle(this);
 	}
 
 	@Override
@@ -144,8 +149,8 @@ public class CreatureEntity extends TamableAnimal {
 			if (!this.level().isClientSide()) {
 				if (player.isShiftKeyDown()) {
 					// sneak + right click: call it back into the party
-					Party.add(player, toCaught());
-					player.sendOverlayMessage(Component.literal(displayName() + " came back to your party."));
+					boolean party = Party.addAnywhere(player, toCaught());
+					player.sendOverlayMessage(Component.literal(displayName() + (party ? " came back to your party." : " went to your box (party full).")));
 					this.discard();
 				} else {
 					this.setOrderedToSit(!this.isOrderedToSit());

@@ -1,0 +1,66 @@
+{
+  "name": "Draugr",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 78,
+        "attack": 61,
+        "defense": 89,
+        "speed": 51,
+        "magic": 66,
+        "luck": 99,
+        "charisma": 66
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:frozen_peaks"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:rotten_flesh",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:blue_ice",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob drop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 78,
+    "attack": 61,
+    "defense": 89,
+    "speed": 51,
+    "magic": 66,
+    "luck": 99,
+    "charisma": 66
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,603 @@
+{
+  "name": "Mage",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 72,
+        "attack": 85,
+        "defense": 90,
+        "speed": 88,
+        "magic": 92,
+        "luck": 56,
+        "charisma": 77
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:warped_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:blaze_powder",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:emerald",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Furnace and blast-furnace operation"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "frost": {
+      "stats": {
+        "hp": 89,
+        "attack": 57,
+        "defense": 58,
+        "speed": 61,
+        "magic": 53,
+        "luck": 90,
+        "charisma": 95
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:snowball",
+          "chance": 0.6,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:leather_boots",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:packed_ice",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ice",
+          "text": "Ice production"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "storm": {
+      "stats": {
+        "hp": 94,
+        "attack": 81,
+        "defense": 93,
+        "speed": 77,
+        "magic": 45,
+        "luck": 97,
+        "charisma": 77
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        },
+        {
+          "job": "smelting",
+          "text": "Furnace and machine operation"
+        }
+      ]
+    },
+    "earth": {
+      "stats": {
+        "hp": 79,
+        "attack": 99,
+        "defense": 46,
+        "speed": 88,
+        "magic": 84,
+        "luck": 75,
+        "charisma": 54
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:stony_peaks",
+          "minecraft:dripstone_caves",
+          "minecraft:desert",
+          "minecraft:windswept_hills",
+          "minecraft:lush_caves",
+          "minecraft:deep_dark"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:raw_gold",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Stonecutting and block processing"
+        },
+        {
+          "job": "smelting",
+          "text": "Furnace operation"
+        }
+      ]
+    },
+    "water": {
+      "stats": {
+        "hp": 49,
+        "attack": 77,
+        "defense": 45,
+        "speed": 92,
+        "magic": 92,
+        "luck": 89,
+        "charisma": 84
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:lapis_lazuli",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:fishing_rod",
+          "chance": 0.12,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "nature": {
+      "stats": {
+        "hp": 87,
+        "attack": 56,
+        "defense": 78,
+        "speed": 75,
+        "magic": 64,
+        "luck": 65,
+        "charisma": 90
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:jungle",
+          "minecraft:forest",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:lush_caves",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:pale_garden",
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:carrot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:potato",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone_meal",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "void": {
+      "stats": {
+        "hp": 43,
+        "attack": 99,
+        "defense": 90,
+        "speed": 67,
+        "magic": 80,
+        "luck": 80,
+        "charisma": 88
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:chorus_fruit",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:end_crystal",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Enchanting and brewing"
+        },
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        }
+      ]
+    },
+    "fae": {
+      "stats": {
+        "hp": 91,
+        "attack": 45,
+        "defense": 91,
+        "speed": 68,
+        "magic": 89,
+        "luck": 53,
+        "charisma": 91
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:cherry_grove"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:glow_berries",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop growth support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "darkness": {
+      "stats": {
+        "hp": 79,
+        "attack": 84,
+        "defense": 68,
+        "speed": 94,
+        "magic": 89,
+        "luck": 78,
+        "charisma": 63
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark",
+          "minecraft:dark_forest",
+          "minecraft:soul_sand_valley",
+          "minecraft:dripstone_caves",
+          "minecraft:nether_wastes",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glass_bottle",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        },
+        {
+          "job": "ranching",
+          "text": "Hostile-mob farm support"
+        }
+      ]
+    },
+    "radiant": {
+      "stats": {
+        "hp": 58,
+        "attack": 71,
+        "defense": 77,
+        "speed": 55,
+        "magic": 62,
+        "luck": 89,
+        "charisma": 88
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:paper",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:lapis_lazuli",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    },
+    "arcane": {
+      "stats": {
+        "hp": 66,
+        "attack": 42,
+        "defense": 97,
+        "speed": 86,
+        "magic": 70,
+        "luck": 81,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:plains"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:paper",
+          "chance": 0.5,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:lapis_lazuli",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "enchanting",
+          "text": "Enchanting support"
+        },
+        {
+          "job": "brewing",
+          "text": "Brewing potions"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 72,
+    "attack": 85,
+    "defense": 90,
+    "speed": 88,
+    "magic": 92,
+    "luck": 56,
+    "charisma": 77
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Birdfolk",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 63,
+        "attack": 93,
+        "defense": 100,
+        "speed": 100,
+        "magic": 78,
+        "luck": 72,
+        "charisma": 91
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:feather",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:arrow",
+          "chance": 0.2,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Courier between farm and storage"
+        },
+        {
+          "job": "farming",
+          "text": "Seed and crop collection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 63,
+    "attack": 93,
+    "defense": 100,
+    "speed": 100,
+    "magic": 78,
+    "luck": 72,
+    "charisma": 91
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Scylla",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 100,
+        "attack": 81,
+        "defense": 98,
+        "speed": 74,
+        "magic": 58,
+        "luck": 100,
+        "charisma": 52
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_shard",
+          "chance": 0.6,
+          "min": 2,
+          "max": 4
+        },
+        {
+          "item": "minecraft:nautilus_shell",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.18,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Aquatic mob-farm support"
+        },
+        {
+          "job": "fishing",
+          "text": "Fishing"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 100,
+    "attack": 81,
+    "defense": 98,
+    "speed": 74,
+    "magic": 58,
+    "luck": 100,
+    "charisma": 52
+  },
+  "size": 1.6,
+  "movement": "swim"
+}

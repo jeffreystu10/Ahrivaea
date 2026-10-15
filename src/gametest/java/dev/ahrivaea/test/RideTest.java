@@ -41,8 +41,8 @@ public class RideTest implements FabricClientGameTest {
 			context.getInput().resizeWindow(1600, 900);
 			TestServerContext server = sp.getServer();
 			server.runCommand("time set noon");
-			server.runCommand("gamerule doDaylightCycle false");
-			server.runCommand("gamerule doMobSpawning false");
+			server.runCommand("gamerule advance_time false");
+			server.runCommand("gamerule spawn_mobs false");
 			var pos = context.computeOnClient(c -> c.player.blockPosition());
 			int x0 = pos.getX(), y = pos.getY(), z0 = pos.getZ() + 3;
 			server.runCommand("forceload add %d %d %d %d".formatted(x0 - 16, z0 - 64, x0 + 400, z0 + 24));

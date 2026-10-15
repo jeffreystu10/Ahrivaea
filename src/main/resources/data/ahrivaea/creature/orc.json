@@ -1,0 +1,66 @@
+{
+  "name": "Orc",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 82,
+        "attack": 82,
+        "defense": 66,
+        "speed": 88,
+        "magic": 70,
+        "luck": 80,
+        "charisma": 90
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.4,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:iron_chestplate",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Tree farming"
+        },
+        {
+          "job": "mining",
+          "text": "Mining stone"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 82,
+    "attack": 82,
+    "defense": 66,
+    "speed": 88,
+    "magic": 70,
+    "luck": 80,
+    "charisma": 90
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

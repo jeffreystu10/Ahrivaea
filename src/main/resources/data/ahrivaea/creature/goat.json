@@ -1,0 +1,67 @@
+{
+  "name": "Goat",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 89,
+        "attack": 87,
+        "defense": 87,
+        "speed": 99,
+        "magic": 89,
+        "luck": 81,
+        "charisma": 55
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:stony_peaks",
+          "minecraft:windswept_hills"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:mutton",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "ranching",
+          "text": "Milk collection"
+        },
+        {
+          "job": "mining",
+          "text": "Mountain resource gathering"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 89,
+    "attack": 87,
+    "defense": 87,
+    "speed": 99,
+    "magic": 89,
+    "luck": 81,
+    "charisma": 55
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

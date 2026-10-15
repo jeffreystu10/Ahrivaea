@@ -1,0 +1,124 @@
+{
+  "name": "Moose",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 98,
+        "attack": 76,
+        "defense": 62,
+        "speed": 99,
+        "magic": 64,
+        "luck": 67,
+        "charisma": 71
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:forest",
+          "minecraft:taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Spruce and birch logging"
+        },
+        {
+          "job": "logging",
+          "text": "Sapling replanting"
+        }
+      ]
+    },
+    "frost": {
+      "stats": {
+        "hp": 67,
+        "attack": 86,
+        "defense": 95,
+        "speed": 88,
+        "magic": 71,
+        "luck": 91,
+        "charisma": 96
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "logging",
+          "text": "Spruce and birch logging"
+        },
+        {
+          "job": "logging",
+          "text": "Sapling replanting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 67,
+    "attack": 86,
+    "defense": 95,
+    "speed": 88,
+    "magic": 71,
+    "luck": 91,
+    "charisma": 96
+  },
+  "size": 1.6,
+  "movement": "walk"
+}

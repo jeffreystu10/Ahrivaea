@@ -39,7 +39,7 @@ public class VesselItem extends Item {
 		boolean caught = level.getRandom().nextFloat() < chance;
 		double x = creature.getX(), y = creature.getY() + creature.getBbHeight() / 2, z = creature.getZ();
 		if (caught) {
-			Party.add(player, creature.toCaught());
+			Party.addAnywhere(player, creature.toCaught());
 			level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 20, 0.4, 0.4, 0.4, 0.1);
 			level.playSound(null, x, y, z, SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.4f);
 			creature.discard();

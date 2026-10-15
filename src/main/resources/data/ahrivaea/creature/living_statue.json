@@ -1,0 +1,66 @@
+{
+  "name": "Living Statue",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 87,
+        "attack": 53,
+        "defense": 82,
+        "speed": 78,
+        "magic": 83,
+        "luck": 88,
+        "charisma": 57
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:badlands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:stone",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:cobblestone",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.12,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "crafting",
+          "text": "Stonecutting"
+        },
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 87,
+    "attack": 53,
+    "defense": 82,
+    "speed": 78,
+    "magic": 83,
+    "luck": 88,
+    "charisma": 57
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

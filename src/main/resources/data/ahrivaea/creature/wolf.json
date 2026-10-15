@@ -1,0 +1,70 @@
+{
+  "name": "Wolf",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 55,
+        "attack": 86,
+        "defense": 84,
+        "speed": 88,
+        "magic": 99,
+        "luck": 70,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:taiga",
+          "minecraft:dappled_forest",
+          "minecraft:pale_garden",
+          "minecraft:dark_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 600
+      },
+      "drops": [
+        {
+          "item": "minecraft:bone",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 55,
+    "attack": 86,
+    "defense": 84,
+    "speed": 88,
+    "magic": 99,
+    "luck": 70,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

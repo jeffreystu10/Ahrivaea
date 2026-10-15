@@ -1,0 +1,66 @@
+{
+  "name": "Cloaker",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 61,
+        "attack": 97,
+        "defense": 65,
+        "speed": 94,
+        "magic": 100,
+        "luck": 89,
+        "charisma": 62
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:shulker_shell",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:chorus_fruit",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Chest sorting and item routing"
+        },
+        {
+          "job": "transport",
+          "text": "Item pickup"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 61,
+    "attack": 97,
+    "defense": 65,
+    "speed": 94,
+    "magic": 100,
+    "luck": 89,
+    "charisma": 62
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

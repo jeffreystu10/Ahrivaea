@@ -1,0 +1,71 @@
+{
+  "name": "Jackalope",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 89,
+        "attack": 85,
+        "defense": 96,
+        "speed": 86,
+        "magic": 81,
+        "luck": 66,
+        "charisma": 41
+      },
+      "rarity": "Common",
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove",
+          "minecraft:meadow",
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:rabbit_foot",
+          "chance": 0.25,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:rabbit_hide",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:carrot",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Carrot and berry harvesting"
+        },
+        {
+          "job": "logging",
+          "text": "Sapling replanting"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 89,
+    "attack": 85,
+    "defense": 96,
+    "speed": 86,
+    "magic": 81,
+    "luck": 66,
+    "charisma": 41
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

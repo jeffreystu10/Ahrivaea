@@ -1,0 +1,66 @@
+{
+  "name": "Shield Guardian",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 94,
+        "attack": 77,
+        "defense": 99,
+        "speed": 85,
+        "magic": 83,
+        "luck": 64,
+        "charisma": 55
+      },
+      "rarity": "Uncommon",
+      "spawn": {
+        "biomes": [
+          "minecraft:pale_garden"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:shield",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        },
+        {
+          "job": "defense",
+          "text": "Villager and animal pen protection"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 94,
+    "attack": 77,
+    "defense": 99,
+    "speed": 85,
+    "magic": 83,
+    "luck": 64,
+    "charisma": 55
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

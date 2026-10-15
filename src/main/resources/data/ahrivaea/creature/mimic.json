@@ -1,0 +1,68 @@
+{
+  "name": "Mimic",
+  "forms": {
+    "none": {
+      "stats": {
+        "hp": 53,
+        "attack": 91,
+        "defense": 80,
+        "speed": 65,
+        "magic": 62,
+        "luck": 100,
+        "charisma": 76
+      },
+      "rarity": "Rare",
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld",
+          "#minecraft:is_nether",
+          "#minecraft:is_end"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:gold_ingot",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:iron_nugget",
+          "chance": 0.35,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:chest",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Chest sorting"
+        },
+        {
+          "job": "defense",
+          "text": "Storage security"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "hp": 53,
+    "attack": 91,
+    "defense": 80,
+    "speed": 65,
+    "magic": 62,
+    "luck": 100,
+    "charisma": 76
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

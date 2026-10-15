@@ -36,6 +36,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
+import java.util.Arrays;
+import java.util.Locale;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.biome.Biome;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -380,6 +387,30 @@ public final class Battles {
 
 	// ---- commands (for testing and admins) ----
 
+	/** Builds an arena of the given theme (no battle) and takes the player above it to look. Returns a problem, or null. */
+	public static String previewArena(ServerPlayer p, String themeName) {
+		Arena.Theme theme;
+		try {
+			theme = Arena.Theme.valueOf(themeName.toUpperCase(Locale.ROOT));
+		} catch (IllegalArgumentException e) {
+			return "Unknown arena theme: " + themeName;
+		}
+		ServerLevel arena = p.level().getServer().getLevel(Arena.DIMENSION);
+		if (arena == null) return "The battle arena dimension is missing.";
+		if (of(p) != null) return "Not during a battle.";
+		var biome = arena.registryAccess().lookupOrThrow(Registries.BIOME)
+				.get(ResourceKey.create(Registries.BIOME, Identifier.withDefaultNamespace(theme.sampleBiome())));
+		BlockPos c = Arena.build(arena, 1000 + theme.ordinal(), theme, biome.<Holder<Biome>>map(h -> h).orElse(null), theme.ordinal() * 31L + 7);
+		if (!p.hasAttached(ArenaReturn.ATTACHMENT) && !p.level().dimension().equals(Arena.DIMENSION)) p.setAttached(ArenaReturn.ATTACHMENT, ArenaReturn.of(p));
+		p.teleportTo(arena, c.getX() + 0.5, c.getY() + 18, c.getZ() + Arena.FIELD + 8.5, Set.of(), 180, 45, true);
+		if (p.getAbilities().mayfly) {
+			p.getAbilities().flying = true;
+			p.onUpdateAbilities();
+		}
+		Ahrivaea.LOGGER.info("Arena preview {} at {} for {}", theme, c.toShortString(), p.getPlainTextName());
+		return null;
+	}
+
 	public static void registerCommands(CommandDispatcher<CommandSourceStack> d) {
 		d.register(Commands.literal("battle").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("start").executes(ctx -> {
@@ -398,6 +429,20 @@ public final class Battles {
 					b.outcome = Battle.Outcome.FLED;
 					b.phase = Battle.Phase.OVER;
 					cleanUp(b);
+					return 1;
+				}))
+				// look at an arena without a battle: /battle arena <theme>, then /battle home
+				.then(Commands.literal("arena").then(Commands.argument("theme", StringArgumentType.word())
+						.suggests((ctx, sb) -> SharedSuggestionProvider.suggest(Arrays.stream(Arena.Theme.values()).map(t -> t.name().toLowerCase(Locale.ROOT)), sb))
+						.executes(ctx -> {
+							String msg = previewArena(ctx.getSource().getPlayerOrException(), StringArgumentType.getString(ctx, "theme"));
+							if (msg != null) ctx.getSource().sendFailure(Component.literal(msg));
+							return msg == null ? 1 : 0;
+						})))
+				.then(Commands.literal("home").executes(ctx -> {
+					ServerPlayer p = ctx.getSource().getPlayerOrException();
+					if (of(p) != null) return 0;
+					goHome(p, FINISHED.remove(p.getUUID()));
 					return 1;
 				}))
 				.then(Commands.literal("recruit").then(Commands.argument("index", IntegerArgumentType.integer(0)).executes(ctx -> {

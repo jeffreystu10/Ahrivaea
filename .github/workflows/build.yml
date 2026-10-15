@@ -46,8 +46,11 @@ jobs:
         run: |
           shots=$(find . -path ./.git -prune -o -type d -name screenshots -print | head -5)
           echo "found: $shots"
-          [ -z "$shots" ] && exit 0
           mkdir -p /tmp/shots && for d in $shots; do cp -r "$d"/. /tmp/shots/; done
+          # the mods' own log lines and any errors, to read without downloading the job log
+          [ -f client.log ] && grep -E "\(ahrivaea|AssertionError|Exception|Caused by|at dev\.ahrivaea" client.log | cut -c1-3000 > /tmp/shots/client-ahrivaea.log || true
+          [ -f server-all.log ] && grep -E "\(ahrivaea|AHRIVAEA|Exception|Caused by|at dev\.ahrivaea|ERROR" server-all.log | cut -c1-3000 > /tmp/shots/server-ahrivaea.log || true
+          [ -z "$(ls /tmp/shots)" ] && exit 0
           cd /tmp/shots && git init -q && git checkout -q -b ci-screenshots
           echo "${GITHUB_SHA}" > COMMIT
           git add -A && git -c user.name=ci -c user.email=ci@localhost commit -qm "Screenshots for ${GITHUB_SHA}"

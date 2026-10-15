@@ -24,14 +24,14 @@ public class ArenaScreenshots implements FabricClientGameTest {
 			});
 			for (Arena.Theme theme : Arena.Theme.values()) {
 				String name = theme.name().toLowerCase(Locale.ROOT);
-				server.runCommand("battle arena " + name);
+				server.runCommand("execute as @p run battle arena " + name);
 				context.waitFor(c -> c.level != null && c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() == null, 400);
 				context.waitTicks(10);
 				sp.getConnection().waitForChunksRender();
 				context.waitTicks(10);
 				context.takeScreenshot(TestScreenshotOptions.of("arena_" + name));
 			}
-			server.runCommand("battle home");
+			server.runCommand("execute as @p run battle home");
 			context.waitFor(c -> c.level != null && !c.level.dimension().equals(Arena.DIMENSION), 400);
 		}
 	}

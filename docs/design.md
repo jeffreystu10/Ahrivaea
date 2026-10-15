@@ -109,9 +109,25 @@ Which biome and time of day gives which influence: list to come (a draft is in
 - Speed sets your squares per turn the same way as for creatures. Armor adds 1.5 Defense per armor point.
 - Classes or skill trees (e.g. the Seven Schools of the Dread Circle) can come later.
 
+## The creature list
+
+206 species, 278 forms (one per influence a creature appears with), from `Monster_List_v.1.xlsx`: each with biomes,
+rarity, drops and two jobs. Creatures replace every vanilla mob (see [creatures.md](creatures.md#no-vanilla-mobs)).
+Until models arrive, a creature looks like a placeholder tinted its influence's colour.
+
+## Drops
+
+Each creature you defeat in a battle you win drops its listed loot (chance and amount per item), straight into
+your inventory; the results screen lists it.
+
+## Bases (Palworld-style)
+
+A Base Core lets recruited creatures work: farming, growth, logging, mining (at a Mining Post), smelting,
+transport, ranching and fishing now; defense (against base raids) and the rest in phase 2. See [bases.md](bases.md).
+
 ## After a battle
 
 - **XP** goes to the player's pool, not the creatures: 10 XP per creature defeated. The player chooses
   which creatures to spend it on. Levelling is linear: 100 XP per level.
 - **Recruiting**: instead of catching mid-battle, pay XP to recruit one of the creatures you
-  defeated. Cost: 10 XP × its level *(placeholder)*.
+  defeated. Cost: 10 XP × its level *(placeholder)*. If your party (6) is full, it goes to your box.

@@ -5,18 +5,18 @@
       "key": "creatures",
       "id": "ahrivaea",
       "name": "Ahrivaea Creatures",
-      "summary": "Creatures with elemental influences, Fire Emblem-style grid battles on the real terrain, and your own levelled-up character.",
+      "summary": "Creatures with elemental influences, Fire Emblem-style grid battles in arenas themed after the biome you met them in, and your own levelled-up character.",
       "features": [
         "Creatures spawn in the world; their influence (Fire, Frost, Storm ... Arcane) comes from the biome and time of day and sets their look, name and stats",
-        "Grid battles on the real terrain seen from above: hit a wild creature to fight it plus 1-4 more; you and 4 of your creatures each move by Speed, then attack, use an item, rally or wait",
+        "Grid battles seen from above: hit a wild creature and you're taken to a battle arena built for that biome (25 themes: forests, desert, snow, swamp, ocean, caves, deep dark, nether biomes, the End ...) to fight it plus 1-4 more; you and 4 of your creatures each move by Speed, then attack, use an item, rally or wait; afterwards you're brought back to where you were",
         "Counterattacks, high ground, water and lava, influence matchups, crits and dodges (Luck), support (Charisma), fleeing; the enemy side plays itself",
         "Your character levels up to 50 and you spend stat points (/character); your weapon and armor count in battle",
         "Win XP for your creatures and yourself, then recruit creatures you defeated; Vessels and a party of 6",
         "Blockbench creature models with an animated form per influence (the 11 dragons so far)"
       ],
-      "commands": "/party, /party send|release <slot>, /party xp <slot> <amount>, /character, /character spend <stat> <points>; operators: /ahrivaea spawn|givexp|selftest, /battle start|end|recruit, /character givexp",
+      "commands": "/party, /party send|release <slot>, /party xp <slot> <amount>, /character, /character spend <stat> <points>; operators: /ahrivaea spawn|givexp|selftest, /battle start|end|recruit, /battle arena <theme>, /battle home, /character givexp",
       "players_install": "Yes (new creatures, models and items)",
-      "status": "Battles playable (placeholder moves until the move list)",
+      "status": "Battles playable in biome arenas (placeholder moves until the move list)",
       "added": "2026-10-14",
       "docs": "docs/design.md, docs/battles.md, docs/creatures.md",
       "entrypoints": {
@@ -48,6 +48,8 @@
         "data/ahrivaea/creature/**",
         "data/ahrivaea/influence_rules/**",
         "data/ahrivaea/recipe/vessel.json",
+        "data/ahrivaea/dimension/**",
+        "data/ahrivaea/dimension_type/**",
         "ahrivaea.client.mixins.json"
       ]
     },

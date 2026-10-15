@@ -1,6 +1,7 @@
 package dev.ahrivaea.test;
 
 import com.google.gson.JsonObject;
+import dev.ahrivaea.battle.Arena;
 import dev.ahrivaea.battle.Battle;
 import dev.ahrivaea.battle.Battles;
 import dev.ahrivaea.battle.Unit;
@@ -52,8 +53,6 @@ public class BattleTest implements FabricClientGameTest {
 				}
 			});
 			var pos = context.computeOnClient(c -> c.player.blockPosition());
-			server.runCommand("fill %d %d %d %d %d %d minecraft:stone".formatted(pos.getX() - 6, pos.getY(), pos.getZ() + 2, pos.getX() - 3, pos.getY() + 1, pos.getZ() + 5));
-			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(pos.getX() + 3, pos.getY() - 1, pos.getZ() + 3, pos.getX() + 5, pos.getY() - 1, pos.getZ() + 5));
 			server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon nature 8".formatted(pos.getX(), pos.getY(), pos.getZ() + 6));
 			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
 			context.waitTicks(10);
@@ -63,8 +62,12 @@ public class BattleTest implements FabricClientGameTest {
 				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12)).getFirst();
 				c.gameMode.attack(c.player, wild);
 			});
-			context.waitFor(c -> c.gui.screen() instanceof BattleScreen, 100);
+			// off to the arena (another dimension); the battle screen opens there
+			context.waitFor(c -> c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() instanceof BattleScreen, 400);
+			sp.getConnection().waitForChunksRender();
 			context.waitTicks(20);
+			boolean wildGone = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(20)).isEmpty());
+			if (!wildGone) failures.add("the wild dragon should have gone into the arena with us");
 			context.takeScreenshot(TestScreenshotOptions.of("battle_1_start"));
 
 			// select our first creature by clicking it, then click a square two steps away
@@ -189,8 +192,11 @@ public class BattleTest implements FabricClientGameTest {
 			});
 			if (charLevelXp <= 1000) failures.add("the player character should have gained XP");
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).leave());
-			context.waitFor(c -> !(c.gui.screen() instanceof BattleScreen), 100);
+			context.waitFor(c -> !(c.gui.screen() instanceof BattleScreen) && !c.level.dimension().equals(Arena.DIMENSION), 400);
+			sp.getConnection().waitForChunksRender();
 			context.waitTicks(10);
+			double away = context.computeOnClient(c -> Math.sqrt(c.player.blockPosition().distSqr(pos)));
+			if (away > 3) failures.add("after the battle we should be back where we started, but are " + away + " blocks away");
 			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after"));
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));

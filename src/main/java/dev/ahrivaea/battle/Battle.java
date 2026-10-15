@@ -64,9 +64,18 @@ public final class Battle {
 	int enemyDelay;
 	private int nextId = 1;
 
-	Battle(ServerPlayer player, BattleGrid grid, boolean startedWithCreatures) {
+	/** The arena slot this battle uses in the battle dimension (-1 = fought on the real terrain). */
+	int arenaSlot = -1;
+	/** The wild creature that started it, taken out of the world for the battle; put back unless it was defeated. */
+	Wild wild;
+	/** The unit standing in for that wild creature. */
+	Unit lead;
+
+	record Wild(ServerLevel level, String species, dev.ahrivaea.creature.Influence influence, int creatureLevel, double x, double y, double z) {}
+
+	Battle(ServerPlayer player, ServerLevel level, BattleGrid grid, boolean startedWithCreatures) {
 		this.playerId = player.getUUID();
-		this.level = (ServerLevel) player.level();
+		this.level = level;
 		this.grid = grid;
 		this.random = level.getRandom();
 		this.startedWithCreatures = startedWithCreatures;

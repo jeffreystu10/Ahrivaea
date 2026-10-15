@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.ahrivaea.battle.BattleGrid;
 import dev.ahrivaea.battle.Battles;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 
@@ -18,6 +20,14 @@ public final class BattleClient {
 
 	public static void init() {
 		ClientPlayNetworking.registerGlobalReceiver(Battles.StatePayload.TYPE, (payload, ctx) -> receive(ctx.client(), payload.json()));
+		// moving to the arena (another dimension) closes every screen; open the battle screen again once there
+		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+			if (state != null && mc.level != null && mc.player != null && mc.gui.screen() == null) mc.gui.setScreen(new BattleScreen());
+		});
+		ClientPlayConnectionEvents.DISCONNECT.register((handler, mc) -> {
+			state = null;
+			grid = null;
+		});
 	}
 
 	public static boolean active() {

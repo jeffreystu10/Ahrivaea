@@ -21,7 +21,7 @@ public final class HorseStats {
 		out.add(new Line(h.getName().getString() + (h.isTamed() ? "" : " (wild)"), 0xFFFFFF55));
 		out.add(new Line("Speed: " + String.format("%.1f", HorseSpeed.blocksPerSecond(h)) + " blocks/sec", 0xFFFFFFFF));
 		if (riding) {
-			double now = h.getDeltaMovement().horizontalDistance() * 20;
+			double now = HorsesClient.currentSpeed;
 			out.add(new Line("  now " + String.format("%.1f", now), 0xFFAAAAAA));
 		}
 		out.add(new Line("Tier " + s.tier() + " (x" + HorseSpeed.MULTIPLIER[Math.clamp(s.tier(), 0, HorseSpeed.MAX_TIER)] + ")"

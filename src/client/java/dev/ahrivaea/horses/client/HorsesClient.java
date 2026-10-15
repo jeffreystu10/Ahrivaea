@@ -3,6 +3,7 @@ package dev.ahrivaea.horses.client;
 import dev.ahrivaea.horses.HorseSpeed;
 import dev.ahrivaea.horses.HorsesMod;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.Minecraft;
@@ -18,8 +19,23 @@ import net.minecraft.world.phys.Vec3;
 public class HorsesClient implements ClientModInitializer {
 	public static final double LOOK_RANGE = 16;
 
+	/** How fast the horse you're riding is going now, from how far it moved each tick (smoothed over half a second). */
+	static double currentSpeed;
+	private static Vec3 lastPos;
+
 	@Override
 	public void onInitializeClient() {
+		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+			if (mc.player != null && mc.player.getVehicle() instanceof AbstractHorse h) {
+				Vec3 now = h.position();
+				double step = lastPos == null ? 0 : Math.hypot(now.x - lastPos.x, now.z - lastPos.z) * 20;
+				currentSpeed += (Math.min(step, 100) - currentSpeed) * 0.2;
+				lastPos = now;
+			} else {
+				lastPos = null;
+				currentSpeed = 0;
+			}
+		});
 		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, HorsesMod.id("horse_stats"), (g, delta) -> {
 			Minecraft mc = Minecraft.getInstance();
 			if (mc.player == null || mc.level == null || mc.gui.hud.isHidden()) return;

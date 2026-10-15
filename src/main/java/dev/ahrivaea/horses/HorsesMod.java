@@ -83,7 +83,7 @@ public class HorsesMod implements ModInitializer {
 		}
 		HorseSpeed.Step step = HorseSpeed.stepFrom(s.tier());
 		if (!stack.is(step.feed())) {
-			p.sendOverlayMessage(Component.literal("This horse is tier " + s.tier() + "; it needs ").append(step.feed().getName()).append(" next."));
+			p.sendOverlayMessage(Component.literal("This horse is tier " + s.tier() + "; it needs ").append(step.feed().getDefaultInstance().getHoverName()).append(" next."));
 			return InteractionResult.FAIL;
 		}
 		stack.consume(1, p);
@@ -99,7 +99,7 @@ public class HorsesMod implements ModInitializer {
 			HorseSpeed.set(h, new HorseSpeed(s.tier(), fed));
 			level.playSound(null, h.blockPosition(), SoundEvents.HORSE_EAT, SoundSource.NEUTRAL, 1f, 1f);
 			level.sendParticles(ParticleTypes.HAPPY_VILLAGER, h.getX(), h.getY() + 1.2, h.getZ(), 6, 0.4, 0.4, 0.4, 0);
-			p.sendOverlayMessage(Component.literal("Tier " + s.tier() + ": " + fed + "/" + step.amount() + " ").append(step.feed().getName()).append(" to tier " + (s.tier() + 1)));
+			p.sendOverlayMessage(Component.literal("Tier " + s.tier() + ": " + fed + "/" + step.amount() + " ").append(step.feed().getDefaultInstance().getHoverName()).append(" to tier " + (s.tier() + 1)));
 		}
 		return InteractionResult.SUCCESS;
 	}
@@ -115,7 +115,7 @@ public class HorsesMod implements ModInitializer {
 		HorseSpeed.Step step = HorseSpeed.stepFrom(s.tier());
 		Component next = s.tier() >= HorseSpeed.MAX_TIER ? Component.literal("Top tier.")
 				: step == null ? Component.literal("Next tier: breed two tier " + s.tier() + " horses (" + Math.round(HorseSpeed.BREED_BONUS_CHANCE * 100) + "% chance per foal).")
-				: Component.literal("Next tier: " + s.fed() + "/" + step.amount() + " ").append(step.feed().getName());
+				: Component.literal("Next tier: " + s.fed() + "/" + step.amount() + " ").append(step.feed().getDefaultInstance().getHoverName());
 		src.sendSuccess(() -> Component.literal(h.getName().getString() + ": speed tier " + s.tier() + " (x" + HorseSpeed.MULTIPLIER[s.tier()] + "), top speed "
 				+ String.format("%.1f", HorseSpeed.blocksPerSecond(h)) + " blocks/sec. ").append(next), false);
 		return 1;

@@ -54,7 +54,7 @@ public final class VanillaMobs {
 	public static void init() {
 		// no natural spawning of vanilla mobs anywhere (creatures have their own spawner)
 		BiomeModifications.create(Ahrivaea.id("no_vanilla_mobs")).add(ModificationPhase.REMOVALS, BiomeSelectors.all(),
-				ctx -> ctx.getSpawnSettings().clearSpawns());
+				ctx -> ctx.getMobSpawnSettings().clearSpawns());
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
 			if (!(entity instanceof Mob mob) || entity instanceof CreatureEntity || level.getGameRules().get(ALLOWED)) return;
 			if (WildSpawner.SKIP.contains(level.dimension())) return; // the battle arenas look after themselves

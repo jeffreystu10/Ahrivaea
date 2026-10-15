@@ -32,6 +32,14 @@ public final class WildSpawner {
 	/** Dimensions to leave alone (the battle arenas). */
 	public static final List<net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>> SKIP = new ArrayList<>();
 
+	/** Why each recent attempt failed (for tests and /ahrivaea spawninfo). */
+	public static final java.util.Map<String, Integer> FAILURES = new java.util.TreeMap<>();
+
+	private static CreatureEntity fail(String why) {
+		FAILURES.merge(why, 1, Integer::sum);
+		return null;
+	}
+
 	public static void init() {
 		ServerTickEvents.END_SERVER_TICK.register(WildSpawner::tick);
 	}
@@ -54,7 +62,7 @@ public final class WildSpawner {
 		int dist = MIN_DISTANCE + rnd.nextInt(MAX_DISTANCE - MIN_DISTANCE);
 		int x = p.getBlockX() + (int) (Math.cos(angle) * dist), z = p.getBlockZ() + (int) (Math.sin(angle) * dist);
 		BlockPos column = new BlockPos(x, p.getBlockY(), z);
-		if (!level.isLoaded(column)) return null;
+		if (!level.isLoaded(column)) return fail("not loaded");
 		int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
 		int playerSurface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, p.getBlockX(), p.getBlockZ());
 		boolean underground = level.dimensionType().hasCeiling() || p.getBlockY() < playerSurface - 8;
@@ -66,24 +74,27 @@ public final class WildSpawner {
 				BlockPos q = new BlockPos(x, p.getBlockY() + dy, z);
 				if (standable(level, q)) at = q;
 			}
-			if (at == null) return null;
+			if (at == null) return fail("no cave floor");
 			water = false;
 		} else {
 			at = new BlockPos(x, surface, z);
 			water = level.getFluidState(at.below()).is(FluidTags.WATER);
 			if (water) at = at.below();
-			else if (!standable(level, at)) return null;
+			else if (!standable(level, at)) return fail("can't stand");
 		}
-		if (level.getFluidState(at).is(FluidTags.LAVA) || level.getNearestPlayer(at.getX(), at.getY(), at.getZ(), MIN_DISTANCE - 4, false) != null) return null;
+		if (level.getFluidState(at).is(FluidTags.LAVA) || level.getNearestPlayer(at.getX(), at.getY(), at.getZ(), MIN_DISTANCE - 4, false) != null) return fail("lava or player");
 		final BlockPos spot = at;
-		for (var blocked : BLOCKED) if (blocked.test(level, spot)) return null;
+		for (var blocked : BLOCKED) if (blocked.test(level, spot)) return fail("blocked");
 		boolean inWater = water;
 		var pick = Species.pickFor(level.getBiome(spot), level, rnd,
 				(s, inf) -> inWater == (s.movement() == Species.Movement.SWIM));
-		if (pick.isEmpty()) return null;
+		if (pick.isEmpty()) return fail("nothing lives in " + level.getBiome(spot).unwrapKey().map(k -> k.identifier().toString()).orElse("?") + (inWater ? " water" : ""));
 		int[] range = pick.get().species().levelRange(pick.get().influence());
 		int lvl = range[0] + rnd.nextInt(Math.max(1, range[1] - range[0] + 1));
-		return Ahrivaea.spawn(level, pick.get().species(), pick.get().influence(), lvl, -1, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5);
+		CreatureEntity e = Ahrivaea.spawn(level, pick.get().species(), pick.get().influence(), lvl, -1, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5);
+		if (e == null) return fail("couldn't create");
+		FAILURES.merge("spawned", 1, Integer::sum);
+		return e;
 	}
 
 	private static boolean standable(ServerLevel level, BlockPos feet) {

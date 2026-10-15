@@ -64,8 +64,9 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			}
 			String kinds = server.computeOnServer(s -> String.join(", ", s.overworld().getEntitiesOfClass(CreatureEntity.class, new AABB(pos).inflate(90), c -> !c.isTame())
 					.stream().map(CreatureEntity::displayName).toList()));
-			LOG.info("WildCreaturesTest: {} wild creatures appeared: {}", wild, kinds);
-			if (wild < 4) failures.add("wild creatures should appear around the player, only " + wild + " did");
+			String why = server.computeOnServer(s -> dev.ahrivaea.creature.WildSpawner.FAILURES.toString());
+			LOG.info("WildCreaturesTest: {} wild creatures appeared: {}; spawn attempts: {}", wild, kinds, why);
+			if (wild < 4) failures.add("wild creatures should appear around the player, only " + wild + " did; attempts: " + why);
 
 			// a lineup of different creatures (placeholder model, tinted by influence, sized by species)
 			server.runCommand("gamerule spawn_mobs false");

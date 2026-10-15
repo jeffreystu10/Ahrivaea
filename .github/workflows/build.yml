@@ -65,6 +65,10 @@ jobs:
         run: |
           pip install --quiet openpyxl
           python3 tools/mods_sheet.py Ahrivaea_Mods.xlsx
+          # Fabric API, which every mod here needs, from the build's own download of it
+          FAPI_VERSION=$(grep '^fabric_api_version=' gradle.properties | cut -d= -f2)
+          find ~/.gradle -name "fabric-api-${FAPI_VERSION}.jar" -not -path "*sources*" | head -1 | xargs -I{} cp {} build/mods/
+          ls build/mods
           gh release delete latest --yes --cleanup-tag 2>/dev/null || true
           gh release create latest build/mods/*.jar Ahrivaea_Mods.xlsx --target "$GITHUB_SHA" --title "Latest mods" \
-            --notes "Built from ${GITHUB_SHA}. Each .jar is one mod; Ahrivaea_Mods.xlsx lists what each does and which worlds use it."
+            --notes "Built from ${GITHUB_SHA}. Each ahrivaea-*.jar is one mod; fabric-api-*.jar is required by all of them (put it in the mods folder too). Ahrivaea_Mods.xlsx lists what each mod does and which worlds use it."

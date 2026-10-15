@@ -32,10 +32,24 @@ Operator commands for testing: `/battle start` (with the nearest wild creature),
 
 ## Arenas
 
-Arenas are built fresh for each battle in their own dimension (`ahrivaea:battle_arena`), always in daylight, so
-trees, mobs, night and awkward terrain in the real world don't get in the way. Each has a 21×21 field (gentle
-terraced hills, pools, obstacles that block squares, harmless decoration) and a 6-block border of the biome's
-scenery. Its grass, leaves and water take the colours of the biome the encounter happened in.
+Arenas are built fresh for each battle in their own dimension (`ahrivaea:battle_arena`), so trees, mobs and
+awkward terrain in the real world don't get in the way. Each has a square field (gentle terraced hills, pools,
+obstacles that block squares, harmless decoration) and a 6-block border of the biome's scenery. Its grass, leaves
+and water take the colours of the biome the encounter happened in.
+
+- **Time of day** is the world's: the arena dimension runs on the overworld clock, so a battle at dusk is fought
+  at dusk. (Nether and End arenas get the overworld's sky too.)
+- **Size** depends on the biome and the battle: open country 25×25, woods and most others 21×21, the Nether
+  19×19, caves 17×17; one size up for a crowded battle (9+ units), one down for a small one (4 or fewer). Between
+  15×15 and 27×27. The camera rises to fit.
+- **Everyone gets their own arena.** Each battle going on at once is built in its own slot, 1024 blocks apart
+  (further than anyone can see); a slot is reused, rebuilt from scratch, once its battle is over.
+- **Only for battles.** Nobody can get in otherwise: anyone in the arena dimension who isn't in a battle (or an
+  operator previewing with `/battle arena`) is sent back within a second. Blocks there can't be broken, placed
+  or used.
+- **Safe return.** If the spot you left has changed (built over, flooded, lava), you're put on the nearest safe
+  ground within 8 blocks sideways and 12 up or down; failing that on top of the ground there, and failing that at
+  the world spawn. A wild creature going back uses the same search.
 
 | Theme | Biomes | Field | Water / lava | Obstacles | Border |
 |---|---|---|---|---|---|

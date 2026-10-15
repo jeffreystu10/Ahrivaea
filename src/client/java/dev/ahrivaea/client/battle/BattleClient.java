@@ -91,7 +91,7 @@ public final class BattleClient {
 			camX = grid.originX + size / 2.0;
 			camZ = grid.originZ + size / 2.0;
 			// high enough to see the whole field, whatever its size (13 above the top for 21×21)
-			camY = max + Math.round(size * 0.62f);
+			camY = max + Math.round(size * 0.7f);
 			maxHeight = max;
 			hudWasHidden = mc.gui.hud.isHidden();
 			if (!hudWasHidden) mc.gui.hud.toggle();

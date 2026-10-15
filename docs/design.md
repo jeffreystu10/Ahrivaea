@@ -56,10 +56,10 @@ Which biome and time of day gives which influence: list to come (a draft is in
 ## Battles (Fire Emblem style)
 
 ### Starting
-- Hitting a wild creature starts a battle (a wild creature reaching you will too, once wild creatures can be
-  aggressive). Trainers are NPCs you talk to (later).
+- Only the player starts a battle, by hitting a wild creature. **Wild creatures are passive**: they wander, look
+  at you and never attack or start a battle. Trainers are NPCs you talk to (later).
 - You're taken to a **battle arena** themed after the biome the encounter happened in (25 themes, see
-  [battles.md](battles.md#arenas)): a 21×21 battlefield seen from above, always in daylight. Your side starts
+  [battles.md](battles.md#arenas)): a 15×15 to 27×27 battlefield seen from above, at the world's time of day. Your side starts
   on the south edge, the wild creatures on the north edge. Afterwards you go back to where you were; a wild
   creature you didn't defeat goes back too.
 - Wild encounters: the creature you hit plus 1–4 more wild creatures of the area.

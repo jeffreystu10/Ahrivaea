@@ -181,7 +181,7 @@ public final class Battles {
 			level = arena;
 			// you line up on the south edge, the wild creatures on the north edge
 			playerCell = new int[] {field, grid.size - 4};
-			enemyCell = new int[] {field, 3};
+			enemyCell = new int[] {field, 4};
 			Ahrivaea.LOGGER.info("Arena {} ({}, {}x{}) for {}", slot, theme, grid.size, grid.size, player.getPlainTextName());
 		} else {
 			// no arena dimension (or already in one): fight on the spot

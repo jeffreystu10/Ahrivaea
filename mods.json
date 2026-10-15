@@ -8,7 +8,7 @@
       "summary": "Creatures with elemental influences, Fire Emblem-style grid battles in arenas themed after the biome you met them in, and your own levelled-up character.",
       "features": [
         "Creatures spawn in the world; their influence (Fire, Frost, Storm ... Arcane) comes from the biome and time of day and sets their look, name and stats",
-        "Grid battles seen from above: hit a wild creature and you're taken to a battle arena built for that biome (25 themes: forests, desert, snow, swamp, ocean, caves, deep dark, nether biomes, the End ...) to fight it plus 1-4 more; you and 4 of your creatures each move by Speed, then attack, use an item, rally or wait; afterwards you're brought back to where you were",
+        "Grid battles seen from above: hit a wild creature (they never attack first) and you're taken to your own battle arena built for that biome (25 themes, 15×15 to 27×27, at the world's time of day) to fight it plus 1-4 more; you and 4 of your creatures each move by Speed, then attack, use an item, rally or wait; afterwards you're brought back to safe ground where you were. The arenas can't be visited outside a battle",
         "Counterattacks, high ground, water and lava, influence matchups, crits and dodges (Luck), support (Charisma), fleeing; the enemy side plays itself",
         "Your character levels up to 50 and you spend stat points (/character); your weapon and armor count in battle",
         "Win XP for your creatures and yourself, then recruit creatures you defeated; Vessels and a party of 6",

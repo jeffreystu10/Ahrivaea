@@ -25,6 +25,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -106,11 +107,18 @@ public final class Battles {
 		AttackEntityCallback.EVENT.register((player, level, hand, entity, hit) -> {
 			if (!(player instanceof ServerPlayer sp) || !(entity instanceof CreatureEntity c) || c.isTame() || player.isSpectator()) return InteractionResult.PASS;
 			if (of(player) != null || inBattle(c)) return InteractionResult.FAIL;
+			// for now a sword is the only way to start a battle; anything else does nothing
+			if (!player.getItemInHand(hand).is(ItemTags.SWORDS)) {
+				sp.sendOverlayMessage(Component.literal("Hit it with a sword to battle it."));
+				return InteractionResult.FAIL;
+			}
 			start(sp, c);
 			return InteractionResult.FAIL;
 		});
 		// nothing outside the battle can hurt its units, and nobody can dig up the battlefield
-		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !inBattle(entity));
+		// and players can't hurt wild creatures outside a battle (arrows, tridents, explosions they set off ...)
+		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) ->
+				!inBattle(entity) && !(entity instanceof CreatureEntity && source.getEntity() instanceof Player));
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, be) -> {
 			if (level.dimension().equals(Arena.DIMENSION)) return false;
 			for (Battle b : ACTIVE.values()) {

@@ -57,7 +57,23 @@ public class BattleTest implements FabricClientGameTest {
 			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
 			context.waitTicks(10);
 
-			// hit the wild dragon: the battle starts
+			// hitting it with an empty hand does nothing: only a sword starts a battle
+			server.runCommand("item replace entity @a weapon.mainhand with minecraft:air");
+			context.waitTicks(2);
+			context.runOnClient(c -> {
+				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12)).getFirst();
+				c.gameMode.attack(c.player, wild);
+			});
+			context.waitTicks(20);
+			boolean startedBarehanded = server.computeOnServer(s -> Battles.of(s.getPlayerList().getPlayers().getFirst()) != null);
+			float wildHealth = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(16)).getFirst().getHealth());
+			float wildMax = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(16)).getFirst().getMaxHealth());
+			if (startedBarehanded) failures.add("hitting a creature without a sword shouldn't start a battle");
+			if (wildHealth < wildMax) failures.add("hitting a creature without a sword shouldn't hurt it");
+			server.runCommand("item replace entity @a weapon.mainhand with minecraft:netherite_sword");
+			context.waitTicks(2);
+
+			// hit the wild dragon with the sword: the battle starts
 			context.runOnClient(c -> {
 				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12)).getFirst();
 				c.gameMode.attack(c.player, wild);
@@ -219,6 +235,33 @@ public class BattleTest implements FabricClientGameTest {
 			if (away > 10) failures.add("after the battle we should be back near where we started, but are " + away + " blocks away");
 			if (stuck) failures.add("after the battle we should be standing on the ground with room around us");
 			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after"));
+
+			// a second battle, fled during the enemy phase: fleeing always works, at any time, and the wild creature stays in the world
+			var here = context.computeOnClient(c -> c.player.blockPosition());
+			server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon frost 5".formatted(here.getX(), here.getY(), here.getZ() + 4));
+			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
+			context.waitTicks(10);
+			context.runOnClient(c -> {
+				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12)).getFirst();
+				c.gameMode.attack(c.player, wild);
+			});
+			context.waitFor(c -> c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() instanceof BattleScreen, 400);
+			context.waitTicks(10);
+			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).endTurn());
+			context.waitTicks(3);
+			String phaseWhenFleeing = context.computeOnClient(c -> BattleClient.state().get("phase").getAsString());
+			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).flee());
+			context.waitFor(c -> BattleClient.state() != null && BattleClient.state().has("result"), 100);
+			context.takeScreenshot(TestScreenshotOptions.of("battle_7_fled"));
+			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).leave());
+			context.waitFor(c -> !(c.gui.screen() instanceof BattleScreen) && !c.level.dimension().equals(Arena.DIMENSION), 400);
+			context.waitTicks(10);
+			if (!"ENEMY".equals(phaseWhenFleeing)) failures.add("the flee test should have run in the enemy phase, was " + phaseWhenFleeing);
+			String outcome = server.computeOnServer(s -> {
+				var all = s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(here).inflate(16), c -> !c.isTame());
+				return all.size() + " wild";
+			});
+			if (!outcome.equals("1 wild")) failures.add("after fleeing, the wild creature should be back in the world (found " + outcome + ")");
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

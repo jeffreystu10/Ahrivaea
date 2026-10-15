@@ -127,15 +127,12 @@ public final class Battle {
 
 	/** Carries out one of the player's orders. Returns null if it worked, or why it can't be done. */
 	public String act(Action a) {
+		// fleeing works at any time, in either phase
+		if (a.kind().equals("flee")) return phase == Phase.OVER ? "The battle is over." : flee();
 		if (phase != Phase.PLAYER) return "It isn't your turn.";
-		switch (a.kind()) {
-			case "end_turn" -> {
-				startEnemyPhase();
-				return null;
-			}
-			case "flee" -> {
-				return flee();
-			}
+		if (a.kind().equals("end_turn")) {
+			startEnemyPhase();
+			return null;
 		}
 		Unit u = unit(a.unit());
 		if (u == null || !u.alive() || u.side != Unit.Side.PLAYER) return "That's not one of your units.";
@@ -219,17 +216,10 @@ public final class Battle {
 		say(u.name + " uses " + what + " on " + (target == u ? "themself" : target.name) + ": +" + heal + " HP");
 	}
 
+	/** Running away always works, at any point of the battle. No XP; your creatures keep the damage they took. */
 	private String flee() {
-		double mine = units.stream().filter(x -> x.alive() && x.side == Unit.Side.PLAYER).mapToDouble(x -> x.stats.speed()).average().orElse(0);
-		double theirs = units.stream().filter(x -> x.alive() && x.side == Unit.Side.ENEMY).mapToDouble(x -> x.stats.speed()).average().orElse(0);
-		double chance = Math.clamp(0.5 + (mine - theirs) / 200.0, 0.1, 0.95);
-		if (random.nextDouble() < chance) {
-			say("You got away! (" + Math.round(chance * 100) + "% chance)");
-			finish(Outcome.FLED);
-		} else {
-			say("Couldn't get away! (" + Math.round(chance * 100) + "% chance)");
-			startEnemyPhase();
-		}
+		say("You got away!");
+		finish(Outcome.FLED);
 		return null;
 	}
 

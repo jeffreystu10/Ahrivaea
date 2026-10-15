@@ -2,7 +2,7 @@
 
 The rules are in [design.md](design.md#battles-fire-emblem-style). This is how it plays.
 
-**Starting.** Hit a wild creature. You and it are taken to a **battle arena** built for the biome you were in, and the
+**Starting.** Hit a wild creature with a sword (any sword; nothing else starts a battle). You and it are taken to a **battle arena** built for the biome you were in, and the
 camera looks straight down on its 21×21 battlefield: you and the first 4 creatures in your party along the south
 edge, the creature you hit and 1–4 more wild ones along the north edge. When you leave the results screen you're
 back exactly where you were; if you fled or lost, the wild creature is back too (with the damage you did). Blue frames are your
@@ -15,7 +15,7 @@ units, red are enemies; the bar above each is its health.
    (you only; then click a unit in green), or **Wait**. Shortcut: after step 2, click an enemy in red to attack
    it with the first move that reaches.
 
-Right-click or Escape goes back a step. **End turn** ends your phase early; **Flee** tries to escape.
+Right-click or Escape goes back a step. **End turn** ends your phase early; **Flee** gets you out straight away, at any time, even during the enemy phase.
 Scroll to zoom in and out, WASD or the arrow keys to look around.
 
 **Enemy phase.** The wild creatures move and attack one at a time. The log at the top left says what happened.

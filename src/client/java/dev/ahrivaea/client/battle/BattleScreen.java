@@ -330,7 +330,7 @@ public class BattleScreen extends Screen {
 		Button end = addRenderableWidget(Button.builder(Component.literal("End turn"), b -> endTurn()).bounds(width - 86, height - 26, 80, 20).build());
 		Button run = addRenderableWidget(Button.builder(Component.literal("Flee"), b -> flee()).bounds(width - 86, height - 50, 80, 20).build());
 		end.active = myTurn;
-		run.active = myTurn;
+		run.active = true; // fleeing works in either phase
 		JsonObject u = unit(selected);
 		if (myTurn && u != null && step == Step.ACTION) {
 			int x = 6, y = height - 26;

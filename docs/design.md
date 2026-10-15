@@ -56,7 +56,8 @@ Which biome and time of day gives which influence: list to come (a draft is in
 ## Battles (Fire Emblem style)
 
 ### Starting
-- Only the player starts a battle, by hitting a wild creature. **Wild creatures are passive**: they wander, look
+- Only the player starts a battle, by **hitting a wild creature with a sword** (for now the only way; hitting it
+  with anything else does nothing, and players can't hurt wild creatures outside a battle). **Wild creatures are passive**: they wander, look
   at you and never attack or start a battle. Trainers are NPCs you talk to (later).
 - You're taken to a **battle arena** themed after the biome the encounter happened in (25 themes, see
   [battles.md](battles.md#arenas)): a 15×15 to 27×27 battlefield seen from above, at the world's time of day. Your side starts
@@ -88,8 +89,7 @@ Which biome and time of day gives which influence: list to come (a draft is in
   unit next to you.
 - **Rally** (your action): a creature next to you gets +(your Charisma ÷ 2)% damage on its next attack.
 - **Support:** each attack also gets +0.1% damage per point of Charisma of the attacker's neighbouring allies.
-- **Flee** (instead of acting): chance = 50% + (your side's average Speed − theirs) ÷ 2 %, between 10% and 95%.
-  Failing ends your phase.
+- **Flee**: at any time, in either phase, and it always works. No XP; your creatures keep the damage they took.
 - Until there is a move list, every creature has *Strike* (melee, physical, power 40) and *<Influence> Bolt*
   (range 1–2, magic, power 35, its own influence).
 

@@ -161,7 +161,8 @@ public class BattleTest implements FabricClientGameTest {
 					if (b == null) return;
 					for (Unit u : b.units) if (u.side == Unit.Side.PLAYER) u.acted = false;
 					Unit target = null;
-					for (Unit u : b.units) if (u.side == Unit.Side.ENEMY && u.alive()) target = u;
+					Unit me0 = b.playerUnit();
+					for (Unit u : b.units) if (u.side == Unit.Side.ENEMY && u.alive() && (target == null || Math.abs(u.x - me0.x) + Math.abs(u.z - me0.z) < Math.abs(target.x - me0.x) + Math.abs(target.z - me0.z))) target = u;
 					if (target == null) return;
 					Unit p = b.playerUnit();
 					// bring it next to us (a wild encounter can have up to 5)

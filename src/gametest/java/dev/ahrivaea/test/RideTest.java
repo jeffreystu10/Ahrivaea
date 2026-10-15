@@ -125,6 +125,7 @@ public class RideTest implements FabricClientGameTest {
 			context.runOnClient(c -> {
 				c.player.setYRot(0);
 				c.player.setXRot(25);
+				if (c.gui.hud.isHidden()) c.gui.hud.toggle(); // test worlds start with the HUD hidden
 			});
 			context.waitTicks(3);
 			context.takeScreenshot(TestScreenshotOptions.of("horse_1_fed_tier_1"));

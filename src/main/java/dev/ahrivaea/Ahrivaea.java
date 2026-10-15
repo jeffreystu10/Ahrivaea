@@ -58,6 +58,7 @@ public class Ahrivaea implements ModInitializer {
 		Party.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
+		dev.ahrivaea.creature.VanillaMobs.init();
 		dev.ahrivaea.character.PlayerCharacter.init();
 		dev.ahrivaea.battle.Battles.init();
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("creatures"), (ResourceManagerReloadListener) Species::reload);

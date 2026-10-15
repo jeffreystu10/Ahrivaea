@@ -43,6 +43,7 @@ public class RideTest implements FabricClientGameTest {
 			server.runCommand("time set noon");
 			server.runCommand("gamerule advance_time false");
 			server.runCommand("gamerule spawn_mobs false");
+			server.runCommand("gamerule ahrivaea:vanilla_mobs true"); // this test is about horses, which Ahrivaea otherwise replaces
 			var pos = context.computeOnClient(c -> c.player.blockPosition());
 			int x0 = pos.getX(), y = pos.getY(), z0 = pos.getZ() + 3;
 			server.runCommand("forceload add %d %d %d %d".formatted(x0 - 16, z0 - 64, x0 + 400, z0 + 24));

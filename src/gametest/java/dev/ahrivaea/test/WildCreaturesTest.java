@@ -83,6 +83,27 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			});
 			context.waitTicks(30);
 			context.takeScreenshot(TestScreenshotOptions.of("creatures_lineup"));
+
+			// vanilla mobs don't stay: a cow becomes a Cow creature, others become creatures of the biome (or just go)
+			server.runCommand("kill @e[type=ahrivaea:creature]");
+			server.runCommand("summon minecraft:cow %d %d %d".formatted(pos.getX() + 3, pos.getY(), pos.getZ() + 3));
+			server.runCommand("summon minecraft:zombie %d %d %d".formatted(pos.getX() - 20, pos.getY(), pos.getZ() + 3));
+			server.runCommand("summon minecraft:villager %d %d %d".formatted(pos.getX() + 20, pos.getY(), pos.getZ() + 3));
+			context.waitTicks(10);
+			String after = server.computeOnServer(s -> {
+				var box = new AABB(pos).inflate(40);
+				long vanilla = s.overworld().getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box, m -> !(m instanceof CreatureEntity)).size();
+				var creatures = s.overworld().getEntitiesOfClass(CreatureEntity.class, box);
+				return vanilla + " vanilla; creatures: " + String.join(", ", creatures.stream().map(CreatureEntity::displayName).toList());
+			});
+			LOG.info("WildCreaturesTest: after summoning a cow, a zombie and a villager: {}", after);
+			if (!after.startsWith("0 vanilla")) failures.add("vanilla mobs should be removed: " + after);
+			if (!after.contains("Cow")) failures.add("a cow should become a Cow creature: " + after);
+			server.runCommand("gamerule ahrivaea:vanilla_mobs true");
+			server.runCommand("summon minecraft:cow %d %d %d".formatted(pos.getX() + 5, pos.getY(), pos.getZ() + 3));
+			context.waitTicks(10);
+			int cows = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(net.minecraft.world.entity.animal.cow.Cow.class, new AABB(pos).inflate(40)).size());
+			if (cows != 1) failures.add("with ahrivaea:vanilla_mobs true, a vanilla cow should stay (found " + cows + ")");
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

@@ -205,7 +205,9 @@ public final class WorkerBrain {
 		for (Job job : jobs()) {
 			Task t = switch (job) {
 				case FARMING -> nearest(level, be, be.crops, p -> isRipe(level, p, level.getBlockState(p)), p -> new Task(Kind.HARVEST, p, null, scaled(30), "Harvesting " + name(level, p)));
-				case GROWTH -> nearest(level, be, be.growables, p -> true, p -> new Task(Kind.TEND, p, null, scaled(60), "Tending " + name(level, p)));
+				case GROWTH -> any(level, be, be.growables, p -> level.getBlockState(p).getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b
+						&& b.isValidBonemealTarget(level, p, level.getBlockState(p), net.minecraft.world.level.block.BonemealSource.MOB),
+						p -> new Task(Kind.TEND, p, null, scaled(60), "Tending " + name(level, p)));
 				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(60), "Felling a tree"));
 				case MINING -> nearest(level, be, be.miningPosts, p -> level.getBlockState(p).is(Bases.MINING_POST), p -> new Task(Kind.MINE, p, null, scaled(100), "Mining"));
 				case SMELTING -> nearest(level, be, be.furnaces, p -> needsSmelting(level, p), p -> new Task(Kind.SMELT, p, null, 0, "Running the " + name(level, p)));
@@ -233,6 +235,14 @@ public final class WorkerBrain {
 
 	private interface Make {
 		Task make(BlockPos p);
+	}
+
+	/** A random one rather than the nearest, so a gardener spreads its care around. */
+	private Task any(ServerLevel level, BaseCoreBlockEntity be, Set<BlockPos> set, Check check, Make make) {
+		List<BlockPos> options = new ArrayList<>(be.unclaimed(set));
+		java.util.Collections.shuffle(options, new java.util.Random(level.getRandom().nextLong()));
+		for (BlockPos p : options) if (level.isLoaded(p) && check.ok(p)) return make.make(p);
+		return null;
 	}
 
 	private Task nearest(ServerLevel level, BaseCoreBlockEntity be, Set<BlockPos> set, Check check, Make make) {
@@ -269,8 +279,15 @@ public final class WorkerBrain {
 		switch (t.kind()) {
 			case HARVEST -> harvest(level, t.target());
 			case TEND -> {
+				// like a dose of bone meal half the time, otherwise a few growth ticks
 				BlockState s = level.getBlockState(t.target());
-				for (int i = 0; i < 4 && level.getBlockState(t.target()) == s; i++) s.randomTick(level, t.target(), level.getRandom());
+				if (s.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b && level.getRandom().nextBoolean()
+						&& b.isValidBonemealTarget(level, t.target(), s, net.minecraft.world.level.block.BonemealSource.MOB)) {
+					b.performBonemeal(level, level.getRandom(), t.target(), s, net.minecraft.world.level.block.BonemealSource.MOB);
+					level.levelEvent(null, net.minecraft.world.level.block.LevelEvent.PARTICLES_AND_SOUND_PLANT_GROWTH, t.target(), 15);
+				} else {
+					for (int i = 0; i < 4 && level.getBlockState(t.target()) == s; i++) s.randomTick(level, t.target(), level.getRandom());
+				}
 			}
 			case FELL -> fell(level, t.target());
 			case MINE -> {

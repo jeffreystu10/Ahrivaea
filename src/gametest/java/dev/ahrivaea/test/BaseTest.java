@@ -37,7 +37,8 @@ import java.util.TreeMap;
  */
 public class BaseTest implements FabricClientGameTest {
 	private static final Logger LOG = LoggerFactory.getLogger("ahrivaea");
-	private static final Job[] JOBS = {Job.FARMING, Job.LOGGING, Job.MINING, Job.SMELTING, Job.TRANSPORT, Job.FISHING, Job.GROWTH, Job.RANCHING};
+	private static final Job[] JOBS = {Job.FARMING, Job.LOGGING, Job.MINING, Job.SMELTING, Job.TRANSPORT, Job.FISHING, Job.GROWTH, Job.RANCHING,
+			Job.BREWING, Job.ENCHANTING, Job.REDSTONE, Job.CRAFTING, Job.ICE, Job.LIGHTING};
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -70,6 +71,13 @@ public class BaseTest implements FabricClientGameTest {
 			server.runCommand("setblock %d %d %d ahrivaea:mining_post".formatted(cx, y, cz - 5));
 			server.runCommand("setblock %d %d %d minecraft:chest".formatted(cx + 1, y, cz - 5));
 			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(cx - 8, y - 1, cz - 8, cx - 6, y - 1, cz - 6));
+			// phase 2 workstations: a brewing stand, an enchanting table, a Creature Dynamo by a lamp, a crafter, torches
+			server.runCommand("setblock %d %d %d minecraft:brewing_stand".formatted(cx - 3, y, cz - 2));
+			server.runCommand("setblock %d %d %d minecraft:enchanting_table".formatted(cx + 3, y, cz - 3));
+			server.runCommand("setblock %d %d %d ahrivaea:creature_dynamo".formatted(cx - 4, y, cz + 2));
+			server.runCommand("setblock %d %d %d minecraft:redstone_lamp".formatted(cx - 5, y, cz + 2));
+			server.runCommand("setblock %d %d %d minecraft:crafter".formatted(cx + 4, y, cz - 1));
+			server.runCommand("setblock %d %d %d minecraft:barrel".formatted(cx - 2, y, cz - 4));
 			context.waitTicks(10);
 			int treeLogs = server.computeOnServer(s -> countLogs(s.overworld(), new BlockPos(cx - 8, y, cz + 6)));
 			LOG.info("BaseTest: tree has {} logs", treeLogs);
@@ -82,6 +90,13 @@ public class BaseTest implements FabricClientGameTest {
 				be.setOwner(p);
 				be.setBaseLevel(5);
 				((AbstractFurnaceBlockEntity) level.getBlockEntity(new BlockPos(cx - 2, y, cz))).setItem(0, new ItemStack(Items.RAW_IRON, 8));
+				var stand = (net.minecraft.world.level.block.entity.BrewingStandBlockEntity) level.getBlockEntity(new BlockPos(cx - 3, y, cz - 2));
+				for (int i = 0; i < 3; i++) stand.setItem(i, net.minecraft.world.item.alchemy.PotionContents.createItemStack(Items.POTION, net.minecraft.world.item.alchemy.Potions.WATER));
+				stand.setItem(3, new ItemStack(Items.NETHER_WART));
+				var crafter = (net.minecraft.world.level.block.entity.CrafterBlockEntity) level.getBlockEntity(new BlockPos(cx + 4, y, cz - 1));
+				for (int i : new int[]{0, 1, 3, 4}) crafter.setItem(i, new ItemStack(Items.OAK_PLANKS));
+				var barrel = (net.minecraft.world.Container) level.getBlockEntity(new BlockPos(cx - 2, y, cz - 4));
+				barrel.setItem(0, new ItemStack(Items.TORCH, 3));
 				StringBuilder sb = new StringBuilder();
 				for (Job job : JOBS) {
 					String[] pick = firstWith(job);
@@ -173,6 +188,18 @@ public class BaseTest implements FabricClientGameTest {
 		boolean grown = !level.getBlockState(new BlockPos(cx + 6, y, cz - 6)).is(Blocks.OAK_SAPLING)
 				|| level.getBlockState(new BlockPos(cx + 6, y, cz - 6)).getValue(net.minecraft.world.level.block.SaplingBlock.STAGE) > 0;
 		r.put("growth", grown ? (Object) true : "the sapling hasn't been tended");
+		var stand = (net.minecraft.world.level.block.entity.BrewingStandBlockEntity) level.getBlockEntity(new BlockPos(cx - 3, y, cz - 2));
+		boolean brewed = stand.getItem(0).getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS, net.minecraft.world.item.alchemy.PotionContents.EMPTY)
+				.is(net.minecraft.world.item.alchemy.Potions.AWKWARD);
+		r.put("brewing", brewed ? (Object) true : "no awkward potions brewed (fuel " + stand.getItem(4) + ")");
+		r.put("enchanting", count(level, core, Items.EXPERIENCE_BOTTLE) > 0 ? (Object) true : "no bottles o' enchanting from the table");
+		boolean lamp = level.getBlockState(new BlockPos(cx - 5, y, cz + 2)).getValue(net.minecraft.world.level.block.RedstoneLampBlock.LIT);
+		r.put("redstone", lamp ? (Object) true : "the lamp by the dynamo isn't lit");
+		r.put("crafting", count(level, core, Items.CRAFTING_TABLE) > 0 ? (Object) true : "the crafter hasn't made a crafting table");
+		r.put("ice", count(level, core, Items.ICE) + count(level, core, Items.SNOWBALL) > 0 ? (Object) true : "no ice made");
+		int torches = 0;
+		for (BlockPos p : BlockPos.betweenClosed(core.offset(-40, -2, -40), core.offset(40, 2, 40))) if (level.getBlockState(p).is(Blocks.TORCH)) torches++;
+		r.put("lighting", torches > 0 ? (Object) true : "no torches put up");
 		boolean done = r.values().stream().allMatch(v -> v instanceof Boolean);
 		Map<String, Object> out = new TreeMap<>(r);
 		out.put("done", done);
@@ -182,7 +209,7 @@ public class BaseTest implements FabricClientGameTest {
 	/** Items of a kind in the base's chests, the post chest, and lying around. */
 	private static int count(ServerLevel level, BlockPos core, net.minecraft.world.item.Item item) {
 		int n = 0;
-		for (BlockPos c : List.of(core.offset(2, 0, 0), core.offset(2, 0, 2), core.offset(1, 0, -5))) {
+		for (BlockPos c : List.of(core.offset(2, 0, 0), core.offset(2, 0, 2), core.offset(1, 0, -5), core.offset(-2, 0, -4))) {
 			Container ct = HopperBlockEntity.getContainerAt(level, c);
 			for (int i = 0; ct != null && i < ct.getContainerSize(); i++) if (ct.getItem(i).is(item)) n += ct.getItem(i).getCount();
 		}

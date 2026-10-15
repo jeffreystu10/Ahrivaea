@@ -18,5 +18,6 @@
   "item.ahrivaea.ivory": "Ivory",
   "item.ahrivaea.purpur_shard": "Purpur Shard",
   "block.ahrivaea.base_core": "Base Core",
-  "block.ahrivaea.mining_post": "Mining Post"
+  "block.ahrivaea.mining_post": "Mining Post",
+  "block.ahrivaea.creature_dynamo": "Creature Dynamo"
 }

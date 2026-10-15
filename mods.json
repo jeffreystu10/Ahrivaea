@@ -75,6 +75,8 @@
         "assets/ahrivaea/items/mining_post.json",
         "data/ahrivaea/recipe/base_core.json",
         "data/ahrivaea/recipe/mining_post.json",
+        "assets/ahrivaea/items/creature_dynamo.json",
+        "data/ahrivaea/recipe/creature_dynamo.json",
         "ahrivaea.client.mixins.json"
       ]
     },

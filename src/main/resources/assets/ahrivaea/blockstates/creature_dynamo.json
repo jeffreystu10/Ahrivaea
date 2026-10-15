@@ -1,0 +1,1 @@
+{"variants": {"powered=false": {"model": "ahrivaea:block/creature_dynamo"}, "powered=true": {"model": "ahrivaea:block/creature_dynamo_on"}}}

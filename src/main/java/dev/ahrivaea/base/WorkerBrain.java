@@ -53,7 +53,7 @@ public final class WorkerBrain {
 	private final CreatureEntity self;
 	private final BlockPos core;
 
-	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH }
+	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH, BREW, STUDY, POWER, CRAFT, ICE, LIGHT }
 
 	private record Task(Kind kind, BlockPos target, ItemEntity item, int duration, String doing) {}
 
@@ -70,6 +70,32 @@ public final class WorkerBrain {
 
 	public String status() {
 		return status;
+	}
+
+	/** Ticks left resting after being knocked out in a raid. */
+	private int restTicks;
+	private CreatureEntity fighting;
+	private int attackCooldown;
+
+	/** Knocked out by a raider: rests (and heals) for a minute before working again. */
+	public void knockOut() {
+		restTicks = 1200;
+		fighting = null;
+		if (task != null) {
+			BaseCoreBlockEntity be = Bases.coreAt((ServerLevel) self.level(), core);
+			if (be != null) finish(be, 20);
+			else task = null;
+		}
+		self.getNavigation().stop();
+	}
+
+	public boolean resting() {
+		return restTicks > 0;
+	}
+
+	/** The Creature Dynamo it's powering right now, if any. */
+	public BlockPos powering() {
+		return task != null && task.kind() == Kind.POWER && workTicks > 0 ? task.target() : null;
 	}
 
 	public BlockPos core() {
@@ -96,7 +122,15 @@ public final class WorkerBrain {
 			self.teleportTo(core.getX() + 1.5, core.getY() + 1, core.getZ() + 0.5);
 			drop();
 		}
+		if (restTicks > 0) {
+			restTicks--;
+			status = "Knocked out, resting (" + (restTicks / 20 + 1) + "s)";
+			if (restTicks % 20 == 0) self.heal(self.getMaxHealth() / 60f);
+			return;
+		}
 		ranch(level);
+		// defenders drop everything when raiders come
+		if (jobs().contains(Job.DEFENSE) && defend(level, be)) return;
 		if (task == null) {
 			if (--cooldown > 0) return;
 			task = plan(level, be);
@@ -104,7 +138,7 @@ public final class WorkerBrain {
 			lastDist = Double.MAX_VALUE;
 			if (task == null) {
 				cooldown = 40;
-				status = jobs().stream().anyMatch(Job::working) ? "Idle (nothing to do)" : "Idle (its jobs come in phase 2)";
+				status = jobs().contains(Job.DEFENSE) ? "On guard" : jobs().stream().anyMatch(Job::working) ? "Idle (nothing to do)" : "Idle (no work it can do yet)";
 				wander(level, be);
 				return;
 			}
@@ -115,7 +149,7 @@ public final class WorkerBrain {
 			finish(be, 10);
 			return;
 		}
-		double reach = task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH ? 3 : 2.3;
+		double reach = task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH || task.kind() == Kind.ICE ? 3 : 2.3;
 		double d = self.position().distanceTo(where);
 		if (d > reach) {
 			status = "On the way: " + task.doing();
@@ -133,6 +167,20 @@ public final class WorkerBrain {
 		workTicks++;
 		if (task.kind() == Kind.SMELT) {
 			if (!smeltTick(level, task.target()) || workTicks > 1200) finish(be, 20);
+			return;
+		}
+		if (task.kind() == Kind.BREW) {
+			if (!brewTick(level, task.target()) || workTicks > 1200) finish(be, 20);
+			return;
+		}
+		if (task.kind() == Kind.POWER) {
+			if (!level.getBlockState(task.target()).is(Bases.CREATURE_DYNAMO) || workTicks > 2400) {
+				finish(be, 20);
+				return;
+			}
+			if (workTicks % 20 == 1) CreatureDynamoBlock.power(level, task.target());
+			// now and then the work turns up some redstone
+			if (workTicks % 1200 == 0) output(level, task.target(), new ItemStack(Items.REDSTONE));
 			return;
 		}
 		if (workTicks % 10 == 0) level.sendParticles(ParticleTypes.HAPPY_VILLAGER, where.x, where.y + 0.5, where.z, 2, 0.3, 0.3, 0.3, 0);
@@ -163,6 +211,15 @@ public final class WorkerBrain {
 				case SMELTING -> nearest(level, be, be.furnaces, p -> needsSmelting(level, p), p -> new Task(Kind.SMELT, p, null, 0, "Running the " + name(level, p)));
 				case FISHING -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.FISH, p, null, scaled(240), "Fishing"));
 				case TRANSPORT -> transportTask(level, be);
+				case BREWING -> nearest(level, be, be.brewingStands, p -> needsBrewing(level, p), p -> new Task(Kind.BREW, p, null, 0, "Brewing potions"));
+				case ENCHANTING -> nearest(level, be, be.enchantingTables, p -> level.getBlockState(p).is(Blocks.ENCHANTING_TABLE),
+						p -> new Task(Kind.STUDY, p, null, scaled(1200), "Studying at the enchanting table"));
+				case REDSTONE -> nearest(level, be, be.dynamos, p -> level.getBlockState(p).is(Bases.CREATURE_DYNAMO),
+						p -> new Task(Kind.POWER, p, null, 0, "Powering the Creature Dynamo"));
+				case CRAFTING -> nearest(level, be, be.crafters, p -> level.getBlockEntity(p) instanceof net.minecraft.world.level.block.entity.CrafterBlockEntity c && !c.isEmpty(),
+						p -> new Task(Kind.CRAFT, p, null, scaled(60), "Working the crafter"));
+				case ICE -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.ICE, p, null, scaled(300), "Making ice"));
+				case LIGHTING -> lightingTask(level, be);
 				default -> null;
 			};
 			if (t != null) return t;
@@ -240,7 +297,30 @@ public final class WorkerBrain {
 				if (c != null) carried = HopperBlockEntity.addItem(null, c, carried, null);
 				if (!carried.isEmpty() && chestFor(level, be, carried) == null) drop();
 			}
-			case SMELT -> {
+			case STUDY -> {
+				// study turns into experience, and now and then an enchanted book
+				output(level, t.target(), new ItemStack(Items.EXPERIENCE_BOTTLE, 1 + level.getRandom().nextInt(2)));
+				if (level.getRandom().nextInt(20) == 0) output(level, t.target(), net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(
+						level.getRandom(), new ItemStack(Items.BOOK), 10 + self.getCreatureLevel() / 2, level.registryAccess(), java.util.Optional.empty()));
+			}
+			case CRAFT -> {
+				BlockState s = level.getBlockState(t.target());
+				if (s.getBlock() instanceof net.minecraft.world.level.block.CrafterBlock cb) ((dev.ahrivaea.base.mixin.CrafterAccess) cb).ahrivaea$craft(s, level, t.target());
+			}
+			case ICE -> {
+				RandomSource r = level.getRandom();
+				Block.popResource(level, self.blockPosition(), new ItemStack(Items.ICE, 1 + r.nextInt(2)));
+				Block.popResource(level, self.blockPosition(), new ItemStack(Items.SNOWBALL, 2 + r.nextInt(3)));
+				if (r.nextInt(8) == 0) Block.popResource(level, self.blockPosition(), new ItemStack(Items.PACKED_ICE));
+				if (r.nextInt(40) == 0) Block.popResource(level, self.blockPosition(), new ItemStack(Items.BLUE_ICE));
+			}
+			case LIGHT -> {
+				if (level.getBlockState(t.target()).isAir() && Blocks.TORCH.defaultBlockState().canSurvive(level, t.target())) {
+					level.setBlockAndUpdate(t.target(), Blocks.TORCH.defaultBlockState());
+					carried = ItemStack.EMPTY;
+				}
+			}
+			case SMELT, BREW, POWER -> {
 			}
 		}
 		finish(be, 10);
@@ -304,6 +384,84 @@ public final class WorkerBrain {
 		for (int i = 0; i < c.getContainerSize(); i++) {
 			ItemStack in = c.getItem(i);
 			if (in.isEmpty() || ItemStack.isSameItemSameComponents(in, stack) && in.getCount() < in.getMaxStackSize()) return true;
+		}
+		return false;
+	}
+
+	// ---- defense ----
+
+	/** During a raid, a defender goes for the nearest raider. Returns true while it's fighting. */
+	private boolean defend(ServerLevel level, BaseCoreBlockEntity be) {
+		if (Raids.at(core) == null) {
+			fighting = null;
+			return false;
+		}
+		if (fighting == null || !fighting.isAlive() || !fighting.hasAttached(Raids.RAIDER_OF)) fighting = Raids.nearestRaider(level, core, self);
+		if (fighting == null) return false;
+		if (task != null) finish(be, 0);
+		double reach = Combat.reach(self, fighting);
+		if (self.distanceTo(fighting) > reach) {
+			status = "Charging " + fighting.displayName();
+			if (self.tickCount % 10 == 0) self.getNavigation().moveTo(fighting, 1.3);
+		} else {
+			self.getNavigation().stop();
+			self.getLookControl().setLookAt(fighting);
+			status = "Fighting " + fighting.displayName();
+			if (--attackCooldown <= 0) {
+				Combat.hit(level, self, fighting);
+				attackCooldown = scaled(30);
+			}
+		}
+		return true;
+	}
+
+	// ---- brewing ----
+
+	private static boolean needsBrewing(ServerLevel level, BlockPos p) {
+		return level.getBlockEntity(p) instanceof net.minecraft.world.level.block.entity.BrewingStandBlockEntity b
+				&& dev.ahrivaea.base.mixin.BrewingAccess.ahrivaea$isBrewable(level, b);
+	}
+
+	/** One tick of running a brewing stand: no blaze powder needed, twice as fast. False when there's nothing to brew. */
+	private boolean brewTick(ServerLevel level, BlockPos p) {
+		if (!(level.getBlockEntity(p) instanceof net.minecraft.world.level.block.entity.BrewingStandBlockEntity b)) return false;
+		var a = (dev.ahrivaea.base.mixin.BrewingAccess) b;
+		boolean brewing = a.ahrivaea$brewTime() > 0;
+		if (!brewing && !dev.ahrivaea.base.mixin.BrewingAccess.ahrivaea$isBrewable(level, b)) return false;
+		if (a.ahrivaea$fuel() < 1) a.ahrivaea$setFuel(1);
+		if (a.ahrivaea$brewTime() > 2) a.ahrivaea$setBrewTime(a.ahrivaea$brewTime() - 1);
+		b.setChanged();
+		if (workTicks % 20 == 0) level.sendParticles(ParticleTypes.WITCH, p.getX() + 0.5, p.getY() + 0.8, p.getZ() + 0.5, 3, 0.2, 0.2, 0.2, 0);
+		return true;
+	}
+
+	// ---- lighting ----
+
+	/** A dark spot on the ground in the base to put a torch on, if there are torches in the base's chests. */
+	private Task lightingTask(ServerLevel level, BaseCoreBlockEntity be) {
+		if (!carried.isEmpty() && !carried.is(Items.TORCH)) return null;
+		RandomSource r = level.getRandom();
+		BlockPos spot = null;
+		for (int i = 0; i < 24 && spot == null; i++) {
+			int x = core.getX() + r.nextInt(2 * be.radius() + 1) - be.radius(), z = core.getZ() + r.nextInt(2 * be.radius() + 1) - be.radius();
+			BlockPos top = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
+			if (!be.contains(top) || !level.getBlockState(top).isAir() || level.getLightEngine().getLayerListener(net.minecraft.world.level.LightLayer.BLOCK).getLightValue(top) >= 8) continue;
+			if (Blocks.TORCH.defaultBlockState().canSurvive(level, top) && !be.claimed.containsKey(top)) spot = top;
+		}
+		if (spot == null) return null;
+		if (carried.isEmpty() && !takeTorch(level, be)) return null;
+		return new Task(Kind.LIGHT, spot, null, scaled(20), "Lighting up a dark spot");
+	}
+
+	private boolean takeTorch(ServerLevel level, BaseCoreBlockEntity be) {
+		for (BlockPos p : be.containers) {
+			Container c = HopperBlockEntity.getContainerAt(level, p);
+			for (int i = 0; c != null && i < c.getContainerSize(); i++) {
+				if (c.getItem(i).is(Items.TORCH)) {
+					carried = c.removeItem(i, 1);
+					return true;
+				}
+			}
 		}
 		return false;
 	}

@@ -61,6 +61,8 @@ public final class Bases {
 			BlockBehaviour.Properties.of().strength(4f, 1200f).sound(SoundType.AMETHYST).lightLevel(s -> 10));
 	public static final Block MINING_POST = block("mining_post", Block::new,
 			BlockBehaviour.Properties.of().strength(2f, 6f).sound(SoundType.WOOD));
+	public static final Block CREATURE_DYNAMO = block("creature_dynamo", CreatureDynamoBlock::new,
+			BlockBehaviour.Properties.of().strength(3f, 6f).sound(SoundType.COPPER).lightLevel(s -> s.getValue(CreatureDynamoBlock.POWERED) ? 9 : 0));
 	public static final BlockEntityType<BaseCoreBlockEntity> BASE_CORE_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
 			Ahrivaea.id("base_core"), new BlockEntityType<>(BaseCoreBlockEntity::new, Set.of(BASE_CORE)));
 
@@ -130,11 +132,29 @@ public final class Bases {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(out -> {
 			out.accept(BASE_CORE);
 			out.accept(MINING_POST);
+			out.accept(CREATURE_DYNAMO);
 		});
 		// no wild creatures turn up inside a base
 		WildSpawner.BLOCKED.add(Bases::inAnyBase);
-		// workers can't be hurt (there's nothing to fight at a base yet; raids come later)
-		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !entity.hasAttached(WORKER_OF));
+		// workers can only be hurt by raiders (and are knocked out, not killed: see Raids)
+		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !entity.hasAttached(WORKER_OF)
+				|| source.getEntity() != null && Raids.isRaider(source.getEntity()));
+		Raids.init();
+		net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register((d, reg, env) -> d.register(
+				net.minecraft.commands.Commands.literal("base").requires(net.minecraft.commands.Commands.hasPermission(net.minecraft.commands.Commands.LEVEL_GAMEMASTERS))
+						.then(net.minecraft.commands.Commands.literal("raid").executes(ctx -> {
+							ServerPlayer p = ctx.getSource().getPlayerOrException();
+							for (BlockPos c : cores(p.level())) {
+								BaseCoreBlockEntity be = coreAt(p.level(), c);
+								if (be != null && be.contains(p.blockPosition())) {
+									int n = Raids.start(p.level(), be);
+									ctx.getSource().sendSuccess(() -> Component.literal(n > 0 ? "Raid started: " + n + " raiders." : "Couldn't start a raid here."), false);
+									return n;
+								}
+							}
+							ctx.getSource().sendFailure(Component.literal("Stand in a base to raid it."));
+							return 0;
+						}))));
 		// a core with workers can't be broken until they're sent away
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, be) -> {
 			if (be instanceof BaseCoreBlockEntity core && !core.workers.isEmpty()) {

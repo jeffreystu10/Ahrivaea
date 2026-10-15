@@ -2,6 +2,6 @@
   "required": true,
   "package": "dev.ahrivaea.base.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["FurnaceAccess"],
+  "mixins": ["FurnaceAccess", "BrewingAccess", "CrafterAccess"],
   "injectors": {"defaultRequire": 1}
 }

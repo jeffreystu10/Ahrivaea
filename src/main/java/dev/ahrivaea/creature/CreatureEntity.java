@@ -54,6 +54,7 @@ public class CreatureEntity extends TamableAnimal {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		// at a base, work comes before anything else (following the owner, wandering ...)
 		this.goalSelector.addGoal(1, new WorkGoal());
+		this.goalSelector.addGoal(1, new RaidGoal());
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
 		this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 		this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.1, 6f, 2f));
@@ -89,6 +90,27 @@ public class CreatureEntity extends TamableAnimal {
 		@Override
 		public void tick() {
 			brain().tick((net.minecraft.server.level.ServerLevel) level());
+		}
+	}
+
+	private class RaidGoal extends net.minecraft.world.entity.ai.goal.Goal {
+		RaidGoal() {
+			setFlags(java.util.EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+		}
+
+		@Override
+		public boolean canUse() {
+			return !level().isClientSide() && hasAttached(dev.ahrivaea.base.Raids.RAIDER_OF);
+		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
+		}
+
+		@Override
+		public void tick() {
+			dev.ahrivaea.base.Raids.raiderTick(CreatureEntity.this);
 		}
 	}
 

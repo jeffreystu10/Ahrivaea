@@ -65,7 +65,8 @@ public class BaseCoreBlockEntity extends BlockEntity {
 
 	// the survey (not saved: rebuilt by scanning)
 	final Set<BlockPos> crops = new LinkedHashSet<>(), growables = new LinkedHashSet<>(), trees = new LinkedHashSet<>(),
-			furnaces = new LinkedHashSet<>(), containers = new LinkedHashSet<>(), water = new LinkedHashSet<>(), miningPosts = new LinkedHashSet<>();
+			furnaces = new LinkedHashSet<>(), containers = new LinkedHashSet<>(), water = new LinkedHashSet<>(), miningPosts = new LinkedHashSet<>(),
+			brewingStands = new LinkedHashSet<>(), enchantingTables = new LinkedHashSet<>(), dynamos = new LinkedHashSet<>(), crafters = new LinkedHashSet<>();
 	private int scanIndex;
 	/** Targets a worker is already on, so two don't go for the same one. */
 	final Map<BlockPos, UUID> claimed = new HashMap<>();
@@ -213,6 +214,10 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		set(containers, p, be instanceof ChestBlockEntity || be instanceof BarrelBlockEntity);
 		set(water, p, s.getFluidState().is(Fluids.WATER) && s.getFluidState().isSource() && level.getBlockState(p.above()).isAir());
 		set(miningPosts, p, s.is(Bases.MINING_POST));
+		set(brewingStands, p, be instanceof net.minecraft.world.level.block.entity.BrewingStandBlockEntity);
+		set(enchantingTables, p, s.is(Blocks.ENCHANTING_TABLE));
+		set(dynamos, p, s.is(Bases.CREATURE_DYNAMO));
+		set(crafters, p, be instanceof net.minecraft.world.level.block.entity.CrafterBlockEntity);
 	}
 
 	private static void set(Set<BlockPos> set, BlockPos p, boolean in) {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "CRC",
+    "RBR",
+    "CRC"
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "R": "minecraft:redstone",
+    "B": "minecraft:redstone_block"
+  },
+  "result": {
+    "id": "ahrivaea:creature_dynamo",
+    "count": 1
+  }
+}

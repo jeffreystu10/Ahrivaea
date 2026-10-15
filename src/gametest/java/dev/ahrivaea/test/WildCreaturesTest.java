@@ -23,7 +23,6 @@ import java.util.List;
  * drops come out at the listed rates, and a lineup of placeholder creatures (tinted by influence) is photographed.
  */
 public class WildCreaturesTest implements FabricClientGameTest {
-	private static CreatureEntity PROBE;
 	private static final Logger LOG = LoggerFactory.getLogger("ahrivaea");
 	private static final String[][] LINEUP = {{"mephit", "fire"}, {"mephit", "water"}, {"axe_beak", "fire"}, {"giant_frog", "water"},
 			{"warrior", "storm"}, {"treant", "nature"}, {"phoenix", "radiant"}, {"aboleth", "earth"}, {"angel", "radiant"},
@@ -39,6 +38,7 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			var server = sp.getServer();
 			server.runCommand("time set noon");
 			server.runCommand("gamerule advance_time false");
+			server.runCommand("gamerule spawn_mobs true"); // test worlds start with spawning off
 
 			int species = server.computeOnServer(s -> Species.all().size());
 			int forms = server.computeOnServer(s -> Species.all().stream().mapToInt(x -> x.forms().size()).sum());
@@ -65,23 +65,6 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			}
 			String kinds = server.computeOnServer(s -> String.join(", ", s.overworld().getEntitiesOfClass(CreatureEntity.class, new AABB(pos).inflate(90), c -> !c.isTame())
 					.stream().map(CreatureEntity::displayName).toList()));
-			// what happens to one spawned right now
-			String probe = server.computeOnServer(s -> {
-				var pl = s.getPlayerList().getPlayers().getFirst();
-				for (int i = 0; i < 50; i++) {
-					var e = dev.ahrivaea.creature.WildSpawner.trySpawnNear(pl.level(), pl, pl.getRandom());
-					if (e != null) {
-						PROBE = e;
-						return e.displayName() + " at " + e.blockPosition().toShortString() + " removed=" + e.getRemovalReason() + " player at " + pl.blockPosition().toShortString();
-					}
-				}
-				return "none";
-			});
-			context.waitTicks(40);
-			String probeAfter = server.computeOnServer(s -> PROBE == null ? "-" : "removed=" + PROBE.getRemovalReason() + " alive=" + PROBE.isAlive() + " at " + PROBE.blockPosition().toShortString()
-					+ " all creatures in level: " + java.util.stream.StreamSupport.stream(s.overworld().getAllEntities().spliterator(), false).filter(e -> e instanceof CreatureEntity).count());
-			LOG.info("WildCreaturesTest probe: {} -> {}", probe, probeAfter);
-			failures.add("probe: " + probe + " -> " + probeAfter);
 			String why = server.computeOnServer(s -> dev.ahrivaea.creature.WildSpawner.FAILURES.toString());
 			LOG.info("WildCreaturesTest: {} wild creatures appeared: {}; spawn attempts: {}", wild, kinds, why);
 			if (wild < 4) failures.add("wild creatures should appear around the player, only " + wild + " did; attempts: " + why);

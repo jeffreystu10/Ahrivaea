@@ -129,19 +129,6 @@ public class CreatureEntity extends TamableAnimal {
 		return super.finalizeSpawn(level, difficulty, reason, data);
 	}
 
-	public static int removalsLogged;
-
-	@Override
-	public void remove(net.minecraft.world.entity.Entity.RemovalReason reason) {
-		if (!this.level().isClientSide() && removalsLogged < 3 && !this.isTame()) {
-			removalsLogged++;
-			StringBuilder sb = new StringBuilder();
-			for (StackTraceElement el : new Throwable().getStackTrace()) if (sb.length() < 900) sb.append(" < ").append(el.getClassName().replaceAll(".*\\.", "")).append('.').append(el.getMethodName());
-			dev.ahrivaea.Ahrivaea.LOGGER.info("Creature {} removed ({}){}", displayName(), reason, sb);
-		}
-		super.remove(reason);
-	}
-
 	/** Wild creatures wander off when nobody is near (tamed ones and ones in a battle stay). */
 	@Override
 	public boolean removeWhenFarAway(double distanceSqr) {

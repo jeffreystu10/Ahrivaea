@@ -17,7 +17,7 @@ public class AhrivaeaClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(CREATURE_LAYER, CreatureModel::createBodyLayer);
 		EntityRendererRegistry.register(Ahrivaea.CREATURE, CreatureRenderer::new);
 		dev.ahrivaea.client.battle.BattleClient.init();
-		dev.ahrivaea.client.base.BaseScreen.init();
+		dev.ahrivaea.client.base.BaseScreen.register();
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(Ahrivaea.id("creature_models"), (ResourceManagerReloadListener) GeoModels::reload);
 	}
 }

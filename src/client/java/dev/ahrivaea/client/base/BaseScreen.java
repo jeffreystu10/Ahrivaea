@@ -25,7 +25,7 @@ public class BaseScreen extends Screen {
 		this.state = state;
 	}
 
-	public static void init() {
+	public static void register() {
 		ClientPlayNetworking.registerGlobalReceiver(Bases.StatePayload.TYPE, (payload, ctx) -> {
 			JsonObject o = JsonParser.parseString(payload.json()).getAsJsonObject();
 			Minecraft mc = ctx.client();

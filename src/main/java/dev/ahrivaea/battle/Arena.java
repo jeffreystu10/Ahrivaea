@@ -296,7 +296,7 @@ public final class Arena {
 			case CACTUS -> {
 				if (level.getBlockState(p.below()).is(Blocks.SAND)) column(level, p, Blocks.CACTUS.defaultBlockState(), 1 + rnd.nextInt(2));
 			}
-			case MESA -> column(level, p, (rnd.nextBoolean() ? Blocks.ORANGE_TERRACOTTA : Blocks.TERRACOTTA).defaultBlockState(), 2 + rnd.nextInt(2));
+			case MESA -> column(level, p, (rnd.nextBoolean() ? Blocks.DYED_TERRACOTTA.pick(net.minecraft.world.item.DyeColor.ORANGE) : Blocks.TERRACOTTA).defaultBlockState(), 2 + rnd.nextInt(2));
 			case CORAL -> set(level, p, Blocks.SANDSTONE.defaultBlockState());
 			case MUSHROOM -> {
 				column(level, p, Blocks.MUSHROOM_STEM.defaultBlockState(), 2);
@@ -385,7 +385,7 @@ public final class Arena {
 					case HILLS -> Blocks.GRASS_BLOCK;
 					case SNOW_CLIFFS -> Blocks.SNOW_BLOCK;
 					case STONE_CLIFFS -> Blocks.STONE;
-					case MESA_CLIFFS -> depth % 2 == 0 ? Blocks.ORANGE_TERRACOTTA : Blocks.TERRACOTTA;
+					case MESA_CLIFFS -> depth % 2 == 0 ? Blocks.DYED_TERRACOTTA.pick(net.minecraft.world.item.DyeColor.ORANGE) : Blocks.TERRACOTTA;
 					case DUNES -> Blocks.SAND;
 					case CAVE_WALLS -> Blocks.STONE;
 					case DEEPSLATE_WALLS -> Blocks.DEEPSLATE;

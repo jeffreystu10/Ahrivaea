@@ -11,8 +11,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.screenshot.TestScreenshotOptio
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.equine.Horse;
@@ -93,16 +91,16 @@ public class RideTest implements FabricClientGameTest {
 			// ---- horse: a fast-bred horse (vanilla's best speed), tamed and saddled ----
 			int z1 = z0 + 10;
 			server.runCommand("tp @p %d %d %d -90 0".formatted(x0, y, z1 - 2));
+			server.runCommand("summon minecraft:horse %d %d %d".formatted(x0, y, z1));
+			context.waitTicks(2);
 			server.runOnServer(s -> {
 				ServerPlayer p = s.getPlayerList().getPlayers().getFirst();
-				Horse h = EntityType.HORSE.create(s.overworld(), EntitySpawnReason.COMMAND);
-				h.snapTo(x0 + 0.5, y, z1 + 0.5, -90, 0);
+				Horse h = s.overworld().getEntitiesOfClass(Horse.class, new AABB(x0 - 3, y - 3, z1 - 3, x0 + 3, y + 3, z1 + 3)).getFirst();
 				h.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3375);
 				h.setTamed(true);
 				h.setOwner(p);
 				h.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
 				h.setPersistenceRequired();
-				s.overworld().addFreshEntity(h);
 				p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Feeds.SWIFT, 8));
 			});
 			context.waitTicks(10);
@@ -157,14 +155,14 @@ public class RideTest implements FabricClientGameTest {
 			server.runCommand("ride @p dismount");
 
 			// ---- breeding two tier 3 horses: the foal is tier 3 or 4 ----
+			server.runCommand("summon minecraft:horse %d %d %d".formatted(x0, y, z0 + 20));
+			server.runCommand("summon minecraft:horse %d %d %d".formatted(x0 + 2, y, z0 + 20));
+			context.waitTicks(2);
 			server.runOnServer(s -> {
 				ServerPlayer p = s.getPlayerList().getPlayers().getFirst();
-				for (int i = 0; i < 2; i++) {
-					Horse h = EntityType.HORSE.create(s.overworld(), EntitySpawnReason.COMMAND);
-					h.snapTo(x0 + 0.5 + i * 1.5, y, z0 + 20.5, 0, 0);
+				for (Horse h : s.overworld().getEntitiesOfClass(Horse.class, new AABB(x0 - 3, y - 3, z0 + 17, x0 + 5, y + 3, z0 + 23))) {
 					h.setTamed(true);
 					h.setOwner(p);
-					s.overworld().addFreshEntity(h);
 					HorseSpeed.set(h, new HorseSpeed(3, 0));
 					h.setInLove(p);
 				}

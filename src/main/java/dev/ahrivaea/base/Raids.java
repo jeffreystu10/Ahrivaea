@@ -66,6 +66,12 @@ public final class Raids {
 
 	private static final Map<BlockPos, Raid> ACTIVE = new HashMap<>();
 	private static final Map<BlockPos, Long> LAST = new HashMap<>();
+	/** How the last raid on each base ended ("defeated" or "left"), and how much was stolen. */
+	private static final Map<BlockPos, String> RESULTS = new HashMap<>();
+
+	public static String lastResult(BlockPos core) {
+		return RESULTS.get(core);
+	}
 
 	public static Raid at(BlockPos core) {
 		return ACTIVE.get(core);
@@ -205,6 +211,7 @@ public final class Raids {
 
 	private static void end(Raid r, BaseCoreBlockEntity be, boolean won) {
 		ACTIVE.remove(r.core());
+		RESULTS.put(r.core(), (won ? "defeated" : "left") + ", " + r.stolen()[0] + " stolen");
 		ServerLevel level = r.level();
 		for (UUID id : r.raiders()) if (level.getEntity(id) instanceof CreatureEntity c) c.discard();
 		ServerPlayer p = be == null ? null : owner(level, be);

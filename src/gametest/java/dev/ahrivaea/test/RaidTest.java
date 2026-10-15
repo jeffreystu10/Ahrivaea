@@ -37,7 +37,7 @@ public class RaidTest implements FabricClientGameTest {
 			sp.getConnection().waitForChunksRender();
 			context.getInput().resizeWindow(1600, 900);
 			var server = sp.getServer();
-			server.runCommand("time set noon");
+			server.runCommand("time set midnight"); // raiders give up at daybreak
 			server.runCommand("gamerule advance_time false");
 			server.runCommand("gamerule spawn_mobs false");
 			BlockPos pos = context.computeOnClient(c -> c.player.blockPosition());
@@ -75,16 +75,16 @@ public class RaidTest implements FabricClientGameTest {
 					context.takeScreenshot(TestScreenshotOptions.of("raid_1_defenders_fighting"));
 					shot = true;
 				}
-				guardedResult = server.computeOnServer(s -> Raids.at(guarded) == null ? "over" : Raids.at(guarded).raiders().size() + " raiders left");
+				guardedResult = server.computeOnServer(s -> Raids.at(guarded) == null ? "over: " + Raids.lastResult(guarded) : Raids.at(guarded).raiders().size() + " raiders left");
 				openResult = server.computeOnServer(s -> {
 					var r = Raids.at(open);
 					int left = ((Container) s.overworld().getBlockEntity(open.offset(1, 0, 0))).getItem(0).getCount();
 					return r == null ? "raid over, chest has " + left : "stolen " + r.stolen()[0] + ", chest has " + left;
 				});
-				if (guardedResult.equals("over") && !openResult.contains("stolen 0") && !openResult.contains("has 64")) break;
+				if (guardedResult.startsWith("over") && !openResult.contains("has 64")) break;
 			}
 			LOG.info("RaidTest: guarded base {}; undefended base {}", guardedResult, openResult);
-			if (!guardedResult.equals("over")) failures.add("the defenders should have beaten the raid: " + guardedResult);
+			if (!guardedResult.startsWith("over: defeated")) failures.add("the defenders should have beaten the raid: " + guardedResult);
 			if (openResult.contains("has 64")) failures.add("raiders at an undefended base should steal from its chest: " + openResult);
 			int knocked = server.computeOnServer(s -> {
 				var be = (BaseCoreBlockEntity) s.overworld().getBlockEntity(guarded);

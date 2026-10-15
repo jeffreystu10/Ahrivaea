@@ -39,6 +39,7 @@ public class StellarGearTest implements FabricClientGameTest {
 			server.runCommand("gamerule advance_time false");
 			server.runCommand("gamerule spawn_mobs false");
 			server.runCommand("gamerule ahrivaea:vanilla_mobs true"); // the sword test hits a zombie, which the creatures mod would otherwise replace
+			server.runCommand("gamerule random_tick_speed 0"); // dry farmland can turn back to dirt between tilling and counting
 			server.runCommand("gamemode survival @a");
 			server.runCommand("effect give @a minecraft:resistance 9999 4 true");
 			server.runCommand("effect give @a minecraft:saturation 9999 0 true");

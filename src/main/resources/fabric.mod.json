@@ -14,7 +14,9 @@
 		"main": [
 			"dev.ahrivaea.Ahrivaea",
 			"dev.ahrivaea.challenge.TowersMod",
-			"dev.ahrivaea.stellar.StellarMod"
+			"dev.ahrivaea.stellar.StellarMod",
+			"dev.ahrivaea.horses.HorsesMod",
+			"dev.ahrivaea.minecarts.MinecartsMod"
 		],
 		"client": [
 			"dev.ahrivaea.client.AhrivaeaClient"
@@ -22,6 +24,8 @@
 	},
 	"mixins": [
 		"ahrivaea_stellar.mixins.json",
+		"ahrivaea_horses.mixins.json",
+		"ahrivaea_minecarts.mixins.json",
 		{
 			"config": "ahrivaea.client.mixins.json",
 			"environment": "client"

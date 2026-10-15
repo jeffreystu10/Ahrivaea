@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": ["minecraft:golden_carrot", "minecraft:golden_carrot", "ahrivaea:swift_feed", "minecraft:sugar"],
+  "result": {"id": "ahrivaea:golden_feed", "count": 2}
+}

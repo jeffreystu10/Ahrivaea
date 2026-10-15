@@ -42,9 +42,10 @@
         "dev/ahrivaea/item/**",
         "dev/ahrivaea/client/**",
         "assets/ahrivaea/geo/**",
-        "assets/ahrivaea/textures/**",
+        "assets/ahrivaea/textures/entity/**",
+        "assets/ahrivaea/textures/item/vessel.png",
         "assets/ahrivaea/items/vessel.json",
-        "assets/ahrivaea/models/**",
+        "assets/ahrivaea/models/item/vessel.json",
         "data/ahrivaea/creature/**",
         "data/ahrivaea/influence_rules/**",
         "data/ahrivaea/recipe/vessel.json",
@@ -117,6 +118,68 @@
         "data/ahrivaea/recipe/stellar_*.json",
         "data/minecraft/tags/item/swords.json"
       ]
+    },
+    {
+      "key": "horses",
+      "id": "ahrivaea_horses",
+      "name": "Ahrivaea Swift Horses",
+      "summary": "Faster horses, donkeys and mules, and a way to train them faster still: feed them up three speed tiers, then breed for the top two.",
+      "features": [
+        "Every horse, donkey, mule, skeleton horse and zombie horse is 1.5x as fast as vanilla (vanilla horses run 5-14 blocks/sec)",
+        "Speed tiers 0-5, each multiplying the horse's own speed: x1.5, x1.76, x2.02, x2.28, x2.54, x2.8. The best-bred horses top out near 40 blocks/sec, faster than a Fast Minecart (30)",
+        "Tiers 1-3 by feeding a tamed horse: 8 Swift Feed, then 8 Golden Feed, then 4 Racing Feed (crafted from wheat, sugar, apples, golden carrots, golden apples and a rabbit's foot)",
+        "Tiers 4-5 only by breeding: a foal takes the better parent's tier, and two parents on the same tier have a 30% chance of a foal one tier higher. Vanilla speed inheritance still applies, so bloodlines matter",
+        "Skeleton and zombie horses can't breed, so they top out at tier 3"
+      ],
+      "commands": "/horse (while riding: its tier, top speed and what it needs next); operators: /horse settier <0-5>",
+      "players_install": "Yes (new items)",
+      "status": "Working (placeholder feed textures)",
+      "added": "2026-10-15",
+      "docs": "docs/horses.md",
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.horses.HorsesMod"
+        ]
+      },
+      "mixins": [
+        "ahrivaea_horses.mixins.json"
+      ],
+      "include": [
+        "dev/ahrivaea/horses/**",
+        "ahrivaea_horses.mixins.json",
+        "assets/ahrivaea/items/*_feed.json",
+        "assets/ahrivaea/models/item/*_feed.json",
+        "assets/ahrivaea/textures/item/*_feed.png",
+        "data/ahrivaea/recipe/*_feed.json"
+      ]
+    },
+    {
+      "key": "minecarts",
+      "id": "ahrivaea_minecarts",
+      "name": "Ahrivaea Fast Minecarts",
+      "summary": "Minecarts go up to 30 blocks a second (vanilla: 8), on Minecraft's newer minecart physics so they stay on the rails at speed.",
+      "features": [
+        "Top speed 30 blocks/sec on rails, almost 4x vanilla (half that in water; furnace minecarts go half speed)",
+        "Turns on Minecraft's newer minecart physics in every world (normally an experiment you pick when making a world): carts follow corners, slopes and loops at any speed instead of flying off",
+        "Powered rails get carts up to speed over a longer stretch, so long lines need more of them"
+      ],
+      "commands": "(none)",
+      "players_install": "Yes (the client has to move carts the same way)",
+      "status": "Working",
+      "added": "2026-10-15",
+      "docs": "docs/minecarts.md",
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.minecarts.MinecartsMod"
+        ]
+      },
+      "mixins": [
+        "ahrivaea_minecarts.mixins.json"
+      ],
+      "include": [
+        "dev/ahrivaea/minecarts/**",
+        "ahrivaea_minecarts.mixins.json"
+      ]
     }
   ],
   "shared": [
@@ -130,7 +193,8 @@
       "mods": [
         "creatures",
         "towers",
-        "stellar"
+        "stellar",
+        "minecarts"
       ]
     },
     {

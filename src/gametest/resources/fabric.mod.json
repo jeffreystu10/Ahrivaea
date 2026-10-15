@@ -5,7 +5,7 @@
   "name": "Ahrivaea client tests",
   "environment": "*",
   "entrypoints": {
-    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots", "dev.ahrivaea.test.TowerChallengeTest", "dev.ahrivaea.test.StrongholdTowerScreenshots", "dev.ahrivaea.test.StellarGearTest", "dev.ahrivaea.test.BattleTest", "dev.ahrivaea.test.ArenaScreenshots"]
+    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots", "dev.ahrivaea.test.TowerChallengeTest", "dev.ahrivaea.test.StrongholdTowerScreenshots", "dev.ahrivaea.test.StellarGearTest", "dev.ahrivaea.test.BattleTest", "dev.ahrivaea.test.ArenaScreenshots", "dev.ahrivaea.test.RideTest"]
   },
   "depends": {"ahrivaea": "*"}
 }

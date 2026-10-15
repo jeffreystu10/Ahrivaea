@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.ahrivaea.minecarts.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["AbstractMinecartMixin", "NewMinecartBehaviorMixin"],
+  "injectors": {"defaultRequire": 1}
+}

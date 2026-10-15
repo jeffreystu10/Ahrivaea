@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.ahrivaea.horses.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["AbstractHorseMixin"],
+  "injectors": {"defaultRequire": 1}
+}

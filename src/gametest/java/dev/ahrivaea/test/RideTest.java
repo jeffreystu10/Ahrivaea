@@ -67,13 +67,14 @@ public class RideTest implements FabricClientGameTest {
 			for (int t = 0; t < 240; t++) {
 				double[] at = server.computeOnServer(s -> {
 					var carts = s.overworld().getEntitiesOfClass(AbstractMinecart.class, new AABB(x0 - 10, y - 10, z0 - 60, x0 + 300, y + 10, z0 + 10));
-					return carts.isEmpty() ? null : new double[]{carts.getFirst().getX(), carts.getFirst().getY(), carts.getFirst().getZ()};
+					return carts.isEmpty() ? null : new double[]{carts.getFirst().getX(), carts.getFirst().getY(), carts.getFirst().getZ(), s.getTickCount()};
 				});
 				if (at == null) break;
 				track.add(at);
-				if (track.size() > 10) {
-					double[] a = track.get(track.size() - 11);
-					cartTop = Math.max(cartTop, Math.hypot(at[0] - a[0], at[2] - a[2]) * 2);
+				// speed over the last 20 server ticks, along x only (the long straight before the corner)
+				if (track.size() > 20) {
+					double[] a = track.get(track.size() - 21);
+					if (at[3] > a[3] && at[0] < corner - 1) cartTop = Math.max(cartTop, (at[0] - a[0]) * 20 / (at[3] - a[3]));
 				}
 				if (t == 110) context.takeScreenshot(TestScreenshotOptions.of("minecart_1_full_speed"));
 				prev = at;
@@ -137,13 +138,13 @@ public class RideTest implements FabricClientGameTest {
 			for (int t = 0; t < 140; t++) {
 				double[] at = server.computeOnServer(s -> {
 					ServerPlayer p = s.getPlayerList().getPlayers().getFirst();
-					return p.getVehicle() == null ? null : new double[]{p.getVehicle().getX(), p.getVehicle().getZ()};
+					return p.getVehicle() == null ? null : new double[]{p.getVehicle().getX(), p.getVehicle().getZ(), s.getTickCount()};
 				});
 				if (at == null) break;
 				ride.add(at);
 				if (ride.size() > 20) {
 					double[] a = ride.get(ride.size() - 21);
-					horseTop = Math.max(horseTop, Math.hypot(at[0] - a[0], at[1] - a[1]));
+					if (at[2] > a[2]) horseTop = Math.max(horseTop, Math.hypot(at[0] - a[0], at[1] - a[1]) * 20 / (at[2] - a[2]));
 				}
 				if (t == 100) context.takeScreenshot(TestScreenshotOptions.of("horse_2_tier_5_full_speed"));
 				context.waitTick();

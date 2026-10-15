@@ -25,7 +25,9 @@ public class ArenaScreenshots implements FabricClientGameTest {
 			for (Arena.Theme theme : Arena.Theme.values()) {
 				String name = theme.name().toLowerCase(Locale.ROOT);
 				server.runCommand("execute as @p run battle arena " + name);
-				context.waitFor(c -> c.level != null && c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() == null, 400);
+				for (int t = 0; t < 400 && !context.computeOnClient(c -> c.level != null && c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() == null); t++) context.waitTick();
+				String where = context.computeOnClient(c -> "dimension " + (c.level == null ? "none" : c.level.dimension().identifier()) + ", screen " + (c.gui.screen() == null ? "none" : c.gui.screen().getClass().getName()) + ", at " + (c.player == null ? "?" : c.player.blockPosition().toShortString()));
+				if (!where.contains("battle_arena") || !where.contains("screen none")) throw new AssertionError("arena " + name + " didn't open: " + where);
 				context.waitTicks(10);
 				sp.getConnection().waitForChunksRender();
 				context.waitTicks(10);

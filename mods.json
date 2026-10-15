@@ -189,6 +189,29 @@
         "dev/ahrivaea/minecarts/**",
         "ahrivaea_minecarts.mixins.json"
       ]
+    },
+    {
+      "key": "woodcutting",
+      "id": "ahrivaea_woodcutting",
+      "name": "Ahrivaea Woodcutting",
+      "summary": "The stonecutter cuts wood too: logs into planks, stairs, slabs, fences, doors and more, and into stripped logs, with no crafting grid or sticks.",
+      "features": [
+        "Put any log or wood block in a stonecutter (every wood type, including crimson and warped stems, poplar and bamboo blocks)",
+        "One log gives what its 4 planks would make at a crafting table, without needing sticks: 4 planks, 4 stairs, 8 slabs, 2 fences, 1 fence gate, 2 doors, 1 trapdoor, 2 pressure plates, 4 buttons, 2 signs or 8 sticks",
+        "Strips logs: log to stripped log, and log or stripped log to (stripped) wood",
+        "Planks cut 1:1 like stone: 1 stair, 2 slabs, 1 button or 2 sticks; bamboo planks also make mosaic",
+        "Recipes only (no code), made by tools/woodcutting_recipes.py"
+      ],
+      "commands": "(none)",
+      "players_install": "No (server only; works for players without the mod)",
+      "status": "Working",
+      "added": "2026-10-15",
+      "docs": "docs/woodcutting.md",
+      "entrypoints": {},
+      "mixins": [],
+      "include": [
+        "data/ahrivaea/recipe/woodcutting/**"
+      ]
     }
   ],
   "shared": [
@@ -203,7 +226,8 @@
         "creatures",
         "towers",
         "stellar",
-        "minecarts"
+        "minecarts",
+        "woodcutting"
       ]
     },
     {

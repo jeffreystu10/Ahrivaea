@@ -121,6 +121,12 @@ public class RideTest implements FabricClientGameTest {
 			});
 			int[] t1 = server.computeOnServer(s -> new int[]{HorseSpeed.of(horse(s, x0, y, z1)).tier(), s.getPlayerList().getPlayers().getFirst().getMainHandItem().getCount()});
 			if (t1[0] != 1) failures.add("8 Swift Feed should make tier 1, got tier " + t1[0]);
+			// look at it: its stats show beside the crosshair
+			context.runOnClient(c -> {
+				c.player.setYRot(0);
+				c.player.setXRot(25);
+			});
+			context.waitTicks(3);
 			context.takeScreenshot(TestScreenshotOptions.of("horse_1_fed_tier_1"));
 
 			// tier 5 (as if bred), then ride it flat out east
@@ -150,10 +156,28 @@ public class RideTest implements FabricClientGameTest {
 				context.waitTick();
 			}
 			context.getInput().releaseKey(o -> o.keyUp);
+			context.waitTicks(20);
+			// the stats beside its inventory screen
+			context.getInput().pressKey(o -> o.keyInventory);
+			context.waitFor(c -> c.gui.screen() instanceof net.minecraft.client.gui.screens.inventory.HorseInventoryScreen, 100);
+			context.waitTicks(3);
+			context.takeScreenshot(TestScreenshotOptions.of("horse_3_inventory_stats"));
+			context.runOnClient(c -> c.gui.setScreen(null));
 			LOG.info("RideTest horse: tier 0 {} blocks/sec, tier 5 expected {} and measured {} blocks/sec", String.format("%.1f", tier0), String.format("%.1f", expected), String.format("%.1f", horseTop));
 			if (Math.abs(tier0 - 0.3375 * 1.5 * HorseSpeed.BLOCKS_PER_SECOND) > 0.2) failures.add("an untrained top horse should be 1.5x vanilla: " + tier0);
 			if (horseTop <= 30) failures.add("a tier 5 horse of the best bloodline should outrun a minecart (30): measured " + String.format("%.1f", horseTop) + " blocks/sec");
 			server.runCommand("ride @p dismount");
+
+			// ---- skeleton horses: always top speed ----
+			server.runCommand("summon minecraft:skeleton_horse %d %d %d".formatted(x0, y, z0 + 30));
+			context.waitTicks(5);
+			double skeleton = server.computeOnServer(s -> {
+				var sk = s.overworld().getEntitiesOfClass(net.minecraft.world.entity.animal.equine.SkeletonHorse.class, new AABB(x0 - 3, y - 3, z0 + 27, x0 + 3, y + 3, z0 + 33));
+				return sk.isEmpty() ? -1 : HorseSpeed.blocksPerSecond(sk.getFirst());
+			});
+			LOG.info("RideTest skeleton horse: {} blocks/sec", String.format("%.1f", skeleton));
+			if (Math.abs(skeleton - HorseSpeed.VANILLA_MAX_SPEED * 2.8 * HorseSpeed.BLOCKS_PER_SECOND) > 0.1) failures.add("a skeleton horse should always be at top speed (39.8), got " + skeleton);
+			server.runCommand("kill @e[type=minecraft:skeleton_horse]");
 
 			// ---- breeding two tier 3 horses: the foal is tier 3 or 4 ----
 			server.runCommand("summon minecraft:horse %d %d %d".formatted(x0, y, z0 + 20));

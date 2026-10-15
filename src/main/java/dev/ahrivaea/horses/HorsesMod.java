@@ -76,6 +76,10 @@ public class HorsesMod implements ModInitializer {
 			p.sendOverlayMessage(Component.literal("Tame it first."));
 			return InteractionResult.FAIL;
 		}
+		if (h instanceof net.minecraft.world.entity.animal.equine.SkeletonHorse) {
+			p.sendOverlayMessage(Component.literal("Skeleton horses are always at top speed."));
+			return InteractionResult.FAIL;
+		}
 		if (s.tier() >= HorseSpeed.MAX_FED_TIER) {
 			p.sendOverlayMessage(Component.literal(s.tier() >= HorseSpeed.MAX_TIER ? "This horse is as fast as a horse gets."
 					: "Feed can't take it past tier " + HorseSpeed.MAX_FED_TIER + ". Breed two tier " + s.tier() + " horses for a chance at tier " + (s.tier() + 1) + "."));

@@ -19,7 +19,8 @@
 			"dev.ahrivaea.minecarts.MinecartsMod"
 		],
 		"client": [
-			"dev.ahrivaea.client.AhrivaeaClient"
+			"dev.ahrivaea.client.AhrivaeaClient",
+			"dev.ahrivaea.horses.client.HorsesClient"
 		]
 	},
 	"mixins": [
@@ -28,6 +29,10 @@
 		"ahrivaea_minecarts.mixins.json",
 		{
 			"config": "ahrivaea.client.mixins.json",
+			"environment": "client"
+		},
+		{
+			"config": "ahrivaea_horses.client.mixins.json",
 			"environment": "client"
 		}
 	],

@@ -19,7 +19,8 @@ way), so a well-bred horse stays faster than a poorly bred one at the same tier.
 
 Speeds in blocks per second. For comparison: walking 4.3, sprinting 5.6, vanilla horses 4.7–14.2, a Fast Minecart 30.
 Only well-bred horses at tier 4–5 beat the minecart. Donkeys and mules are slower to begin with (a vanilla donkey
-is 7.4), so they top out around 21; skeleton and zombie horses can't breed, so they stop at tier 3.
+is 7.4), so they top out around 21. **Skeleton horses are always at top speed**: the best possible bloodline at
+tier 5, about 40 blocks/sec, with no training. Zombie horses can't breed, so they stop at tier 3.
 
 ## Feeding (tiers 1–3)
 
@@ -37,6 +38,16 @@ it up (sound and sparkles). Feeding the wrong feed tells you which one it needs.
 Breed horses the vanilla way. The foal takes the better parent's tier. If both parents are on the same tier, there's
 a 30% chance the foal is born one tier higher. So: feed two horses to tier 3, breed them for a tier 4 foal, raise
 two tier 4 horses and breed them for tier 5. Vanilla speed inheritance still applies, so breed fast horses together.
+
+## Seeing a horse's stats
+
+- **Look at a horse** (up to 16 blocks away, not through walls): a panel beside the crosshair shows its top speed,
+  speed tier, jump height, health and what its next tier needs. Works on wild horses too, so you can pick a good one
+  to tame.
+- **Riding:** the same panel sits in the top-left corner, with the speed you're going right now.
+- **Inventory:** the panel is beside the horse's inventory screen.
+
+Jump height is at full charge, in blocks (vanilla horses jump about 1.1 to 5.3).
 
 ## Commands
 

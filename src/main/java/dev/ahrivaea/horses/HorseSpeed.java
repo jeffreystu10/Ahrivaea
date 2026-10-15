@@ -4,6 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -27,8 +31,12 @@ public record HorseSpeed(int tier, int fed) {
 			Codec.INT.fieldOf("fed").forGetter(HorseSpeed::fed)
 	).apply(i, HorseSpeed::new));
 
+	public static final StreamCodec<RegistryFriendlyByteBuf, HorseSpeed> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.VAR_INT, HorseSpeed::tier, ByteBufCodecs.VAR_INT, HorseSpeed::fed, HorseSpeed::new);
+
+	/** Saved with the horse, and sent to players nearby so they can see its stats. */
 	public static final AttachmentType<HorseSpeed> ATTACHMENT = AttachmentRegistry.create(HorsesMod.id("horse_speed"),
-			b -> b.persistent(CODEC).initializer(() -> new HorseSpeed(0, 0)));
+			b -> b.persistent(CODEC).initializer(() -> new HorseSpeed(0, 0)).syncWith(STREAM_CODEC, AttachmentSyncPredicate.all()));
 
 	public static final HorseSpeed START = new HorseSpeed(0, 0);
 
@@ -39,6 +47,8 @@ public record HorseSpeed(int tier, int fed) {
 	public static final int MAX_FED_TIER = 3;
 	/** Chance a foal of two parents on the same tier is born one tier higher. */
 	public static final double BREED_BONUS_CHANCE = 0.3;
+	/** Vanilla's fastest possible horse speed (movement speed attribute). Skeleton horses always have it. */
+	public static final double VANILLA_MAX_SPEED = 0.3375;
 	/** Movement speed attribute to blocks per second for a ridden horse. */
 	public static final double BLOCKS_PER_SECOND = 42.16;
 
@@ -72,13 +82,25 @@ public record HorseSpeed(int tier, int fed) {
 	public static void apply(AbstractHorse h) {
 		AttributeInstance speed = h.getAttribute(Attributes.MOVEMENT_SPEED);
 		if (speed == null) return;
+		// skeleton horses are always as fast as a horse can be: the best bloodline at the top tier
+		if (h instanceof SkeletonHorse) {
+			speed.setBaseValue(VANILLA_MAX_SPEED);
+			if (of(h).tier() != MAX_TIER) h.setAttached(ATTACHMENT, new HorseSpeed(MAX_TIER, 0));
+		}
 		int tier = Math.clamp(of(h).tier(), 0, MAX_TIER);
 		speed.addOrUpdateTransientModifier(new AttributeModifier(HorsesMod.id("speed_tier"), MULTIPLIER[tier] - 1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 	}
 
 	/** Top speed in blocks per second, as ridden. */
 	public static double blocksPerSecond(AbstractHorse h) {
-		return h.getAttributeValue(Attributes.MOVEMENT_SPEED) * BLOCKS_PER_SECOND;
+		// from the base speed and the tier (both known on every client), not the modified value
+		return h.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * MULTIPLIER[Math.clamp(of(h).tier(), 0, MAX_TIER)] * BLOCKS_PER_SECOND;
+	}
+
+	/** How high the horse jumps at full charge, in blocks (the Minecraft wiki's fit to the jump strength attribute). */
+	public static double jumpHeight(AbstractHorse h) {
+		double j = h.getAttributeValue(Attributes.JUMP_STRENGTH);
+		return -0.1817584952 * j * j * j + 3.689713992 * j * j + 2.128599134 * j - 0.343930367;
 	}
 
 	/** A foal takes the better parent's tier; if both parents are on the same tier it may be born one higher. */

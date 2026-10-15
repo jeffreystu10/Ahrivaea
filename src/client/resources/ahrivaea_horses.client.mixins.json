@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "dev.ahrivaea.horses.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": ["MountScreenMixin"],
+  "injectors": {"defaultRequire": 1}
+}

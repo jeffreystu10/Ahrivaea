@@ -154,7 +154,7 @@ public class BattleTest implements FabricClientGameTest {
 				Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
 				return b == null ? 0 : (int) b.units.stream().filter(u -> u.side == Unit.Side.ENEMY && u.alive()).count();
 			});
-			for (int i = 0; i < enemiesBefore && i < 4; i++) {
+			for (int i = 0; i < enemiesBefore; i++) {
 				final int k = i;
 				server.runOnServer(s -> {
 					Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
@@ -164,6 +164,15 @@ public class BattleTest implements FabricClientGameTest {
 					for (Unit u : b.units) if (u.side == Unit.Side.ENEMY && u.alive()) target = u;
 					if (target == null) return;
 					Unit p = b.playerUnit();
+					// bring it next to us (a wild encounter can have up to 5)
+					for (int[] d : new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}) {
+						int nx = p.x + d[0], nz = p.z + d[1];
+						if (b.units.stream().noneMatch(o -> o.alive() && o.x == nx && o.z == nz)) {
+							target.x = nx;
+							target.z = nz;
+							break;
+						}
+					}
 					// attacks can miss: keep swinging with the luck turned up
 					for (int tries = 0; tries < 20 && target.alive() && b.phase == Battle.Phase.PLAYER; tries++) {
 						p.acted = false;

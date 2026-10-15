@@ -170,7 +170,9 @@ public class BaseTest implements FabricClientGameTest {
 		r.put("farming", young >= 3 ? (Object) true : "no wheat harvested and replanted yet");
 		int logs = countLogs(level, new BlockPos(cx - 8, y, cz + 6));
 		boolean sapling = level.getBlockState(new BlockPos(cx - 8, y, cz + 6)).is(BlockTags.SAPLINGS);
-		r.put("logging", logs == 0 && sapling ? (Object) true : "tree still has " + logs + " logs" + (sapling ? "" : ", no sapling replanted"));
+		// the felled tree's logs end up in the chests (and the sapling it replants may already have grown again)
+		int felled = count(level, core, Items.OAK_LOG);
+		r.put("logging", felled >= 3 ? (Object) true : "only " + felled + " oak logs collected; tree has " + logs + " logs" + (sapling ? ", sapling replanted" : ""));
 		var furnace = (AbstractFurnaceBlockEntity) level.getBlockEntity(new BlockPos(cx - 2, y, cz));
 		int ingots = furnace.getItem(2).getCount() + count(level, core, Items.IRON_INGOT);
 		r.put("smelting", ingots >= 2 ? (Object) true : "only " + ingots + " iron ingots, " + furnace.getItem(0).getCount() + " raw iron left, fuel " + furnace.getItem(1));

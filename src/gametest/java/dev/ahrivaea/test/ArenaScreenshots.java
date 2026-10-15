@@ -38,8 +38,11 @@ public class ArenaScreenshots implements FabricClientGameTest {
 			context.waitTicks(20);
 			// the arenas can't be visited outside a battle: someone teleported in is sent straight back
 			server.runCommand("execute in ahrivaea:battle_arena run tp @p 0 80 0");
-			context.waitFor(c -> c.level != null && c.level.dimension().equals(Arena.DIMENSION), 200);
-			context.waitFor(c -> c.level != null && !c.level.dimension().equals(Arena.DIMENSION), 400);
+			boolean arrived = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().level().dimension().equals(Arena.DIMENSION));
+			context.waitTicks(60);
+			boolean still = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().level().dimension().equals(Arena.DIMENSION));
+			if (!arrived) throw new AssertionError("the /tp into the arena dimension didn't happen, so the lock-out wasn't tested");
+			if (still) throw new AssertionError("a player who teleported into the arenas without a battle should be sent back");
 		}
 	}
 }

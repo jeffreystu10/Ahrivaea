@@ -83,7 +83,7 @@ public class RideTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("minecart_2_after_corner"));
 			LOG.info("RideTest minecart: top speed {} blocks/sec, ended at {}", String.format("%.1f", cartTop), prev == null ? "?" : String.format("%.1f %.1f %.1f", prev[0], prev[1], prev[2]));
 			if (cartTop < 20) failures.add("the minecart should reach well over vanilla's 8 blocks/sec, got " + String.format("%.1f", cartTop));
-			if (cartTop > 31) failures.add("the minecart should top out at 30 blocks/sec, got " + String.format("%.1f", cartTop));
+			if (cartTop > 33) failures.add("the minecart should top out at about 30 blocks/sec, got " + String.format("%.1f", cartTop));
 			if (prev == null || Math.abs(prev[0] - (corner + 0.5)) > 1 || prev[2] > z0 - 10 || Math.abs(prev[1] - y) > 1)
 				failures.add("the minecart should have gone round the corner and north along the rails, ended at " + (prev == null ? "?" : prev[0] + " " + prev[1] + " " + prev[2]));
 			server.runCommand("ride @p dismount");

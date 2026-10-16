@@ -91,14 +91,28 @@ public final class GeoModels {
 
 	/** The model for a species' form, falling back to its None form; null if the species has no models. */
 	public static GeoCreatureModel model(String species, String influence) {
-		GeoCreatureModel m = models.get(species + "/" + influence);
-		return m != null ? m : models.get(species + "/none");
+		String key = key(species, influence);
+		return key == null ? null : models.get(key);
+	}
+
+	/**
+	 * Which model a form uses: its own, else the species' None form, else any form the species has a model for
+	 * (so a form whose model hasn't arrived yet still looks like its species). Null if the species has none.
+	 */
+	private static String key(String species, String influence) {
+		String own = species + "/" + influence;
+		if (models.containsKey(own)) return own;
+		if (models.containsKey(species + "/none")) return species + "/none";
+		String prefix = species + "/";
+		String any = null;
+		for (String k : models.keySet()) if (k.startsWith(prefix) && (any == null || k.compareTo(any) < 0)) any = k;
+		return any;
 	}
 
 	/** Longest horizontal size of a form's model in blocks (unscaled), falling back to the None form. */
 	public static float extent(String species, String influence) {
-		Float e = extents.get(species + "/" + influence);
-		return e != null ? e : extents.getOrDefault(species + "/none", 1f);
+		String key = key(species, influence);
+		return key == null ? 1f : extents.getOrDefault(key, 1f);
 	}
 
 	private static float extent(JsonObject file) {
@@ -120,13 +134,14 @@ public final class GeoModels {
 
 	/** Height of a form's model in blocks (unscaled), falling back to the None form. */
 	public static float height(String species, String influence) {
-		Float h = heights.get(species + "/" + influence);
-		return h != null ? h : heights.getOrDefault(species + "/none", 1f);
+		String key = key(species, influence);
+		return key == null ? 1f : heights.getOrDefault(key, 1f);
 	}
 
 	/** Whether a form's model is drawn at the size it was made, rather than scaled with the creature. */
 	public static boolean realSize(String species, String influence) {
-		return models.containsKey(species + "/" + influence) ? realSize.contains(species + "/" + influence) : realSize.contains(species + "/none");
+		String key = key(species, influence);
+		return key != null && realSize.contains(key);
 	}
 
 	private static float height(JsonObject file) {
@@ -154,6 +169,9 @@ public final class GeoModels {
 
 	public static Identifier texture(String species, String influence) {
 		if (textures.contains(species + "/" + influence)) return Ahrivaea.id("textures/entity/creature/" + species + "/" + influence + ".png");
+		// the texture that goes with whichever model the form borrows
+		String key = key(species, influence);
+		if (key != null && textures.contains(key)) return Ahrivaea.id("textures/entity/creature/" + key + ".png");
 		if (textures.contains(species + "/none")) return Ahrivaea.id("textures/entity/creature/" + species + "/none.png");
 		return Ahrivaea.id("textures/entity/creature/placeholder.png");
 	}

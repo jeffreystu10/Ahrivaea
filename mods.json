@@ -7,7 +7,7 @@
       "name": "Ahrivaea Creatures",
       "summary": "205 creatures (278 forms) that replace every vanilla mob, with drops, Fire Emblem-style grid battles in biome arenas, recruiting, Palworld-style bases where they work, and your own levelled-up character.",
       "features": [
-        "All 205 creatures from the creature list (278 influence forms), each with its own biomes, rarity, levels, drops and jobs; real models for every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20), Nature (20), Radiant (20), Storm (20) and Void (20) creature, 56 of the 58 None creatures (all but Orca and Whale), and the Water Dragon's older model (animated, at their real size), placeholder models tinted by influence for the rest until theirs arrive",
+        "All 205 creatures from the creature list (278 influence forms), each with its own biomes, rarity, levels, drops and jobs; real models (animated, at their real size) for 275 of the 278 forms: every Arcane, Darkness, Earth, Fae, Fire, Frost, Nature, Radiant, Storm, Void and Water creature and 56 of the 58 None ones. The None Orca uses the Water Orca's model and the Arcane Dragon the None Dragon's until theirs arrive; the Whale is still the placeholder (a block tinted by its influence) until its model arrives",
         "Wild creatures spawn around players on land, in water, in caves, the Nether and the End, by biome and rarity; they never attack first and can't be hurt outside battle",
         "No vanilla mobs: natural spawning is off and any vanilla mob that appears is replaced by a creature (a cow becomes a Cow); the Ender Dragon counts as defeated; /gamerule ahrivaea:vanilla_mobs true turns this off",
         "Grid battles seen from above: hit a wild creature with a sword (the only way to start one; they never attack first, and can't be hurt outside battle) and you're taken to your own battle arena built for that biome (25 themes, 15×15 to 27×27, at the world's time of day) to fight it plus 1-4 more; you and 4 of your creatures each move by Speed, then attack, use an item, rally or wait; afterwards you're brought back to safe ground where you were. The arenas can't be visited outside a battle",
@@ -20,7 +20,7 @@
       ],
       "commands": "/party, /party send|release <slot>, /party xp <slot> <amount>, /party box [take <n>|store <slot>], /character, /character spend <stat> <points>; operators: /ahrivaea spawn|givexp|selftest, /battle start|end|recruit, /battle arena <theme>, /battle home, /character givexp, /gamerule ahrivaea:vanilla_mobs, /gamerule ahrivaea:base_raids, /base raid",
       "players_install": "Yes (creatures, models, items, blocks and screens)",
-      "status": "Creature list phases 1 and 2 done (creatures, drops, bases with every job, raids, no vanilla mobs); real models for the Arcane, Darkness, Earth, Fae, Fire, Frost, Nature, Radiant, Storm and Void creatures and nearly all None ones and the dragons, placeholders for the other influences; placeholder moves; riding to come",
+      "status": "Creature list phases 1 and 2 done (creatures, drops, bases with every job, raids, no vanilla mobs); real models for every creature but the Whale; placeholder moves; riding to come",
       "added": "2026-10-14",
       "docs": "docs/design.md, docs/battles.md, docs/creatures.md, docs/bases.md",
       "entrypoints": {

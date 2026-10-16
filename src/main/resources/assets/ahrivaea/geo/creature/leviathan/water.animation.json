@@ -1,0 +1,158 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+0))",
+      "0"
+     ]
+    },
+    "body_2": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-42.972))",
+      "0"
+     ]
+    },
+    "body_3": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-85.944))",
+      "0"
+     ]
+    },
+    "body_4": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-128.916))",
+      "0"
+     ]
+    },
+    "body_5": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-171.887))",
+      "0"
+     ]
+    },
+    "body_6": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-214.859))",
+      "0"
+     ]
+    },
+    "body_7": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-257.831))",
+      "0"
+     ]
+    },
+    "body_8": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-300.803))",
+      "0"
+     ]
+    },
+    "body_9": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-343.775))",
+      "0"
+     ]
+    },
+    "body_10": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-386.747))",
+      "0"
+     ]
+    },
+    "body_11": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-429.718))",
+      "0"
+     ]
+    },
+    "body_12": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-472.69))",
+      "0"
+     ]
+    },
+    "body_13": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*0.5*162+-515.662))",
+      "0"
+     ]
+    },
+    "pectoral_fin": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-14*math.sin(query.life_time*0.5*180+-57.296))"
+     ]
+    },
+    "pectoral_fin_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(14*math.sin(query.life_time*0.5*180+57.296))"
+     ]
+    },
+    "neck": {
+     "rotation": [
+      "6*math.sin(query.life_time*0.5*144+0)",
+      "0",
+      "0"
+     ]
+    },
+    "neck_2": {
+     "rotation": [
+      "6*math.sin(query.life_time*0.5*144+28.648)",
+      "0",
+      "0"
+     ]
+    },
+    "neck_3": {
+     "rotation": [
+      "6*math.sin(query.life_time*0.5*144+57.296)",
+      "0",
+      "0"
+     ]
+    },
+    "neck_4": {
+     "rotation": [
+      "6*math.sin(query.life_time*0.5*144+85.944)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "0",
+      "-(8*math.sin(query.life_time*0.5*126+0))",
+      "0"
+     ]
+    },
+    "jaw": {
+     "rotation": [
+      "6*math.sin(query.life_time*0.5*216+0)",
+      "0",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

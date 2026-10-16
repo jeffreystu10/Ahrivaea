@@ -287,7 +287,8 @@
           "job": "fishing",
           "text": "Fishing and aquatic harvesting"
         }
-      ]
+      ],
+      "size": 5.25
     },
     "nature": {
       "stats": {

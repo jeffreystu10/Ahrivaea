@@ -8,8 +8,8 @@ import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.core.BlockPos;
 
 /**
- * Starts the real game (no window), lines up every dragon form on a flat world and takes screenshots,
- * so the models can be checked without anyone running Minecraft. CI publishes them to the
+ * Starts the real game (no window), lines up the creatures on a flat world by influence and size and takes
+ * screenshots, so the models can be checked without anyone running Minecraft. CI publishes them to the
  * ci-screenshots branch.
  */
 public class CreatureScreenshots implements FabricClientGameTest {
@@ -66,9 +66,14 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			{"void", "s", "gnome", "mephit", "grick", "ooze", "roper", "phase_panther", "mind_eater"},
 			{"void", "s", "dark_elf", "hag", "mage", "ranger", "warrior", "wraith", "fallen_angel"},
 			{"void", "l", "bone_golem", "cloaker", "elemental", "eye_tyrant", "wyrm"},
-			{"void", "x", "dragon"}};
-
-	private static final String[] FORMS = {"fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "radiant", "none"};
+			{"void", "x", "dragon"},
+			{"water", "s", "fish", "mephit", "giant_frog", "aspidochelone", "mermaid", "siren", "sahuagin"},
+			{"water", "s", "mage", "scylla", "water_weird"},
+			{"water", "l", "elemental", "giant_octopus", "isonade", "long", "orca", "squid"},
+			{"water", "x", "dragon", "charybdis", "kraken", "leviathan"},
+			// forms without their own model yet borrow another form's (Orca), or the None form's (Arcane Dragon)
+			{"none", "l", "orca"},
+			{"arcane", "x", "dragon"}};
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -82,35 +87,11 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			server.runCommand("weather clear");
 			server.runCommand("gamerule advance_time false");
 			server.runCommand("gamerule spawn_mobs false");
-			for (int i = 0; i < FORMS.length; i++) {
-				int dx = (i % 4) * 7 - 10, dz = 10 + (i / 4) * 8;
-				server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon %s 30".formatted(x + dx, y, z + dz, FORMS[i]));
-			}
-			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
 			context.runOnClient(client -> {
 				if (!client.gui.hud.isHidden()) client.gui.hud.toggle();
 				client.player.getAbilities().flying = true;
 			});
-			context.waitTicks(40);
-
-			// all eleven from above and in front (the player faces south, towards them)
-			view(context, server, x - 0.5, y + 11, z - 6, 0, 38);
-			context.takeScreenshot(TestScreenshotOptions.of("dragons_overview").withSize(1600, 900));
-
-			// Ashen Dragon close up, three-quarter front
-			view(context, server, x - 10 + 4.5, y + 3, z + 10 + 5.5, 140, 18);
-			context.takeScreenshot(TestScreenshotOptions.of("ashen_closeup").withSize(1600, 900));
-
-			// side view, to check it stands upright and faces the right way
-			view(context, server, x - 10 + 8, y + 1.5, z + 10, 90, 5);
-			context.takeScreenshot(TestScreenshotOptions.of("ashen_side").withSize(1600, 900));
-
-			// back row from behind
-			view(context, server, x + 0.5, y + 7, z + 38, 180, 25);
-			context.takeScreenshot(TestScreenshotOptions.of("dragons_back").withSize(1600, 900));
-
 			// the creatures with library models: each group in a row along x, 60 blocks apart, facing the camera
-			server.runCommand("kill @e[type=ahrivaea:creature]");
 			java.util.Map<String, Integer> shots = new java.util.HashMap<>();
 			for (int g = 0; g < GROUPS.length; g++) {
 				String influence = GROUPS[g][0], size = GROUPS[g][1];

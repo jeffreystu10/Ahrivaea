@@ -349,7 +349,8 @@
           "job": "growth",
           "text": "Crop irrigation"
         }
-      ]
+      ],
+      "size": 11.89
     },
     "nature": {
       "name": "Briar Dragon",

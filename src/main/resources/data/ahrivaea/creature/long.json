@@ -56,7 +56,8 @@
           "job": "fishing",
           "text": "Kelp harvesting"
         }
-      ]
+      ],
+      "size": 5.03
     }
   },
   "stats": {

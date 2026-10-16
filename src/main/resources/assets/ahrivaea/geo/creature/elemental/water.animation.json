@@ -1,0 +1,130 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "scale": [
+      "1",
+      "1+0.05*math.sin(query.life_time*0.72*180+0)",
+      "1"
+     ]
+    },
+    "wave": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_2": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-34.377)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_3": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-68.755)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_4": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-103.132)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_5": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-137.51)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_6": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_7": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-206.265)",
+      "0",
+      "0"
+     ]
+    },
+    "wave_8": {
+     "rotation": [
+      "4*math.sin(query.life_time*0.72*180+-240.642)",
+      "0",
+      "0"
+     ]
+    },
+    "tendril": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+0))",
+      "0"
+     ]
+    },
+    "tendril_2": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+34.377))",
+      "0"
+     ]
+    },
+    "tendril_3": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+68.755))",
+      "0"
+     ]
+    },
+    "tendril_4": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+103.132))",
+      "0"
+     ]
+    },
+    "tendril_5": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+57.296))",
+      "0"
+     ]
+    },
+    "tendril_6": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+91.673))",
+      "0"
+     ]
+    },
+    "tendril_7": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+126.051))",
+      "0"
+     ]
+    },
+    "tendril_8": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*0.72*216+160.428))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

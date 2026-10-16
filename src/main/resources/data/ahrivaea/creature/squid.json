@@ -96,7 +96,8 @@
           "job": "fishing",
           "text": "Aquatic harvesting"
         }
-      ]
+      ],
+      "size": 5.25
     }
   },
   "stats": {

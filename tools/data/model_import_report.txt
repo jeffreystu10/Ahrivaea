@@ -1,8 +1,9 @@
-255 models in use
+275 models in use
   aboleth/earth: from "aboleth" (M), size 2.02, 4 textures, animations idle
   angel/radiant: from "angel" (M), size 2.68, 4 textures, animations idle, fly
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
   artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
+  aspidochelone/water: from "aspidochelone" (M), size 2.24, 4 textures, animations idle
   assassin_vine/nature: from "assassinvine" (M), size 2.46, 4 textures, animations idle
   axe_beak/fire: from "axebeak" (S), size 1.19, 4 textures, animations idle
   bai_ze/storm: from "baize" (M), size 2.37, 4 textures, animations idle
@@ -24,6 +25,7 @@
   catoblepas/radiant: from "catoblepas" (M), size 2.22, 4 textures, animations idle
   centaur/nature: from "centaur" (M), size 3.63, 4 textures, animations idle
   cerberus/darkness: from "cerberus" (XL), size 10.7, 4 textures, animations idle
+  charybdis/water: from "charybdis" (XL), size 11.49, 4 textures, animations idle
   chicken/none: from "chicken" (S), size 1.19, 4 textures, animations idle, fly
   chimaera/none: from "chimera" (L), size 4.72, 4 textures, animations idle
   cloaker/void: from "cloaker" (L), size 4.69, 4 textures, animations idle, fly
@@ -55,6 +57,7 @@
   dragon/radiant: from "dragon" (XL), size 11.86, 4 textures, animations idle, fly
   dragon/storm: from "dragon" (XL), size 11.93, 4 textures, animations idle, fly
   dragon/void: from "dragon" (XL), size 12.29, 4 textures, animations idle, fly
+  dragon/water: from "dragon" (XL), size 11.89, 4 textures, animations idle, fly
   drathkuhl_balor/fire: from "balor" (XXL), size 20.0, 4 textures, animations idle, fly
   draugr/frost: from "draugr" (M), size 3.16, 4 textures, animations idle
   drider/darkness: from "drider" (M), size 2.87, 4 textures, animations idle
@@ -72,6 +75,7 @@
   elemental/radiant: from "elemental" (L), size 5.58, 4 textures, animations idle
   elemental/storm: from "elemental" (L), size 5.29, 4 textures, animations idle
   elemental/void: from "elemental" (L), size 5.25, 4 textures, animations idle
+  elemental/water: from "elemental" (L), size 5.25, 4 textures, animations idle
   elephant/none: from "elephant" (L), size 5.25, 4 textures, animations idle
   empyrean/radiant: from "empyrean" (M), size 2.61, 4 textures, animations idle
   enchanted_axe/arcane: from "dancingaxe" (M), size 2.38, 4 textures, animations idle
@@ -82,6 +86,7 @@
   fairy_queen/fae: from "fairyqueen" (M), size 2.81, 4 textures, animations idle, fly
   fallen_angel/void: from "fallenangel" (M), size 3.03, 4 textures, animations idle, fly
   fish/none: from "tropicalfish" (S), size 1.14, 4 textures, animations idle
+  fish/water: from "fish" (S), size 1.18, 4 textures, animations idle
   flying_sword/arcane: from "flyingsword" (M), size 2.38, 4 textures, animations idle
   fox/none: from "fox" (S), size 1.15, 4 textures, animations idle
   gargoyle/earth: from "gargoyle" (S), size 1.53, 4 textures, animations idle, fly
@@ -93,6 +98,8 @@
   giant_beetle/storm: from "giantbeetle" (S), size 1.19, 4 textures, animations idle
   giant_boar/frost: from "giantboar" (M), size 2.46, 4 textures, animations idle
   giant_eagle/radiant: from "gianteagle" (L), size 4.89, 4 textures, animations idle, fly
+  giant_frog/water: from "giantfrog" (M), size 2.37, 4 textures, animations idle
+  giant_octopus/water: from "giantoctopus" (L), size 5.25, 4 textures, animations idle
   giant_rat/none: from "giantrat" (S), size 1.15, 4 textures, animations idle
   giant_scorpion/earth: from "giantscorpion" (M), size 3.22, 4 textures, animations idle
   giant_snail/fae: from "giantslug" (M), size 2.0, 4 textures, animations idle
@@ -118,22 +125,26 @@
   ibong_adarna/nature: from "adarna" (S), size 1.23, 4 textures, animations idle, fly
   imp/fire: from "imp" (S), size 1.2, 4 textures, animations idle, fly
   insect_swarm/none: from "insectswarm" (M), size 2.37, 4 textures, animations idle
+  isonade/water: from "isonade" (L), size 4.68, 4 textures, animations idle
   jackalope/fae: from "jackalope" (S), size 1.19, 4 textures, animations idle
   jellyfish/none: from "jellyfish" (S), size 1.19, 4 textures, animations idle
   jotunn/frost: from "jotunn" (XL), size 13.21, 4 textures, animations idle
   kitsune/fire: from "kitsune" (M), size 2.37, 4 textures, animations idle
   komainu/nature: from "komainu" (M), size 2.38, 4 textures, animations idle
+  kraken/water: from "kraken" (XL), size 11.68, 4 textures, animations idle
   krampus/frost: from "krampus" (M), size 3.23, 4 textures, animations idle
   lamassu/radiant: from "lamassu" (L), size 4.83, 4 textures, animations idle, fly
   lamia/radiant: from "lamia" (M), size 3.04, 4 textures, animations idle
   leprechaun/fae: from "leprechaun" (S), size 1.54, 4 textures, animations idle
   leshy/nature: from "leshy" (M), size 3.11, 4 textures, animations idle
+  leviathan/water: from "leviathan" (XL), size 11.83, 4 textures, animations idle
   lich/darkness: from "lich" (M), size 2.39, 4 textures, animations idle
   lion/none: from "lion" (M), size 2.17, 4 textures, animations idle
   living_spellbook/arcane: from "spellbook" (S), size 1.21, 4 textures, animations idle
   living_statue/arcane: from "livingstatue" (M), size 2.63, 4 textures, animations idle
   lizardfolk/none: from "lizardfolk" (M), size 2.36, 4 textures, animations idle
   llama/none: from "llama" (M), size 2.69, 4 textures, animations idle
+  long/water: from "lung" (L), size 5.03, 4 textures, animations idle
   mage/arcane: from "mage" (M), size 2.44, 4 textures, animations idle
   mage/darkness: from "mage" (M), size 2.43, 4 textures, animations idle
   mage/earth: from "mage" (M), size 2.44, 4 textures, animations idle
@@ -144,6 +155,7 @@
   mage/radiant: from "mage" (M), size 2.44, 4 textures, animations idle
   mage/storm: from "mage" (M), size 2.44, 4 textures, animations idle
   mage/void: from "mage" (M), size 2.44, 4 textures, animations idle
+  mage/water: from "mage" (M), size 2.54, 4 textures, animations idle
   medusa/none: from "medusa" (M), size 3.14, 4 textures, animations idle
   mephit/darkness: from "mephit" (S), size 1.42, 4 textures, animations idle, fly
   mephit/earth: from "mephit" (S), size 1.38, 4 textures, animations idle, fly
@@ -153,6 +165,8 @@
   mephit/radiant: from "mephit" (S), size 1.52, 4 textures, animations idle, fly
   mephit/storm: from "mephit" (S), size 1.37, 4 textures, animations idle, fly
   mephit/void: from "mephit" (S), size 1.39, 4 textures, animations idle, fly
+  mephit/water: from "mephit" (S), size 1.19, 4 textures, animations idle, fly
+  mermaid/water: from "mermaid" (M), size 2.21, 4 textures, animations idle
   mimic/none: from "mimic" (S), size 1.19, 4 textures, animations idle
   mind_eater/void: from "mindeater" (M), size 2.4, 4 textures, animations idle
   minotaur/none: from "minotaur" (M), size 2.64, 4 textures, animations idle
@@ -170,6 +184,7 @@
   oni/fire: from "oni" (L), size 5.25, 4 textures, animations idle
   ooze/void: from "ooze" (M), size 2.37, 4 textures, animations idle
   orc/none: from "orc" (M), size 2.59, 4 textures, animations idle
+  orca/water: from "orca" (L), size 4.64, 4 textures, animations idle
   owlbear/none: from "owlbear" (L), size 5.25, 4 textures, animations idle
   paladin/radiant: from "paladin" (M), size 2.71, 4 textures, animations idle
   pegasus/fae: from "pegasus" (M), size 3.3, 4 textures, animations idle, fly
@@ -199,20 +214,24 @@
   rhinocerous/none: from "rhino" (M), size 2.13, 4 textures, animations idle
   roper/void: from "roper" (M), size 2.18, 4 textures, animations idle
   saber_toothed_cat/frost: from "sabertooth" (M), size 2.4, 4 textures, animations idle
+  sahuagin/water: from "sahuagin" (M), size 2.56, 4 textures, animations idle
   salamander/fire: from "salamander" (L), size 4.81, 4 textures, animations idle
   sasquatch/none: from "sasquatch" (L), size 5.3, 4 textures, animations idle
   satyr/fae: from "satyr" (M), size 2.85, 4 textures, animations idle
+  scylla/water: from "scylla" (M), size 2.91, 4 textures, animations idle
   sea_turtle/none: from "seaturtle" (S), size 1.16, 4 textures, animations idle
   seal/none: from "seal" (M), size 2.11, 4 textures, animations idle
   shambling_mound/nature: from "shamblingmound" (L), size 5.25, 4 textures, animations idle
   sheep/none: from "sheep" (M), size 2.37, 4 textures, animations idle
   shield_guardian/arcane: from "shieldguardian" (L), size 5.29, 4 textures, animations idle
+  siren/water: from "siren" (M), size 2.4, 4 textures, animations idle, fly
   six_armed_serpent_demon/storm: from "serpentdemon" (M), size 3.03, 4 textures, animations idle
   skeleton/darkness: from "skeleton" (M), size 2.5, 4 textures, animations idle
   sleipnir/radiant: from "sleipnir" (M), size 2.62, 4 textures, animations idle
   sphinx/earth: from "sphinx" (L), size 5.05, 4 textures, animations idle
   spriggan/frost: from "spriggan" (M), size 3.15, 4 textures, animations idle
   squid/none: from "squid" (M), size 2.37, 4 textures, animations idle
+  squid/water: from "squid" (L), size 5.25, 4 textures, animations idle
   stirge/radiant: from "stirge" (S), size 1.19, 4 textures, animations idle, fly
   stirge/storm: from "stirge" (S), size 1.19, 4 textures, animations idle, fly
   t_rex/none: from "dinosaur" (XL), size 10.0, 4 textures, animations idle
@@ -237,6 +256,7 @@
   warrior/radiant: from "warrior" (M), size 2.49, 4 textures, animations idle
   warrior/storm: from "warrior" (M), size 2.49, 4 textures, animations idle
   warrior/void: from "warrior" (M), size 2.49, 4 textures, animations idle
+  water_weird/water: from "waterweird" (M), size 2.5, 4 textures, animations idle
   wendigo/nature: from "wendigo" (L), size 6.67, 4 textures, animations idle
   werewolf/none: from "werewolf" (M), size 2.63, 4 textures, animations idle
   wight/darkness: from "wight" (M), size 2.57, 4 textures, animations idle

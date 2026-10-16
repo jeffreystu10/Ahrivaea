@@ -168,10 +168,10 @@ public final class GeoModels {
 	}
 
 	public static Identifier texture(String species, String influence) {
-		if (textures.contains(species + "/" + influence)) return Ahrivaea.id("textures/entity/creature/" + species + "/" + influence + ".png");
-		// the texture that goes with whichever model the form borrows
+		// a form that borrows another form's model wears that form's texture (textures are laid out for their model)
 		String key = key(species, influence);
 		if (key != null && textures.contains(key)) return Ahrivaea.id("textures/entity/creature/" + key + ".png");
+		if (textures.contains(species + "/" + influence)) return Ahrivaea.id("textures/entity/creature/" + species + "/" + influence + ".png");
 		if (textures.contains(species + "/none")) return Ahrivaea.id("textures/entity/creature/" + species + "/none.png");
 		return Ahrivaea.id("textures/entity/creature/placeholder.png");
 	}

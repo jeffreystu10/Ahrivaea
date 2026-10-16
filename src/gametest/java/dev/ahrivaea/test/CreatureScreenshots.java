@@ -107,6 +107,12 @@ public class CreatureScreenshots implements FabricClientGameTest {
 				context.waitTicks(40);
 				int k = shots.merge(influence, 1, Integer::sum) - 1;
 				context.takeScreenshot(TestScreenshotOptions.of(influence + "_" + k).withSize(1600, 900));
+				if (influence.equals("nature") && k == 0) {
+					// the Assassin Vine (in the middle of this row) close up: its tentacles are thin
+					view(context, server, gx + 0.5, y + 1.2, z + 10 + 4.5, 180, 5);
+					context.waitTicks(10);
+					context.takeScreenshot(TestScreenshotOptions.of("nature_vine_closeup").withSize(1600, 900));
+				}
 			}
 			// a close look at the medium ones, three-quarter front
 			view(context, server, x + 120 + 0.5 + 9, y + 2.5, z + 10 + 6, 125, 12);

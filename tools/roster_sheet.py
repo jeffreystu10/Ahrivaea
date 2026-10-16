@@ -6,7 +6,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.utils import get_column_letter
 
-WORKING = {'farming', 'growth', 'logging', 'mining', 'smelting', 'transport', 'ranching', 'fishing'}
+WORKING = {'farming', 'growth', 'logging', 'mining', 'smelting', 'transport', 'ranching', 'fishing', 'defense', 'brewing', 'enchanting', 'redstone', 'crafting', 'ice', 'lighting'}
 INF = ['none', 'fire', 'frost', 'storm', 'earth', 'water', 'nature', 'void', 'fae', 'darkness', 'radiant', 'arcane']
 RAR = {'Common': 0, 'Uncommon': 1, 'Rare': 2, 'Super Rare': 3, 'Legendary': 4}
 STATS = ['hp', 'attack', 'defense', 'speed', 'magic', 'luck', 'charisma']
@@ -23,7 +23,7 @@ for f in sorted(glob.glob('src/main/resources/data/ahrivaea/creature/*.json')):
         def job(i):
             if i >= len(jobs): return '', '', ''
             j = jobs[i]
-            return j['text'], j['job'].capitalize(), 'yes' if j['job'] in WORKING else 'phase 2'
+            return j['text'], j['job'].capitalize(), 'yes' if j['job'] in WORKING else 'later'
         drops = '; '.join(f"{x['item'].split(':')[1].replace('_', ' ')} ({round(x['chance'] * 100)}%, {x['min']}{'' if x['max'] == x['min'] else '-' + str(x['max'])})" for x in fm.get('drops', []))
         sp = fm['spawn']
         rows.append([inf.capitalize(), fm.get('rarity', ''), name, sid, d.get('movement', 'walk'), ', '.join(b.split(':')[1] for b in sp['biomes']),
@@ -47,7 +47,7 @@ for i, w in enumerate(widths, 1): ws.column_dimensions[get_column_letter(i)].wid
 for row in ws.iter_rows(min_row=2):
     for c in (row[5], row[16]): c.alignment = Alignment(wrap_text=True, vertical='top')
     for c in (row[19], row[22]):
-        if c.value == 'phase 2': c.font = Font(color='9C6500')
+        if c.value == 'later': c.font = Font(color='9C6500')
 ws.freeze_panes = 'D2'
 ws.auto_filter.ref = ws.dimensions
 
@@ -57,12 +57,15 @@ js.append(['Job', 'Works now', 'Forms with it', 'What the worker does'])
 desc = {'Farming': 'Harvests ripe crops and replants them', 'Growth': 'Tends plants so they grow faster', 'Logging': 'Fells natural trees and replants',
         'Mining': 'Works a Mining Post (stone and ores by location)', 'Smelting': 'Runs furnaces with no fuel, twice as fast',
         'Transport': 'Carries loose items and smelting output to chests', 'Ranching': 'Produces its own drops every 2-3 minutes',
-        'Fishing': 'Fishes from water in the base', 'Defense': 'Fights off base raids (phase 2)'}
+        'Fishing': 'Fishes from water in the base', 'Defense': 'Fights off raids on the base',
+        'Brewing': 'Runs brewing stands with no blaze powder, twice as fast', 'Enchanting': "Studies at an enchanting table: bottles o' enchanting, sometimes a book",
+        'Redstone': 'Powers a Creature Dynamo (signal 15)', 'Crafting': 'Works crafters', 'Ice': 'Makes ice and snowballs from water',
+        'Lighting': "Puts torches from the base's chests on dark spots", 'Riding': 'Comes with rideable creatures'}
 counts = {}
 for r in rows:
     for j in {r[18], r[21]} - {''}: counts[j] = counts.get(j, 0) + 1
 for j, n in sorted(counts.items(), key=lambda x: -x[1]):
-    js.append([j, 'yes' if j.lower() in WORKING else 'phase 2', n, desc.get(j, 'Phase 2')])
+    js.append([j, 'yes' if j.lower() in WORKING else 'later', n, desc.get(j, '')])
 for c in js[1]:
     c.font = Font(bold=True, color='FFFFFF')
     c.fill = fill

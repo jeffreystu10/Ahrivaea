@@ -123,7 +123,9 @@ your inventory; the results screen lists it.
 ## Bases (Palworld-style)
 
 A Base Core lets recruited creatures work: farming, growth, logging, mining (at a Mining Post), smelting,
-transport, ranching and fishing now; defense (against base raids) and the rest in phase 2. See [bases.md](bases.md).
+transport, ranching, fishing, brewing, enchanting, redstone (a Creature Dynamo), crafting (Crafters), ice and
+lighting. At night bases may be raided by aggressive creatures; Defense workers fight them off and raiders that
+reach the core steal from the chests. See [bases.md](bases.md).
 
 ## After a battle
 

@@ -6,8 +6,8 @@ import net.minecraft.util.StringRepresentable;
 import java.util.Locale;
 
 /**
- * Kinds of work a creature does at a base (the creature list's ~190 job descriptions sorted into these). Phase 1 has
- * {@link #working() working} versions of the first eight; the rest are coming.
+ * Kinds of work a creature does at a base (the creature list's ~190 job descriptions sorted into these). All work
+ * except Riding, which comes with rideable creatures.
  */
 public enum Job implements StringRepresentable {
 	FARMING("Farming", "harvests ripe crops in the base and replants them", true),
@@ -18,14 +18,14 @@ public enum Job implements StringRepresentable {
 	TRANSPORT("Transport", "carries loose items and furnace output in the base to its chests", true),
 	RANCHING("Ranching", "produces its own drops now and then", true),
 	FISHING("Fishing", "catches fish and treasure from water in the base", true),
-	DEFENSE("Defense", "fights off raids on the base (raids come in phase 2)", false),
-	BREWING("Brewing", "phase 2", false),
-	ENCHANTING("Enchanting", "phase 2", false),
-	REDSTONE("Redstone", "phase 2", false),
-	CRAFTING("Crafting", "phase 2", false),
-	ICE("Ice", "phase 2", false),
-	LIGHTING("Lighting", "phase 2", false),
-	RIDING("Riding", "phase 2", false);
+	DEFENSE("Defense", "fights off raids on the base", true),
+	BREWING("Brewing", "runs brewing stands with no blaze powder, twice as fast", true),
+	ENCHANTING("Enchanting", "studies at an enchanting table: bottles o' enchanting, now and then an enchanted book", true),
+	REDSTONE("Redstone", "powers a Creature Dynamo (redstone signal 15), turning up a little redstone", true),
+	CRAFTING("Crafting", "works crafters in the base, crafting whatever they're set up for", true),
+	ICE("Ice", "makes ice, snowballs and now and then packed or blue ice from water in the base", true),
+	LIGHTING("Lighting", "puts torches from the base's chests on dark spots", true),
+	RIDING("Riding", "coming with rideable creatures", false);
 
 	public static final Codec<Job> CODEC = StringRepresentable.fromEnum(Job::values);
 

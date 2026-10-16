@@ -267,7 +267,7 @@ public final class Bases {
 		be.workers.add(new Worker(c, e.getUUID()));
 		be.setChanged();
 		boolean works = species.get().jobsFor(c.influence()).stream().anyMatch(Job::working);
-		p.sendSystemMessage(Component.literal(e.displayName() + " is working at your base" + (works ? "." : ", but none of its jobs work yet (coming in phase 2).")));
+		p.sendSystemMessage(Component.literal(e.displayName() + " is working at your base" + (works ? "." : ", but its only job (riding) isn't a base job yet.")));
 		return null;
 	}
 

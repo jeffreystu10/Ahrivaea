@@ -23,7 +23,7 @@ import java.util.Locale;
  */
 public class GuideScreen extends Screen {
 	private static final int GOLD = 0xFFFFC94A, WHITE = 0xFFFFFFFF, GREY = 0xFFA8A8B8, DIM = 0xFF707080, NEW = 0xFF7CFC6A;
-	private static final int CARD_W = 128, CARD_H = 86, GAP = 6, ROW = 16, LIST_W = 120;
+	private static final int CARD_W = 144, CARD_H = 86, GAP = 6, ROW = 16, LIST_W = 120;
 
 	private enum Page {ABOUT, RECIPES}
 
@@ -235,7 +235,6 @@ public class GuideScreen extends Screen {
 		int x = contentX(), y = top() + 24;
 		String heading = focus != null ? "Recipes with " + new ItemStack(focus).getHoverName().getString() : mod == null ? "All mods" : mod.name();
 		g.text(font, heading, x, y + 2, WHITE);
-		if (page == Page.RECIPES && focus != null) g.text(font, "Makes it first, then uses it", x + Math.min(220, contentW()) + 72, y + 22, DIM);
 
 		int top = bodyTop(), bot = bodyBottom();
 		g.enableScissor(x - 2, top, x + contentW() + 2, bot);
@@ -385,8 +384,9 @@ public class GuideScreen extends Screen {
 		slot(g, r.result(), 1, gx + 54 + 20, mid, inBody, mx, my);
 		g.text(font, r.station().title, x + 4, y + CARD_H - 11, DIM);
 		if (mod == null || focus != null) {
-			String m = r.mod().name().replaceFirst("^Ahrivaea ", "");
-			g.text(font, font.plainSubstrByWidth(m, 50), x + CARD_W - 4 - Math.min(50, font.width(m)), y + CARD_H - 11, 0xFF6A8AC0);
+			// which mod it's from, after the station name
+			String m = font.plainSubstrByWidth(r.mod().name().replaceFirst("^Ahrivaea ", ""), CARD_W - 14 - font.width(r.station().title));
+			g.text(font, m, x + CARD_W - 4 - font.width(m), y + CARD_H - 11, 0xFF6A8AC0);
 		}
 	}
 

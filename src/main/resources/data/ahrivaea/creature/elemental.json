@@ -453,7 +453,8 @@
           "job": "logging",
           "text": "Tree planting and harvesting"
         }
-      ]
+      ],
+      "size": 5.25
     },
     "darkness": {
       "stats": {

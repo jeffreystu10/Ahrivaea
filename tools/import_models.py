@@ -35,6 +35,9 @@ ALIASES = {
     'rugofsmothering': 'enchanted_rug',
     'spellbook': 'living_spellbook',
     'tarasque': 'terrasque',
+    'changeling': 'doppleganger',
+    'giantslug': 'giant_snail',
+    'wisp': 'will_o_the_wisp',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

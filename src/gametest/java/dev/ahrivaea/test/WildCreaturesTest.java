@@ -43,7 +43,7 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			int species = server.computeOnServer(s -> Species.all().size());
 			int forms = server.computeOnServer(s -> Species.all().stream().mapToInt(x -> x.forms().size()).sum());
 			LOG.info("WildCreaturesTest: {} species, {} forms", species, forms);
-			if (species < 200) failures.add("the creature list should load about 206 species, got " + species);
+			if (species < 200) failures.add("the creature list should load about 205 species, got " + species);
 
 			// drop rates: a Fire Mephit drops flint 65% of the time
 			double flint = server.computeOnServer(s -> {

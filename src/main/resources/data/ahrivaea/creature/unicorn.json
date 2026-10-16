@@ -50,7 +50,8 @@
           "job": "ranching",
           "text": "Livestock healing and ranching"
         }
-      ]
+      ],
+      "size": 3.25
     },
     "radiant": {
       "stats": {

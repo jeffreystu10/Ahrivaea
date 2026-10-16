@@ -137,14 +137,14 @@ def main():
             if not v or not name or v in ('Commanilty', 'Commonality') or current[half] is None: continue
             inf, overall = current[half]
             if inf not in INFLUENCES: report.append(f'unknown influence {inf}'); continue
-            entries.append(dict(influence=inf, overall=overall, rarity=v.strip(), name=name.strip(),
+            entries.append(dict(influence=inf, overall=overall, rarity=v.strip(), name=NAME_FIXES.get(name.strip(), name.strip()), sheet_name=name.strip(),
                                 biomes=biomes(row[off + 2]), drops=drops(row[off + 3])))
     # Sheet2: work
     work = {}
     for row in list(wb['Sheet2'].iter_rows(values_only=True))[1:]:
         if not row or not row[2]: continue
         inf = str(row[0]).strip().lower()
-        work[('none' if inf == 'normal' else inf, row[2].strip())] = [w for w in (row[4], row[5]) if w]
+        work[('none' if inf == 'normal' else inf, NAME_FIXES.get(row[2].strip(), row[2].strip()))] = [w for w in (row[4], row[5]) if w]
 
     roster = {}
     if os.path.exists(ROSTER):
@@ -166,7 +166,7 @@ def main():
         s['_seen'].add(e['influence'])
         form = s['forms'].setdefault(e['influence'], {})
         if 'stats' not in form:
-            form['stats'] = roster.get((e['name'], e['influence'])) or rolled_stats(f"{e['name']}/{e['influence']}")
+            form['stats'] = roster.get((e['name'], e['influence'])) or roster.get((e['sheet_name'], e['influence'])) or rolled_stats(f"{e['name']}/{e['influence']}")
         weight, lo, hi = RARITY.get(e['rarity'], RARITY['Common'])
         form['rarity'] = e['rarity']
         form['spawn'] = {'biomes': e['biomes'], 'min_level': lo, 'max_level': hi,
@@ -200,6 +200,9 @@ def main():
     open('tools/data/creature_import_report.txt', 'w').write('\n'.join(report) + '\n')
     print('\n'.join(report[:40]))
 
+
+# typos in the creature list, fixed on the way in: the sheet's name -> the creature's real name
+NAME_FIXES = {'Ghome': 'Gnome'}
 
 FLYERS = r'dragon|phoenix|wyrm|wyvern|griff|harpy|roc\b|bat\b|stirge|pegasus|eagle|owl|hawk|raven|crow|sprite|pixie|fairy|faerie|wisp|angel|thunderbird|djinn|genie|bird|moth|bee\b|wasp|gargoyle|peryton|hippogriff|couatl|zephyr|cloud|wind|air elemental|imp\b|mephit|beholder|will|ghost|specter|spectre|wraith|banshee|eye'
 SWIMMERS = r'fish|shark|orca|squid|kraken|leviathan|isonade|scylla|charybdis|aspidochelone|eel|ray\b|jelly|crab|lobster|merrow|mermaid|selkie|kelpie|water weird|nereid|octo|whale|dolphin|turtle|serpent'

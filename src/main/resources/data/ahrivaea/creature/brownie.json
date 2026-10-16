@@ -54,7 +54,8 @@
           "job": "transport",
           "text": "Chest sorting"
         }
-      ]
+      ],
+      "size": 1.57
     }
   },
   "stats": {

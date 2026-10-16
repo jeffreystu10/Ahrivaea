@@ -111,7 +111,7 @@ Which biome and time of day gives which influence: list to come (a draft is in
 
 ## The creature list
 
-206 species, 278 forms (one per influence a creature appears with), from `Monster_List_v.1.xlsx`: each with biomes,
+205 species, 278 forms (one per influence a creature appears with), from `Monster_List_v.1.xlsx`: each with biomes,
 rarity, drops and two jobs. Creatures replace every vanilla mob (see [creatures.md](creatures.md#no-vanilla-mobs)).
 Until models arrive, a creature looks like a placeholder tinted its influence's colour.
 

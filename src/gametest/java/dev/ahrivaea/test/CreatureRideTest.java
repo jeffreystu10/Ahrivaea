@@ -156,9 +156,11 @@ public class CreatureRideTest implements FabricClientGameTest {
 
 			// ---- an Orca in a lake: dive where you look, the rider keeps breathing ----
 			int lx = x0 + 20, lz = z0 + 40;
-			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(lx - 6, y - 12, lz - 6, lx + 60, y - 1, lz + 6));
-			server.runCommand("tp @p %d %d %d -90 0".formatted(lx, y, lz));
-			server.runCommand("execute positioned %d %d %d run ahrivaea spawn orca water 50".formatted(lx + 2, y - 3, lz));
+			// a glass tank on the flat world, 10 deep
+			server.runCommand("fill %d %d %d %d %d %d minecraft:glass hollow".formatted(lx - 7, y - 1, lz - 7, lx + 61, y + 10, lz + 7));
+			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(lx - 6, y, lz - 6, lx + 60, y + 9, lz + 6));
+			server.runCommand("tp @p %d %d %d -90 0".formatted(lx, y + 9, lz));
+			server.runCommand("execute positioned %d %d %d run ahrivaea spawn orca water 50".formatted(lx + 2, y + 5, lz));
 			context.waitTicks(10);
 			server.runOnServer(s -> {
 				CreatureEntity e = creature(s, "orca");
@@ -202,7 +204,14 @@ public class CreatureRideTest implements FabricClientGameTest {
 				double[] a = ride.get(ride.size() - 21);
 				if (at[3] > a[3]) top = Math.max(top, Math.sqrt(Math.pow(at[0] - a[0], 2) + Math.pow(at[1] - a[1], 2) + Math.pow(at[2] - a[2], 2)) * 20 / (at[3] - a[3]));
 			}
-			if (t == ticks - 20) context.takeScreenshot(TestScreenshotOptions.of(shot).withSize(1600, 900));
+			if (t == ticks - 20) {
+				context.takeScreenshot(TestScreenshotOptions.of(shot).withSize(1600, 900));
+				// and from behind, to see rider and mount
+				context.runOnClient(c -> c.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_BACK));
+				context.waitTick();
+				context.takeScreenshot(TestScreenshotOptions.of(shot + "_behind").withSize(1600, 900));
+				context.runOnClient(c -> c.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
+			}
 			context.waitTick();
 		}
 		context.getInput().releaseKey(o -> o.keyUp);

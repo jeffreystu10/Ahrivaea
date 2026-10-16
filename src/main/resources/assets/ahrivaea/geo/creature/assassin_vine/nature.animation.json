@@ -1,0 +1,256 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "vine": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+0)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_2": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+28.648)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_3": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+57.296)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_4": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+85.944)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_5": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_6": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+143.239)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_7": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_8": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+57.296)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_9": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+85.944)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_10": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_11": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+143.239)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_12": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_13": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+200.535)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_14": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_15": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_16": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+143.239)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_17": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_18": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+200.535)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_19": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_20": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+257.831)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_21": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+286.479)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_22": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_23": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+200.535)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_24": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_25": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+257.831)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_26": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+286.479)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_27": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+315.127)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_28": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+343.775)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_29": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_30": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+257.831)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_31": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+286.479)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_32": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+315.127)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_33": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+343.775)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_34": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+372.423)",
+      "0",
+      "0"
+     ]
+    },
+    "vine_35": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+401.07)",
+      "0",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

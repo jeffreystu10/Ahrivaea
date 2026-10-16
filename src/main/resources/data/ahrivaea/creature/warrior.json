@@ -334,7 +334,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 2.49
     },
     "void": {
       "stats": {

@@ -51,7 +51,8 @@
           "job": "growth",
           "text": "Crop growth support"
         }
-      ]
+      ],
+      "size": 3.11
     }
   },
   "stats": {

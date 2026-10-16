@@ -114,7 +114,8 @@
           "job": "growth",
           "text": "Composting"
         }
-      ]
+      ],
+      "size": 2.44
     },
     "darkness": {
       "stats": {

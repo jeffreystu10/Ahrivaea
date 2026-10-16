@@ -328,7 +328,8 @@
           "job": "brewing",
           "text": "Brewing potions"
         }
-      ]
+      ],
+      "size": 2.44
     },
     "void": {
       "stats": {

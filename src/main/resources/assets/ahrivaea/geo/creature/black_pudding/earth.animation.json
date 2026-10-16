@@ -1,0 +1,32 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "scale": [
+      "1",
+      "1+0.1*math.sin(query.life_time*1*162+0)",
+      "1"
+     ]
+    },
+    "pseudopod": {
+     "rotation": [
+      "0",
+      "-(20*math.sin(query.life_time*1*144+-57.296))",
+      "0"
+     ]
+    },
+    "pseudopod_2": {
+     "rotation": [
+      "0",
+      "-(20*math.sin(query.life_time*1*144+57.296))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

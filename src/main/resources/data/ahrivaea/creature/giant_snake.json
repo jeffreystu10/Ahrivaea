@@ -55,7 +55,8 @@
           "job": "mining",
           "text": "Cave resource gathering"
         }
-      ]
+      ],
+      "size": 5.92
     }
   },
   "stats": {

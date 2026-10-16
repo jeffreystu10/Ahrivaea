@@ -49,7 +49,8 @@
           "job": "crafting",
           "text": "Stonecutting"
         }
-      ]
+      ],
+      "size": 5.6
     }
   },
   "stats": {

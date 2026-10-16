@@ -55,7 +55,8 @@
           "job": "mining",
           "text": "Clay and gravel gathering"
         }
-      ]
+      ],
+      "size": 2.77
     },
     "nature": {
       "stats": {

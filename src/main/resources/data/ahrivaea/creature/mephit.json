@@ -221,7 +221,8 @@
           "job": "smelting",
           "text": "Glass and brick production"
         }
-      ]
+      ],
+      "size": 1.38
     },
     "water": {
       "stats": {

@@ -55,7 +55,8 @@
           "job": "crafting",
           "text": "Cobblestone processing"
         }
-      ]
+      ],
+      "size": 1.26
     }
   },
   "stats": {

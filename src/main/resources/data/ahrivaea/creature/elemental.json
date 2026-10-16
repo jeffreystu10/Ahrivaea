@@ -226,7 +226,8 @@
           "job": "crafting",
           "text": "Stonecutting and block processing"
         }
-      ]
+      ],
+      "size": 5.27
     },
     "water": {
       "stats": {

@@ -286,7 +286,8 @@
           "job": "smelting",
           "text": "Furnace operation"
         }
-      ]
+      ],
+      "size": 11.75
     },
     "water": {
       "name": "Coral Dragon",

@@ -51,7 +51,8 @@
           "job": "fishing",
           "text": "Aquatic block collection"
         }
-      ]
+      ],
+      "size": 2.01
     }
   },
   "stats": {

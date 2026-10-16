@@ -215,7 +215,8 @@
           "job": "smelting",
           "text": "Furnace operation"
         }
-      ]
+      ],
+      "size": 2.44
     },
     "water": {
       "stats": {

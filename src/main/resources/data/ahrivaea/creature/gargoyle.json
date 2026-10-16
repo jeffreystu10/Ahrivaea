@@ -50,7 +50,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 1.53
     }
   },
   "stats": {

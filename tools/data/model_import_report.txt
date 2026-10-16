@@ -1,26 +1,39 @@
-159 models in use
+179 models in use
   aboleth/earth: from "aboleth" (M), size 2.02, 4 textures, animations idle
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
   artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
   assassin_vine/nature: from "assassinvine" (M), size 2.46, 4 textures, animations idle
   axe_beak/fire: from "axebeak" (S), size 1.19, 4 textures, animations idle
   bake_kujira/earth: from "bakekujira" (M), size 2.01, 4 textures, animations idle
+  bandit/none: from "bandit" (M), size 2.37, 4 textures, animations idle
+  bear/none: from "bear" (M), size 2.31, 4 textures, animations idle
   behemoth/earth: from "behemoth" (L), size 4.94, 4 textures, animations idle
+  birdfolk/none: from "birdfolk" (M), size 2.54, 4 textures, animations idle
   black_pudding/earth: from "blackpudding" (M), size 2.0, 4 textures, animations idle
   boggart/earth: from "boggart" (S), size 1.26, 4 textures, animations idle
   brownie/fae: from "brownie" (S), size 1.57, 4 textures, animations idle
+  bugbear/none: from "bugbear" (M), size 2.51, 4 textures, animations idle
   cambion/frost: from "cambion" (M), size 3.15, 4 textures, animations idle, fly
+  camel/none: from "camel" (M), size 2.14, 4 textures, animations idle
+  cat/none: from "cat" (S), size 1.19, 4 textures, animations idle
+  catfolk/none: from "catfolk" (M), size 2.55, 4 textures, animations idle
   centaur/nature: from "centaur" (M), size 3.63, 4 textures, animations idle
   cerberus/darkness: from "cerberus" (XL), size 10.7, 4 textures, animations idle
+  chicken/none: from "chicken" (S), size 1.19, 4 textures, animations idle, fly
+  chimaera/none: from "chimera" (L), size 4.72, 4 textures, animations idle
   clockwork_beetle/arcane: from "clockworkbeetle" (S), size 1.14, 4 textures, animations idle
   clockwork_dragon/arcane: from "clockworkdragon" (XL), size 11.73, 4 textures, animations idle, fly
   clockwork_raven/arcane: from "clockworkraven" (S), size 1.43, 4 textures, animations idle, fly
   clockwork_soldier/arcane: from "clockworksoldier" (M), size 2.6, 4 textures, animations idle
   cockatrice/fire: from "cockatrice" (S), size 1.19, 4 textures, animations idle, fly
   couatl/fae: from "couatl" (L), size 4.77, 4 textures, animations idle, fly
+  cow/none: from "cow" (M), size 2.38, 4 textures, animations idle
+  crab/none: from "crab" (S), size 1.17, 4 textures, animations idle
+  cultist/none: from "cultist" (M), size 2.4, 4 textures, animations idle
   cyclops/earth: from "cyclops" (L), size 5.6, 4 textures, animations idle
   death_knight/darkness: from "deathknight" (M), size 3.72, 4 textures, animations idle
   death_knight/fire: from "deathknight" (M), size 3.55, 4 textures, animations idle
+  deer/none: from "deer" (M), size 2.38, 4 textures, animations idle
   djinni/arcane: from "djinn" (L), size 5.25, 4 textures, animations idle
   dog/none: from "dog" (S), size 1.19, 4 textures, animations idle
   dolphin/none: from "dolphin" (M), size 2.0, 4 textures, animations idle
@@ -106,7 +119,10 @@
   mephit/fire: from "mephit" (S), size 1.19, 4 textures, animations idle, fly
   mephit/frost: from "mephit" (S), size 1.82, 4 textures, animations idle, fly
   mephit/nature: from "mephit" (S), size 1.37, 4 textures, animations idle, fly
+  mimic/none: from "mimic" (S), size 1.19, 4 textures, animations idle
+  minotaur/none: from "minotaur" (M), size 2.64, 4 textures, animations idle
   moose/frost: from "moose" (L), size 5.25, 4 textures, animations idle
+  moose/none: from "moose" (L), size 5.25, 4 textures, animations idle
   mushussu/fae: from "mushussu" (M), size 2.16, 4 textures, animations idle
   myconid/fae: from "myconid" (S), size 1.43, 4 textures, animations idle
   myconid/nature: from "myconid" (S), size 1.21, 4 textures, animations idle
@@ -114,9 +130,13 @@
   nidhogg/darkness: from "nidhogg" (L), size 4.94, 4 textures, animations idle, fly
   night_hag/darkness: from "nighthag" (M), size 2.72, 4 textures, animations idle
   nue/frost: from "nue" (M), size 2.3, 4 textures, animations idle
+  ogre/none: from "ogre" (M), size 2.4, 4 textures, animations idle
   omukade/fire: from "omukade" (M), size 2.02, 4 textures, animations idle
   oni/fire: from "oni" (L), size 5.25, 4 textures, animations idle
+  orc/none: from "orc" (M), size 2.59, 4 textures, animations idle
+  owlbear/none: from "owlbear" (L), size 5.25, 4 textures, animations idle
   pegasus/fae: from "pegasus" (M), size 3.3, 4 textures, animations idle, fly
+  penguin/none: from "penguin" (S), size 1.19, 4 textures, animations idle
   peryton/fire: from "peryton" (S), size 1.19, 4 textures, animations idle, fly
   phoenix/fire: from "phoenix" (L), size 5.36, 4 textures, animations idle, fly
   pixie/fae: from "pixie" (S), size 1.51, 4 textures, animations idle, fly

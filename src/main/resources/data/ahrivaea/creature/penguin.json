@@ -55,7 +55,8 @@
           "job": "fishing",
           "text": "Fishing"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

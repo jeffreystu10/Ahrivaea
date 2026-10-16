@@ -56,7 +56,8 @@
           "job": "transport",
           "text": "Item pickup and chest sorting"
         }
-      ]
+      ],
+      "size": 2.55
     }
   },
   "stats": {

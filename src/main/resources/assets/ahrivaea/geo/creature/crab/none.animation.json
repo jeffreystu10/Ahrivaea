@@ -1,0 +1,88 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "1*math.sin(query.life_time*1.35*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "leg": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_2": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_3": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_4": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_5": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_6": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_7": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_8": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "pincer": {
+     "rotation": [
+      "0",
+      "-(8*math.sin(query.life_time*1.35*180+-57.296))",
+      "0"
+     ]
+    },
+    "pincer_2": {
+     "rotation": [
+      "0",
+      "-(8*math.sin(query.life_time*1.35*180+57.296))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

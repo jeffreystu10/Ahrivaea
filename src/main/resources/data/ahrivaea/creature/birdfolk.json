@@ -53,7 +53,8 @@
           "job": "farming",
           "text": "Seed and crop collection"
         }
-      ]
+      ],
+      "size": 2.54
     }
   },
   "stats": {

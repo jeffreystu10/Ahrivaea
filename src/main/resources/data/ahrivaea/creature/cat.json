@@ -56,7 +56,8 @@
           "job": "defense",
           "text": "Pest and mob patrol"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

@@ -50,7 +50,8 @@
           "job": "ranching",
           "text": "Hostile-mob drop collection"
         }
-      ]
+      ],
+      "size": 4.72
     }
   },
   "stats": {

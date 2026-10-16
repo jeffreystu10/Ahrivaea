@@ -56,7 +56,8 @@
           "job": "fishing",
           "text": "Aquatic item collection"
         }
-      ]
+      ],
+      "size": 1.14
     },
     "water": {
       "stats": {

@@ -1,0 +1,53 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "shell": {
+     "rotation": [
+      "1*math.sin(query.life_time*1.35*108+0)",
+      "0",
+      "0"
+     ]
+    },
+    "flipper": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*144+0))"
+     ]
+    },
+    "flipper_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-10*math.sin(query.life_time*1.35*144+0))"
+     ]
+    },
+    "flipper_3": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*144+180))"
+     ]
+    },
+    "flipper_4": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-10*math.sin(query.life_time*1.35*144+180))"
+     ]
+    },
+    "neck": {
+     "rotation": [
+      "0",
+      "-(8*math.sin(query.life_time*1.35*108+0))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

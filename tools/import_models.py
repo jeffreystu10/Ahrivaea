@@ -49,6 +49,8 @@ ALIASES = {
     'gelcube': 'gelatinous_cube',
     'dinosaur': 't_rex',
     'chimera': 'chimaera',
+    'rhino': 'rhinocerous',
+    'tropicalfish': 'fish',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

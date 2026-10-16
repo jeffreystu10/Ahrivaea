@@ -56,7 +56,8 @@
           "job": "farming",
           "text": "Crop and carrot harvesting"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

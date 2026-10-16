@@ -1,4 +1,4 @@
-179 models in use
+195 models in use
   aboleth/earth: from "aboleth" (M), size 2.02, 4 textures, animations idle
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
   artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
@@ -65,6 +65,7 @@
   enchanted_lantern/arcane: from "hauntedlantern" (S), size 1.19, 4 textures, animations idle
   enchanted_rug/arcane: from "rugofsmothering" (S), size 1.37, 4 textures, animations idle
   fairy_queen/fae: from "fairyqueen" (M), size 2.81, 4 textures, animations idle, fly
+  fish/none: from "tropicalfish" (S), size 1.14, 4 textures, animations idle
   flying_sword/arcane: from "flyingsword" (M), size 2.38, 4 textures, animations idle
   fox/none: from "fox" (S), size 1.15, 4 textures, animations idle
   gargoyle/earth: from "gargoyle" (S), size 1.53, 4 textures, animations idle, fly
@@ -139,25 +140,37 @@
   penguin/none: from "penguin" (S), size 1.19, 4 textures, animations idle
   peryton/fire: from "peryton" (S), size 1.19, 4 textures, animations idle, fly
   phoenix/fire: from "phoenix" (L), size 5.36, 4 textures, animations idle, fly
+  pig/none: from "pig" (S), size 1.19, 4 textures, animations idle
   pixie/fae: from "pixie" (S), size 1.51, 4 textures, animations idle, fly
+  rabbit/none: from "rabbit" (S), size 1.19, 4 textures, animations idle
   ranger/darkness: from "ranger" (M), size 2.41, 4 textures, animations idle
   ranger/earth: from "ranger" (M), size 2.43, 4 textures, animations idle
   ranger/fire: from "ranger" (M), size 2.37, 4 textures, animations idle
   ranger/frost: from "ranger" (M), size 3.14, 4 textures, animations idle
   ranger/nature: from "ranger" (M), size 2.41, 4 textures, animations idle
+  ranger/none: from "ranger" (M), size 2.37, 4 textures, animations idle
+  ratfolk/none: from "ratfolk" (M), size 2.63, 4 textures, animations idle
   revenant/frost: from "revenant" (M), size 3.25, 4 textures, animations idle
+  rhinocerous/none: from "rhino" (M), size 2.13, 4 textures, animations idle
   saber_toothed_cat/frost: from "sabertooth" (M), size 2.4, 4 textures, animations idle
   salamander/fire: from "salamander" (L), size 4.81, 4 textures, animations idle
+  sasquatch/none: from "sasquatch" (L), size 5.3, 4 textures, animations idle
   satyr/fae: from "satyr" (M), size 2.85, 4 textures, animations idle
+  sea_turtle/none: from "seaturtle" (S), size 1.16, 4 textures, animations idle
+  seal/none: from "seal" (M), size 2.11, 4 textures, animations idle
   shambling_mound/nature: from "shamblingmound" (L), size 5.25, 4 textures, animations idle
+  sheep/none: from "sheep" (M), size 2.37, 4 textures, animations idle
   shield_guardian/arcane: from "shieldguardian" (L), size 5.29, 4 textures, animations idle
   skeleton/darkness: from "skeleton" (M), size 2.5, 4 textures, animations idle
   sphinx/earth: from "sphinx" (L), size 5.05, 4 textures, animations idle
   spriggan/frost: from "spriggan" (M), size 3.15, 4 textures, animations idle
+  squid/none: from "squid" (M), size 2.37, 4 textures, animations idle
   t_rex/none: from "dinosaur" (XL), size 10.0, 4 textures, animations idle
   terrasque/earth: from "tarasque" (XL), size 11.85, 4 textures, animations idle
+  tortoise/none: from "tortoise" (S), size 1.19, 4 textures, animations idle
   treant/fae: from "treant" (L), size 5.81, 4 textures, animations idle
   treant/nature: from "treant" (L), size 5.25, 4 textures, animations idle
+  treasure_goblin/none: from "treasuregoblin" (S), size 1.22, 4 textures, animations idle
   troll/earth: from "troll" (M), size 2.77, 4 textures, animations idle
   troll/nature: from "troll" (L), size 6.07, 4 textures, animations idle
   unicorn/fae: from "unicorn" (M), size 3.25, 4 textures, animations idle
@@ -167,10 +180,13 @@
   warrior/fire: from "warrior" (M), size 2.37, 4 textures, animations idle
   warrior/frost: from "warrior" (M), size 3.17, 4 textures, animations idle
   warrior/nature: from "warrior" (M), size 2.49, 4 textures, animations idle
+  warrior/none: from "warrior" (M), size 2.49, 4 textures, animations idle
   wendigo/nature: from "wendigo" (L), size 6.67, 4 textures, animations idle
+  werewolf/none: from "werewolf" (M), size 2.63, 4 textures, animations idle
   wight/darkness: from "wight" (M), size 2.57, 4 textures, animations idle
   wild_hunt_rider/nature: from "wildhunt" (M), size 3.57, 4 textures, animations idle
   will_o_the_wisp/fae: from "wisp" (S), size 1.47, 4 textures, animations idle
+  wolf/none: from "wolf" (M), size 2.19, 4 textures, animations idle
   wyrm/earth: from "wyrm" (XL), size 11.51, 4 textures, animations idle
   wyvern/frost: from "wyvern" (L), size 4.85, 4 textures, animations idle, fly
   yeti/frost: from "yeti" (L), size 7.17, 4 textures, animations idle

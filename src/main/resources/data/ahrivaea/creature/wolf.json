@@ -53,7 +53,8 @@
           "job": "defense",
           "text": "Hunting hostile mobs"
         }
-      ]
+      ],
+      "size": 2.19
     }
   },
   "stats": {

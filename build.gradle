@@ -135,3 +135,35 @@ modList.mods.each { m ->
 	}
 	tasks.named('build') { dependsOn jarTask }
 }
+
+// ---- the in-game guide's data (Ahrivaea Guide mod): each mod's text from mods.json, and the items and
+// recipes in its jar, worked out from its 'include' patterns ----
+def guideDir = layout.buildDirectory.dir('generated/guide')
+def guideData = tasks.register('guideData') {
+	inputs.file('mods.json')
+	inputs.dir('src/main/resources/data')
+	inputs.dir('src/main/resources/assets')
+	outputs.dir(guideDir)
+	doLast {
+		def res = file('src/main/resources')
+		def all = new JsonSlurper().parse(file('mods.json')).mods
+		def out = all.collect { m ->
+			def files = project.fileTree(res) { include m.include }.files
+					.collect { res.toPath().relativize(it.toPath()).toString().replace('\\', '/') }.sort()
+			def recipes = files.findAll { it ==~ /data\/[^\/]+\/recipe\/.+\.json/ }.collect { p ->
+				def ns = p.split('/')[1]
+				[id: ns + ':' + p.substring("data/${ns}/recipe/".length(), p.length() - 5), recipe: new JsonSlurper().parse(new File(res, p))]
+			}
+			def items = files.findAll { it ==~ /assets\/[^\/]+\/items\/[^\/]+\.json/ }.collect { p ->
+				def parts = p.split('/')
+				parts[1] + ':' + parts[3].replace('.json', '')
+			}
+			[key: m.key, id: m.id, name: m.name, summary: m.summary, guide: m.guide ?: [], features: m.features ?: [],
+			 commands: m.commands ?: '', added: m.added ?: '', install: m.players_install ?: '', items: items, recipes: recipes]
+		}
+		def f = new File(guideDir.get().asFile, 'assets/ahrivaea_guide/guide.json')
+		f.parentFile.mkdirs()
+		f.text = JsonOutput.toJson([mods: out])
+	}
+}
+sourceSets.client.resources.srcDir(guideData)

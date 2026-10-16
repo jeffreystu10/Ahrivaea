@@ -20,7 +20,8 @@
 		],
 		"client": [
 			"dev.ahrivaea.client.AhrivaeaClient",
-			"dev.ahrivaea.horses.client.HorsesClient"
+			"dev.ahrivaea.horses.client.HorsesClient",
+			"dev.ahrivaea.guide.GuideClient"
 		]
 	},
 	"mixins": [

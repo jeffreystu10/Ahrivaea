@@ -80,6 +80,16 @@
         "assets/ahrivaea/items/creature_dynamo.json",
         "data/ahrivaea/recipe/creature_dynamo.json",
         "ahrivaea.client.mixins.json"
+      ],
+      "guide": [
+        "Creatures live everywhere instead of the usual Minecraft mobs. They never attack you first.",
+        "Start a battle by hitting a wild creature with any sword. You're taken to an arena built for that biome, then brought back to where you were afterwards.",
+        "In battle, click one of your units, click a square to move, then attack, use an item, rally or wait. Press End turn when you're done. Flee leaves the battle at any time.",
+        "Winning gives XP and the creatures' drops, and you can recruit one of the creatures you beat. A Vessel used on a weakened wild creature can catch it too.",
+        "/party shows your party (up to 6). Extra creatures go to your box: /party box. /character shows your own level; spend points with /character spend.",
+        "Bases: craft a Base Core and place it. Right-click it to put party or box creatures to work. Each works by its job: farming, logging, mining (place a Mining Post), smelting, brewing, enchanting, fishing, ranching and more. Put chests near the core for what they make.",
+        "Upgrade a base by right-clicking its core while holding 4 iron blocks, then 4 gold blocks, 2 diamond blocks and 4 emerald blocks. Each level reaches farther and takes more workers.",
+        "At night your base may be raided. Creatures with the Defense job fight back, and you can help with a sword. Raiders who reach the core steal from nearby chests."
       ]
     },
     {
@@ -111,6 +121,12 @@
         "data/ahrivaea/challenge_order.json",
         "data/ahrivaea/tower_palette/**",
         "data/ahrivaea/structure/tower/**"
+      ],
+      "guide": [
+        "A ruined tower stands over every stronghold. Follow an Eye of Ender to find one.",
+        "Each tower asks for its own item. Put it in the tower's offering chest; everyone on the server works together.",
+        "The tower rebuilds in four stages as items come in. When it's finished, the top donors get rewards.",
+        "/challenge shows the nearest tower's leaderboard and what it needs. /challenge list shows every tower found so far."
       ]
     },
     {
@@ -145,6 +161,12 @@
         "assets/ahrivaea/items/stellar_*.json",
         "data/ahrivaea/recipe/stellar_*.json",
         "data/minecraft/tags/item/swords.json"
+      ],
+      "guide": [
+        "At a smithing table, put a nether star in the template slot and a netherite tool or armor piece next to it to make its Stellar version. Enchantments are kept.",
+        "Stellar pickaxe and shovel dig 3x3. The axe fells a whole tree. The hoe tills and harvests 3x3. The sword heals you for some of the damage it deals.",
+        "Wear the full Stellar armor set to fly.",
+        "Sneak to use a Stellar tool on one block at a time."
       ]
     },
     {
@@ -188,6 +210,12 @@
         "assets/ahrivaea/textures/item/*_feed.png",
         "data/ahrivaea/recipe/*_feed.json",
         "ahrivaea_horses.client.mixins.json"
+      ],
+      "guide": [
+        "Every horse, donkey and mule is faster than usual. Skeleton horses are always at top speed.",
+        "Look at a horse to see its speed, tier and jump height. While riding, its stats stay in the corner of the screen.",
+        "Feed a tamed horse 8 Swift Feed for tier 1, then 8 Golden Feed for tier 2, then 4 Racing Feed for tier 3.",
+        "Tiers 4 and 5 come from breeding: a foal gets the better parent's tier, and two parents on the same tier may have a foal one tier higher."
       ]
     },
     {
@@ -216,6 +244,11 @@
       "include": [
         "dev/ahrivaea/minecarts/**",
         "ahrivaea_minecarts.mixins.json"
+      ],
+      "guide": [
+        "Minecarts reach 30 blocks a second, almost 4 times as fast as usual.",
+        "They stay on the rails through corners, slopes and loops at full speed.",
+        "Use more powered rails than usual: carts take longer to get up to speed."
       ]
     },
     {
@@ -239,6 +272,45 @@
       "mixins": [],
       "include": [
         "data/ahrivaea/recipe/woodcutting/**"
+      ],
+      "guide": [
+        "Put any log or wood block in a stonecutter to make planks, stairs, slabs, fences, doors, signs and more, with no sticks needed.",
+        "The stonecutter also strips logs and turns logs into wood.",
+        "Planks work too, one at a time, like stone."
+      ]
+    },
+    {
+      "key": "guide",
+      "id": "ahrivaea_guide",
+      "name": "Ahrivaea Guide",
+      "summary": "An in-game guide to every Ahrivaea mod: what each one does, how to get started, its commands, and all of its recipes, searchable and filtered by mod.",
+      "features": [
+        "Press G (or type /guide) to open it; the key can be changed in Controls",
+        "A tab for every mod with what it adds, how to get started and its commands, and \"NEW\" on mods you haven't looked at yet; when you join a world, chat says which mods are new",
+        "Every recipe from the mods (crafting table, smithing table, stonecutter), filtered by mod or all together, with a search box; ingredients that can be any of a kind (any log) cycle through the options",
+        "Hover over an item to see its name and which mod adds it; click it to see every recipe that makes or uses it",
+        "Each mod's new items, including ones you don't craft (creature drops)",
+        "Built from mods.json and the recipe files every time the mods are built, so it's always up to date"
+      ],
+      "commands": "/guide, /guide <mod>",
+      "players_install": "Yes (it's a screen; client only)",
+      "status": "Done",
+      "added": "2026-10-16",
+      "docs": "docs/guide.md",
+      "entrypoints": {
+        "client": [
+          "dev.ahrivaea.guide.GuideClient"
+        ]
+      },
+      "mixins": [],
+      "include": [
+        "dev/ahrivaea/guide/**",
+        "assets/ahrivaea_guide/**"
+      ],
+      "guide": [
+        "Press G any time to open this guide. Pick a mod on the left; About explains it and Recipes shows how to make its items.",
+        "Click any item to see what makes it and what it's used in. Type in the search box to find a recipe by name.",
+        "Mods marked NEW were added since you last looked."
       ]
     }
   ],

@@ -170,6 +170,7 @@ public final class Bases {
 			if (!level.isLoaded(core)) return;
 			BaseCoreBlockEntity be = coreAt(level, core);
 			if (be == null || !be.isWorker(c.getUUID())) c.discard();
+			else c.capSize(CreatureEntity.BASE_HITBOX); // workers saved before the cap existed
 		});
 	}
 
@@ -301,6 +302,7 @@ public final class Bases {
 		}
 		e.setPersistenceRequired();
 		e.setAttached(WORKER_OF, be.getBlockPos());
+		e.capSize(CreatureEntity.BASE_HITBOX);
 		return e;
 	}
 

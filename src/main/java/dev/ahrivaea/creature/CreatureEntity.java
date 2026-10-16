@@ -146,6 +146,11 @@ public class CreatureEntity extends TamableAnimal {
 	 * around a base. Their model is still drawn at full size.
 	 */
 	public static final float MAX_HITBOX = 4f;
+	/**
+	 * Base workers and raiders move around inside bases, through doors and between farms, so their hitbox is kept
+	 * under a block wide (like a standard creature) whatever their size. Their model is still drawn at full size.
+	 */
+	public static final float BASE_HITBOX = 1.25f;
 	/** In a battle every creature fits its square. */
 	public static final float BATTLE_HITBOX = 1.4f;
 

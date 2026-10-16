@@ -94,7 +94,8 @@ Smothering → Enchanted Rug, Spellbook → Living Spellbook, Tarasque → Terra
 These models are made at their real size (one Blockbench pixel = 1/16 block): a Haunted Lantern is about a block
 tall, a Gilded Sentinel 8 blocks and a Clockwork Dragon 16 blocks long. The tool sets the form's `size` from the
 model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 blocks) so big creatures can still
-get around; the model is always drawn full size. In a battle every creature is shrunk to fit its square.
+get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
+so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
 Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20) and Nature (20)
 creature, 56 of the 58 None creatures (all but Orca and Whale), and the other 3 dragons (the None, Darkness, Earth, Fae, Fire, Frost and Nature

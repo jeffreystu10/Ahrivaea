@@ -152,6 +152,7 @@ public final class Raids {
 			CreatureEntity e = Ahrivaea.spawn(level, pick.get().species(), pick.get().influence(), lvl, -1, at.x, at.y, at.z);
 			if (e == null) continue;
 			e.setAttached(RAIDER_OF, core);
+			e.capSize(CreatureEntity.BASE_HITBOX);
 			e.setGlowingTag(true);
 			raiders.add(e.getUUID());
 		}

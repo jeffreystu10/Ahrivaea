@@ -152,7 +152,8 @@ public final class WorkerBrain {
 			finish(be, 10);
 			return;
 		}
-		double reach = task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH || task.kind() == Kind.ICE ? 3 : 2.3;
+		// measured from the worker's middle, so a wider worker reaches a little farther
+		double reach = (task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH || task.kind() == Kind.ICE ? 3 : 2.3) + self.getBbWidth() / 2 - 0.35;
 		double d = self.position().distanceTo(where);
 		if (d > reach) {
 			status = "On the way: " + task.doing();

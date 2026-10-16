@@ -138,3 +138,4 @@
   zombie/darkness: from "zombie" (M), size 2.45, 4 textures, animations idle
   zombie/frost: from "zombie" (M), size 3.17, 4 textures, animations idle
   zombie/nature: from "zombie" (M), size 2.44, 4 textures, animations idle
+irongolem (arcane): no such creature in the roster; kept in art/models/arcane/, not used

@@ -102,7 +102,8 @@ def convert(bb):
             o, r = n['origin'], n.get('rotation', [0, 0, 0])
             bone = {'name': n['name'], 'pivot': [-o[0], o[1], o[2]]}
             if parent: bone['parent'] = parent
-            if any(r): bone['rotation'] = [-r[0], -r[1], r[2]]
+            # Bedrock geometry is Blockbench's space mirrored in x, which flips the y and z rotations
+            if any(r): bone['rotation'] = [r[0], -r[1], -r[2]]
             mine = [elements[c] for c in n['children'] if isinstance(c, str) and c in elements]
             if mine: bone['cubes'] = [cube(e) for e in mine]
             bones.append(bone)
@@ -194,7 +195,9 @@ def main(paths):
         for (creature, influence, baby), variants in sorted(groups.items()):
             base_file, base = variants.get('', next(iter(variants.values())))
             os.makedirs(os.path.join(ART, influence), exist_ok=True)
-            for f, _ in variants.values(): shutil.copy(f, os.path.join(ART, influence, os.path.basename(f)))
+            for f, _ in variants.values():
+                dest = os.path.join(ART, influence, os.path.basename(f))
+                if os.path.abspath(f) != os.path.abspath(dest): shutil.copy(f, dest)
             if baby:
                 report.append(f'{creature} ({influence}): baby model kept in art/, not used yet')
                 continue

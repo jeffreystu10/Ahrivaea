@@ -36,6 +36,8 @@ jobs:
         run: |
           set -o pipefail
           sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-vulkan-drivers > /dev/null
+          # if the game hangs, save what every thread was doing just before the time runs out
+          ( sleep 1740; for p in $(jps -l | grep -viE "gradle|jps" | cut -d' ' -f1); do jstack "$p"; done > client-threads.txt 2>&1 ) &
           timeout 1800 xvfb-run -a -s "-screen 0 1920x1080x24" ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
             msg=$( (grep -E "AssertionError|Exception|Caused by|at dev\.ahrivaea|\(ahrivaea\)|FAILURE|What went wrong|error:|Test failed|FAILED" -A1 client.log | grep -vE "flite|GLX|Realms|Narrator|resource path|Anisotropic|SignedJWT|BackendCreation|renderpearl|text2speech" | cut -c1-400 | head -40; echo "--- last lines ---"; grep -v "^\s*at " client.log | grep -vE "flite|resource path" | cut -c1-300 | tail -25) | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
             echo "::error title=Client test::${msg}"
@@ -50,6 +52,7 @@ jobs:
           # the mods' own log lines and any errors, to read without downloading the job log
           [ -f client.log ] && grep -E "\(ahrivaea|AssertionError|Exception|Caused by|at dev\.ahrivaea" client.log | cut -c1-3000 > /tmp/shots/client-ahrivaea.log || true
           [ -f server-all.log ] && grep -E "\(ahrivaea|AHRIVAEA|Exception|Caused by|at dev\.ahrivaea|ERROR" server-all.log | cut -c1-3000 > /tmp/shots/server-ahrivaea.log || true
+          [ -s client-threads.txt ] && cp client-threads.txt /tmp/shots/ || true
           [ -z "$(ls /tmp/shots)" ] && exit 0
           cd /tmp/shots && git init -q && git checkout -q -b ci-screenshots
           echo "${GITHUB_SHA}" > COMMIT

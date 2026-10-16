@@ -43,9 +43,9 @@ public class GuideClient implements ClientModInitializer {
 		OPEN = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.ahrivaea_guide.open", InputConstants.Type.KEYBOARD, SDLScancode.SDL_SCANCODE_G, category));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			while (OPEN.consumeClick()) if (client.screen == null) open(null);
+			while (OPEN.consumeClick()) if (client.gui.screen() == null) open(null);
 			// a command's chat screen closes after it runs, so the guide opens on the next tick
-			if (pendingOpen != null && client.screen == null) {
+			if (pendingOpen != null && client.gui.screen() == null) {
 				String mod = pendingOpen;
 				pendingOpen = null;
 				open(mod.isEmpty() ? null : mod);
@@ -67,7 +67,7 @@ public class GuideClient implements ClientModInitializer {
 
 	/** Opens the guide, on a mod's page if one is named (by key, id or name). */
 	public static void open(String mod) {
-		Minecraft.getInstance().setScreen(new GuideScreen(GuideData.load(), mod));
+		Minecraft.getInstance().gui.setScreen(new GuideScreen(GuideData.load(), mod));
 	}
 
 	/** After joining a world: say which mods are new since the guide was last read. */

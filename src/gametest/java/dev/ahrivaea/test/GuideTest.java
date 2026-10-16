@@ -43,21 +43,21 @@ public class GuideTest implements FabricClientGameTest {
 			if (!summary.contains("woodcutting=256/")) failures.add("woodcutting should have 256 recipes: " + summary);
 			if (!summary.contains("stellar=9/")) failures.add("stellar should have 9 smithing recipes: " + summary);
 
-			context.runOnClient(c -> c.setScreen(new GuideScreen(GuideData.load(), null)));
+			context.runOnClient(c -> c.gui.setScreen(new GuideScreen(GuideData.load(), null)));
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_1_all_mods").withSize(1600, 900));
 
-			context.runOnClient(c -> c.setScreen(new GuideScreen(GuideData.load(), "creatures")));
+			context.runOnClient(c -> c.gui.setScreen(new GuideScreen(GuideData.load(), "creatures")));
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_2_creatures_about").withSize(1600, 900));
 
-			context.runOnClient(c -> ((GuideScreen) c.screen).showRecipes());
+			context.runOnClient(c -> ((GuideScreen) c.gui.screen()).showRecipes());
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_3_creatures_recipes").withSize(1600, 900));
 
 			int doors = context.computeOnClient(c -> {
-				c.setScreen(new GuideScreen(GuideData.load(), "woodcutting"));
-				GuideScreen s = (GuideScreen) c.screen;
+				c.gui.setScreen(new GuideScreen(GuideData.load(), "woodcutting"));
+				GuideScreen s = (GuideScreen) c.gui.screen();
 				s.showRecipes();
 				s.search("door");
 				return s.shownCount();
@@ -68,8 +68,8 @@ public class GuideTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("guide_4_woodcutting_search").withSize(1600, 900));
 
 			int vessel = context.computeOnClient(c -> {
-				c.setScreen(new GuideScreen(GuideData.load(), null));
-				GuideScreen s = (GuideScreen) c.screen;
+				c.gui.setScreen(new GuideScreen(GuideData.load(), null));
+				GuideScreen s = (GuideScreen) c.gui.screen();
 				s.showRecipesFor(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("ahrivaea", "vessel")));
 				return s.shownCount();
 			});
@@ -78,11 +78,11 @@ public class GuideTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_5_vessel").withSize(1600, 900));
 
-			context.runOnClient(c -> c.setScreen(new GuideScreen(GuideData.load(), "stellar")));
-			context.runOnClient(c -> ((GuideScreen) c.screen).showRecipes());
+			context.runOnClient(c -> c.gui.setScreen(new GuideScreen(GuideData.load(), "stellar")));
+			context.runOnClient(c -> ((GuideScreen) c.gui.screen()).showRecipes());
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_6_stellar_recipes").withSize(1600, 900));
-			context.runOnClient(c -> c.setScreen(null));
+			context.runOnClient(c -> c.gui.setScreen(null));
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

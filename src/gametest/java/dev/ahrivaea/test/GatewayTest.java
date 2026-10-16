@@ -64,14 +64,19 @@ public class GatewayTest implements FabricClientGameTest {
 			boolean built = server.computeOnServer(s -> !s.overworld().getEntitiesOfClass(net.minecraft.world.entity.Marker.class,
 					new net.minecraft.world.phys.AABB(pos).inflate(8), m -> m.entityTags().contains("gateway.portal")).isEmpty());
 			if (!built) failures.add("gateway:build should make a portal");
+			context.runOnClient(c -> {
+				if (c.gui.hud.isHidden()) c.gui.hud.toggle(); // show chat
+			});
 			context.waitTicks(110);
+			server.runCommand("tp @p %.1f %d %.1f 180 5".formatted(pos.getX() + 0.5, pos.getY(), pos.getZ() + 11.5));
+			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("gateway_1_portal").withSize(1600, 900));
 			server.runCommand("tp @p %.1f %d %.1f 0 0".formatted(pos.getX() + 0.5, pos.getY(), pos.getZ() + 3.5));
 			context.waitTicks(10);
 			boolean prompted = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().entityTags().contains("gateway.prompted"));
 			LOG.info("GatewayTest: portal built {}, player offered the trip {}", built, prompted);
 			if (!prompted) failures.add("stepping into the portal should offer the trip");
-			server.runCommand("tp @p %.1f %d %.1f 180 10".formatted(pos.getX() + 0.5, pos.getY(), pos.getZ() + 6.5));
+			server.runCommand("tp @p %.1f %d %.1f 180 5".formatted(pos.getX() + 0.5, pos.getY(), pos.getZ() + 9.5));
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("gateway_2_offer").withSize(1600, 900));
 			// asking to go while standing outside the portal is refused (and doesn't start a transfer)

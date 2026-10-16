@@ -164,7 +164,8 @@
           "job": "ice",
           "text": "Snow and ice harvesting"
         }
-      ]
+      ],
+      "size": 3.17
     },
     "storm": {
       "stats": {

@@ -41,6 +41,7 @@ ALIASES = {
     'ifrit': 'efreeti',
     'nemeanlion': 'namean_lion',
     'balor': 'drathkuhl_balor',
+    'sabertooth': 'saber_toothed_cat',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

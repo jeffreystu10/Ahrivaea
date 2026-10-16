@@ -107,7 +107,8 @@
           "job": "logging",
           "text": "Sapling replanting"
         }
-      ]
+      ],
+      "size": 5.25
     }
   },
   "stats": {

@@ -55,7 +55,8 @@
           "job": "farming",
           "text": "Crop harvesting"
         }
-      ]
+      ],
+      "size": 3.17
     },
     "nature": {
       "stats": {

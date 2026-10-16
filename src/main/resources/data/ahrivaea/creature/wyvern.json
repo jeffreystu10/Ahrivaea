@@ -51,7 +51,8 @@
           "job": "transport",
           "text": "Courier between farm and storage"
         }
-      ]
+      ],
+      "size": 4.85
     }
   },
   "stats": {

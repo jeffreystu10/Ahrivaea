@@ -89,15 +89,15 @@ model, animations and textures above. The `_enraged`, `_mutated` and `_enraged_m
 colours, so they become extra textures (`<influence>_enraged.png` …) for later. The originals are kept in
 `art/models/<influence>/`, and `tools/data/model_import_report.txt` lists what was used. Names that differ from
 the roster (Dancing Axe → Enchanted Axe, Djinn → Djinni, Haunted Lantern → Enchanted Lantern, Rug of
-Smothering → Enchanted Rug, Spellbook → Living Spellbook, Tarasque → Terrasque, Changeling → Doppleganger, Giant Slug → Giant Snail, Wisp → Will-o-the-wisp, Ifrit → Efreeti, Nemean Lion → Namean Lion, Balor → Drathkuhl) are in the tool's `ALIASES`.
+Smothering → Enchanted Rug, Spellbook → Living Spellbook, Tarasque → Terrasque, Changeling → Doppleganger, Giant Slug → Giant Snail, Wisp → Will-o-the-wisp, Ifrit → Efreeti, Nemean Lion → Namean Lion, Balor → Drathkuhl, Sabertooth → Saber Toothed Cat) are in the tool's `ALIASES`.
 
 These models are made at their real size (one Blockbench pixel = 1/16 block): a Haunted Lantern is about a block
 tall, a Gilded Sentinel 8 blocks and a Clockwork Dragon 16 blocks long. The tool sets the form's `size` from the
 model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 blocks) so big creatures can still
 get around; the model is always drawn full size. In a battle every creature is shrunk to fit its square.
 
-Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20) and Fire (20) creature, and the other 7
-dragons (the Darkness, Earth, Fae and Fire Dragons now use the library's models; the older dragon set is drawn at `model_scale` 0.15, which real-size models ignore).
+Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20) and Frost (20) creature, and the
+other 6 dragons (the Darkness, Earth, Fae, Fire and Frost Dragons now use the library's models; the older dragon set is drawn at `model_scale` 0.15, which real-size models ignore).
 
 ## Where influences come from
 

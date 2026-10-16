@@ -179,7 +179,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 11.89
     },
     "storm": {
       "name": "Squall Dragon",

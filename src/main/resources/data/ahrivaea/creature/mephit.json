@@ -112,7 +112,8 @@
           "job": "mining",
           "text": "Cold-biome resource gathering"
         }
-      ]
+      ],
+      "size": 1.82
     },
     "storm": {
       "stats": {

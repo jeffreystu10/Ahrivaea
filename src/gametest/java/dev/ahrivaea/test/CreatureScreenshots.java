@@ -13,13 +13,19 @@ import net.minecraft.core.BlockPos;
  * ci-screenshots branch.
  */
 public class CreatureScreenshots implements FabricClientGameTest {
-	/** The Arcane creatures (models from the Mythic Mob Library), by size. */
-	private static final String[][] ARCANE = {
-			{"homunculus", "living_spellbook", "enchanted_lantern", "clockwork_beetle", "clockwork_raven", "enchanted_rug", "mage", "artificer"},
-			{"enchanted_axe", "enchanted_broom", "flying_sword", "animated_armor", "living_statue", "clockwork_soldier"},
-			{"djinni", "elemental", "shield_guardian"},
-			{"gilded_sentinel", "clockwork_dragon"}};
-	private static final int[] SPACING = {3, 3, 7, 20};
+	/**
+	 * Creatures with models from the Mythic Mob Library, in rows by size: each row is its influence, its size
+	 * (s = small and medium, l = large, x = huge) and the species.
+	 */
+	private static final String[][] GROUPS = {
+			{"arcane", "s", "homunculus", "living_spellbook", "enchanted_lantern", "clockwork_beetle", "clockwork_raven", "enchanted_rug", "mage", "artificer"},
+			{"arcane", "s", "enchanted_axe", "enchanted_broom", "flying_sword", "animated_armor", "living_statue", "clockwork_soldier"},
+			{"arcane", "l", "djinni", "elemental", "shield_guardian"},
+			{"arcane", "x", "gilded_sentinel", "clockwork_dragon"},
+			{"darkness", "s", "gremlin", "hraesvelgr", "mephit", "ghost", "lich", "mage", "night_hag"},
+			{"darkness", "s", "ranger", "skeleton", "vampire", "warrior", "wight", "yurei", "zombie"},
+			{"darkness", "l", "drider", "death_knight", "elemental", "nidhogg"},
+			{"darkness", "x", "cerberus", "dragon"}};
 
 	private static final String[] FORMS = {"fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "radiant", "none"};
 
@@ -62,21 +68,25 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			view(context, server, x + 0.5, y + 7, z + 38, 180, 25);
 			context.takeScreenshot(TestScreenshotOptions.of("dragons_back").withSize(1600, 900));
 
-			// the Arcane creatures: each group in a row along x, 60 blocks apart, facing the camera
+			// the creatures with library models: each group in a row along x, 60 blocks apart, facing the camera
 			server.runCommand("kill @e[type=ahrivaea:creature]");
-			float[][] cams = {{8, 3, 12}, {8, 3, 12}, {10, 6, 20}, {14, 14, 40}};
-			for (int g = 0; g < ARCANE.length; g++) {
-				int gx = x + 60 + g * 60, n = ARCANE[g].length;
+			java.util.Map<String, Integer> shots = new java.util.HashMap<>();
+			for (int g = 0; g < GROUPS.length; g++) {
+				String influence = GROUPS[g][0], size = GROUPS[g][1];
+				int gx = x + 60 + g * 60, n = GROUPS[g].length - 2;
+				int spacing = size.equals("x") ? 20 : size.equals("l") ? 7 : 3;
+				float[] cam = size.equals("x") ? new float[]{14, 14, 40} : size.equals("l") ? new float[]{10, 6, 20} : new float[]{8, 3, 12};
 				// from the south looking north; they face south, towards us (go there first so the chunks are loaded)
-				view(context, server, gx + 0.5, y + cams[g][1], z + 10 + cams[g][2], 180, cams[g][0]);
+				view(context, server, gx + 0.5, y + cam[1], z + 10 + cam[2], 180, cam[0]);
 				sp.getConnection().waitForChunksRender();
 				for (int i = 0; i < n; i++) {
-					int cx = gx + Math.round((i - (n - 1) / 2f) * SPACING[g]);
-					server.runCommand("execute positioned %d %d %d run ahrivaea spawn %s arcane 20".formatted(cx, y, z + 10, ARCANE[g][i]));
+					int cx = gx + Math.round((i - (n - 1) / 2f) * spacing);
+					server.runCommand("execute positioned %d %d %d run ahrivaea spawn %s %s 20".formatted(cx, y, z + 10, GROUPS[g][i + 2], influence));
 				}
 				server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b,Rotation:[0f,0f]}");
 				context.waitTicks(40);
-				context.takeScreenshot(TestScreenshotOptions.of("arcane_" + g).withSize(1600, 900));
+				int k = shots.merge(influence, 1, Integer::sum) - 1;
+				context.takeScreenshot(TestScreenshotOptions.of(influence + "_" + k).withSize(1600, 900));
 			}
 			// a close look at the medium ones, three-quarter front
 			view(context, server, x + 120 + 0.5 + 9, y + 2.5, z + 10 + 6, 125, 12);

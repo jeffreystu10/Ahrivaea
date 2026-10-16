@@ -553,7 +553,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 11.75
     },
     "radiant": {
       "name": "Hallowed Dragon",

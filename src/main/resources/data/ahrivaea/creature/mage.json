@@ -486,7 +486,8 @@
           "job": "ranching",
           "text": "Hostile-mob farm support"
         }
-      ]
+      ],
+      "size": 2.43
     },
     "radiant": {
       "stats": {

@@ -1,21 +1,40 @@
-19 models in use
+39 models in use
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
   artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
+  cerberus/darkness: from "cerberus" (XL), size 10.7, 4 textures, animations idle
   clockwork_beetle/arcane: from "clockworkbeetle" (S), size 1.14, 4 textures, animations idle
   clockwork_dragon/arcane: from "clockworkdragon" (XL), size 11.73, 4 textures, animations idle, fly
   clockwork_raven/arcane: from "clockworkraven" (S), size 1.43, 4 textures, animations idle, fly
   clockwork_soldier/arcane: from "clockworksoldier" (M), size 2.6, 4 textures, animations idle
+  death_knight/darkness: from "deathknight" (M), size 3.72, 4 textures, animations idle
   djinni/arcane: from "djinn" (L), size 5.25, 4 textures, animations idle
+  dragon/darkness: from "dragon" (XL), size 11.75, 4 textures, animations idle, fly
+  drider/darkness: from "drider" (M), size 2.87, 4 textures, animations idle
   elemental/arcane: from "elemental" (L), size 5.25, 4 textures, animations idle
+  elemental/darkness: from "elemental" (L), size 5.35, 4 textures, animations idle
   enchanted_axe/arcane: from "dancingaxe" (M), size 2.38, 4 textures, animations idle
   enchanted_broom/arcane: from "enchantedbroom" (M), size 2.37, 4 textures, animations idle
   enchanted_lantern/arcane: from "hauntedlantern" (S), size 1.19, 4 textures, animations idle
   enchanted_rug/arcane: from "rugofsmothering" (S), size 1.37, 4 textures, animations idle
   flying_sword/arcane: from "flyingsword" (M), size 2.38, 4 textures, animations idle
+  ghost/darkness: from "ghost" (M), size 2.37, 4 textures, animations idle
   gilded_sentinel/arcane: from "gildedsentinel" (XL), size 14.29, 4 textures, animations idle
+  gremlin/darkness: from "gremlin" (S), size 1.26, 4 textures, animations idle
   homunculus/arcane: from "homunculus" (S), size 1.22, 4 textures, animations idle, fly
+  hraesvelgr/darkness: from "hraesvelgr" (S), size 1.3, 4 textures, animations idle, fly
+  lich/darkness: from "lich" (M), size 2.39, 4 textures, animations idle
   living_spellbook/arcane: from "spellbook" (S), size 1.21, 4 textures, animations idle
   living_statue/arcane: from "livingstatue" (M), size 2.63, 4 textures, animations idle
   mage/arcane: from "mage" (M), size 2.44, 4 textures, animations idle
+  mage/darkness: from "mage" (M), size 2.43, 4 textures, animations idle
+  mephit/darkness: from "mephit" (S), size 1.42, 4 textures, animations idle, fly
+  nidhogg/darkness: from "nidhogg" (L), size 4.94, 4 textures, animations idle, fly
+  night_hag/darkness: from "nighthag" (M), size 2.72, 4 textures, animations idle
+  ranger/darkness: from "ranger" (M), size 2.41, 4 textures, animations idle
   shield_guardian/arcane: from "shieldguardian" (L), size 5.29, 4 textures, animations idle
-irongolem (arcane): no such creature in the roster; kept in art/models/arcane/, not used
+  skeleton/darkness: from "skeleton" (M), size 2.5, 4 textures, animations idle
+  vampire/darkness: from "vampire" (M), size 2.47, 4 textures, animations idle
+  warrior/darkness: from "warrior" (M), size 2.49, 4 textures, animations idle
+  wight/darkness: from "wight" (M), size 2.57, 4 textures, animations idle
+  yurei/darkness: from "yurei" (M), size 2.38, 4 textures, animations idle
+  zombie/darkness: from "zombie" (M), size 2.45, 4 textures, animations idle

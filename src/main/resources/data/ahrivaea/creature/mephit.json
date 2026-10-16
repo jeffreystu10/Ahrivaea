@@ -445,7 +445,8 @@
           "job": "brewing",
           "text": "Brewing potions"
         }
-      ]
+      ],
+      "size": 1.42
     },
     "radiant": {
       "stats": {

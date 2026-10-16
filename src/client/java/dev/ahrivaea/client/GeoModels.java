@@ -143,6 +143,11 @@ public final class GeoModels {
 		return maxY > 0 ? maxY / 16f : 1f;
 	}
 
+	/** A form's model_scale: the species' settings.json, except for real-size models, which are drawn as made. */
+	public static float scale(String species, String influence) {
+		return realSize(species, influence) ? 1f : scale(species);
+	}
+
 	public static float scale(String species) {
 		return scales.getOrDefault(species, 1f);
 	}

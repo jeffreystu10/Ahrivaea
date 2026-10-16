@@ -440,7 +440,8 @@
           "job": "defense",
           "text": "Night patrol"
         }
-      ]
+      ],
+      "size": 2.41
     },
     "radiant": {
       "stats": {

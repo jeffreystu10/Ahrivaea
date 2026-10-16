@@ -33,7 +33,7 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
 		state.geo = species.isEmpty() ? null : GeoModels.model(species, influence);
 		state.realSize = state.geo != null && GeoModels.realSize(species, influence);
-		state.modelScale = state.geo != null ? GeoModels.scale(species) : 1f;
+		state.modelScale = state.geo != null ? GeoModels.scale(species, influence) : 1f;
 		state.extent = state.realSize ? GeoModels.extent(species, influence) * state.modelScale
 				: (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
 		// off the ground: nothing solid just below (the client's onGround isn't reliable for mobs standing still)
@@ -81,8 +81,8 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		var box = super.getBoundingBoxForCulling(entity, partialTick);
 		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
 		if (species.isEmpty() || !GeoModels.realSize(species, influence)) return box;
-		float half = GeoModels.extent(species, influence) * GeoModels.scale(species) / 2f;
-		float h = GeoModels.height(species, influence) * GeoModels.scale(species);
+		float half = GeoModels.extent(species, influence) * GeoModels.scale(species, influence) / 2f;
+		float h = GeoModels.height(species, influence) * GeoModels.scale(species, influence);
 		return box.minmax(new net.minecraft.world.phys.AABB(entity.getX() - half, entity.getY(), entity.getZ() - half,
 				entity.getX() + half, entity.getY() + h, entity.getZ() + half));
 	}

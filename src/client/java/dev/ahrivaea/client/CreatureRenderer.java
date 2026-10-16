@@ -36,7 +36,9 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		state.modelScale = state.geo != null ? GeoModels.scale(species) : 1f;
 		state.extent = state.realSize ? GeoModels.extent(species, influence) * state.modelScale
 				: (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
-		state.flying = !entity.onGround() && !entity.isInWater() && !entity.isPassenger();
+		// off the ground: nothing solid just below (the client's onGround isn't reliable for mobs standing still)
+		state.flying = !entity.isInWater() && !entity.isPassenger()
+				&& entity.level().noCollision(entity, entity.getBoundingBox().move(0, -0.3, 0));
 		if (state.realSize && state.nameTagAttachment != null) {
 			// above the model, not the (smaller) hitbox
 			float h = GeoModels.height(species, influence) * state.modelScale * battleShrink(state.extent);

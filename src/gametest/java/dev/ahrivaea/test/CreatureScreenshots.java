@@ -67,19 +67,19 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			float[][] cams = {{8, 3, 12}, {8, 3, 12}, {10, 6, 20}, {14, 14, 40}};
 			for (int g = 0; g < ARCANE.length; g++) {
 				int gx = x + 60 + g * 60, n = ARCANE[g].length;
-				// from the south looking north, so they face us (go there first so the chunks are loaded)
+				// from the south looking north; they face south, towards us (go there first so the chunks are loaded)
 				view(context, server, gx + 0.5, y + cams[g][1], z + 10 + cams[g][2], 180, cams[g][0]);
 				sp.getConnection().waitForChunksRender();
 				for (int i = 0; i < n; i++) {
 					int cx = gx + Math.round((i - (n - 1) / 2f) * SPACING[g]);
 					server.runCommand("execute positioned %d %d %d run ahrivaea spawn %s arcane 20".formatted(cx, y, z + 10, ARCANE[g][i]));
 				}
-				server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b,Rotation:[180f,0f]}");
+				server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b,Rotation:[0f,0f]}");
 				context.waitTicks(40);
 				context.takeScreenshot(TestScreenshotOptions.of("arcane_" + g).withSize(1600, 900));
 			}
-			// a close look at the first few, from the side
-			view(context, server, x + 60 + 0.5 + 16, y + 1.5, z + 10 + 0.5, 90, 10);
+			// a close look at the medium ones, three-quarter front
+			view(context, server, x + 120 + 0.5 + 9, y + 2.5, z + 10 + 6, 125, 12);
 			context.waitTicks(20);
 			context.takeScreenshot(TestScreenshotOptions.of("arcane_side").withSize(1600, 900));
 		}

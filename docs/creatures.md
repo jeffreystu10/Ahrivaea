@@ -28,7 +28,7 @@ its id (`dragon.json` → `dragon`). Creatures can also be added from any data p
 | `name` | The species name. A form without its own name is called "<Influence> <name>", e.g. "Frost Dragon". |
 | `stats` | The seven stats at level 50, each 0–100, adding up to 500–600 (the log warns if not). |
 | `forms` | One entry per influence the species can have: none, fire, frost, storm, earth, water, nature, void, fae, darkness, radiant, arcane. Each can have its own `name` and `stats`. A creature whose spawn influence isn't listed becomes its None form. Optional; default is just None. |
-| `size` | Size multiplier for the creature's hitbox and model. Optional, default 1. |
+| `size` | Size multiplier for the creature's hitbox and model. Optional, default 1. A form can have its own `size` (set by the model import). |
 | `movement` | `walk`, `fly` or `swim` (for the battle grid). Optional, default walk. |
 | `spawn` | Optional, species-wide. Biome ids or `#tags`, level range (0–50) and how common it is compared with others in the same biome; the influence then comes from the influence rules. Without any spawn, the creature never appears in the wild. |
 
@@ -65,13 +65,35 @@ Their drops come from creatures instead (nether stars: a few Legendary creatures
 
 Models are Blockbench **Bedrock entity** models (`.geo.json`), one per form:
 
-- `assets/ahrivaea/geo/creature/<species>/<influence>.geo.json`
+- `assets/ahrivaea/geo/creature/<species>/<influence>.geo.json`, with box UVs or per-face UVs
+- `assets/ahrivaea/geo/creature/<species>/<influence>.animation.json` (optional): Bedrock animations. `idle`
+  plays all the time, `fly` while the creature is off the ground. Values can be Molang (numbers, `+ - * /`,
+  brackets, `query.life_time`, `math.sin`/`cos`/`abs`/`min`/`max`/`clamp`/`sqrt`).
 - `assets/ahrivaea/textures/entity/creature/<species>/<influence>.png`
 - optional `assets/ahrivaea/geo/creature/<species>/settings.json`: `{"model_scale": 0.15}` shrinks or grows the model
   (the dragons are modelled about 17 blocks long, so they're drawn at 0.15 × size 1.6).
 
-A missing form falls back to the None model and texture. Bones named `front_left_leg`, `head`, `neck`,
-`wing_left`, `tail`, `tail_2` … are animated automatically.
+A missing form falls back to the None model and texture; a creature with no model at all is the placeholder,
+tinted its influence's colour. Legs (`front_left_leg` …, or a biped's `leg_left`/`arm_right` …) swing as it
+walks and `head`/`neck` follow where it looks; models without animations also get gently moving `wing_left`,
+`tail`, `tail_2` ….
+
+### Importing models from Blockbench
+
+`python3 tools/import_models.py <zips, .bbmodel files or folders>` takes Blockbench projects (`.bbmodel`) from
+the Mythic Mob Library, reads which creature and influence each is from its `mythic_mob` block, and writes the
+model, animations and textures above. The `_enraged`, `_mutated` and `_enraged_mutated` versions only differ in
+colours, so they become extra textures (`<influence>_enraged.png` …) for later. The originals are kept in
+`art/models/<influence>/`, and `tools/data/model_import_report.txt` lists what was used. Names that differ from
+the roster (Dancing Axe → Enchanted Axe, Djinn → Djinni, Haunted Lantern → Enchanted Lantern, Rug of
+Smothering → Enchanted Rug, Spellbook → Living Spellbook) are in the tool's `ALIASES`.
+
+These models are made at their real size (one Blockbench pixel = 1/16 block): a Haunted Lantern is about a block
+tall, a Gilded Sentinel 8 blocks and a Clockwork Dragon 16 blocks long. The tool sets the form's `size` from the
+model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 blocks) so big creatures can still
+get around; the model is always drawn full size. In a battle every creature is shrunk to fit its square.
+
+Models so far: the 11 dragons, and all 19 Arcane creatures.
 
 ## Where influences come from
 

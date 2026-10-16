@@ -1,0 +1,354 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "mantle": {
+     "rotation": [
+      "3*math.sin(query.life_time*1.35*126+0)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+0)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_2": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+34.377)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_3": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+68.755)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_4": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+103.132)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_5": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+137.51)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_6": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_7": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+40.107)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_8": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+74.485)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_9": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+108.862)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_10": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+143.239)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_11": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+177.617)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_12": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+211.994)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_13": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+80.214)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_14": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_15": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+148.969)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_16": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+183.346)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_17": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+217.724)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_18": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+252.101)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_19": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+120.321)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_20": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+154.699)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_21": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+189.076)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_22": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+223.454)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_23": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+257.831)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_24": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+292.208)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_25": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+160.428)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_26": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+194.806)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_27": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_28": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+263.561)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_29": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+297.938)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_30": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+332.316)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_31": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+200.535)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_32": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+234.913)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_33": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+269.29)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_34": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+303.668)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_35": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+338.045)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_36": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+372.423)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_37": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+240.642)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_38": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+275.02)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_39": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+309.397)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_40": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+343.775)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_41": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+378.152)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_42": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+412.53)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_43": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+280.749)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_44": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+315.127)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_45": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+349.504)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_46": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+383.882)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_47": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+418.259)",
+      "0",
+      "0"
+     ]
+    },
+    "tentacle_48": {
+     "rotation": [
+      "10*math.sin(query.life_time*1.35*162+452.637)",
+      "0",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

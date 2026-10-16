@@ -43,7 +43,8 @@
           "job": "fishing",
           "text": "Fishing and aquatic gathering"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

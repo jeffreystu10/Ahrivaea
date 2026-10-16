@@ -45,6 +45,9 @@ ALIASES = {
     'adarna': 'ibong_adarna',
     'wildhunt': 'wild_hunt_rider',
     'ape': 'giant_ape',
+    'griffin': 'griffon',
+    'gelcube': 'gelatinous_cube',
+    'dinosaur': 't_rex',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

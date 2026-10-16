@@ -61,7 +61,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 11.84
     },
     "fire": {
       "name": "Ashen Dragon",

@@ -1,4 +1,4 @@
-139 models in use
+159 models in use
   aboleth/earth: from "aboleth" (M), size 2.02, 4 textures, animations idle
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
   artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
@@ -22,6 +22,8 @@
   death_knight/darkness: from "deathknight" (M), size 3.72, 4 textures, animations idle
   death_knight/fire: from "deathknight" (M), size 3.55, 4 textures, animations idle
   djinni/arcane: from "djinn" (L), size 5.25, 4 textures, animations idle
+  dog/none: from "dog" (S), size 1.19, 4 textures, animations idle
+  dolphin/none: from "dolphin" (M), size 2.0, 4 textures, animations idle
   doppleganger/fae: from "changeling" (M), size 2.71, 4 textures, animations idle
   dragon/darkness: from "dragon" (XL), size 11.75, 4 textures, animations idle, fly
   dragon/earth: from "dragon" (XL), size 11.75, 4 textures, animations idle
@@ -29,11 +31,13 @@
   dragon/fire: from "dragon" (XL), size 11.68, 4 textures, animations idle, fly
   dragon/frost: from "dragon" (XL), size 11.89, 4 textures, animations idle, fly
   dragon/nature: from "dragon" (XL), size 11.84, 4 textures, animations idle, fly
+  dragon/none: from "dragon" (XL), size 11.84, 4 textures, animations idle, fly
   drathkuhl_balor/fire: from "balor" (XXL), size 20.0, 4 textures, animations idle, fly
   draugr/frost: from "draugr" (M), size 3.16, 4 textures, animations idle
   drider/darkness: from "drider" (M), size 2.87, 4 textures, animations idle
   dryad/fae: from "dryad" (M), size 2.8, 4 textures, animations idle
   dryad/nature: from "dryad" (M), size 2.41, 4 textures, animations idle
+  duck/none: from "duck" (S), size 1.19, 4 textures, animations idle, fly
   efreeti/fire: from "ifrit" (M), size 2.38, 4 textures, animations idle
   elemental/arcane: from "elemental" (L), size 5.25, 4 textures, animations idle
   elemental/darkness: from "elemental" (L), size 5.35, 4 textures, animations idle
@@ -42,30 +46,41 @@
   elemental/fire: from "elemental" (L), size 5.25, 4 textures, animations idle
   elemental/frost: from "elemental" (L), size 5.29, 4 textures, animations idle
   elemental/nature: from "elemental" (L), size 5.25, 4 textures, animations idle
+  elephant/none: from "elephant" (L), size 5.25, 4 textures, animations idle
   enchanted_axe/arcane: from "dancingaxe" (M), size 2.38, 4 textures, animations idle
   enchanted_broom/arcane: from "enchantedbroom" (M), size 2.37, 4 textures, animations idle
   enchanted_lantern/arcane: from "hauntedlantern" (S), size 1.19, 4 textures, animations idle
   enchanted_rug/arcane: from "rugofsmothering" (S), size 1.37, 4 textures, animations idle
   fairy_queen/fae: from "fairyqueen" (M), size 2.81, 4 textures, animations idle, fly
   flying_sword/arcane: from "flyingsword" (M), size 2.38, 4 textures, animations idle
+  fox/none: from "fox" (S), size 1.15, 4 textures, animations idle
   gargoyle/earth: from "gargoyle" (S), size 1.53, 4 textures, animations idle, fly
+  gelatinous_cube/none: from "gelcube" (L), size 5.25, 4 textures, animations idle
   ghost/darkness: from "ghost" (M), size 2.37, 4 textures, animations idle
   giant/frost: from "giant" (L), size 6.81, 4 textures, animations idle
   giant_ape/nature: from "ape" (L), size 5.57, 4 textures, animations idle
   giant_boar/frost: from "giantboar" (M), size 2.46, 4 textures, animations idle
+  giant_rat/none: from "giantrat" (S), size 1.15, 4 textures, animations idle
   giant_scorpion/earth: from "giantscorpion" (M), size 3.22, 4 textures, animations idle
   giant_snail/fae: from "giantslug" (M), size 2.0, 4 textures, animations idle
   giant_snake/earth: from "giantsnake" (M), size 5.92, 4 textures, animations idle
   gilded_sentinel/arcane: from "gildedsentinel" (XL), size 14.29, 4 textures, animations idle
+  gnoll/none: from "gnoll" (M), size 2.62, 4 textures, animations idle
   gnome/fae: from "gnome" (S), size 1.46, 4 textures, animations idle
+  goat/none: from "goat" (M), size 2.49, 4 textures, animations idle
+  goblin/none: from "goblin" (S), size 1.21, 4 textures, animations idle
   golem/earth: from "golem" (L), size 5.35, 4 textures, animations idle
   gremlin/darkness: from "gremlin" (S), size 1.26, 4 textures, animations idle
+  griffon/none: from "griffin" (L), size 4.83, 4 textures, animations idle, fly
   hell_hound/fire: from "hellhound" (M), size 2.27, 4 textures, animations idle
   homunculus/arcane: from "homunculus" (S), size 1.22, 4 textures, animations idle, fly
+  horse/none: from "horse" (M), size 2.37, 4 textures, animations idle
   hraesvelgr/darkness: from "hraesvelgr" (S), size 1.3, 4 textures, animations idle, fly
   ibong_adarna/nature: from "adarna" (S), size 1.23, 4 textures, animations idle, fly
   imp/fire: from "imp" (S), size 1.2, 4 textures, animations idle, fly
+  insect_swarm/none: from "insectswarm" (M), size 2.37, 4 textures, animations idle
   jackalope/fae: from "jackalope" (S), size 1.19, 4 textures, animations idle
+  jellyfish/none: from "jellyfish" (S), size 1.19, 4 textures, animations idle
   jotunn/frost: from "jotunn" (XL), size 13.21, 4 textures, animations idle
   kitsune/fire: from "kitsune" (M), size 2.37, 4 textures, animations idle
   komainu/nature: from "komainu" (M), size 2.38, 4 textures, animations idle
@@ -73,8 +88,11 @@
   leprechaun/fae: from "leprechaun" (S), size 1.54, 4 textures, animations idle
   leshy/nature: from "leshy" (M), size 3.11, 4 textures, animations idle
   lich/darkness: from "lich" (M), size 2.39, 4 textures, animations idle
+  lion/none: from "lion" (M), size 2.17, 4 textures, animations idle
   living_spellbook/arcane: from "spellbook" (S), size 1.21, 4 textures, animations idle
   living_statue/arcane: from "livingstatue" (M), size 2.63, 4 textures, animations idle
+  lizardfolk/none: from "lizardfolk" (M), size 2.36, 4 textures, animations idle
+  llama/none: from "llama" (M), size 2.69, 4 textures, animations idle
   mage/arcane: from "mage" (M), size 2.44, 4 textures, animations idle
   mage/darkness: from "mage" (M), size 2.43, 4 textures, animations idle
   mage/earth: from "mage" (M), size 2.44, 4 textures, animations idle
@@ -82,6 +100,7 @@
   mage/fire: from "mage" (M), size 2.44, 4 textures, animations idle
   mage/frost: from "mage" (M), size 2.99, 4 textures, animations idle
   mage/nature: from "mage" (M), size 2.44, 4 textures, animations idle
+  medusa/none: from "medusa" (M), size 3.14, 4 textures, animations idle
   mephit/darkness: from "mephit" (S), size 1.42, 4 textures, animations idle, fly
   mephit/earth: from "mephit" (S), size 1.38, 4 textures, animations idle, fly
   mephit/fire: from "mephit" (S), size 1.19, 4 textures, animations idle, fly
@@ -115,6 +134,7 @@
   skeleton/darkness: from "skeleton" (M), size 2.5, 4 textures, animations idle
   sphinx/earth: from "sphinx" (L), size 5.05, 4 textures, animations idle
   spriggan/frost: from "spriggan" (M), size 3.15, 4 textures, animations idle
+  t_rex/none: from "dinosaur" (XL), size 10.0, 4 textures, animations idle
   terrasque/earth: from "tarasque" (XL), size 11.85, 4 textures, animations idle
   treant/fae: from "treant" (L), size 5.81, 4 textures, animations idle
   treant/nature: from "treant" (L), size 5.25, 4 textures, animations idle
@@ -138,4 +158,3 @@
   zombie/darkness: from "zombie" (M), size 2.45, 4 textures, animations idle
   zombie/frost: from "zombie" (M), size 3.17, 4 textures, animations idle
   zombie/nature: from "zombie" (M), size 2.44, 4 textures, animations idle
-irongolem (arcane): no such creature in the roster; kept in art/models/arcane/, not used

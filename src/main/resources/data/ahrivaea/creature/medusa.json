@@ -49,7 +49,8 @@
           "job": "mining",
           "text": "Ore sorting"
         }
-      ]
+      ],
+      "size": 3.14
     }
   },
   "stats": {

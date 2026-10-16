@@ -89,6 +89,8 @@ public class GatewayTest implements FabricClientGameTest {
 				return score == null ? 0 : score.value();
 			});
 			if (leaving != 0) failures.add("asking to travel from outside the portal should be refused");
+			server.runCommand("tp @p %.1f %d %.1f 180 5".formatted(pos.getX() + 0.5, pos.getY(), pos.getZ() + 6.5));
+			context.waitTicks(2);
 			server.runCommand("execute as @p at @s run function gateway:remove");
 			context.waitTicks(5);
 			boolean removed = server.computeOnServer(s -> s.overworld().getEntitiesOfClass(net.minecraft.world.entity.Marker.class,

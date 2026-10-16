@@ -38,7 +38,7 @@ public class HorsesClient implements ClientModInitializer {
 		});
 		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, HorsesMod.id("horse_stats"), (g, delta) -> {
 			Minecraft mc = Minecraft.getInstance();
-			if (mc.player == null || mc.level == null || mc.gui.hud.isHidden()) return;
+			if (mc.player == null || mc.level == null || mc.gui.hud.isHidden() || !serverHasMod()) return;
 			if (mc.player.getVehicle() instanceof AbstractHorse h && HorseSpeed.covers(h)) {
 				HorseStats.draw(g, h, true, 6, 6);
 				return;
@@ -46,6 +46,11 @@ public class HorsesClient implements ClientModInitializer {
 			AbstractHorse looked = lookedAt(mc);
 			if (looked != null) HorseStats.draw(g, looked, false, g.guiWidth() / 2 + 14, g.guiHeight() / 2 - 8);
 		});
+	}
+
+	/** Whether the server the player is on has Swift Horses; without it the stats would be wrong, so they're hidden. */
+	public static boolean serverHasMod() {
+		return net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.canSend(dev.ahrivaea.horses.Present.TYPE);
 	}
 
 	static AbstractHorse lookedAt(Minecraft mc) {

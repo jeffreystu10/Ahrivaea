@@ -70,6 +70,22 @@ public final class GuideData {
 		this.addedBy = addedBy;
 	}
 
+	/**
+	 * Only the mods the server the player is on has (each announces itself, see e.g. dev.ahrivaea.horses.Present),
+	 * so the guide doesn't describe mods that don't do anything here. The guide's own page is kept if any are left.
+	 */
+	public GuideData forThisServer() {
+		var sendable = net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.getSendable();
+		List<Mod> kept = new ArrayList<>();
+		for (Mod m : mods) if (sendable.contains(Identifier.fromNamespaceAndPath(m.id(), "present"))) kept.add(m);
+		if (!kept.isEmpty()) for (Mod m : mods) if (m.id().equals("ahrivaea_guide")) kept.add(m);
+		Map<Item, String> by = new HashMap<>();
+		for (Mod m : kept) addedBy.forEach((item, name) -> {
+			if (name.equals(m.name())) by.put(item, name);
+		});
+		return new GuideData(kept, by);
+	}
+
 	public List<Recipe> allRecipes() {
 		List<Recipe> out = new ArrayList<>();
 		for (Mod m : mods) out.addAll(m.recipes());

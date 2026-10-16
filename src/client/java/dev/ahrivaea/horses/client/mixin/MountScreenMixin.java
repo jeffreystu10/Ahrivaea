@@ -23,6 +23,7 @@ public class MountScreenMixin {
 
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void ahrivaea$horseStats(GuiGraphicsExtractor g, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+		if (!dev.ahrivaea.horses.client.HorsesClient.serverHasMod()) return;
 		if (!(mount instanceof AbstractHorse h) || !HorseSpeed.covers(h)) return;
 		Screen screen = (Screen) (Object) this;
 		// the inventory is 176 x 166, centred

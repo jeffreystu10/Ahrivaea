@@ -55,6 +55,7 @@ public class Ahrivaea implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Party.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();

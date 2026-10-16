@@ -16,12 +16,14 @@
 			"dev.ahrivaea.challenge.TowersMod",
 			"dev.ahrivaea.stellar.StellarMod",
 			"dev.ahrivaea.horses.HorsesMod",
-			"dev.ahrivaea.minecarts.MinecartsMod"
+			"dev.ahrivaea.minecarts.MinecartsMod",
+			"dev.ahrivaea.woodcutting.WoodcuttingMod"
 		],
 		"client": [
 			"dev.ahrivaea.client.AhrivaeaClient",
 			"dev.ahrivaea.horses.client.HorsesClient",
-			"dev.ahrivaea.guide.GuideClient"
+			"dev.ahrivaea.guide.GuideClient",
+			"dev.ahrivaea.minecarts.client.MinecartsClient"
 		]
 	},
 	"mixins": [

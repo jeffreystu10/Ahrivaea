@@ -15,6 +15,7 @@ public class StellarMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Stellar.init();
 		LOGGER.info("Ahrivaea Stellar Gear loaded");
 	}

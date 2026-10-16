@@ -19,6 +19,7 @@ public class TowersMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("challenges"), (ResourceManagerReloadListener) ChallengeDef::reload);
 		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("tower_palettes"), (ResourceManagerReloadListener) TowerPalette::reload);
 		Challenges.init();

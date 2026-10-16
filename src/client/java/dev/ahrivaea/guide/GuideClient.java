@@ -67,18 +67,24 @@ public class GuideClient implements ClientModInitializer {
 
 	/** Opens the guide, on a mod's page if one is named (by key, id or name). */
 	public static void open(String mod) {
-		Minecraft.getInstance().gui.setScreen(new GuideScreen(GuideData.load(), mod));
+		Minecraft mc = Minecraft.getInstance();
+		GuideData data = GuideData.load().forThisServer();
+		if (data.mods.isEmpty()) {
+			if (mc.player != null) mc.player.sendOverlayMessage(Component.literal("This server doesn't use any Ahrivaea mods."));
+			return;
+		}
+		mc.gui.setScreen(new GuideScreen(data, mod));
 	}
 
 	/** After joining a world: say which mods are new since the guide was last read. */
 	private static void announce(Minecraft client) {
 		if (client.player == null) return;
-		GuideData data = GuideData.load();
+		GuideData data = GuideData.load().forThisServer();
 		List<String> fresh = data.mods.stream().filter(m -> !seen(m.key())).map(GuideData.Mod::name).toList();
 		if (fresh.isEmpty()) return;
 		String key = OPEN.getTranslatedKeyMessage().getString();
 		client.player.sendSystemMessage(Component.literal("[Ahrivaea Guide] ").withStyle(ChatFormatting.GOLD)
-				.append(Component.literal((fresh.size() == data.mods.size() ? "Mods in this pack: " : "New: ") + String.join(", ", fresh)
+				.append(Component.literal((fresh.size() == data.mods.size() ? "Mods on this server: " : "New: ") + String.join(", ", fresh)
 						+ ". Press " + key + " (or type /guide) to see what they do and how to craft their items.").withStyle(ChatFormatting.WHITE)));
 	}
 

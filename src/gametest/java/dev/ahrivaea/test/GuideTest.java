@@ -24,6 +24,12 @@ public class GuideTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
 		List<String> failures = new ArrayList<>();
+		// not on any server (like a vanilla server, nothing announces itself): every mod's client side stays off
+		context.waitTicks(5);
+		String off = context.computeOnClient(c -> "guide " + GuideData.load().forThisServer().mods.size()
+				+ ", horses " + dev.ahrivaea.horses.client.HorsesClient.serverHasMod() + ", minecarts " + dev.ahrivaea.minecarts.MinecartsMod.serverHasMod);
+		LOG.info("GuideTest: with no server: {}", off);
+		if (!off.equals("guide 0, horses false, minecarts false")) failures.add("with no server, the mods should be off: " + off);
 		try (TestSingleplayerContext sp = context.worldBuilder()
 				.adjustSettings(c -> c.setGameMode(WorldCreationUiState.SelectedGameMode.CREATIVE)).create()) {
 			sp.getConnection().waitForChunksRender();
@@ -43,6 +49,11 @@ public class GuideTest implements FabricClientGameTest {
 			if (!summary.contains("woodcutting=256/")) failures.add("woodcutting should have 256 recipes: " + summary);
 			if (!summary.contains("stellar=9/")) failures.add("stellar should have 9 smithing recipes: " + summary);
 
+			// single player: the built-in server has every mod, so they're all on
+			String on = context.computeOnClient(c -> "guide " + GuideData.load().forThisServer().mods.size()
+					+ ", horses " + dev.ahrivaea.horses.client.HorsesClient.serverHasMod() + ", minecarts " + dev.ahrivaea.minecarts.MinecartsMod.serverHasMod);
+			LOG.info("GuideTest: in single player: {}", on);
+			if (!on.equals("guide 7, horses true, minecarts true")) failures.add("in single player, every mod should be on: " + on);
 			context.runOnClient(c -> c.gui.setScreen(new GuideScreen(GuideData.load(), null)));
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_1_all_mods").withSize(1600, 900));

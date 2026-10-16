@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AbstractMinecartMixin {
 	@Inject(method = "useExperimentalMovement", at = @At("HEAD"), cancellable = true)
 	private static void ahrivaea$alwaysNewPhysics(Level level, CallbackInfoReturnable<Boolean> cir) {
+		// on a player's computer, only when the server they're on has Fast Minecarts too
+		if (level != null && level.isClientSide() && !dev.ahrivaea.minecarts.MinecartsMod.serverHasMod) return;
 		cir.setReturnValue(true);
 	}
 }

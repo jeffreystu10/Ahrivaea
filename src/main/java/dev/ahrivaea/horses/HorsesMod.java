@@ -35,6 +35,7 @@ public class HorsesMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Feeds.init();
 		LOGGER.debug("Horse speed data: {}", HorseSpeed.ATTACHMENT.identifier());
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {

@@ -232,7 +232,8 @@
           "job": "smelting",
           "text": "High-speed machine operation"
         }
-      ]
+      ],
+      "size": 11.93
     },
     "earth": {
       "name": "Mossback Dragon",

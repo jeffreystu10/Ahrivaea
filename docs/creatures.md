@@ -6,7 +6,7 @@ The 205 species (278 forms) from the creature list are made by `tools/creatures_
 rewrites its spawn, drops and jobs. `tools/data/creature_import_report.txt` lists anything it couldn't read.
 
 Typos in the list are fixed on import (`NAME_FIXES` in the tool): the Fae "Ghome" is the Gnome's Fae form. "Namean Lion" keeps its id
-(`namean_lion`) but is shown as Nemean Lion.
+(`namean_lion`) but is shown as Nemean Lion, and "Zmey Gorymych" (`zmey_gorymych`) as Zmey Gorynych.
 
 Each creature species is one JSON file in `src/main/resources/data/ahrivaea/creature/`. The file name is
 its id (`dragon.json` → `dragon`). Creatures can also be added from any data pack at
@@ -89,7 +89,7 @@ model, animations and textures above. The `_enraged`, `_mutated` and `_enraged_m
 colours, so they become extra textures (`<influence>_enraged.png` …) for later. The originals are kept in
 `art/models/<influence>/`, and `tools/data/model_import_report.txt` lists what was used. Names that differ from
 the roster (Dancing Axe → Enchanted Axe, Djinn → Djinni, Haunted Lantern → Enchanted Lantern, Rug of
-Smothering → Enchanted Rug, Spellbook → Living Spellbook, Tarasque → Terrasque, Changeling → Doppleganger, Giant Slug → Giant Snail, Wisp → Will-o-the-wisp, Ifrit → Efreeti, Nemean Lion → Namean Lion, Balor → Drathkuhl, Sabertooth → Saber Toothed Cat, Adarna → Ibong Adarna, Wild Hunt → Wild Hunt Rider, Ape → Giant Ape, Griffin → Griffon, Gelcube → Gelatinous Cube, Dinosaur → T-Rex, Chimera → Chimaera, Rhino → Rhinocerous, Tropical Fish → Fish) are in the tool's `ALIASES`.
+Smothering → Enchanted Rug, Spellbook → Living Spellbook, Tarasque → Terrasque, Changeling → Doppleganger, Giant Slug → Giant Snail, Wisp → Will-o-the-wisp, Ifrit → Efreeti, Nemean Lion → Namean Lion, Balor → Drathkuhl, Sabertooth → Saber Toothed Cat, Adarna → Ibong Adarna, Wild Hunt → Wild Hunt Rider, Ape → Giant Ape, Griffin → Griffon, Gelcube → Gelatinous Cube, Dinosaur → T-Rex, Chimera → Chimaera, Rhino → Rhinocerous, Tropical Fish → Fish, Zmey → Zmey Gorymych, Serpent Demon → Six Armed Serpent Demon, Angler → Giant Angler Fish) are in the tool's `ALIASES`.
 
 These models are made at their real size (one Blockbench pixel = 1/16 block): a Haunted Lantern is about a block
 tall, a Gilded Sentinel 8 blocks and a Clockwork Dragon 16 blocks long. The tool sets the form's `size` from the
@@ -97,9 +97,9 @@ model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 
 get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
-Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20), Nature (20) and Radiant
-(20) creature, and 56 of the 58 None creatures (all but Orca and Whale). The Storm and Water Dragons still use the older
-dragon set, drawn at `model_scale` 0.15 (which real-size models ignore).
+Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20), Nature (20), Radiant
+(20) and Storm (20) creature, and 56 of the 58 None creatures (all but Orca and Whale). The Water Dragon still uses the
+older dragon set, drawn at `model_scale` 0.15 (which real-size models ignore).
 
 ## Where influences come from
 

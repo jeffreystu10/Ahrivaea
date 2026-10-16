@@ -167,7 +167,8 @@
           "job": "transport",
           "text": "Item pickup and routing"
         }
-      ]
+      ],
+      "size": 1.37
     },
     "earth": {
       "stats": {

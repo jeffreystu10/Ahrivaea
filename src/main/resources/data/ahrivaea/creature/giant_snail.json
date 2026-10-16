@@ -50,7 +50,8 @@
           "job": "mining",
           "text": "Stone and ore gathering"
         }
-      ]
+      ],
+      "size": 2.0
     },
     "fae": {
       "stats": {

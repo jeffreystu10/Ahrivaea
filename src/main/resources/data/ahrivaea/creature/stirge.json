@@ -47,7 +47,8 @@
           "job": "transport",
           "text": "Item pickup and routing"
         }
-      ]
+      ],
+      "size": 1.19
     },
     "radiant": {
       "stats": {

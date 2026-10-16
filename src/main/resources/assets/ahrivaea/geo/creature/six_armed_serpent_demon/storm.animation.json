@@ -1,0 +1,137 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+0))",
+      "0"
+     ]
+    },
+    "body_2": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-42.972))",
+      "0"
+     ]
+    },
+    "body_3": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-85.944))",
+      "0"
+     ]
+    },
+    "body_4": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-128.916))",
+      "0"
+     ]
+    },
+    "body_5": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-171.887))",
+      "0"
+     ]
+    },
+    "body_6": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-214.859))",
+      "0"
+     ]
+    },
+    "body_7": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-257.831))",
+      "0"
+     ]
+    },
+    "body_8": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-300.803))",
+      "0"
+     ]
+    },
+    "body_9": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-343.775))",
+      "0"
+     ]
+    },
+    "body_10": {
+     "rotation": [
+      "0",
+      "-(9*math.sin(query.life_time*1*162+-386.747))",
+      "0"
+     ]
+    },
+    "torso": {
+     "rotation": [
+      "3*math.sin(query.life_time*1*144+0)",
+      "0",
+      "0"
+     ]
+    },
+    "arm_left": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "7*math.sin(query.life_time*1*216+180)",
+      "0",
+      "0"
+     ]
+    },
+    "arm2_left": {
+     "rotation": [
+      "12*math.sin(query.life_time*1*216+57.296)",
+      "0",
+      "0"
+     ]
+    },
+    "arm2_right": {
+     "rotation": [
+      "12*math.sin(query.life_time*1*216+237.296)",
+      "0",
+      "0"
+     ]
+    },
+    "arm3_left": {
+     "rotation": [
+      "12*math.sin(query.life_time*1*216+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "arm3_right": {
+     "rotation": [
+      "12*math.sin(query.life_time*1*216+294.592)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1*108+0))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

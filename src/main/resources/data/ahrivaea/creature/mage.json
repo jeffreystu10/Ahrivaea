@@ -161,7 +161,8 @@
           "job": "smelting",
           "text": "Furnace and machine operation"
         }
-      ]
+      ],
+      "size": 2.44
     },
     "earth": {
       "stats": {

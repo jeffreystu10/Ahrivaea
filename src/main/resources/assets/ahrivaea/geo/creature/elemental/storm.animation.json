@@ -1,0 +1,151 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "0",
+      "-(4*math.sin(query.life_time*0.72*126+0))"
+     ]
+    },
+    "funnel": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*612",
+      "0"
+     ]
+    },
+    "funnel_2": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*579.6",
+      "0"
+     ]
+    },
+    "funnel_3": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*547.2",
+      "0"
+     ]
+    },
+    "funnel_4": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*514.8",
+      "0"
+     ]
+    },
+    "funnel_5": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*482.4",
+      "0"
+     ]
+    },
+    "funnel_6": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*450",
+      "0"
+     ]
+    },
+    "funnel_7": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*417.6",
+      "0"
+     ]
+    },
+    "funnel_8": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*385.2",
+      "0"
+     ]
+    },
+    "funnel_9": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*352.8",
+      "0"
+     ]
+    },
+    "funnel_10": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*320.4",
+      "0"
+     ]
+    },
+    "funnel_11": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*288",
+      "0"
+     ]
+    },
+    "funnel_12": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*255.6",
+      "0"
+     ]
+    },
+    "funnel_bolt": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*-324",
+      "0"
+     ]
+    },
+    "debris": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*252",
+      "0"
+     ]
+    },
+    "storm_cloud": {
+     "position": [
+      "0",
+      "1.221*math.sin(query.life_time*0.72*144+0)",
+      "0"
+     ]
+    },
+    "arm_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-12*math.sin(query.life_time*0.72*288+0))"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(12*math.sin(query.life_time*0.72*288+180))"
+     ]
+    },
+    "bolt": {
+     "scale": [
+      "1",
+      "1+0.22*math.sin(query.life_time*0.72*1980+0)",
+      "1"
+     ]
+    },
+    "bolt_2": {
+     "scale": [
+      "1",
+      "1+0.22*math.sin(query.life_time*0.72*1980+131.78)",
+      "1"
+     ]
+    }
+   }
+  }
+ }
+}

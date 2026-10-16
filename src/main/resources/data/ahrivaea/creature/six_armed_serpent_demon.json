@@ -50,7 +50,8 @@
           "job": "redstone",
           "text": "Redstone device operation"
         }
-      ]
+      ],
+      "size": 3.03
     }
   },
   "stats": {

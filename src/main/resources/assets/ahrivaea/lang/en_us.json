@@ -19,5 +19,8 @@
   "item.ahrivaea.purpur_shard": "Purpur Shard",
   "block.ahrivaea.base_core": "Base Core",
   "block.ahrivaea.mining_post": "Mining Post",
-  "block.ahrivaea.creature_dynamo": "Creature Dynamo"
+  "block.ahrivaea.creature_dynamo": "Creature Dynamo",
+  "item.ahrivaea.swift_treat": "Swift Treat",
+  "item.ahrivaea.golden_treat": "Golden Treat",
+  "item.ahrivaea.racing_treat": "Racing Treat"
 }

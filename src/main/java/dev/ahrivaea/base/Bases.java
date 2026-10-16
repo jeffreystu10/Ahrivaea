@@ -301,6 +301,7 @@ public final class Bases {
 			e.setOwnerReference(EntityReference.of(be.owner()));
 		}
 		e.setPersistenceRequired();
+		e.applyCaught(c);
 		e.setAttached(WORKER_OF, be.getBlockPos());
 		e.capSize(CreatureEntity.BASE_HITBOX);
 		return e;

@@ -467,7 +467,7 @@ public final class Battle {
 		for (Unit u : units) {
 			if (u.side != Unit.Side.PLAYER || u.isPlayer || u.partySlot < 0 || u.partySlot >= party.size()) continue;
 			CaughtCreature c = party.get(u.partySlot);
-			Party.set(p, u.partySlot, new CaughtCreature(c.species(), c.influence(), c.level(), c.xp(), Math.max(1, u.hp)));
+			Party.set(p, u.partySlot, c.withHealth(Math.max(1, u.hp)));
 		}
 	}
 

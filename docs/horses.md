@@ -1,7 +1,7 @@
 # Ahrivaea Swift Horses
 
 Faster horses, and a way to make them faster still. Covers horses, donkeys, mules, skeleton horses and zombie
-horses (not llamas or camels). Meant for worlds other than Ahrivaea, where rideable creatures take the horses' place.
+horses (not llamas or camels). Meant for worlds other than Ahrivaea, where rideable creatures take the horses' place. On Ahrivaea, creature riding (in Ahrivaea Creatures, see `docs/creatures.md`) uses the same speed tiers, with treats instead of feed and Speed instead of breeding for tiers 4 and 5.
 
 ## Speed tiers
 

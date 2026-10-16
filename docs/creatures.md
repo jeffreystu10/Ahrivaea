@@ -119,3 +119,34 @@ or `any`) to an influence. `draft.json` is a placeholder until the real list is 
   `/party box store <slot>`.
 - `/ahrivaea spawn <species> <influence> <level>` — (operators) put a creature here.
 - `/ahrivaea givexp <amount>`, `/ahrivaea selftest` — (operators) testing tools.
+
+## Riding
+
+Every creature of medium size or bigger can be ridden (form size 1.9 and up: everything human-sized and larger,
+220 of the 278 forms). The rules are Swift Horses' (`docs/horses.md`), which stays the mod for vanilla horses.
+
+- **Saddle**: right-click your own creature (sent out with `/party send`, not a base worker) with a vanilla saddle.
+  Right-click it with an empty hand to get on; sneak to get off. Shears take the saddle off. Small creatures and
+  creatures that aren't yours can't be saddled. Starting a battle takes you off your mount; it waits where it was.
+- **Flying** creatures (`movement: fly`): jump to take off, then forward flies where you look, jump rises. Look
+  down into the ground to land. No fall damage for them or their rider.
+- **Swimming** creatures (`movement: swim`): in water, forward swims where you look and jump rises; the rider gets
+  Water Breathing. On land they walk.
+- **Walkers** climb full blocks and jump about 2 blocks.
+- **Speed**: top speed (blocks/sec) = (5 + 0.09 x Speed) x the tier's multiplier (x1.5, x1.76, x2.02, x2.28, x2.54,
+  x2.8), where Speed is the creature's Speed stat at its level (25% at level 0, full at 50).
+- **Tiers**: 1-3 from treats fed by hand: 8 Swift Treats, then 8 Golden Treats, then 4 Racing Treats
+  (`dev.ahrivaea.creature.Mounts`). At tier 3 a creature with Speed 60 or more rides at tier 4, and 80 or more at
+  tier 5, so levelling it up can raise it further.
+- Its treat tier, progress and saddle are kept when it's called back into the party (and its XP now is too).
+- While riding, its name, top speed, current speed, tier and next step show in the top-left corner.
+
+| Treat | Recipe (shapeless) | Makes |
+|---|---|---|
+| Swift Treat | 2 wheat, sugar, apple, sweet berries | 4 |
+| Golden Treat | 2 golden carrots, Swift Treat, honey bottle | 2 |
+| Racing Treat | golden apple, 2 Golden Treats, rabbit's foot (Rabbits, Foxes, Jackalopes and others drop it), glow berries | 1 |
+
+The client test `CreatureRideTest` saddles and feeds a Horse creature by hand, rides it at tier 4 and measures its
+speed, flies a Pegasus up and back down, and dives an Orca. Screenshots: `creature_ride_1_horse_full_speed.png`,
+`creature_ride_2_pegasus_flying.png`, `creature_ride_3_orca_diving.png`.

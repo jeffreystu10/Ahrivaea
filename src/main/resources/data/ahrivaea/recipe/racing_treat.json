@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": ["minecraft:golden_apple", "ahrivaea:golden_treat", "ahrivaea:golden_treat", "minecraft:rabbit_foot", "minecraft:glow_berries"],
+  "result": {"id": "ahrivaea:racing_treat", "count": 1}
+}

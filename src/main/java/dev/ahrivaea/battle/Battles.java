@@ -205,6 +205,7 @@ public final class Battles {
 		int[] pc = b.freeCellNear(playerCell[0], playerCell[1], Unit.Side.PLAYER);
 		b.addPlayer(player, pc[0], pc[1]);
 		if (slot >= 0) {
+			player.stopRiding(); // off any mount first; it waits where it was
 			if (!player.hasAttached(ArenaReturn.ATTACHMENT)) player.setAttached(ArenaReturn.ATTACHMENT, ArenaReturn.of(player));
 			BlockPos at = b.cellPos(b.playerUnit());
 			player.teleportTo(level, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, Set.of(), 180, 30, true);

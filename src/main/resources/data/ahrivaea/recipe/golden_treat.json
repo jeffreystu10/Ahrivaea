@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": ["minecraft:golden_carrot", "minecraft:golden_carrot", "ahrivaea:swift_treat", "minecraft:honey_bottle"],
+  "result": {"id": "ahrivaea:golden_treat", "count": 2}
+}

@@ -57,6 +57,7 @@ public class Ahrivaea implements ModInitializer {
 	public void onInitialize() {
 		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Party.init();
+		dev.ahrivaea.creature.Mounts.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
 		dev.ahrivaea.creature.VanillaMobs.init();
@@ -101,7 +102,9 @@ public class Ahrivaea implements ModInitializer {
 						if (e == null) return 0;
 						Party.remove(player, slot);
 						e.tame(player);
-						ctx.getSource().sendSuccess(() -> Component.literal("Go, " + e.displayName() + "! (sneak + right-click it to call it back)"), false);
+						e.applyCaught(c);
+						ctx.getSource().sendSuccess(() -> Component.literal("Go, " + e.displayName() + "! (sneak + right-click it to call it back"
+								+ (e.isRideable() ? (e.hasSaddle() ? "; right-click to ride)" : "; put a saddle on it to ride it)") : ")")), false);
 						return 1;
 					})))
 					.then(Commands.literal("release").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {

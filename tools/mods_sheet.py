@@ -10,6 +10,12 @@ version = re.search(r'^version=(.+)$', open('gradle.properties').read(), re.M).g
 # the mods (one jar each) and the datapacks (one zip each) together
 entries = [dict(m, _file=f"ahrivaea-{m['key']}-{version}.jar") for m in mods['mods']] + \
           [dict(d, _file=d['file'], name=d['name'] + ' (datapack)') for d in mods.get('datapacks', [])]
+fapi = re.search(r'^fabric_api_version=(.+)$', open('gradle.properties').read(), re.M).group(1).strip()
+# Fabric API: not ours, but every mod needs it, so it's in the release and on this list too
+entries.append(dict(key='fabric_api', name='Fabric API (required)', _file=f'fabric-api-{fapi}.jar',
+    summary='The library every Ahrivaea mod is built on. It goes in the mods folder next to them, on the server and for every player.',
+    features=['Made by the Fabric team, not part of Ahrivaea', f'Version {fapi}, the one the mods are built and tested with (included in the "latest" release)'],
+    commands='', players_install='Yes, whenever any Ahrivaea mod is installed', status='Required', added='', docs='https://modrinth.com/mod/fabric-api'))
 out = sys.argv[1] if len(sys.argv) > 1 else 'Ahrivaea_Mods.xlsx'
 F = 'Arial'; f = lambda **k: Font(name=F, **k)
 thin = Side(style='thin', color='BFBFBF'); B = Border(left=thin, right=thin, top=thin, bottom=thin)
@@ -47,7 +53,7 @@ for i, m in enumerate(entries):
     r = 5 + i
     w2.cell(r, 1, m['name']).font = f(bold=True); w2.cell(r, 2, m['_file']).font = f()
     for j, w in enumerate(worlds):
-        c = w2.cell(r, 3 + j, '✓' if m['key'] in w['mods'] + w.get('datapacks', []) else None)
+        c = w2.cell(r, 3 + j, '✓' if m['key'] in w['mods'] + w.get('datapacks', []) or (m['key'] == 'fabric_api' and w['mods']) else None)
         c.font = f(color='006100', bold=True); c.alignment = Alignment(horizontal='center'); dv.add(c)
     for j in range(len(worlds) + 2): w2.cell(r, 1 + j).border = B
 r = 5 + len(entries)

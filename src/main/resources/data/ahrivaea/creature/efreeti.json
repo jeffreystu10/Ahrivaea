@@ -55,7 +55,8 @@
           "job": "smelting",
           "text": "Glass and brick production"
         }
-      ]
+      ],
+      "size": 2.38
     }
   },
   "stats": {

@@ -54,7 +54,8 @@
           "job": "smelting",
           "text": "Fueling furnaces"
         }
-      ]
+      ],
+      "size": 5.25
     },
     "frost": {
       "stats": {

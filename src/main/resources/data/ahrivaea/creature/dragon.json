@@ -124,7 +124,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 11.68
     },
     "frost": {
       "name": "Snowveil Dragon",

@@ -51,7 +51,8 @@
           "job": "smelting",
           "text": "Cooking food"
         }
-      ]
+      ],
+      "size": 2.27
     }
   },
   "stats": {

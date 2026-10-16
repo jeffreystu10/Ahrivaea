@@ -1,0 +1,137 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "leg": {
+     "rotation": [
+      "14*math.sin(query.life_time*1.35*288+0)",
+      "0",
+      "0"
+     ]
+    },
+    "leg_2": {
+     "rotation": [
+      "14*math.sin(query.life_time*1.35*288+180)",
+      "0",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "3*math.sin(query.life_time*1.35*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "neck": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*180+28.648)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*1.35*126+57.296))",
+      "0"
+     ]
+    },
+    "tail": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "plume": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+0))",
+      "0"
+     ]
+    },
+    "plume_2": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+-34.377))",
+      "0"
+     ]
+    },
+    "plume_3": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+-68.755))",
+      "0"
+     ]
+    },
+    "plume_4": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+-103.132))",
+      "0"
+     ]
+    },
+    "plume_5": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+57.296))",
+      "0"
+     ]
+    },
+    "plume_6": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+22.918))",
+      "0"
+     ]
+    },
+    "plume_7": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+-11.459))",
+      "0"
+     ]
+    },
+    "plume_8": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+-45.837))",
+      "0"
+     ]
+    },
+    "plume_9": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+114.592))",
+      "0"
+     ]
+    },
+    "plume_10": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+80.214))",
+      "0"
+     ]
+    },
+    "plume_11": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+45.837))",
+      "0"
+     ]
+    },
+    "plume_12": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1.35*180+11.459))",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

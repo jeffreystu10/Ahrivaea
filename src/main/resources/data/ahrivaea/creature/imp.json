@@ -55,7 +55,8 @@
           "job": "smelting",
           "text": "Smelting ores"
         }
-      ]
+      ],
+      "size": 1.2
     }
   },
   "stats": {

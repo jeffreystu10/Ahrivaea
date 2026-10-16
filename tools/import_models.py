@@ -38,6 +38,9 @@ ALIASES = {
     'changeling': 'doppleganger',
     'giantslug': 'giant_snail',
     'wisp': 'will_o_the_wisp',
+    'ifrit': 'efreeti',
+    'nemeanlion': 'namean_lion',
+    'balor': 'drathkuhl_balor',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

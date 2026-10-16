@@ -500,7 +500,8 @@
           "job": "smelting",
           "text": "Furnace operation"
         }
-      ]
+      ],
+      "size": 1.52
     }
   },
   "stats": {

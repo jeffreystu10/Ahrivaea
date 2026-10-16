@@ -49,7 +49,8 @@
           "job": "transport",
           "text": "Item pickup"
         }
-      ]
+      ],
+      "size": 3.04
     }
   },
   "stats": {

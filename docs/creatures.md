@@ -97,9 +97,9 @@ model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 
 get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
-Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20) and Nature (20)
-creature, 56 of the 58 None creatures (all but Orca and Whale), and the other 3 dragons (the None, Darkness, Earth, Fae, Fire, Frost and Nature
-Dragons now use the library's models; the older dragon set is drawn at `model_scale` 0.15, which real-size models ignore).
+Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20), Nature (20) and Radiant
+(20) creature, and 56 of the 58 None creatures (all but Orca and Whale). The Storm and Water Dragons still use the older
+dragon set, drawn at `model_scale` 0.15 (which real-size models ignore).
 
 ## Where influences come from
 

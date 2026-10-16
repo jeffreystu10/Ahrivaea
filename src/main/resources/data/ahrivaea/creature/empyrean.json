@@ -49,7 +49,8 @@
           "job": "defense",
           "text": "Hostile-mob detection"
         }
-      ]
+      ],
+      "size": 2.61
     }
   },
   "stats": {

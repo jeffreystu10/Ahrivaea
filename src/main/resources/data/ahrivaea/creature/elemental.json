@@ -563,7 +563,8 @@
           "job": "smelting",
           "text": "Machine operation"
         }
-      ]
+      ],
+      "size": 5.58
     },
     "arcane": {
       "stats": {

@@ -49,7 +49,8 @@
           "job": "defense",
           "text": "Perimeter patrol"
         }
-      ]
+      ],
+      "size": 2.62
     }
   },
   "stats": {

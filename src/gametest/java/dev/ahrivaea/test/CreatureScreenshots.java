@@ -54,7 +54,11 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			{"none", "s", "deer", "bandit", "birdfolk", "bugbear", "catfolk", "cultist", "minotaur", "ogre", "orc"},
 			{"none", "l", "chimaera", "moose", "owlbear"},
 			{"none", "s", "fish", "pig", "rabbit", "sea_turtle", "tortoise", "treasure_goblin", "seal", "sheep"},
-			{"none", "s", "squid", "wolf", "rhinocerous", "ranger", "ratfolk", "warrior", "werewolf", "sasquatch"}};
+			{"none", "s", "squid", "wolf", "rhinocerous", "ranger", "ratfolk", "warrior", "werewolf", "sasquatch"},
+			{"radiant", "s", "mephit", "stirge", "catoblepas", "purified_spirit", "angel", "empyrean", "mage"},
+			{"radiant", "s", "paladin", "ranger", "warrior", "valkyrie", "lamia", "sleipnir", "unicorn"},
+			{"radiant", "l", "caladrius", "elemental", "giant_eagle", "lamassu", "phoenix"},
+			{"radiant", "x", "dragon"}};
 
 	private static final String[] FORMS = {"fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "radiant", "none"};
 

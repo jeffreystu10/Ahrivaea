@@ -1,0 +1,128 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "position": [
+      "0",
+      "1.226*math.sin(query.life_time*1*126+0)",
+      "0"
+     ]
+    },
+    "wisp_tail": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*180+0))"
+     ]
+    },
+    "wisp_tail_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*180+-40.107))"
+     ]
+    },
+    "wisp_tail_3": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*180+-80.214))"
+     ]
+    },
+    "wisp_tail_4": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*180+-120.321))"
+     ]
+    },
+    "wisp_tail_5": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*180+-160.428))"
+     ]
+    },
+    "arm_left": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+0)",
+      "0",
+      "0"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "8*math.sin(query.life_time*1*144+180)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1*108+0))",
+      "0"
+     ]
+    },
+    "halo_ring": {
+     "rotation": [
+      "0",
+      "-query.life_time*1*54",
+      "0"
+     ],
+     "position": [
+      "0",
+      "0.409*math.sin(query.life_time*1*180+0)",
+      "0"
+     ]
+    },
+    "chain_left": {
+     "rotation": [
+      "10*math.sin(query.life_time*1*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "chain_right": {
+     "rotation": [
+      "10*math.sin(query.life_time*1*180+85.944)",
+      "0",
+      "0"
+     ]
+    },
+    "aura_wing_l": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-7*math.sin(query.life_time*1*126+0))"
+     ]
+    },
+    "aura_wing_r": {
+     "rotation": [
+      "0",
+      "0",
+      "-(7*math.sin(query.life_time*1*126+180))"
+     ]
+    },
+    "motes": {
+     "rotation": [
+      "0",
+      "-query.life_time*1*28.8",
+      "0"
+     ]
+    },
+    "motes_rise": {
+     "position": [
+      "0",
+      "2.247*math.sin(query.life_time*1*126+0)",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

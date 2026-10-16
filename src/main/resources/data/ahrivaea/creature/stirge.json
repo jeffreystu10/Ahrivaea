@@ -97,7 +97,8 @@
           "job": "defense",
           "text": "Hostile-mob detection"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

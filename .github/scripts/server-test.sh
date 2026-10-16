@@ -5,6 +5,7 @@ mkdir -p run/world/datapacks
 echo "eula=true" > run/eula.txt
 printf 'online-mode=false\nlevel-seed=-447167\nspawn-protection=0\n' > run/server.properties
 cp -r .github/test-pack run/world/datapacks/ahv_test
+cp -r datapacks/ahrivaea_gateway run/world/datapacks/ahrivaea_gateway
 : > server-all.log
 run_once () {
   rm -f in.fifo; mkfifo in.fifo
@@ -26,8 +27,10 @@ run_once () {
 }
 run_once; first=$?
 run_once; second=$?
-report=$(grep -E "AHRIVAEA_TEST|Challenge|Ahrivaea|ahrivaea|ERROR|Exception|Caused by|Crash|at dev\.ahrivaea" server-all.log | grep -v "^\s*$" | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
-if [ $first -eq 0 ] && [ $second -eq 0 ] && grep -q "AHRIVAEA_TEST creature present" server-all.log && [ "$(grep -c "AHRIVAEA_TEST selftest passed" server-all.log)" -ge 2 ] && ! grep -q "Could not load" server-all.log && [ "$(grep -c "leaderboard: 1000/1000 stage 4; Alice 600, Bob 450" server-all.log)" -ge 2 ] && grep -q "AHRIVAEA_TEST tower complete" server-all.log && grep -q "Tower tower_2 (logs) placed" server-all.log && ! grep -q "unknown block" server-all.log && ! grep -q "unknown item\|unknown reward" server-all.log && grep -q "Loaded 128 challenges" server-all.log && grep -q "Battle arena dimension ready" server-all.log && grep -qE "Loaded 2[0-9][0-9] creature species" server-all.log; then
+report=$(grep -E "AHRIVAEA_TEST|Challenge|Ahrivaea|ahrivaea|gateway|function|ERROR|Exception|Caused by|Crash|at dev\.ahrivaea" server-all.log | grep -v "^\s*$" | head -80 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+if [ $first -eq 0 ] && [ $second -eq 0 ] && grep -q "AHRIVAEA_TEST creature present" server-all.log && [ "$(grep -c "AHRIVAEA_TEST selftest passed" server-all.log)" -ge 2 ] && ! grep -q "Could not load" server-all.log && [ "$(grep -c "leaderboard: 1000/1000 stage 4; Alice 600, Bob 450" server-all.log)" -ge 2 ] && grep -q "AHRIVAEA_TEST tower complete" server-all.log && grep -q "Tower tower_2 (logs) placed" server-all.log && ! grep -q "unknown block" server-all.log && ! grep -q "unknown item\|unknown reward" server-all.log && grep -q "Loaded 128 challenges" server-all.log && grep -q "Battle arena dimension ready" server-all.log && grep -qE "Loaded 2[0-9][0-9] creature species" server-all.log \
+    && [ "$(grep -c "AHRIVAEA_TEST gateway portal ok" server-all.log)" -ge 2 ] && grep -q "AHRIVAEA_TEST gateway config ok" server-all.log \
+    && ! grep -qiE "Failed to (load|parse) function|gateway:.*(error|Unknown)" server-all.log; then
   echo "::notice title=Server test::${report}"
 else
   echo "::error title=Server test::${report}"

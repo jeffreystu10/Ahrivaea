@@ -75,6 +75,8 @@ jobs:
           FAPI_VERSION=$(grep '^fabric_api_version=' gradle.properties | cut -d= -f2)
           find ~/.gradle -name "fabric-api-${FAPI_VERSION}.jar" -not -path "*sources*" | head -1 | xargs -I{} cp {} build/mods/
           ls build/mods
+          # each datapack as a zip, ready for a world's datapacks folder
+          for d in datapacks/*/; do (cd "$d" && zip -qr "$GITHUB_WORKSPACE/build/mods/ahrivaea-$(basename "$d" | sed 's/^ahrivaea_//')-datapack.zip" .); done
           gh release delete latest --yes --cleanup-tag 2>/dev/null || true
-          gh release create latest build/mods/*.jar Ahrivaea_Mods.xlsx --target "$GITHUB_SHA" --title "Latest mods" \
-            --notes "Built from ${GITHUB_SHA}. Each ahrivaea-*.jar is one mod; fabric-api-*.jar is required by all of them (put it in the mods folder too). Ahrivaea_Mods.xlsx lists what each mod does and which worlds use it."
+          gh release create latest build/mods/*.jar build/mods/*-datapack.zip Ahrivaea_Mods.xlsx --target "$GITHUB_SHA" --title "Latest mods" \
+            --notes "Built from ${GITHUB_SHA}. Each ahrivaea-*.jar is one mod; fabric-api-*.jar is required by all of them (put it in the mods folder too). *-datapack.zip files go in a world's datapacks folder on the server. Ahrivaea_Mods.xlsx lists what each mod does and which worlds use it."

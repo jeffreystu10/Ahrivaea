@@ -327,13 +327,41 @@
         "towers",
         "stellar",
         "minecarts",
-        "woodcutting"
+        "woodcutting",
+        "guide"
+      ],
+      "datapacks": [
+        "gateway"
       ]
     },
     {
       "name": "Main world (vanilla)",
-      "notes": "Stays fully vanilla",
-      "mods": []
+      "notes": "Stays fully vanilla (the Gateway is a datapack, which is vanilla)",
+      "mods": [],
+      "datapacks": [
+        "gateway"
+      ]
+    }
+  ],
+  "datapacks": [
+    {
+      "key": "gateway",
+      "name": "Ahrivaea Gateway",
+      "file": "ahrivaea-gateway-datapack.zip",
+      "summary": "Portals between the main world and Ahrivaea. The two worlds are separate servers; walking into a portal offers a clickable trip, which moves the player to the other server with Minecraft's own transfer command. A datapack, so the main server stays fully vanilla.",
+      "features": [
+        "/function gateway:build makes a portal 3 blocks in front of you, facing you: a crying obsidian frame around a glowing 3 x 4 opening with portal particles",
+        "/function gateway:place turns an opening you built yourself into a portal; /function gateway:remove switches off the nearest one",
+        "Step into a portal and chat says where it leads, with a clickable [ Travel there ] (nothing happens by accident); the other server's address is set once with /function gateway:setup",
+        "Inventories, XP and spawn points stay separate: each server keeps its own, and players come back to the portal they left from",
+        "No messages for 5 seconds after joining, so arriving in a portal doesn't immediately offer the trip back",
+        "If a trip can't go through (a server setting missing), the player is told what an operator needs to fix"
+      ],
+      "commands": "(operators) /function gateway:setup {name:\"...\",host:\"...\",port:...,note:\"...\"}, /function gateway:build, /function gateway:place, /function gateway:remove",
+      "players_install": "No (server only, on both servers); players need the Ahrivaea modpack to join Ahrivaea itself",
+      "status": "Done",
+      "added": "2026-10-16",
+      "docs": "docs/gateway.md"
     }
   ]
 }

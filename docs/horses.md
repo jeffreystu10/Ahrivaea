@@ -53,3 +53,9 @@ Jump height is at full charge, in blocks (vanilla horses jump about 1.1 to 5.3).
 
 - `/horse` while riding: its tier, top speed, and what it needs next.
 - `/horse settier <0-5>` (operators) while riding.
+
+
+## Only on servers that have it
+
+A player's copy of this mod only switches on when the server they're on has it too (the server announces each of its
+Ahrivaea mods when a player joins; see `Present.java`). On a server without Swift Horses, the horse stats don't show (they'd be wrong there). In single player all installed mods are on.

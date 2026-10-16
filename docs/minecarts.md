@@ -12,3 +12,9 @@ and a little slower than a top-bred horse (see [horses.md](horses.md)).
 - The new physics changes some details redstone builders rely on (how carts push each other and how far they coast),
   so a few old minecart contraptions may behave differently.
 - The top speed is a constant in `MinecartsMod.SPEED`; ask to make it a setting if you want to tune it in game.
+
+
+## Only on servers that have it
+
+A player's copy of this mod only switches on when the server they're on has it too (the server announces each of its
+Ahrivaea mods when a player joins; see `Present.java`). On a server without Fast Minecarts, carts use the server's normal physics. In single player all installed mods are on.

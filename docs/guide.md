@@ -18,3 +18,9 @@ The build writes `assets/ahrivaea_guide/guide.json` (task `guideData` in `build.
 recipe shows up in the guide without touching the guide's code: give the mod's entry a `guide` list and you're done.
 
 Which mods a player has read is kept in `config/ahrivaea_guide.json` on their computer.
+
+
+## Only on servers that have it
+
+A player's copy of this mod only switches on when the server they're on has it too (the server announces each of its
+Ahrivaea mods when a player joins; see `Present.java`). The guide only lists the mods the server you're on has; on a server with none, G just says so. In single player all installed mods are on.

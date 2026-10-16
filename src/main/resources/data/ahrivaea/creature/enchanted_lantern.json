@@ -49,7 +49,8 @@
           "job": "defense",
           "text": "Mob detection"
         }
-      ]
+      ],
+      "size": 1.19
     }
   },
   "stats": {

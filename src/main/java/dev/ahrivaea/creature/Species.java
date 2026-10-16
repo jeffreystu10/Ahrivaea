@@ -44,17 +44,18 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 	 * creature list) its own rarity, where it spawns, what it drops when defeated and what work it does at a base.
 	 */
 	public record Form(Optional<String> name, Optional<Stats> stats, Optional<String> rarity, Optional<Spawn> spawn,
-			List<Drop> drops, List<JobEntry> jobs) {
+			List<Drop> drops, List<JobEntry> jobs, Optional<Float> size) {
 		public static final Codec<Form> CODEC = RecordCodecBuilder.create(i -> i.group(
 				Codec.STRING.optionalFieldOf("name").forGetter(Form::name),
 				Stats.CODEC.optionalFieldOf("stats").forGetter(Form::stats),
 				Codec.STRING.optionalFieldOf("rarity").forGetter(Form::rarity),
 				Spawn.CODEC.optionalFieldOf("spawn").forGetter(Form::spawn),
 				Drop.CODEC.listOf().optionalFieldOf("drops", List.of()).forGetter(Form::drops),
-				JobEntry.CODEC.listOf().optionalFieldOf("jobs", List.of()).forGetter(Form::jobs)
+				JobEntry.CODEC.listOf().optionalFieldOf("jobs", List.of()).forGetter(Form::jobs),
+				Codec.FLOAT.optionalFieldOf("size").forGetter(Form::size)
 		).apply(i, Form::new));
 
-		public static final Form EMPTY = new Form(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), List.of(), List.of());
+		public static final Form EMPTY = new Form(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty());
 	}
 
 	/** Something a defeated creature may drop: the item, the chance (0-1) and how many. "enchant" makes it a random enchanted book or item. */
@@ -200,6 +201,12 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 		if (forms.containsKey(influence)) return influence;
 		if (forms.containsKey(Influence.NONE)) return Influence.NONE;
 		return forms.keySet().iterator().next();
+	}
+
+	/** How big the form is (1 = the standard 0.7 x 0.8 block creature): its own size, from its model, or the species'. */
+	public float sizeFor(Influence influence) {
+		Form f = forms.get(influence);
+		return f != null && f.size().isPresent() ? f.size().get() : size;
 	}
 
 	/** Walking speed in Minecraft units, from the Speed stat. */

@@ -607,7 +607,8 @@
           "job": "smelting",
           "text": "Machine operation"
         }
-      ]
+      ],
+      "size": 5.25
     }
   },
   "stats": {

@@ -49,7 +49,8 @@
           "job": "smelting",
           "text": "Furnace and machine operation"
         }
-      ]
+      ],
+      "size": 2.6
     }
   },
   "stats": {

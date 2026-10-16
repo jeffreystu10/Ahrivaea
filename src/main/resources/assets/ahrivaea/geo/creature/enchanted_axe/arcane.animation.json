@@ -1,0 +1,23 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "0",
+      "-(8*math.sin(query.life_time*1*126+0))"
+     ],
+     "position": [
+      "0",
+      "1.71*math.sin(query.life_time*1*180+0)",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

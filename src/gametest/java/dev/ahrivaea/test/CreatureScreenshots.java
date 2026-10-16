@@ -13,6 +13,14 @@ import net.minecraft.core.BlockPos;
  * ci-screenshots branch.
  */
 public class CreatureScreenshots implements FabricClientGameTest {
+	/** The Arcane creatures (models from the Mythic Mob Library), by size. */
+	private static final String[][] ARCANE = {
+			{"homunculus", "living_spellbook", "enchanted_lantern", "clockwork_beetle", "clockwork_raven", "enchanted_rug", "mage", "artificer"},
+			{"enchanted_axe", "enchanted_broom", "flying_sword", "animated_armor", "living_statue", "clockwork_soldier"},
+			{"djinni", "elemental", "shield_guardian"},
+			{"gilded_sentinel", "clockwork_dragon"}};
+	private static final int[] SPACING = {3, 3, 7, 20};
+
 	private static final String[] FORMS = {"fire", "frost", "storm", "earth", "water", "nature", "void", "fae", "darkness", "radiant", "none"};
 
 	@Override
@@ -53,6 +61,27 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			// back row from behind
 			view(context, server, x + 0.5, y + 7, z + 38, 180, 25);
 			context.takeScreenshot(TestScreenshotOptions.of("dragons_back").withSize(1600, 900));
+
+			// the Arcane creatures: each group in a row along x, 60 blocks apart, facing the camera
+			server.runCommand("kill @e[type=ahrivaea:creature]");
+			float[][] cams = {{8, 3, 12}, {8, 3, 12}, {10, 6, 20}, {14, 14, 40}};
+			for (int g = 0; g < ARCANE.length; g++) {
+				int gx = x + 60 + g * 60, n = ARCANE[g].length;
+				// from the south looking north, so they face us (go there first so the chunks are loaded)
+				view(context, server, gx + 0.5, y + cams[g][1], z + 10 + cams[g][2], 180, cams[g][0]);
+				sp.getConnection().waitForChunksRender();
+				for (int i = 0; i < n; i++) {
+					int cx = gx + Math.round((i - (n - 1) / 2f) * SPACING[g]);
+					server.runCommand("execute positioned %d %d %d run ahrivaea spawn %s arcane 20".formatted(cx, y, z + 10, ARCANE[g][i]));
+				}
+				server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b,Rotation:[180f,0f]}");
+				context.waitTicks(40);
+				context.takeScreenshot(TestScreenshotOptions.of("arcane_" + g).withSize(1600, 900));
+			}
+			// a close look at the first few, from the side
+			view(context, server, x + 60 + 0.5 + 16, y + 1.5, z + 10 + 0.5, 90, 10);
+			context.waitTicks(20);
+			context.takeScreenshot(TestScreenshotOptions.of("arcane_side").withSize(1600, 900));
 		}
 	}
 

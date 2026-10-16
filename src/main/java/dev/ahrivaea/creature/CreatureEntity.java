@@ -141,6 +141,20 @@ public class CreatureEntity extends TamableAnimal {
 		return this.entityData.get(LEVEL);
 	}
 
+	/**
+	 * The biggest a creature's hitbox gets (as a multiple of 0.7 x 0.8 blocks), so even huge creatures can walk
+	 * around a base. Their model is still drawn at full size.
+	 */
+	public static final float MAX_HITBOX = 4f;
+	/** In a battle every creature fits its square. */
+	public static final float BATTLE_HITBOX = 1.4f;
+
+	/** Shrinks the hitbox to at most {@code max} (used for battle copies). */
+	public void capSize(float max) {
+		var scale = this.getAttribute(Attributes.SCALE);
+		if (scale != null && scale.getBaseValue() > max) scale.setBaseValue(max);
+	}
+
 	/** Sets species, influence and level; health below 0 means full. Updates the name tag. */
 	public void setup(Species species, Influence influence, int level, float health) {
 		influence = species.formOrDefault(influence);
@@ -153,7 +167,7 @@ public class CreatureEntity extends TamableAnimal {
 		var speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
 		if (speed != null) speed.setBaseValue(species.walkSpeed(influence));
 		var scale = this.getAttribute(Attributes.SCALE);
-		if (scale != null) scale.setBaseValue(species.size());
+		if (scale != null) scale.setBaseValue(Math.min(species.sizeFor(influence), MAX_HITBOX));
 		this.setHealth(health > 0 ? Math.min(health, this.getMaxHealth()) : this.getMaxHealth());
 		refreshName();
 	}

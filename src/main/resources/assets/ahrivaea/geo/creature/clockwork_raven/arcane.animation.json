@@ -1,0 +1,239 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "leg": {
+     "rotation": [
+      "14*math.sin(query.life_time*1.35*288+0)",
+      "0",
+      "0"
+     ]
+    },
+    "leg_2": {
+     "rotation": [
+      "14*math.sin(query.life_time*1.35*288+180)",
+      "0",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "3*math.sin(query.life_time*1.35*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "neck": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*180+28.648)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*1.35*126+57.296))",
+      "0"
+     ]
+    },
+    "wing_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-30*math.sin(query.life_time*1.35*324+0))"
+     ]
+    },
+    "wingtip_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-21*math.sin(query.life_time*1.35*324+-40.107))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(30*math.sin(query.life_time*1.35*324+0))"
+     ]
+    },
+    "wingtip_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(21*math.sin(query.life_time*1.35*324+-40.107))"
+     ]
+    },
+    "tail": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "gear_l": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*-126",
+      "0"
+     ]
+    },
+    "cog_l": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*216",
+      "0"
+     ]
+    },
+    "gear_r": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*126",
+      "0"
+     ]
+    },
+    "cog_r": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*-216",
+      "0"
+     ]
+    },
+    "wind_key": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*108",
+      "0"
+     ]
+    }
+   }
+  },
+  "fly": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "leg": {
+     "rotation": [
+      "51.104",
+      "0",
+      "0"
+     ]
+    },
+    "leg_2": {
+     "rotation": [
+      "51.104",
+      "0",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "3*math.sin(query.life_time*1.35*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "neck": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*180+28.648)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "-5.4",
+      "-(14*math.sin(query.life_time*1.35*126+57.296))",
+      "0"
+     ]
+    },
+    "wing_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-69*math.sin(query.life_time*1.35*550.8+0))"
+     ]
+    },
+    "wingtip_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-48.3*math.sin(query.life_time*1.35*550.8+-40.107))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(69*math.sin(query.life_time*1.35*550.8+0))"
+     ]
+    },
+    "wingtip_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(48.3*math.sin(query.life_time*1.35*550.8+-40.107))"
+     ]
+    },
+    "tail": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "gear_l": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*-126",
+      "0"
+     ]
+    },
+    "cog_l": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*216",
+      "0"
+     ]
+    },
+    "gear_r": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*126",
+      "0"
+     ]
+    },
+    "cog_r": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*-216",
+      "0"
+     ]
+    },
+    "wind_key": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*108",
+      "0"
+     ]
+    },
+    "fly_root": {
+     "rotation": [
+      "0.3+1.7*math.sin(query.life_time*1.35*100+57)",
+      "0",
+      "0"
+     ],
+     "position": [
+      "0",
+      "24+1.92*math.sin(query.life_time*1.35*100)",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

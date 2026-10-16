@@ -223,6 +223,7 @@ public final class Battles {
 				if (e != null) {
 					e.tame(player);
 					e.setNoAi(true);
+					e.capSize(CreatureEntity.BATTLE_HITBOX);
 					u.entity = e.getUUID();
 				}
 			}
@@ -240,6 +241,7 @@ public final class Battles {
 				CreatureEntity e = Ahrivaea.spawn(level, wildSpecies.get(), wild.getInfluence(), wild.getCreatureLevel(), lead.hp, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
 					e.setNoAi(true);
+					e.capSize(CreatureEntity.BATTLE_HITBOX);
 					lead.entity = e.getUUID();
 				}
 				wild.discard();
@@ -255,6 +257,7 @@ public final class Battles {
 				CreatureEntity e = Ahrivaea.spawn(level, s, inf, lvl, -1, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
 					e.setNoAi(true);
+					e.capSize(CreatureEntity.BATTLE_HITBOX);
 					u.entity = e.getUUID();
 				}
 			}

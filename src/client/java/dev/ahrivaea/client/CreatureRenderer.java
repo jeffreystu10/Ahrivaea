@@ -32,8 +32,16 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		super.extractRenderState(entity, state, partialTick);
 		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
 		state.geo = species.isEmpty() ? null : GeoModels.model(species, influence);
+		state.realSize = state.geo != null && GeoModels.realSize(species, influence);
 		state.modelScale = state.geo != null ? GeoModels.scale(species) : 1f;
-		state.extent = (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
+		state.extent = state.realSize ? GeoModels.extent(species, influence) * state.modelScale
+				: (state.geo != null ? GeoModels.extent(species, influence) : 0.7f) * state.modelScale * entity.getScale();
+		state.flying = !entity.onGround() && !entity.isInWater() && !entity.isPassenger();
+		if (state.realSize && state.nameTagAttachment != null) {
+			// above the model, not the (smaller) hitbox
+			float h = GeoModels.height(species, influence) * state.modelScale * battleShrink(state.extent);
+			state.nameTagAttachment = new net.minecraft.world.phys.Vec3(0, h + 0.3, 0);
+		}
 		state.texture = GeoModels.texture(species, influence);
 		state.sitting = entity.isInSittingPose();
 		// creatures without their own model yet: the placeholder, tinted the colour of their influence
@@ -47,17 +55,34 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		super.submit(state, poseStack, collector, camera);
 	}
 
+	/** In a battle seen from above, every creature fits its square. */
+	private static float battleShrink(float extent) {
+		return dev.ahrivaea.client.battle.BattleClient.active() && extent > 1.3f ? 1.3f / extent : 1f;
+	}
+
 	@Override
 	protected void scale(CreatureRenderState state, PoseStack poseStack) {
-		float s = state.modelScale;
-		// in a battle seen from above, every creature fits its square
-		if (dev.ahrivaea.client.battle.BattleClient.active() && state.extent > 1.3f) s *= 1.3f / state.extent;
+		// a real-size model undoes the hitbox scale the renderer has already applied
+		float s = state.modelScale * (state.realSize && state.scale > 0 ? 1f / state.scale : 1f) * battleShrink(state.extent);
 		poseStack.scale(s, s, s);
 	}
 
 	@Override
 	protected float getShadowRadius(CreatureRenderState state) {
+		if (state.realSize) return Math.min(state.extent * battleShrink(state.extent) * 0.45f, 6f);
 		return super.getShadowRadius(state) * (state.geo != null ? 2.5f : 1f);
+	}
+
+	@Override
+	protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(CreatureEntity entity, float partialTick) {
+		// big models reach well past their hitbox; don't let them vanish when the hitbox goes off screen
+		var box = super.getBoundingBoxForCulling(entity, partialTick);
+		String species = entity.getSpeciesId(), influence = entity.getInfluence().getSerializedName();
+		if (species.isEmpty() || !GeoModels.realSize(species, influence)) return box;
+		float half = GeoModels.extent(species, influence) * GeoModels.scale(species) / 2f;
+		float h = GeoModels.height(species, influence) * GeoModels.scale(species);
+		return box.minmax(new net.minecraft.world.phys.AABB(entity.getX() - half, entity.getY(), entity.getZ() - half,
+				entity.getX() + half, entity.getY() + h, entity.getZ() + half));
 	}
 
 	@Override

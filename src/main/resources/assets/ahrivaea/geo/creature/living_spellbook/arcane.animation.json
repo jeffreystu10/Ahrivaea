@@ -1,0 +1,39 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "position": [
+      "0",
+      "1.231*math.sin(query.life_time*1.35*162+0)",
+      "0"
+     ]
+    },
+    "cover_left": {
+     "rotation": [
+      "0",
+      "-(14*math.sin(query.life_time*1.35*288+0))",
+      "0"
+     ]
+    },
+    "cover_right": {
+     "rotation": [
+      "0",
+      "-(-14*math.sin(query.life_time*1.35*288+180))",
+      "0"
+     ]
+    },
+    "book_rune": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*216",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

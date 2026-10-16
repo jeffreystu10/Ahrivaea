@@ -13,4 +13,8 @@ public class CreatureRenderState extends LivingEntityRenderState {
 	public float modelScale = 1f;
 	/** Longest horizontal size of the model in blocks at this scale (used to shrink creatures to one square in battle). */
 	public float extent = 1f;
+	/** Drawn at the size the model was made, not scaled with the creature's hitbox. */
+	public boolean realSize;
+	/** Off the ground (plays the model's "fly" animation if it has one). */
+	public boolean flying;
 }

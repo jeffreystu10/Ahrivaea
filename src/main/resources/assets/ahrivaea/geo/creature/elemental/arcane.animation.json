@@ -1,0 +1,74 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "position": [
+      "0",
+      "2.548*math.sin(query.life_time*0.72*126+0)",
+      "0"
+     ]
+    },
+    "orbit": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*79.2",
+      "0"
+     ]
+    },
+    "hand_left": {
+     "position": [
+      "0",
+      "1.82*math.sin(query.life_time*0.72*216+0)",
+      "0"
+     ]
+    },
+    "hand_right": {
+     "position": [
+      "0",
+      "1.82*math.sin(query.life_time*0.72*216+180)",
+      "0"
+     ]
+    },
+    "rune_spike": {
+     "position": [
+      "0",
+      "0.828*math.sin(query.life_time*0.72*162+0)",
+      "0"
+     ]
+    },
+    "rune_crystal": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*-43.2",
+      "0"
+     ]
+    },
+    "rune_square": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*-198",
+      "0"
+     ]
+    },
+    "rune_square_2": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*288",
+      "0"
+     ]
+    },
+    "rune_square_3": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*-396",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

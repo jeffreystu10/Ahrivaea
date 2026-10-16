@@ -1,0 +1,21 @@
+19 models in use
+  animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
+  artificer/arcane: from "artificer" (M), size 2.39, 4 textures, animations idle
+  clockwork_beetle/arcane: from "clockworkbeetle" (S), size 1.14, 4 textures, animations idle
+  clockwork_dragon/arcane: from "clockworkdragon" (XL), size 11.73, 4 textures, animations idle, fly
+  clockwork_raven/arcane: from "clockworkraven" (S), size 1.43, 4 textures, animations idle, fly
+  clockwork_soldier/arcane: from "clockworksoldier" (M), size 2.6, 4 textures, animations idle
+  djinni/arcane: from "djinn" (L), size 5.25, 4 textures, animations idle
+  elemental/arcane: from "elemental" (L), size 5.25, 4 textures, animations idle
+  enchanted_axe/arcane: from "dancingaxe" (M), size 2.38, 4 textures, animations idle
+  enchanted_broom/arcane: from "enchantedbroom" (M), size 2.37, 4 textures, animations idle
+  enchanted_lantern/arcane: from "hauntedlantern" (S), size 1.19, 4 textures, animations idle
+  enchanted_rug/arcane: from "rugofsmothering" (S), size 1.37, 4 textures, animations idle
+  flying_sword/arcane: from "flyingsword" (M), size 2.38, 4 textures, animations idle
+  gilded_sentinel/arcane: from "gildedsentinel" (XL), size 14.29, 4 textures, animations idle
+  homunculus/arcane: from "homunculus" (S), size 1.22, 4 textures, animations idle, fly
+  living_spellbook/arcane: from "spellbook" (S), size 1.21, 4 textures, animations idle
+  living_statue/arcane: from "livingstatue" (M), size 2.63, 4 textures, animations idle
+  mage/arcane: from "mage" (M), size 2.44, 4 textures, animations idle
+  shield_guardian/arcane: from "shieldguardian" (L), size 5.29, 4 textures, animations idle
+irongolem (arcane): no such creature in the roster; kept in art/models/arcane/, not used

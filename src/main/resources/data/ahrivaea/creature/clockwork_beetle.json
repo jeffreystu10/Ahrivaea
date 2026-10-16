@@ -49,7 +49,8 @@
           "job": "mining",
           "text": "Copper and stone gathering"
         }
-      ]
+      ],
+      "size": 1.14
     }
   },
   "stats": {

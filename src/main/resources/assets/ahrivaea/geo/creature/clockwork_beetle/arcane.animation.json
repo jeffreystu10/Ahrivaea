@@ -1,0 +1,81 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "1*math.sin(query.life_time*1.35*216+0)",
+      "0",
+      "0"
+     ]
+    },
+    "leg": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_2": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_3": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "leg_4": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_5": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+0))",
+      "0"
+     ]
+    },
+    "leg_6": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1.35*360+180))",
+      "0"
+     ]
+    },
+    "gear": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*-144",
+      "0"
+     ]
+    },
+    "gear_2": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*144",
+      "0"
+     ]
+    },
+    "wind_key": {
+     "rotation": [
+      "0",
+      "-query.life_time*1.35*180",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

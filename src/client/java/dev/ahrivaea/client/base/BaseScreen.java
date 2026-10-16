@@ -18,7 +18,12 @@ import net.minecraft.network.chat.Component;
 public class BaseScreen extends Screen {
 	private JsonObject state;
 	private int tick;
-	private int boxScroll;
+	private int boxScroll, workerScroll;
+
+	/** How many worker rows fit above the Done button. */
+	private int workerRows() {
+		return Math.max(1, (height - 58 - 34) / 26);
+	}
 
 	public BaseScreen(JsonObject state) {
 		super(Component.literal("Base"));
@@ -55,9 +60,10 @@ public class BaseScreen extends Screen {
 	protected void init() {
 		int left = width / 2 - 250, right = width / 2 + 10;
 		JsonArray workers = state.getAsJsonArray("workers");
-		for (int i = 0; i < workers.size(); i++) {
+		workerScroll = Math.clamp(workerScroll, 0, Math.max(0, workers.size() - workerRows()));
+		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++) {
 			final int idx = i;
-			addRenderableWidget(Button.builder(Component.literal("Send away"), b -> send("unassign", idx)).bounds(left + 170, 58 + i * 26, 70, 18).build());
+			addRenderableWidget(Button.builder(Component.literal("Send away"), b -> send("unassign", idx)).bounds(left + 170, 58 + (i - workerScroll) * 26, 70, 18).build());
 		}
 		boolean full = workers.size() >= state.get("cap").getAsInt();
 		int y = 58;
@@ -69,7 +75,7 @@ public class BaseScreen extends Screen {
 		}
 		JsonArray box = state.getAsJsonArray("box");
 		int boxTop = y + Math.max(1, party.size()) * 26 + 22;
-		int rows = Math.max(1, (height - boxTop - 30) / 26);
+		int rows = Math.max(1, (height - boxTop - 34) / 26);
 		boxScroll = Math.clamp(boxScroll, 0, Math.max(0, box.size() - rows));
 		for (int i = boxScroll; i < Math.min(box.size(), boxScroll + rows); i++) {
 			final int idx = i;
@@ -81,7 +87,8 @@ public class BaseScreen extends Screen {
 
 	@Override
 	public boolean mouseScrolled(double x, double y, double dx, double dy) {
-		boxScroll -= (int) Math.signum(dy);
+		if (x < width / 2.0) workerScroll -= (int) Math.signum(dy);
+		else boxScroll -= (int) Math.signum(dy);
 		rebuildWidgets();
 		return true;
 	}
@@ -99,8 +106,9 @@ public class BaseScreen extends Screen {
 		JsonArray workers = state.getAsJsonArray("workers");
 		g.centeredText(font, "Base (level " + state.get("level").getAsInt() + ", radius " + state.get("radius").getAsInt() + ")", width / 2, 10, 0xFFFFD040);
 		g.centeredText(font, state.get("upgrade").getAsString(), width / 2, 22, 0xFFAAAAAA);
-		g.text(font, "Workers " + workers.size() + "/" + state.get("cap").getAsInt(), left, 42, 0xFFFFFFFF);
-		for (int i = 0; i < workers.size(); i++) entry(g, workers.get(i).getAsJsonObject(), left, 58 + i * 26, true);
+		g.text(font, "Workers " + workers.size() + "/" + state.get("cap").getAsInt() + (workers.size() > workerRows() ? " (scroll for more)" : ""), left, 42, 0xFFFFFFFF);
+		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++)
+			entry(g, workers.get(i).getAsJsonObject(), left, 58 + (i - workerScroll) * 26, true);
 		if (workers.isEmpty()) g.text(font, "Nobody works here yet: pick creatures on the right.", left, 58, 0xFFAAAAAA);
 		JsonArray party = state.getAsJsonArray("party");
 		g.text(font, "Party", right, 42, 0xFFFFFFFF);
@@ -109,7 +117,7 @@ public class BaseScreen extends Screen {
 		JsonArray box = state.getAsJsonArray("box");
 		int boxTop = 58 + Math.max(1, party.size()) * 26 + 22;
 		g.text(font, "Box (" + box.size() + (box.size() > 0 ? ", scroll for more" : "") + ")", right, boxTop - 16, 0xFFFFFFFF);
-		int rows = Math.max(1, (height - boxTop - 30) / 26);
+		int rows = Math.max(1, (height - boxTop - 34) / 26);
 		for (int i = boxScroll; i < Math.min(box.size(), boxScroll + rows); i++) entry(g, box.get(i).getAsJsonObject(), right, boxTop + (i - boxScroll) * 26, false);
 	}
 

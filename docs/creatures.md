@@ -98,7 +98,7 @@ get around; the model is always drawn full size. Base workers and raiders get a 
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
 Models so far: every Arcane (19), Darkness (20), Earth (20), Fae (20), Fire (20), Frost (20), Nature (20), Radiant
-(20) and Storm (20) creature, and 56 of the 58 None creatures (all but Orca and Whale). The Water Dragon still uses the
+(20), Storm (20) and Void (20) creature, and 56 of the 58 None creatures (all but Orca and Whale). The Water Dragon still uses the
 older dragon set, drawn at `model_scale` 0.15 (which real-size models ignore).
 
 ## Where influences come from

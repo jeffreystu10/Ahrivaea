@@ -384,7 +384,8 @@
           "job": "transport",
           "text": "Chest sorting"
         }
-      ]
+      ],
+      "size": 2.44
     },
     "fae": {
       "stats": {

@@ -103,7 +103,8 @@
           "job": "transport",
           "text": "Item pickup"
         }
-      ]
+      ],
+      "size": 2.12
     }
   },
   "stats": {

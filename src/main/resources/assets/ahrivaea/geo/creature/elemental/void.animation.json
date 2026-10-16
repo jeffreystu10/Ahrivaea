@@ -1,0 +1,46 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "position": [
+      "0",
+      "4.865*math.sin(query.life_time*0.72*108+0)",
+      "0"
+     ]
+    },
+    "core": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*43.2",
+      "0"
+     ]
+    },
+    "shards": {
+     "rotation": [
+      "0",
+      "-query.life_time*0.72*-64.8",
+      "0"
+     ]
+    },
+    "arm_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-12*math.sin(query.life_time*0.72*180+0))"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(12*math.sin(query.life_time*0.72*180+180))"
+     ]
+    }
+   }
+  }
+ }
+}

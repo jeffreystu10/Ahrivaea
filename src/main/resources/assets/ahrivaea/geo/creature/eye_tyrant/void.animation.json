@@ -1,0 +1,130 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "position": [
+      "0",
+      "4.437*math.sin(query.life_time*0.72*126+0)",
+      "0"
+     ]
+    },
+    "eye_stalk": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*180+0)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+0))"
+     ]
+    },
+    "eye_stalk_2": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*198+57.296)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+74.485))"
+     ]
+    },
+    "eye_stalk_3": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*216+114.592)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_3": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+148.969))"
+     ]
+    },
+    "eye_stalk_4": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*234+171.887)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_4": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+223.454))"
+     ]
+    },
+    "eye_stalk_5": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*252+229.183)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_5": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+297.938))"
+     ]
+    },
+    "eye_stalk_6": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*270+286.479)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_6": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+372.423))"
+     ]
+    },
+    "eye_stalk_7": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*288+343.775)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_7": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+446.907))"
+     ]
+    },
+    "eye_stalk_8": {
+     "rotation": [
+      "14*math.sin(query.life_time*0.72*306+401.07)",
+      "0",
+      "0"
+     ]
+    },
+    "eye_stalk_tip_8": {
+     "rotation": [
+      "0",
+      "0",
+      "-(16*math.sin(query.life_time*0.72*252+521.392))"
+     ]
+    }
+   }
+  }
+ }
+}

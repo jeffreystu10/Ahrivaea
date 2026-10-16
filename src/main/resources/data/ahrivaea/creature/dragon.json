@@ -462,7 +462,8 @@
           "job": "defense",
           "text": "Base defense"
         }
-      ]
+      ],
+      "size": 12.29
     },
     "fae": {
       "name": "Gossamer Dragon",

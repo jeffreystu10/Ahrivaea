@@ -395,7 +395,8 @@
           "job": "mining",
           "text": "End resource gathering"
         }
-      ]
+      ],
+      "size": 1.39
     },
     "darkness": {
       "stats": {

@@ -49,7 +49,8 @@
           "job": "brewing",
           "text": "Potion brewing"
         }
-      ]
+      ],
+      "size": 2.4
     }
   },
   "stats": {

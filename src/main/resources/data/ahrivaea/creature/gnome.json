@@ -53,7 +53,8 @@
           "job": "crafting",
           "text": "Crafting-table assistance"
         }
-      ]
+      ],
+      "size": 1.23
     },
     "fae": {
       "stats": {

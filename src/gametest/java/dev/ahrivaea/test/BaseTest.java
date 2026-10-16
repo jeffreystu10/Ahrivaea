@@ -189,7 +189,8 @@ public class BaseTest implements FabricClientGameTest {
 		r.put("fishing", fished ? (Object) true : "nothing fished");
 		boolean grown = !level.getBlockState(new BlockPos(cx + 6, y, cz - 6)).is(Blocks.OAK_SAPLING)
 				|| level.getBlockState(new BlockPos(cx + 6, y, cz - 6)).getValue(net.minecraft.world.level.block.SaplingBlock.STAGE) > 0;
-		r.put("growth", grown ? (Object) true : "the sapling hasn't been tended");
+		int tended = dev.ahrivaea.base.WorkerBrain.TENDED;
+		r.put("growth", tended >= 3 || grown ? (Object) true : "only " + tended + " plants tended");
 		var stand = (net.minecraft.world.level.block.entity.BrewingStandBlockEntity) level.getBlockEntity(new BlockPos(cx - 3, y, cz - 2));
 		boolean brewed = stand.getItem(0).getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS, net.minecraft.world.item.alchemy.PotionContents.EMPTY)
 				.is(net.minecraft.world.item.alchemy.Potions.AWKWARD);

@@ -68,6 +68,9 @@ public final class WorkerBrain {
 		this.core = core;
 	}
 
+	/** How many plants Growth workers have tended since the server started (for tests). */
+	public static int TENDED;
+
 	public String status() {
 		return status;
 	}
@@ -279,6 +282,7 @@ public final class WorkerBrain {
 		switch (t.kind()) {
 			case HARVEST -> harvest(level, t.target());
 			case TEND -> {
+				TENDED++;
 				// like a dose of bone meal half the time, otherwise a few growth ticks
 				BlockState s = level.getBlockState(t.target());
 				if (s.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b && level.getRandom().nextBoolean()

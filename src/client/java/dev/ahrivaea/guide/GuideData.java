@@ -75,7 +75,13 @@ public final class GuideData {
 	 * so the guide doesn't describe mods that don't do anything here. The guide's own page is kept if any are left.
 	 */
 	public GuideData forThisServer() {
-		var sendable = net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.getSendable();
+		java.util.Set<Identifier> sendable;
+		try {
+			sendable = Minecraft.getInstance().getConnection() == null ? java.util.Set.of()
+					: net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.getSendable();
+		} catch (IllegalStateException notInGame) {
+			sendable = java.util.Set.of();
+		}
 		List<Mod> kept = new ArrayList<>();
 		for (Mod m : mods) if (sendable.contains(Identifier.fromNamespaceAndPath(m.id(), "present"))) kept.add(m);
 		if (!kept.isEmpty()) for (Mod m : mods) if (m.id().equals("ahrivaea_guide")) kept.add(m);

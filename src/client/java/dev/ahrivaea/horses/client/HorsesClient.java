@@ -50,7 +50,12 @@ public class HorsesClient implements ClientModInitializer {
 
 	/** Whether the server the player is on has Swift Horses; without it the stats would be wrong, so they're hidden. */
 	public static boolean serverHasMod() {
-		return net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.canSend(dev.ahrivaea.horses.Present.TYPE);
+		try {
+			return Minecraft.getInstance().getConnection() != null
+					&& net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.canSend(dev.ahrivaea.horses.Present.TYPE);
+		} catch (IllegalStateException notInGame) {
+			return false;
+		}
 	}
 
 	static AbstractHorse lookedAt(Minecraft mc) {

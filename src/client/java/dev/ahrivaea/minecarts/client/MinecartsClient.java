@@ -10,7 +10,14 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 public class MinecartsClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		ClientTickEvents.START_CLIENT_TICK.register(mc ->
-				MinecartsMod.serverHasMod = mc.getConnection() != null && ClientPlayNetworking.canSend(Present.TYPE));
+		ClientTickEvents.START_CLIENT_TICK.register(mc -> {
+			boolean has;
+			try {
+				has = mc.getConnection() != null && ClientPlayNetworking.canSend(Present.TYPE);
+			} catch (IllegalStateException notInGame) {
+				has = false;
+			}
+			MinecartsMod.serverHasMod = has;
+		});
 	}
 }

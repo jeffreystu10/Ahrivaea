@@ -37,6 +37,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import net.minecraft.core.registries.Registries;
@@ -172,8 +173,14 @@ public final class Battles {
 		ServerLevel arena = home.getServer().getLevel(Arena.DIMENSION);
 		List<CaughtCreature> party = Party.get(player);
 		var biome = home.getBiome(wild.blockPosition());
-		// 1-4 more wild creatures of the area join in
-		int extra = 1 + home.getRandom().nextInt(4);
+		// reinforcements: fewer, and less often, for low-level creatures
+		int extra = reinforcements(wild.getCreatureLevel(), home.getRandom());
+		// your creatures out in the world with you fight alongside you (then party creatures fill the rest, up to 4)
+		List<CreatureEntity> out = home.getEntitiesOfClass(CreatureEntity.class, player.getBoundingBox().inflate(dev.ahrivaea.party.PartySync.OUT_RANGE),
+				e -> e != wild && e.isTame() && e.isOwnedBy(player) && !e.hasAttached(dev.ahrivaea.base.Bases.WORKER_OF) && !inBattle(e) && e.getSpecies().isPresent());
+		out.sort(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(player)));
+		if (out.size() > Party.BATTLE_SIZE) out = out.subList(0, Party.BATTLE_SIZE);
+		int fromParty = Math.min(Party.BATTLE_SIZE - out.size(), party.size());
 
 		ServerLevel level;
 		BattleGrid grid;
@@ -183,7 +190,7 @@ public final class Battles {
 			// off to an arena built for this battle, themed after where it happened
 			slot = freeSlot();
 			Arena.Theme theme = Arena.Theme.of(home, wild.blockPosition());
-			int field = arenaField(theme, 1 + extra, Math.min(Party.BATTLE_SIZE, party.size()) + 1);
+			int field = arenaField(theme, 1 + extra, out.size() + fromParty + 1);
 			BlockPos c = Arena.build(arena, slot, theme, biome, home.getRandom().nextLong(), field);
 			grid = BattleGrid.read(arena, c, field);
 			level = arena;
@@ -199,7 +206,7 @@ public final class Battles {
 			playerCell = new int[] {Math.clamp(player.getBlockX() - grid.originX, 0, grid.size - 1), Math.clamp(player.getBlockZ() - grid.originZ, 0, grid.size - 1)};
 			enemyCell = new int[] {Math.clamp(wild.getBlockX() - grid.originX, 0, grid.size - 1), Math.clamp(wild.getBlockZ() - grid.originZ, 0, grid.size - 1)};
 		}
-		Battle b = new Battle(player, level, grid, !party.isEmpty());
+		Battle b = new Battle(player, level, grid, !party.isEmpty() || !out.isEmpty());
 		b.arenaSlot = slot;
 
 		int[] pc = b.freeCellNear(playerCell[0], playerCell[1], Unit.Side.PLAYER);
@@ -213,12 +220,27 @@ public final class Battles {
 
 		SPAWNING = true;
 		try {
-			for (int i = 0; i < Math.min(Party.BATTLE_SIZE, party.size()); i++) {
-				CaughtCreature c = party.get(i);
+			// the ones that were out come along (they leave the world and come back out beside you afterwards)
+			List<CaughtCreature> allies = new ArrayList<>();
+			List<Integer> slots = new ArrayList<>();
+			for (CreatureEntity e : out) {
+				CaughtCreature c = e.toCaught();
+				e.ejectPassengers();
+				e.discard();
+				slots.add(Battle.outSlot(b.outCreatures.size()));
+				b.outCreatures.add(c);
+				allies.add(c);
+			}
+			for (int i = 0; i < fromParty; i++) {
+				allies.add(party.get(i));
+				slots.add(i);
+			}
+			for (int i = 0; i < allies.size(); i++) {
+				CaughtCreature c = allies.get(i);
 				var species = Species.get(c.species());
 				if (species.isEmpty()) continue;
 				int[] cell = b.freeCellNear(pc[0], pc[1], Unit.Side.PLAYER);
-				Unit u = b.addCreature(Unit.Side.PLAYER, species.get(), c.influence(), c.level(), c.health(), i, cell[0], cell[1]);
+				Unit u = b.addCreature(Unit.Side.PLAYER, species.get(), c.influence(), c.level(), c.health(), slots.get(i), cell[0], cell[1]);
 				BlockPos at = b.cellPos(u);
 				CreatureEntity e = Ahrivaea.spawn(level, species.get(), c.influence(), c.level(), u.hp, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
@@ -232,12 +254,12 @@ public final class Battles {
 			int[] wc = b.freeCellNear(enemyCell[0], enemyCell[1], Unit.Side.ENEMY);
 			Unit lead = b.addCreature(Unit.Side.ENEMY, wildSpecies.get(), wild.getInfluence(), wild.getCreatureLevel(), wild.getHealth(), -1, wc[0], wc[1]);
 			b.lead = lead;
+			b.wild = new Battle.Wild(home, wild.getSpeciesId(), wild.getInfluence(), wild.getCreatureLevel(), wild.getX(), wild.getY(), wild.getZ());
 			if (level == home) {
 				lead.entity = wild.getUUID();
 				wild.setNoAi(true);
 			} else {
-				// the wild creature comes along: it leaves the world, and comes back afterwards unless it was defeated
-				b.wild = new Battle.Wild(home, wild.getSpeciesId(), wild.getInfluence(), wild.getCreatureLevel(), wild.getX(), wild.getY(), wild.getZ());
+				// the wild creature comes along: it leaves the world, and comes back afterwards unless you won
 				BlockPos at = b.cellPos(lead);
 				CreatureEntity e = Ahrivaea.spawn(level, wildSpecies.get(), wild.getInfluence(), wild.getCreatureLevel(), lead.hp, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
@@ -264,7 +286,8 @@ public final class Battles {
 					u.entity = e.getUUID();
 				}
 			}
-			b.say("A wild " + lead.name + " appears with " + extra + " more! Turn 1: your phase");
+			b.say("A wild " + lead.name + " appears" + (extra == 0 ? "!" : " with " + extra + " more!")
+					+ (out.isEmpty() ? "" : " " + out.size() + " of your creatures that were out join you.") + " Turn 1: your phase");
 		} finally {
 			SPAWNING = false;
 		}
@@ -296,13 +319,37 @@ public final class Battles {
 		return s;
 	}
 
-	/** After the results screen: back to where the battle started, and the wild creature back too if it wasn't beaten. */
+	/**
+	 * How many wild creatures join the one you challenged: up to 1 for levels 1-10, 2 for 11-20, 3 for 21-30, 4 for
+	 * 31-40 and 5 for 41-50, each one turning up 50%, 60%, 70%, 80% or 90% of the time.
+	 */
+	public static int reinforcements(int level, net.minecraft.util.RandomSource random) {
+		int tier = Math.clamp((level + 9) / 10, 1, 5);
+		double chance = 0.4 + 0.1 * tier;
+		int n = 0;
+		for (int i = 0; i < tier; i++) if (random.nextDouble() < chance) n++;
+		return n;
+	}
+
+	/**
+	 * After the results screen: back to where the battle started, with your creatures that were out beside you, and
+	 * the wild creature back where it was unless you won (at full health if it was knocked out).
+	 */
 	static void goHome(ServerPlayer p, Battle b) {
-		if (b != null && b.wild != null && b.lead != null && b.lead.alive()) {
+		if (b != null && b.wild != null && b.lead != null && b.outcome != Battle.Outcome.WON) {
+			// in a battle fought on the spot, a wild creature still standing never left
+			boolean stillThere = b.level == b.wild.level() && b.lead.alive() && b.level.getEntity(b.lead.entity) != null;
 			var species = Species.get(b.wild.species());
 			var at = ArenaReturn.safeSpot(b.wild.level(), new net.minecraft.world.phys.Vec3(b.wild.x(), b.wild.y(), b.wild.z()));
-			if (species.isPresent() && at != null) Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.hp, at.x, at.y, at.z);
-			b.wild = null;
+			if (!stillThere && species.isPresent() && at != null)
+				Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.alive() ? b.lead.hp : -1, at.x, at.y, at.z);
+		}
+		if (b != null) b.wild = null;
+		ServerPlayer owner = p != null ? p : b == null ? null : b.player();
+		if (b != null && !b.outCreatures.isEmpty() && owner != null && p == null) {
+			// leaving the game mid-battle: they go back into the party
+			for (CaughtCreature c : b.outCreatures) Party.addAnywhere(owner, c);
+			b.outCreatures.clear();
 		}
 		if (p != null) {
 			Ahrivaea.LOGGER.info("Battle over for {}: back from {} (return point {})", p.getPlainTextName(), p.level().dimension().identifier(), p.getAttached(ArenaReturn.ATTACHMENT));
@@ -314,6 +361,18 @@ public final class Battles {
 			if (b != null) {
 				for (var stack : b.loot) if (!p.getInventory().add(stack) || !stack.isEmpty()) p.spawnAtLocation(p.level(), stack);
 				b.loot.clear();
+				// your creatures that were out come back out beside you
+				for (CaughtCreature c : b.outCreatures) {
+					var species = Species.get(c.species());
+					CreatureEntity e = species.isEmpty() ? null : Ahrivaea.spawn((ServerLevel) p.level(), species.get(), c.influence(), c.level(), c.health(), p.getX(), p.getY(), p.getZ());
+					if (e == null) {
+						Party.addAnywhere(p, c);
+						continue;
+					}
+					e.tame(p);
+					e.applyCaught(c);
+				}
+				b.outCreatures.clear();
 			}
 		}
 	}

@@ -264,20 +264,59 @@ public class BattleTest implements FabricClientGameTest {
 			if (stuck) failures.add("after the battle we should be standing on the ground with room around us");
 			context.takeScreenshot(TestScreenshotOptions.of("battle_6_after"));
 
-			// a second battle, fled during the enemy phase: fleeing always works, at any time, and the wild creature stays in the world
+			// reinforcements scale with the wild creature's level: up to 1 (50%) at 1-10, 2 (60%) at 11-20 ... 5 (90%) at 41-50
+			String scaling = server.computeOnServer(s -> {
+				StringBuilder out = new StringBuilder();
+				var rnd = net.minecraft.util.RandomSource.create(7);
+				int[][] cases = {{5, 1}, {15, 2}, {25, 3}, {45, 5}};
+				for (int[] cs : cases) {
+					int max = 0, sum = 0;
+					for (int i = 0; i < 4000; i++) {
+						int n = Battles.reinforcements(cs[0], rnd);
+						max = Math.max(max, n);
+						sum += n;
+					}
+					double mean = sum / 4000.0, want = cs[1] * (0.4 + 0.1 * cs[1]);
+					if (max != cs[1] || Math.abs(mean - want) > 0.1) out.append("Lv.").append(cs[0]).append(": max ").append(max).append(", mean ").append(mean).append("; ");
+				}
+				return out.toString();
+			});
+			if (!scaling.isEmpty()) failures.add("reinforcement counts are off: " + scaling);
+
+			// a second battle, fled during the enemy phase: fleeing always works, at any time, and the wild creature stays in the world.
+			// One of our creatures is out with us first: it joins the battle and comes back out afterwards
 			var here = context.computeOnClient(c -> c.player.blockPosition());
-			server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon frost 5".formatted(here.getX(), here.getY(), here.getZ() + 4));
+			int partyBeforeSend = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).size());
+			context.runOnClient(c -> c.player.connection.sendCommand("party send 1"));
+			context.waitTicks(20);
+			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
+			server.runCommand("execute positioned %d %d %d run ahrivaea spawn dragon frost 45".formatted(here.getX(), here.getY(), here.getZ() + 6));
 			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
 			context.waitTicks(10);
 			context.runOnClient(c -> {
-				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12)).getFirst();
+				var wild = c.level.getEntitiesOfClass(CreatureEntity.class, c.player.getBoundingBox().inflate(12), x -> !x.isTame()).getFirst();
 				c.gameMode.attack(c.player, wild);
 			});
 			context.waitFor(c -> c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() instanceof BattleScreen, 400);
 			context.waitTicks(10);
+			// the creature that was out is fighting with us; then all our creatures and the challenged one go down,
+			// which ends nothing: only being knocked out yourself loses (and only beating every enemy wins)
+			String joined = server.computeOnServer(s -> {
+				Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
+				if (b == null) return "no battle";
+				long outUnits = b.units.stream().filter(u -> u.side == Unit.Side.PLAYER && !u.isPlayer && u.partySlot <= -2).count();
+				long enemies = b.units.stream().filter(u -> u.side == Unit.Side.ENEMY).count();
+				for (Unit u : b.units) if (!u.isPlayer && u.side == Unit.Side.PLAYER) u.hp = 0;
+				if (enemies > 1) b.units.stream().filter(u -> u.side == Unit.Side.ENEMY).findFirst().ifPresent(u -> u.hp = 0);
+				Battles.send(b);
+				return outUnits + " out, " + enemies + " enemies";
+			});
+			if (!joined.startsWith("1 out")) failures.add("the creature we had out should join the battle: " + joined);
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).endTurn());
 			context.waitTicks(3);
 			String phaseWhenFleeing = context.computeOnClient(c -> BattleClient.state().get("phase").getAsString());
+			boolean stillOn = server.computeOnServer(s -> Battles.of(s.getPlayerList().getPlayers().getFirst()) != null);
+			if (!stillOn) failures.add("losing all your creatures (and the challenged creature going down) shouldn't end the battle");
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).flee());
 			context.waitFor(c -> BattleClient.state() != null && BattleClient.state().has("result"), 100);
 			context.takeScreenshot(TestScreenshotOptions.of("battle_7_fled"));
@@ -289,7 +328,14 @@ public class BattleTest implements FabricClientGameTest {
 				var all = s.overworld().getEntitiesOfClass(CreatureEntity.class, new net.minecraft.world.phys.AABB(here).inflate(16), c -> !c.isTame());
 				return all.size() + " wild";
 			});
-			if (!outcome.equals("1 wild")) failures.add("after fleeing, the wild creature should be back in the world (found " + outcome + ")");
+			if (!outcome.equals("1 wild")) failures.add("after fleeing, the wild creature should be back in the world even though it was knocked out (found " + outcome + ")");
+			int[] backOut = server.computeOnServer(s -> {
+				var p = s.getPlayerList().getPlayers().getFirst();
+				int near = s.overworld().getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(8), c -> c.isTame() && c.isOwnedBy(p)).size();
+				return new int[]{near, Party.get(p).size()};
+			});
+			if (backOut[0] != 1 || backOut[1] != partyBeforeSend - 1)
+				failures.add("our creature that was out should be back out beside us (not in the party): " + backOut[0] + " out, party " + backOut[1]);
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

@@ -83,6 +83,16 @@ public final class Battle {
 	/** The unit standing in for that wild creature. */
 	Unit lead;
 
+	/**
+	 * Your creatures that were out in the world with you when the battle started: they fight too (as units whose
+	 * partySlot is -2 for the first, -3 for the second ...), and come back out beside you afterwards.
+	 */
+	final List<CaughtCreature> outCreatures = new ArrayList<>();
+
+	static int outSlot(int index) {
+		return -2 - index;
+	}
+
 	record Wild(ServerLevel level, String species, dev.ahrivaea.creature.Influence influence, int creatureLevel, double x, double y, double z) {}
 
 	Battle(ServerPlayer player, ServerLevel level, BattleGrid grid, boolean startedWithCreatures) {
@@ -388,12 +398,12 @@ public final class Battle {
 		if (phase == Phase.OVER) return true;
 		Unit me = playerUnit();
 		boolean enemiesLeft = units.stream().anyMatch(u -> u.alive() && u.side == Unit.Side.ENEMY);
-		boolean creaturesLeft = units.stream().anyMatch(u -> u.alive() && u.side == Unit.Side.PLAYER && !u.isPlayer);
 		if (!enemiesLeft) {
 			finish(Outcome.WON);
 			return true;
 		}
-		if (me == null || !me.alive() || (startedWithCreatures && !creaturesLeft)) {
+		// you lose only when you're knocked out yourself; your creatures fainting doesn't end it
+		if (me == null || !me.alive()) {
 			finish(Outcome.LOST);
 			return true;
 		}
@@ -478,7 +488,10 @@ public final class Battle {
 	void saveParty(ServerPlayer p) {
 		List<CaughtCreature> party = Party.get(p);
 		for (Unit u : units) {
-			if (u.side != Unit.Side.PLAYER || u.isPlayer || u.partySlot < 0 || u.partySlot >= party.size()) continue;
+			if (u.side != Unit.Side.PLAYER || u.isPlayer) continue;
+			int out = -2 - u.partySlot;
+			if (out >= 0 && out < outCreatures.size()) outCreatures.set(out, outCreatures.get(out).withHealth(Math.max(1, u.hp)));
+			if (u.partySlot < 0 || u.partySlot >= party.size()) continue;
 			CaughtCreature c = party.get(u.partySlot);
 			Party.set(p, u.partySlot, c.withHealth(Math.max(1, u.hp)));
 		}

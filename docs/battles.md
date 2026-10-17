@@ -3,10 +3,19 @@
 The rules are in [design.md](design.md#battles-fire-emblem-style). This is how it plays.
 
 **Starting.** Hit a wild creature with a sword (any sword; nothing else starts a battle). You and it are taken to a **battle arena** built for the biome you were in, and the
-camera looks straight down on its 21×21 battlefield: you and the first 4 creatures in your party along the south
-edge, the creature you hit and 1–4 more wild ones along the north edge. When you leave the results screen you're
-back exactly where you were; if you fled or lost, the wild creature is back too (with the damage you did). Blue frames are your
+camera looks straight down on its 21×21 battlefield: you and up to 4 of your creatures along the south edge
+(first any you had **out in the world** with you, within 64 blocks; then the first ones in your party), the creature
+you hit and its reinforcements along the north edge. When you leave the results screen you're back exactly where you
+were, with the creatures that were out beside you again. Unless you won, the wild creature is back too, with the
+damage you did (at full health if you knocked it out); it's only gone for good when you win. Blue frames are your
 units, red are enemies; the bar above each is its health.
+
+**Reinforcements** depend on the level of the creature you hit: up to 1 at levels 1-10, 2 at 11-20, 3 at 21-30, 4
+at 31-40 and 5 at 41-50, each turning up 50%, 60%, 70%, 80% or 90% of the time (`Battles.reinforcements`). So a
+level 5 creature is alone half the time, and a level 45 one usually brings four or five.
+
+**Winning and losing.** You win when every enemy is beaten. You lose only when you are knocked out yourself: your
+creatures fainting doesn't end the battle, and you can fight on (or flee).
 
 **Your phase.** For each of your units:
 1. Click it. Blue squares show where it can move this turn.

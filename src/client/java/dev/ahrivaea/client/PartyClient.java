@@ -65,7 +65,7 @@ public final class PartyClient {
 		return state == null ? -1 : state.getAsJsonArray("out").size();
 	}
 
-	static final int ROW = 21, WIDTH = 112;
+	static final int ROW = 20, WIDTH = 112;
 
 	/** The summary: a row per party creature (then any out in the world), down the left side of the screen. */
 	static void drawSummary(GuiGraphicsExtractor g, Font font) {
@@ -73,7 +73,9 @@ public final class PartyClient {
 		int rows = party.size() + out.size();
 		if (rows == 0) return;
 		int h = 12 + rows * ROW + (out.isEmpty() || party.isEmpty() ? 0 : 4);
-		int x = 4, y = Math.max(76, g.guiHeight() / 2 - h / 2 - 20);
+		// top left, above the chat; below the mount's stats while riding a creature
+		var player = Minecraft.getInstance().player;
+		int x = 4, y = player != null && player.getVehicle() instanceof dev.ahrivaea.creature.CreatureEntity ? 80 : 4;
 		g.fill(x - 2, y - 2, x + WIDTH + 2, y + h, 0x90000000);
 		g.text(font, "Party  [" + OPEN.getTranslatedKeyMessage().getString() + "]", x + 1, y, 0xFFAAAAAA);
 		y += 12;

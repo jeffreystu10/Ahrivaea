@@ -108,6 +108,7 @@ public final class PartySync {
 		Species s = sp.get();
 		Stats st = s.statsFor(c.influence());
 		j.addProperty("maxHp", st.maxHealth(c.level()));
+		j.addProperty("hp", Math.min(Math.round(c.health()), st.maxHealth(c.level())));
 		JsonArray stats = new JsonArray();
 		int[] base = {st.hp(), st.attack(), st.defense(), st.speed(), st.magic(), st.luck(), st.charisma()};
 		for (int b : base) {

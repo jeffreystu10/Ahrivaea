@@ -157,7 +157,7 @@ The server sends each player a view of their party (`dev.ahrivaea.party.PartySyn
 whenever it changes, checked twice a second): the party, the creatures they've sent out that are within 64 blocks,
 the box and their XP to give out. It's worked out on the server because only the server has the species data.
 
-- **Summary** (`client/PartyClient`): down the left side of the screen, each party creature's name (in its
+- **Summary** (`client/PartyClient`): in the top-left corner (below the mount stats while riding), each party creature's name (in its
   influence colour), level and an HP bar, then the ones out in the world ("out" or "riding"). Hidden with F1, and
   can be turned off with the Summary button on the party screen (saved in `config/ahrivaea_party.json`).
 - **Party screen** (`client/PartyScreen`): on **K** by default (P is Minecraft's Social Interactions key; change it

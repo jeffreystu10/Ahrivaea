@@ -22,9 +22,9 @@ public final class MountHud {
 
 	private record Line(String text, int color) {}
 
-	/** Where the top-left panels start: the top, or a third of the way down while the F3 debug text is on screen. */
+	/** Where the top-left panels start: the top, or a quarter of the way down while the F3 debug text is on screen. */
 	static int hudTop(Minecraft mc, int guiHeight) {
-		return mc.getDebugOverlay().showDebugScreen() ? guiHeight / 3 : 6;
+		return mc.getDebugOverlay().showDebugScreen() ? guiHeight / 4 : 6;
 	}
 
 	public static void register() {

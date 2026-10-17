@@ -117,7 +117,8 @@ public class PartyScreen extends Screen {
 					addRenderableWidget(Button.builder(Component.literal("Send out"), b -> command("party send " + slot)).bounds(rx, by, 54, 20).build());
 					int need = c.get("xpNext").getAsInt() - c.get("xp").getAsInt();
 					int pool = PartyClient.state.get("xp").getAsInt();
-					Button up = addRenderableWidget(Button.builder(Component.literal("+1 Lv (" + need + " XP)"), b -> command("party xp " + slot + " " + need))
+					Button up = addRenderableWidget(Button.builder(Component.literal("Level up"), b -> command("party xp " + slot + " " + need))
+							.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Spend " + need + " of your XP to raise it one level")))
 							.bounds(rx + 57, by, 76, 20).build());
 					up.active = pool >= need && c.get("level").getAsInt() < 50;
 					addRenderableWidget(Button.builder(Component.literal("To box"), b -> command("party box store " + slot)).bounds(rx + 136, by, 46, 20).build());
@@ -206,13 +207,13 @@ public class PartyScreen extends Screen {
 		y += 14;
 		int hp = c.get("hp").getAsInt(), max = c.has("maxHp") ? c.get("maxHp").getAsInt() : hp;
 		g.text(font, "HP", x, y, 0xFFFFFFFF);
-		PartyClient.bar(g, x + 24, y + 2, 140, 5, max <= 0 ? 0 : hp / (float) max, PartyClient.hpColor(hp, max));
-		g.text(font, hp + "/" + max, x + 170, y, 0xFFDDDDDD);
+		PartyClient.bar(g, x + 24, y + 2, 120, 5, max <= 0 ? 0 : hp / (float) max, PartyClient.hpColor(hp, max));
+		g.text(font, hp + "/" + max, x + 150, y, 0xFFDDDDDD);
 		y += 12;
 		int perLevel = c.has("xpNext") ? c.get("xpNext").getAsInt() : 100;
 		g.text(font, "XP", x, y, 0xFFFFFFFF);
-		PartyClient.bar(g, x + 24, y + 2, 140, 5, c.get("xp").getAsInt() / (float) perLevel, 0xFF60A0FF);
-		g.text(font, c.get("xp").getAsInt() + "/" + perLevel, x + 170, y, 0xFFDDDDDD);
+		PartyClient.bar(g, x + 24, y + 2, 120, 5, c.get("xp").getAsInt() / (float) perLevel, 0xFF60A0FF);
+		g.text(font, c.get("xp").getAsInt() + "/" + perLevel, x + 150, y, 0xFFDDDDDD);
 		y += 16;
 		if (c.has("stats")) {
 			g.text(font, "Stats (now / at Lv.50)", x, y, 0xFFAAAAAA);

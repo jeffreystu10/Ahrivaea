@@ -58,6 +58,7 @@ public class Ahrivaea implements ModInitializer {
 		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Party.init();
 		dev.ahrivaea.creature.Mounts.init();
+		dev.ahrivaea.creature.Variant.init();
 		dev.ahrivaea.party.PartySync.init();
 		dev.ahrivaea.party.Starters.init();
 		dev.ahrivaea.item.DropItems.init();
@@ -234,19 +235,11 @@ public class Ahrivaea implements ModInitializer {
 							.suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(Species.all().stream().map(Species::id), b))
 							.then(Commands.argument("influence", StringArgumentType.word())
 									.suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(java.util.Arrays.stream(Influence.values()).map(Influence::getSerializedName), b))
-									.then(Commands.argument("level", IntegerArgumentType.integer(0, Stats.MAX_LEVEL)).executes(ctx -> {
-										var species = Species.get(StringArgumentType.getString(ctx, "species"));
-										if (species.isEmpty()) {
-											ctx.getSource().sendFailure(Component.literal("No such creature."));
-											return 0;
-										}
-										var pos = ctx.getSource().getPosition();
-										CreatureEntity e = spawn(ctx.getSource().getLevel(), species.get(), Influence.byName(StringArgumentType.getString(ctx, "influence")),
-												IntegerArgumentType.getInteger(ctx, "level"), -1, pos.x, pos.y, pos.z);
-										if (e == null) return 0;
-										ctx.getSource().sendSuccess(() -> Component.literal("Spawned " + e.displayName() + " Lv." + e.getCreatureLevel()), true);
-										return 1;
-									})))))
+									.then(Commands.argument("level", IntegerArgumentType.integer(0, Stats.MAX_LEVEL))
+											.executes(ctx -> spawnCommand(ctx, dev.ahrivaea.creature.Variant.NONE))
+											.then(Commands.argument("variant", StringArgumentType.word())
+													.suggests((ctx, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(java.util.List.of("none", "enraged", "mutated"), b))
+													.executes(ctx -> spawnCommand(ctx, dev.ahrivaea.creature.Variant.byName(StringArgumentType.getString(ctx, "variant")))))))))
 					.then(Commands.literal("givexp").then(Commands.argument("amount", IntegerArgumentType.integer(1)).executes(ctx -> {
 						ServerPlayer player = ctx.getSource().getPlayerOrException();
 						Party.addXp(player, IntegerArgumentType.getInteger(ctx, "amount"));
@@ -258,6 +251,22 @@ public class Ahrivaea implements ModInitializer {
 						return 1;
 					})));
 		});
+	}
+
+	/** /ahrivaea spawn <species> <influence> <level> [variant] */
+	private static int spawnCommand(com.mojang.brigadier.context.CommandContext<net.minecraft.commands.CommandSourceStack> ctx, dev.ahrivaea.creature.Variant variant) {
+		var species = Species.get(StringArgumentType.getString(ctx, "species"));
+		if (species.isEmpty()) {
+			ctx.getSource().sendFailure(Component.literal("No such creature."));
+			return 0;
+		}
+		var pos = ctx.getSource().getPosition();
+		CreatureEntity e = spawn(ctx.getSource().getLevel(), species.get(), Influence.byName(StringArgumentType.getString(ctx, "influence")),
+				IntegerArgumentType.getInteger(ctx, "level"), -1, pos.x, pos.y, pos.z);
+		if (e == null) return 0;
+		e.setVariant(variant);
+		ctx.getSource().sendSuccess(() -> Component.literal("Spawned " + e.displayName() + " Lv." + e.getCreatureLevel()), true);
+		return 1;
 	}
 
 	private static String formName(CaughtCreature c) {

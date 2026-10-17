@@ -46,11 +46,30 @@ Each **form** can also have (the creature list fills these in):
 
 ## Spawning
 
-Wild creatures are placed around each player by Ahrivaea's own spawner (not Minecraft's): one try a second per
-player, 24–56 blocks away, until there are 10 wild creatures within 80 blocks. On land it picks walking and flying
-creatures, in water swimmers, underground (or in the Nether) it looks for a cave floor near the player's height.
-Which creature: any form whose `spawn` biomes include the spot's biome, weighted. Nothing spawns inside a base or
-in the battle arenas. Wild creatures despawn like animals do when no player is near; tamed ones and workers stay.
+Wild creatures are rare and tied to exploring. Ahrivaea's own spawner (not Minecraft's) gives each player one
+creature for every 67 blocks they travel (game rule `ahrivaea:wild_spawn_distance`), so about 15 on a 1000 block
+journey, plus one every 2 minutes while they stay put. Each appears 24–56 blocks away, and none do while 4 wild
+creatures are already within 80 blocks (they wander off once you've left them behind). Teleports and portals don't
+count as travel. On land it picks walking and flying creatures, in water swimmers, underground (or in the Nether)
+it looks for a cave floor near the player's height. Nothing spawns inside a base or in the battle arenas. Wild
+creatures despawn like animals do when no player is near; tamed ones and workers stay.
+
+**Which creature.** First its influence tier, then a creature of that tier from the forms whose `spawn` biomes
+include the spot (weighted as above, and within 5 levels of the player):
+
+| Tier | Influences | Share of spawns |
+|---|---|---|
+| 1 (most common) | None | 4 in 9 (44%) |
+| 2 | Fire, Water, Nature, Storm, Earth, Frost | 3 in 9 (33%) |
+| 3 (rarest) | Darkness, Void, Radiant, Fae, Arcane | 2 in 9 (22%) |
+
+Where a biome has no creatures of a tier, the other tiers share its part (`Influence.spawnTier`, `Species.pickTier`).
+Battle reinforcements and creatures replacing vanilla mobs are picked the same way.
+
+**Enraged and Mutated.** 1 in 10,000 wild creatures (game rule `ahrivaea:variant_odds`; 0 turns them off) is
+Enraged or Mutated, equally likely: the same creature in its model's other colours (`<influence>_enraged.png`,
+`<influence>_mutated.png`), with the word in front of its name. It keeps it when caught, recruited, sent out or
+put to work. `/ahrivaea spawn <species> <influence> <level> enraged|mutated` makes one (operators).
 
 ## No vanilla mobs
 

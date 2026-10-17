@@ -49,6 +49,24 @@ public enum Influence implements StringRepresentable {
 		return color;
 	}
 
+	/**
+	 * How rare the influence is among wild spawns: 1 for None (the most common), 2 for Fire, Water, Nature, Storm,
+	 * Earth and Frost, 3 for Darkness, Void, Radiant, Fae and Arcane (the rarest).
+	 */
+	public int spawnTier() {
+		return switch (this) {
+			case NONE -> 1;
+			case FIRE, WATER, NATURE, STORM, EARTH, FROST -> 2;
+			default -> 3;
+		};
+	}
+
+	/**
+	 * The share of wild spawns each tier gets, as weights: 4 : 3 : 2, so about 44% tier 1, 33% tier 2 and 22% tier 3
+	 * where a biome has creatures of all three (a tier with nothing in the biome passes its share to the others).
+	 */
+	public static final int[] TIER_WEIGHT = {0, 4, 3, 2};
+
 	public static Influence byName(String name) {
 		Influence i = CODEC.byName(name);
 		return i == null ? NONE : i;

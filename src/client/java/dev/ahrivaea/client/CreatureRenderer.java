@@ -44,7 +44,7 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 			float h = GeoModels.height(species, influence) * state.modelScale * battleShrink(state.extent);
 			state.nameTagAttachment = new net.minecraft.world.phys.Vec3(0, h + 0.3, 0);
 		}
-		state.texture = GeoModels.texture(species, influence);
+		state.texture = GeoModels.texture(species, influence, entity.getVariant().getSerializedName());
 		state.sitting = entity.isInSittingPose();
 		// creatures without their own model yet: the placeholder, tinted the colour of their influence
 		state.tint = state.geo == null ? 0xFF000000 | entity.getInfluence().color() : -1;

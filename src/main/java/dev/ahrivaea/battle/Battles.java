@@ -240,10 +240,11 @@ public final class Battles {
 				var species = Species.get(c.species());
 				if (species.isEmpty()) continue;
 				int[] cell = b.freeCellNear(pc[0], pc[1], Unit.Side.PLAYER);
-				Unit u = b.addCreature(Unit.Side.PLAYER, species.get(), c.influence(), c.level(), c.health(), slots.get(i), cell[0], cell[1]);
+				Unit u = b.addCreature(Unit.Side.PLAYER, species.get(), c.influence(), c.variant(), c.level(), c.health(), slots.get(i), cell[0], cell[1]);
 				BlockPos at = b.cellPos(u);
 				CreatureEntity e = Ahrivaea.spawn(level, species.get(), c.influence(), c.level(), u.hp, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
+					e.setVariant(c.variant());
 					e.tame(player);
 					e.setNoAi(true);
 					e.capSize(CreatureEntity.BATTLE_HITBOX);
@@ -252,9 +253,9 @@ public final class Battles {
 			}
 
 			int[] wc = b.freeCellNear(enemyCell[0], enemyCell[1], Unit.Side.ENEMY);
-			Unit lead = b.addCreature(Unit.Side.ENEMY, wildSpecies.get(), wild.getInfluence(), wild.getCreatureLevel(), wild.getHealth(), -1, wc[0], wc[1]);
+			Unit lead = b.addCreature(Unit.Side.ENEMY, wildSpecies.get(), wild.getInfluence(), wild.getVariant(), wild.getCreatureLevel(), wild.getHealth(), -1, wc[0], wc[1]);
 			b.lead = lead;
-			b.wild = new Battle.Wild(home, wild.getSpeciesId(), wild.getInfluence(), wild.getCreatureLevel(), wild.getX(), wild.getY(), wild.getZ());
+			b.wild = new Battle.Wild(home, wild.getSpeciesId(), wild.getInfluence(), wild.getCreatureLevel(), wild.getX(), wild.getY(), wild.getZ(), wild.getVariant());
 			if (level == home) {
 				lead.entity = wild.getUUID();
 				wild.setNoAi(true);
@@ -263,6 +264,7 @@ public final class Battles {
 				BlockPos at = b.cellPos(lead);
 				CreatureEntity e = Ahrivaea.spawn(level, wildSpecies.get(), wild.getInfluence(), wild.getCreatureLevel(), lead.hp, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
+					e.setVariant(wild.getVariant());
 					e.setNoAi(true);
 					e.capSize(CreatureEntity.BATTLE_HITBOX);
 					lead.entity = e.getUUID();
@@ -277,10 +279,12 @@ public final class Battles {
 				var inf = pick.map(Species.LevelledPick::influence).orElse(lead.influence);
 				int lvl = pick.map(Species.LevelledPick::level).orElse(Math.max(0, lead.level - b.random.nextInt(dev.ahrivaea.party.RecruitRules.REINFORCEMENT_LEVELS_BELOW + 1)));
 				int[] cell = b.freeCellNear(wc[0], wc[1], Unit.Side.ENEMY);
-				Unit u = b.addCreature(Unit.Side.ENEMY, s, inf, lvl, -1, -1, cell[0], cell[1]);
+				var variant = dev.ahrivaea.creature.Variant.roll(home, b.random);
+				Unit u = b.addCreature(Unit.Side.ENEMY, s, inf, variant, lvl, -1, -1, cell[0], cell[1]);
 				BlockPos at = b.cellPos(u);
 				CreatureEntity e = Ahrivaea.spawn(level, s, inf, lvl, -1, at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
 				if (e != null) {
+					e.setVariant(variant);
 					e.setNoAi(true);
 					e.capSize(CreatureEntity.BATTLE_HITBOX);
 					u.entity = e.getUUID();
@@ -341,8 +345,10 @@ public final class Battles {
 			boolean stillThere = b.level == b.wild.level() && b.lead.alive() && b.level.getEntity(b.lead.entity) != null;
 			var species = Species.get(b.wild.species());
 			var at = ArenaReturn.safeSpot(b.wild.level(), new net.minecraft.world.phys.Vec3(b.wild.x(), b.wild.y(), b.wild.z()));
-			if (!stillThere && species.isPresent() && at != null)
-				Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.alive() ? b.lead.hp : -1, at.x, at.y, at.z);
+			if (!stillThere && species.isPresent() && at != null) {
+				CreatureEntity back = Ahrivaea.spawn(b.wild.level(), species.get(), b.wild.influence(), b.wild.creatureLevel(), b.lead.alive() ? b.lead.hp : -1, at.x, at.y, at.z);
+				if (back != null) back.setVariant(b.wild.variant());
+			}
 		}
 		if (b != null) b.wild = null;
 		ServerPlayer owner = p != null ? p : b == null ? null : b.player();
@@ -485,7 +491,7 @@ public final class Battles {
 		if (Party.xp(p) < d.cost()) return "Recruiting " + d.name() + " costs " + d.cost() + " XP; you have " + Party.xp(p) + ".";
 		var species = Species.get(d.species());
 		if (species.isEmpty()) return "That creature no longer exists.";
-		boolean party = Party.addAnywhere(p, new CaughtCreature(d.species(), d.influence(), d.level(), 0, species.get().statsFor(d.influence()).maxHealth(d.level())));
+		boolean party = Party.addAnywhere(p, new CaughtCreature(d.species(), d.influence(), d.level(), 0, species.get().statsFor(d.influence()).maxHealth(d.level()), 0, 0, false, d.variant()));
 		Party.addXp(p, -d.cost());
 		b.defeated.remove(index);
 		if (!party) p.sendSystemMessage(Component.literal("Your party is full, so " + d.name() + " went to your box (/party box).").withStyle(ChatFormatting.YELLOW));

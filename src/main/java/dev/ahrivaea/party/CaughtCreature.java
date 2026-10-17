@@ -8,7 +8,8 @@ import dev.ahrivaea.creature.Influence;
  * A creature stored in a player's party (not out in the world). xp is progress toward the next level (BattleSettings.xpToNext).
  * mountTier and mountFed are its riding training (see dev.ahrivaea.creature.Mounts); saddled is whether it wears one.
  */
-public record CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled) {
+public record CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled,
+		dev.ahrivaea.creature.Variant variant) {
 	public static final Codec<CaughtCreature> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Codec.STRING.fieldOf("species").forGetter(CaughtCreature::species),
 			Influence.CODEC.optionalFieldOf("influence", Influence.NONE).forGetter(CaughtCreature::influence),
@@ -17,18 +18,23 @@ public record CaughtCreature(String species, Influence influence, int level, int
 			Codec.FLOAT.fieldOf("health").forGetter(CaughtCreature::health),
 			Codec.INT.optionalFieldOf("mount_tier", 0).forGetter(CaughtCreature::mountTier),
 			Codec.INT.optionalFieldOf("mount_fed", 0).forGetter(CaughtCreature::mountFed),
-			Codec.BOOL.optionalFieldOf("saddled", false).forGetter(CaughtCreature::saddled)
+			Codec.BOOL.optionalFieldOf("saddled", false).forGetter(CaughtCreature::saddled),
+			dev.ahrivaea.creature.Variant.CODEC.optionalFieldOf("variant", dev.ahrivaea.creature.Variant.NONE).forGetter(CaughtCreature::variant)
 	).apply(i, CaughtCreature::new));
 
 	public CaughtCreature(String species, Influence influence, int level, int xp, float health) {
 		this(species, influence, level, xp, health, 0, 0, false);
 	}
 
+	public CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled) {
+		this(species, influence, level, xp, health, mountTier, mountFed, saddled, dev.ahrivaea.creature.Variant.NONE);
+	}
+
 	public CaughtCreature withProgress(int level, int xp) {
-		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled);
+		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant);
 	}
 
 	public CaughtCreature withHealth(float health) {
-		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled);
+		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant);
 	}
 }

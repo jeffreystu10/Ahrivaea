@@ -42,7 +42,7 @@ public final class Battle {
 	public record Action(String kind, int unit, int toX, int toZ, int move, int target) {}
 
 	/** A defeated wild creature the player may recruit afterwards. */
-	public record Defeated(String species, Influence influence, int level, String name) {
+	public record Defeated(String species, Influence influence, int level, String name, dev.ahrivaea.creature.Variant variant) {
 		public int cost() {
 			return dev.ahrivaea.creature.Species.get(species).map(s -> dev.ahrivaea.party.RecruitRules.cost(s, influence, level)).orElse(0);
 		}
@@ -93,7 +93,8 @@ public final class Battle {
 		return -2 - index;
 	}
 
-	record Wild(ServerLevel level, String species, dev.ahrivaea.creature.Influence influence, int creatureLevel, double x, double y, double z) {}
+	record Wild(ServerLevel level, String species, dev.ahrivaea.creature.Influence influence, int creatureLevel, double x, double y, double z,
+			dev.ahrivaea.creature.Variant variant) {}
 
 	Battle(ServerPlayer player, ServerLevel level, BattleGrid grid, boolean startedWithCreatures) {
 		this.playerId = player.getUUID();
@@ -301,7 +302,7 @@ public final class Battle {
 		say(d.name + (d.isPlayer ? " is knocked out!" : d.side == Unit.Side.PLAYER ? " fainted!" : " is defeated!"));
 		if (d.side == Unit.Side.ENEMY) {
 			Entity e = level.getEntity(d.entity);
-			if (e instanceof CreatureEntity c) defeated.add(new Defeated(c.getSpeciesId(), c.getInfluence(), c.getCreatureLevel(), d.name));
+			if (e instanceof CreatureEntity c) defeated.add(new Defeated(c.getSpeciesId(), c.getInfluence(), c.getCreatureLevel(), d.name, c.getVariant()));
 		}
 		Battles.removeEntity(this, d);
 	}
@@ -470,10 +471,14 @@ public final class Battle {
 	}
 
 	Unit addCreature(Unit.Side side, Species species, Influence influence, int lvl, float health, int slot, int x, int z) {
+		return addCreature(side, species, influence, dev.ahrivaea.creature.Variant.NONE, lvl, health, slot, x, z);
+	}
+
+	Unit addCreature(Unit.Side side, Species species, Influence influence, dev.ahrivaea.creature.Variant variant, int lvl, float health, int slot, int x, int z) {
 		var stats = species.statsFor(influence);
 		int max = stats.maxHealth(lvl);
 		int hp = health <= 0 ? max : Math.max(1, Math.min(max, Math.round(health)));
-		Unit u = new Unit(newId(), side, false, species.nameFor(influence), stats, lvl, influence, species.movement(),
+		Unit u = new Unit(newId(), side, false, variant.prefix() + species.nameFor(influence), stats, lvl, influence, species.movement(),
 				BattleMove.forCreature(influence), max, hp, species.id(), slot);
 		u.x = x;
 		u.z = z;

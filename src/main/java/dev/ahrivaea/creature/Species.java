@@ -160,12 +160,33 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 			total += s.spawn.get().weight();
 		}
 		if (total <= 0) return Optional.empty();
-		int roll = random.nextInt(total);
+		// first the influence tier (None : elemental : rare = 4 : 3 : 2, among the tiers that live here), then a
+		// creature of that tier by its own spawn weight
+		long[] tierTotal = new long[4];
+		for (int k = 0; k < candidates.size(); k++) tierTotal[candidates.get(k).influence().spawnTier()] += weights.get(k);
+		int tier = pickTier(tierTotal, random);
+		long roll = (long) (random.nextDouble() * tierTotal[tier]);
 		for (int k = 0; k < candidates.size(); k++) {
+			if (candidates.get(k).influence().spawnTier() != tier) continue;
 			roll -= weights.get(k);
 			if (roll < 0) return Optional.of(candidates.get(k));
 		}
+		for (int k = candidates.size() - 1; k >= 0; k--) if (candidates.get(k).influence().spawnTier() == tier) return Optional.of(candidates.get(k));
 		return Optional.of(candidates.getLast());
+	}
+
+	/** Picks an influence tier (1-3) by {@link Influence#TIER_WEIGHT}, among the tiers with any spawn weight here. */
+	public static int pickTier(long[] tierTotal, RandomSource random) {
+		int sum = 0;
+		for (int t = 1; t <= 3; t++) if (tierTotal[t] > 0) sum += Influence.TIER_WEIGHT[t];
+		int roll = random.nextInt(Math.max(1, sum));
+		for (int t = 1; t <= 3; t++) {
+			if (tierTotal[t] <= 0) continue;
+			roll -= Influence.TIER_WEIGHT[t];
+			if (roll < 0) return t;
+		}
+		for (int t = 1; t <= 3; t++) if (tierTotal[t] > 0) return t;
+		return 1;
 	}
 
 	/** A wild creature and its level. */

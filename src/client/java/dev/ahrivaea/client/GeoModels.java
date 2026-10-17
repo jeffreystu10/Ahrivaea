@@ -167,6 +167,16 @@ public final class GeoModels {
 		return scales.getOrDefault(species, 1f);
 	}
 
+	/** The texture for an Enraged or Mutated creature: its form's {@code _enraged} / {@code _mutated} texture if there is one. */
+	public static Identifier texture(String species, String influence, String variant) {
+		if (!variant.equals("none")) {
+			String key = key(species, influence);
+			for (String k : new String[]{key, species + "/" + influence})
+				if (k != null && textures.contains(k + "_" + variant)) return Ahrivaea.id("textures/entity/creature/" + k + "_" + variant + ".png");
+		}
+		return texture(species, influence);
+	}
+
 	public static Identifier texture(String species, String influence) {
 		// a form that borrows another form's model wears that form's texture (textures are laid out for their model)
 		String key = key(species, influence);

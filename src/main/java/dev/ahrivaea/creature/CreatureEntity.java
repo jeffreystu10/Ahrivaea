@@ -44,6 +44,8 @@ public class CreatureEntity extends TamableAnimal {
 	private static final EntityDataAccessor<Integer> MOUNT_FED = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> RIDE_TIER = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
 	private static final int RIDEABLE = 1, FLIES = 2, SWIMS = 4;
+	/** Enraged or Mutated (very rare); sent to players so it's drawn in its colours. */
+	private static final EntityDataAccessor<String> VARIANT = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.STRING);
 	/** Progress toward its next level (kept while it's out of the party). */
 	private int xp;
 	/** Whether the creature its rider is controlling is in the air (only on the rider's side, which moves it). */
@@ -61,6 +63,7 @@ public class CreatureEntity extends TamableAnimal {
 		builder.define(LEVEL, 5);
 		builder.define(INFLUENCE, "none");
 		builder.define(RIDE_FLAGS, 0);
+		builder.define(VARIANT, "none");
 		builder.define(TOP_SPEED, 0f);
 		builder.define(SEAT, 1f);
 		builder.define(MOUNT_TIER, 0);
@@ -153,9 +156,18 @@ public class CreatureEntity extends TamableAnimal {
 		return Influence.byName(this.entityData.get(INFLUENCE));
 	}
 
-	/** The form's name, e.g. "Ashen Dragon". */
+	/** The form's name, e.g. "Ashen Dragon" (or "Enraged Ashen Dragon"). */
 	public String displayName() {
-		return getSpecies().map(s -> s.nameFor(getInfluence())).orElse(getSpeciesId());
+		return getVariant().prefix() + getSpecies().map(s -> s.nameFor(getInfluence())).orElse(getSpeciesId());
+	}
+
+	public Variant getVariant() {
+		return Variant.byName(this.entityData.get(VARIANT));
+	}
+
+	public void setVariant(Variant v) {
+		this.entityData.set(VARIANT, v.getSerializedName());
+		if (!getSpeciesId().isEmpty()) refreshName();
 	}
 
 	public Stats getStats() {
@@ -279,6 +291,7 @@ public class CreatureEntity extends TamableAnimal {
 	/** Takes on what a party creature carries besides species, level and health: XP, riding training and saddle. */
 	public void applyCaught(CaughtCreature c) {
 		this.xp = c.xp();
+		setVariant(c.variant());
 		setMountTraining(c.mountTier(), c.mountFed());
 		if (c.saddled() && isRideable()) setSaddle(true);
 	}
@@ -566,7 +579,7 @@ public class CreatureEntity extends TamableAnimal {
 	}
 
 	public CaughtCreature toCaught() {
-		return new CaughtCreature(getSpeciesId(), getInfluence(), getCreatureLevel(), xp, this.getHealth(), getMountTier(), getMountFed(), hasSaddle());
+		return new CaughtCreature(getSpeciesId(), getInfluence(), getCreatureLevel(), xp, this.getHealth(), getMountTier(), getMountFed(), hasSaddle(), getVariant());
 	}
 
 	@Override
@@ -576,6 +589,7 @@ public class CreatureEntity extends TamableAnimal {
 		output.putInt("CreatureLevel", getCreatureLevel());
 		output.putString("Influence", getInfluence().getSerializedName());
 		output.putInt("CreatureXp", xp);
+		output.putString("Variant", getVariant().getSerializedName());
 		output.putInt("MountTier", getMountTier());
 		output.putInt("MountFed", getMountFed());
 	}
@@ -587,6 +601,7 @@ public class CreatureEntity extends TamableAnimal {
 		this.entityData.set(LEVEL, input.getIntOr("CreatureLevel", 5));
 		this.entityData.set(INFLUENCE, input.getStringOr("Influence", "none"));
 		xp = input.getIntOr("CreatureXp", 0);
+		this.entityData.set(VARIANT, input.getStringOr("Variant", "none"));
 		this.entityData.set(MOUNT_TIER, input.getIntOr("MountTier", 0));
 		this.entityData.set(MOUNT_FED, input.getIntOr("MountFed", 0));
 		refreshName();

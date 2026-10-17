@@ -113,6 +113,7 @@ public final class VanillaMobs {
 				lvl = other.get().level();
 			}
 		}
-		Ahrivaea.spawn(level, pick.species(), pick.influence(), lvl, -1, r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5);
+		CreatureEntity e = Ahrivaea.spawn(level, pick.species(), pick.influence(), lvl, -1, r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5);
+		if (e != null) e.setVariant(Variant.roll(level, level.getRandom()));
 	}
 }

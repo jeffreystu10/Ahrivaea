@@ -97,7 +97,8 @@ public final class PartySync {
 	public static JsonObject describe(CaughtCreature c) {
 		JsonObject j = new JsonObject();
 		var sp = Species.get(c.species());
-		j.addProperty("name", sp.map(s -> s.nameFor(c.influence())).orElse(c.species()));
+		j.addProperty("name", c.variant().prefix() + sp.map(s -> s.nameFor(c.influence())).orElse(c.species()));
+		j.addProperty("variant", c.variant().getSerializedName());
 		j.addProperty("influence", c.influence().displayName());
 		j.addProperty("color", c.influence().color());
 		j.addProperty("level", c.level());

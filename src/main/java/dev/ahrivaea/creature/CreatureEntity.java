@@ -500,9 +500,7 @@ public class CreatureEntity extends TamableAnimal {
 				if (ride != null) return ride;
 				if (player.isShiftKeyDown()) {
 					// sneak + right click: call it back into the party
-					boolean party = Party.addAnywhere(player, toCaught());
-					player.sendOverlayMessage(Component.literal(displayName() + (party ? " came back to your party." : " went to your box (party full).")));
-					this.discard();
+					recallTo(player);
 				} else {
 					this.setOrderedToSit(!this.isOrderedToSit());
 					player.sendOverlayMessage(Component.literal(displayName() + (this.isOrderedToSit() ? " will wait here." : " will follow you.")));
@@ -530,6 +528,14 @@ public class CreatureEntity extends TamableAnimal {
 		// a swimming mount keeps its rider breathing underwater
 		if (!this.level().isClientSide() && this.tickCount % 20 == 0 && ridesSwimming() && this.getControllingPassenger() instanceof Player rider)
 			rider.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WATER_BREATHING, 60, 0, true, false));
+	}
+
+	/** Back into its owner's party (or box if the party is full); it leaves the world. */
+	public void recallTo(Player player) {
+		this.ejectPassengers();
+		boolean party = Party.addAnywhere(player, toCaught());
+		player.sendOverlayMessage(Component.literal(displayName() + (party ? " came back to your party." : " went to your box (party full).")));
+		this.discard();
 	}
 
 	public CaughtCreature toCaught() {

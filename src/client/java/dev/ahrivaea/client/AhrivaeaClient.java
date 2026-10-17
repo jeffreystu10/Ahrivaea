@@ -19,6 +19,7 @@ public class AhrivaeaClient implements ClientModInitializer {
 		dev.ahrivaea.client.battle.BattleClient.init();
 		dev.ahrivaea.client.base.BaseScreen.register();
 		MountHud.register();
+		PartyClient.register();
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(Ahrivaea.id("creature_models"), (ResourceManagerReloadListener) GeoModels::reload);
 	}
 }

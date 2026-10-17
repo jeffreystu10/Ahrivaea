@@ -150,3 +150,21 @@ Every creature of medium size or bigger can be ridden (form size 1.9 and up: eve
 The client test `CreatureRideTest` saddles and feeds a Horse creature by hand, rides it at tier 4 and measures its
 speed, flies a Pegasus up and back down, and dives an Orca. Screenshots: `creature_ride_1_horse_full_speed.png`,
 `creature_ride_2_pegasus_flying.png`, `creature_ride_3_orca_diving.png`.
+
+## Party summary and party screen
+
+The server sends each player a view of their party (`dev.ahrivaea.party.PartySync`, a JSON payload, re-sent
+whenever it changes, checked twice a second): the party, the creatures they've sent out that are within 64 blocks,
+the box and their XP to give out. It's worked out on the server because only the server has the species data.
+
+- **Summary** (`client/PartyClient`): down the left side of the screen, each party creature's name (in its
+  influence colour), level and an HP bar, then the ones out in the world ("out" or "riding"). Hidden with F1, and
+  can be turned off with the Summary button on the party screen (saved in `config/ahrivaea_party.json`).
+- **Party screen** (`client/PartyScreen`): on **K** by default (P is Minecraft's Social Interactions key; change it
+  in Options > Controls > Ahrivaea Creatures). Tabs for Party, Out and Box; click a creature for its HP, XP, all
+  seven stats (now / at level 50), battle movement, jobs and riding (tier, top speed, saddle, next tier). Buttons:
+  Send out, +1 Lv (spends the XP it needs from your pool), To box, Release (asks twice) for party creatures; Call
+  back for ones that are out; To party for the box. The buttons run the `/party` commands.
+- `/party recall` calls back every creature you've sent out nearby; `/party recall <entity>` one of them.
+
+Test: `PartyScreenTest` (screenshots `party_1_summary`, `party_2_screen`, `party_3_summary_one_out`).

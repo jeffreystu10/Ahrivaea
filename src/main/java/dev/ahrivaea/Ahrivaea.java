@@ -58,6 +58,7 @@ public class Ahrivaea implements ModInitializer {
 		Present.register(); // so players' copies of this mod switch on only on servers that have it
 		Party.init();
 		dev.ahrivaea.creature.Mounts.init();
+		dev.ahrivaea.party.PartySync.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
 		dev.ahrivaea.creature.VanillaMobs.init();
@@ -107,6 +108,31 @@ public class Ahrivaea implements ModInitializer {
 								+ (e.isRideable() ? (e.hasSaddle() ? "; right-click to ride)" : "; put a saddle on it to ride it)") : ")")), false);
 						return 1;
 					})))
+					.then(Commands.literal("recall")
+							.executes(ctx -> {
+								// every creature you sent out that's nearby
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								int n = 0;
+								for (CreatureEntity e : player.level().getEntitiesOfClass(CreatureEntity.class, player.getBoundingBox().inflate(dev.ahrivaea.party.PartySync.OUT_RANGE),
+										e -> e.isTame() && e.isOwnedBy(player) && !e.hasAttached(dev.ahrivaea.base.Bases.WORKER_OF) && !dev.ahrivaea.battle.Battles.inBattle(e))) {
+									e.recallTo(player);
+									n++;
+								}
+								if (n == 0) ctx.getSource().sendFailure(Component.literal("None of your creatures are out nearby."));
+								return n;
+							})
+							.then(Commands.argument("entity", IntegerArgumentType.integer(0)).executes(ctx -> {
+								// one of them, by its entity number (the party screen's Call back button)
+								ServerPlayer player = ctx.getSource().getPlayerOrException();
+								var found = player.level().getEntity(IntegerArgumentType.getInteger(ctx, "entity"));
+								if (!(found instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(player) || e.hasAttached(dev.ahrivaea.base.Bases.WORKER_OF)
+										|| dev.ahrivaea.battle.Battles.inBattle(e) || e.distanceTo(player) > dev.ahrivaea.party.PartySync.OUT_RANGE + 8) {
+									ctx.getSource().sendFailure(Component.literal("That creature isn't out with you."));
+									return 0;
+								}
+								e.recallTo(player);
+								return 1;
+							})))
 					.then(Commands.literal("release").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
 						ServerPlayer player = ctx.getSource().getPlayerOrException();
 						int slot = IntegerArgumentType.getInteger(ctx, "slot") - 1;

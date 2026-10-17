@@ -22,5 +22,7 @@
   "block.ahrivaea.creature_dynamo": "Creature Dynamo",
   "item.ahrivaea.swift_treat": "Swift Treat",
   "item.ahrivaea.golden_treat": "Golden Treat",
-  "item.ahrivaea.racing_treat": "Racing Treat"
+  "item.ahrivaea.racing_treat": "Racing Treat",
+  "key.ahrivaea.party": "Open your party",
+  "key.category.ahrivaea.party": "Ahrivaea Creatures"
 }

@@ -214,14 +214,14 @@ public class BattleTest implements FabricClientGameTest {
 			String rules = server.computeOnServer(s -> {
 				var cap = new dev.ahrivaea.party.RecruitRules.Cap(0, 4, "Cat");
 				StringBuilder out = new StringBuilder();
-				for (var sp : dev.ahrivaea.creature.Species.all()) {
-					for (var inf : sp.forms().keySet()) {
-						String r = dev.ahrivaea.party.RecruitRules.rarity(sp, inf);
-						boolean ok4 = dev.ahrivaea.party.RecruitRules.whyNot(cap, sp, inf, 4) == null;
-						boolean ok5 = dev.ahrivaea.party.RecruitRules.whyNot(cap, sp, inf, 5) == null;
-						if (ok4 != r.equals("Common") || ok5) out.append(sp.id()).append('/').append(inf.getSerializedName()).append(' ');
-						if (r.equals("Common") && dev.ahrivaea.party.RecruitRules.cost(sp, inf, 4) != 400) out.append("cost:").append(sp.id()).append(' ');
-						if (r.equals("Legendary") && dev.ahrivaea.party.RecruitRules.cost(sp, inf, 4) != 2000) out.append("cost:").append(sp.id()).append(' ');
+				for (var spc : dev.ahrivaea.creature.Species.all()) {
+					for (var inf : spc.forms().keySet()) {
+						String r = dev.ahrivaea.party.RecruitRules.rarity(spc, inf);
+						boolean ok4 = dev.ahrivaea.party.RecruitRules.whyNot(cap, spc, inf, 4) == null;
+						boolean ok5 = dev.ahrivaea.party.RecruitRules.whyNot(cap, spc, inf, 5) == null;
+						if (ok4 != r.equals("Common") || ok5) out.append(spc.id()).append('/').append(inf.getSerializedName()).append(' ');
+						if (r.equals("Common") && dev.ahrivaea.party.RecruitRules.cost(spc, inf, 4) != 400) out.append("cost:").append(spc.id()).append(' ');
+						if (r.equals("Legendary") && dev.ahrivaea.party.RecruitRules.cost(spc, inf, 4) != 2000) out.append("cost:").append(spc.id()).append(' ');
 					}
 				}
 				return out.toString();

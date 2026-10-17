@@ -142,7 +142,7 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			});
 			if (!tiers.isEmpty()) failures.add("influence tiers should be picked 4 : 3 : 2 among the tiers present: " + tiers);
 
-			// a 1000 block journey: about 15 creatures turn up (one per 67 blocks travelled), a few at a time
+			// a 1000 block journey: about 20 creatures turn up (one per 50 blocks travelled), a few at a time
 			server.runCommand("kill @e[type=ahrivaea:creature]");
 			server.runCommand("gamerule spawn_mobs true");
 			context.runOnClient(c -> c.player.getAbilities().flying = true);
@@ -161,7 +161,7 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			int spawned = server.computeOnServer(s -> dev.ahrivaea.creature.WildSpawner.FAILURES.getOrDefault("spawned", 0)) - spawnedBefore;
 			String why = server.computeOnServer(s -> dev.ahrivaea.creature.WildSpawner.FAILURES.toString());
 			LOG.info("WildCreaturesTest: 1000 blocks travelled, {} wild creatures appeared, at most {} nearby at once; attempts: {}", spawned, most, why);
-			if (spawned < 8 || spawned > 22) failures.add("about 15 wild creatures should turn up over 1000 blocks, got " + spawned + "; attempts: " + why);
+			if (spawned < 13 || spawned > 28) failures.add("about 20 wild creatures should turn up over 1000 blocks, got " + spawned + "; attempts: " + why);
 			if (most > dev.ahrivaea.creature.WildSpawner.CAP) failures.add("no more than " + dev.ahrivaea.creature.WildSpawner.CAP + " wild creatures should be near at once, saw " + most);
 
 			// a big creature walled in by blocks gets itself out: it hops to the nearest open spot on solid ground

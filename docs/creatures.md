@@ -47,8 +47,8 @@ Each **form** can also have (the creature list fills these in):
 ## Spawning
 
 Wild creatures are rare and tied to exploring. Ahrivaea's own spawner (not Minecraft's) gives each player one
-creature for every 67 blocks they travel (game rule `ahrivaea:wild_spawn_distance`), so about 15 on a 1000 block
-journey, plus one every 2 minutes while they stay put. Each appears 24–56 blocks away, and none do while 4 wild
+creature for every 50 blocks they travel (game rule `ahrivaea:wild_spawn_distance`), so about 20 on a 1000 block
+journey, plus one every 90 seconds while they stay put. Each appears 24–56 blocks away, and none do while 5 wild
 creatures are already within 80 blocks (they wander off once you've left them behind). Teleports and portals don't
 count as travel. On land it picks walking and flying creatures, in water swimmers, underground (or in the Nether)
 it looks for a cave floor near the player's height. Nothing spawns inside a base or in the battle arenas. Wild

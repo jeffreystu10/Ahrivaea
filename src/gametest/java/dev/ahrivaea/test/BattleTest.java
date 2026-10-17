@@ -304,24 +304,24 @@ public class BattleTest implements FabricClientGameTest {
 				ServerPlayer p = s.getPlayerList().getPlayers().getFirst();
 				Battle b = Battles.of(p);
 				if (b == null) return "no battle";
-				Unit me = b.playerUnit();
+				Unit pu = b.playerUnit();
 				p.getInventory().clearContent();
 				p.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, 3));
 				p.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COOKED_BEEF, 3));
-				me.hp = 1;
-				me.acted = false;
-				String withFood = b.act(new Battle.Action("item", me.id, me.x, me.z, -1, me.id));
+				pu.hp = 1;
+				pu.acted = false;
+				String withFood = b.act(new Battle.Action("item", pu.id, pu.x, pu.z, -1, pu.id));
 				p.getInventory().add(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, net.minecraft.world.item.alchemy.Potions.HEALING));
-				me.acted = false;
-				String withPotion = b.act(new Battle.Action("item", me.id, me.x, me.z, -1, me.id));
+				pu.acted = false;
+				String withPotion = b.act(new Battle.Action("item", pu.id, pu.x, pu.z, -1, pu.id));
 				var inv = p.getInventory();
 				int bottles = java.util.stream.IntStream.range(0, inv.getContainerSize())
 						.map(i -> inv.getItem(i).is(net.minecraft.world.item.Items.GLASS_BOTTLE) ? inv.getItem(i).getCount() : 0).sum();
-				int expected = 1 + (int) Math.round(me.maxHp * 0.4);
-				me.acted = false;
+				int expected = 1 + (int) Math.round(pu.maxHp * 0.4);
+				pu.acted = false;
 				Battles.send(b);
 				return (withFood == null ? "food was accepted; " : "") + (withPotion != null ? "potion refused: " + withPotion + "; " : "")
-						+ (me.hp != Math.min(me.maxHp, expected) ? "hp " + me.hp + " not " + expected + "; " : "") + (bottles != 1 ? bottles + " bottles; " : "");
+						+ (pu.hp != Math.min(pu.maxHp, expected) ? "hp " + pu.hp + " not " + expected + "; " : "") + (bottles != 1 ? bottles + " bottles; " : "");
 			});
 			if (!items.isEmpty()) failures.add("battle healing: " + items);
 			context.waitTicks(3);

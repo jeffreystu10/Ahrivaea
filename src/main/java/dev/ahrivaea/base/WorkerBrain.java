@@ -320,8 +320,8 @@ public final class WorkerBrain {
 				if (!carried.isEmpty() && chestFor(level, be, carried) == null) drop();
 			}
 			case STUDY -> {
-				// study turns into experience, and now and then an enchanted book
-				output(level, t.target(), new ItemStack(Items.EXPERIENCE_BOTTLE, 1 + level.getRandom().nextInt(2)));
+				// study now and then turns into a bottle o' enchanting (1 in 4), and rarely an enchanted book
+				if (level.getRandom().nextInt(4) == 0) output(level, t.target(), new ItemStack(Items.EXPERIENCE_BOTTLE));
 				if (level.getRandom().nextInt(20) == 0) output(level, t.target(), net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(
 						level.getRandom(), new ItemStack(Items.BOOK), 10 + self.getCreatureLevel() / 2, level.registryAccess(), java.util.Optional.empty()));
 			}

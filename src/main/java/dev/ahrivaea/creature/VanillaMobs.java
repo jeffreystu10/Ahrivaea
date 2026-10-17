@@ -99,7 +99,20 @@ public final class VanillaMobs {
 		if (pick == null) pick = Species.pickFor(biome, level, level.getRandom(), (s, inf) -> water == (s.movement() == Species.Movement.SWIM)).orElse(null);
 		if (pick == null) return;
 		int[] range = pick.species().levelRange(pick.influence());
-		Ahrivaea.spawn(level, pick.species(), pick.influence(), range[0] + level.getRandom().nextInt(Math.max(1, range[1] - range[0] + 1)), -1,
-				r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5);
+		int lvl = range[0] + level.getRandom().nextInt(Math.max(1, range[1] - range[0] + 1));
+		// near a player, within 5 levels of them like every wild creature (a different creature if this one can't be)
+		var near = level.getNearestPlayer(r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5, 128, false);
+		if (near != null) {
+			int me = dev.ahrivaea.character.PlayerCharacter.get(near).level();
+			int lo = me - Species.WILD_LEVEL_SPREAD, hi = me + Species.WILD_LEVEL_SPREAD;
+			if (range[0] <= hi && range[1] >= lo) lvl = Math.max(range[0], lo) + level.getRandom().nextInt(Math.max(1, Math.min(range[1], hi) - Math.max(range[0], lo) + 1));
+			else {
+				var other = Species.pickForLevels(biome, level, level.getRandom(), lo, hi, (s, inf) -> water == (s.movement() == Species.Movement.SWIM));
+				if (other.isEmpty()) return;
+				pick = new Species.Pick(other.get().species(), other.get().influence());
+				lvl = other.get().level();
+			}
+		}
+		Ahrivaea.spawn(level, pick.species(), pick.influence(), lvl, -1, r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5);
 	}
 }

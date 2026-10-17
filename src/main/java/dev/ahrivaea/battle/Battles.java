@@ -200,6 +200,7 @@ public final class Battles {
 			enemyCell = new int[] {Math.clamp(wild.getBlockX() - grid.originX, 0, grid.size - 1), Math.clamp(wild.getBlockZ() - grid.originZ, 0, grid.size - 1)};
 		}
 		Battle b = new Battle(player, level, grid, !party.isEmpty());
+		b.recruitCap = dev.ahrivaea.party.RecruitRules.capFor(player);
 		b.arenaSlot = slot;
 
 		int[] pc = b.freeCellNear(playerCell[0], playerCell[1], Unit.Side.PLAYER);
@@ -248,10 +249,11 @@ public final class Battles {
 				wild.discard();
 			}
 			for (int i = 0; i < extra; i++) {
-				var pick = Species.pickFor(biome, home, b.random);
-				Species s = pick.map(Species.Pick::species).orElse(wildSpecies.get());
-				var inf = pick.map(Species.Pick::influence).orElse(lead.influence);
-				int lvl = Math.clamp(lead.level - 2 + b.random.nextInt(5), 0, 50);
+				// others of the area within 2 levels of the one you challenged (it, again, if nothing else fits)
+				var pick = Species.pickForLevels(biome, home, b.random, lead.level - 2, lead.level + 2, (sp, in) -> true);
+				Species s = pick.map(Species.LevelledPick::species).orElse(wildSpecies.get());
+				var inf = pick.map(Species.LevelledPick::influence).orElse(lead.influence);
+				int lvl = pick.map(Species.LevelledPick::level).orElse(Math.clamp(lead.level - 2 + b.random.nextInt(5), 0, 50));
 				int[] cell = b.freeCellNear(wc[0], wc[1], Unit.Side.ENEMY);
 				Unit u = b.addCreature(Unit.Side.ENEMY, s, inf, lvl, -1, -1, cell[0], cell[1]);
 				BlockPos at = b.cellPos(u);
@@ -419,6 +421,8 @@ public final class Battles {
 	private static String recruit(ServerPlayer p, Battle b, int index) {
 		if (index < 0 || index >= b.defeated.size()) return "Pick a creature to recruit.";
 		Battle.Defeated d = b.defeated.get(index);
+		String why = b.whyNotRecruit(d);
+		if (why != null) return "You can't recruit " + d.name() + ": " + why + ".";
 		if (Party.xp(p) < d.cost()) return "Recruiting " + d.name() + " costs " + d.cost() + " XP; you have " + Party.xp(p) + ".";
 		var species = Species.get(d.species());
 		if (species.isEmpty()) return "That creature no longer exists.";

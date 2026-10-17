@@ -29,6 +29,14 @@ public class VesselItem extends Item {
 			player.sendOverlayMessage(Component.literal(name + " already has a trainer."));
 			return InteractionResult.FAIL;
 		}
+		var species = creature.getSpecies();
+		if (species.isPresent()) {
+			String why = dev.ahrivaea.party.RecruitRules.whyNot(dev.ahrivaea.party.RecruitRules.capFor(player), species.get(), creature.getInfluence(), creature.getCreatureLevel());
+			if (why != null) {
+				player.sendOverlayMessage(Component.literal("Can't bind " + name + ": " + why + "."));
+				return InteractionResult.FAIL;
+			}
+		}
 		if (Party.get(player).size() >= Party.MAX) {
 			player.sendOverlayMessage(Component.literal("Your party is full (6). Release one with /party release <slot>."));
 			return InteractionResult.FAIL;

@@ -86,12 +86,12 @@ public final class WildSpawner {
 		final BlockPos spot = at;
 		for (var blocked : BLOCKED) if (blocked.test(level, spot)) return fail("blocked");
 		boolean inWater = water;
-		var pick = Species.pickFor(level.getBiome(spot), level, rnd,
+		// only creatures within 5 levels of the player (by their character level), at a level in that band
+		int me = dev.ahrivaea.character.PlayerCharacter.get(p).level();
+		var pick = Species.pickForLevels(level.getBiome(spot), level, rnd, me - Species.WILD_LEVEL_SPREAD, me + Species.WILD_LEVEL_SPREAD,
 				(s, inf) -> inWater == (s.movement() == Species.Movement.SWIM));
-		if (pick.isEmpty()) return fail("nothing lives in " + level.getBiome(spot).unwrapKey().map(k -> k.identifier().toString()).orElse("?") + (inWater ? " water" : ""));
-		int[] range = pick.get().species().levelRange(pick.get().influence());
-		int lvl = range[0] + rnd.nextInt(Math.max(1, range[1] - range[0] + 1));
-		CreatureEntity e = Ahrivaea.spawn(level, pick.get().species(), pick.get().influence(), lvl, -1, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5);
+		if (pick.isEmpty()) return fail("nothing near level " + me + " lives in " + level.getBiome(spot).unwrapKey().map(k -> k.identifier().toString()).orElse("?") + (inWater ? " water" : ""));
+		CreatureEntity e = Ahrivaea.spawn(level, pick.get().species(), pick.get().influence(), pick.get().level(), -1, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5);
 		if (e == null) return fail("couldn't create");
 		FAILURES.merge("spawned", 1, Integer::sum);
 		return e;

@@ -168,6 +168,29 @@ public record Species(String name, Stats stats, Map<Influence, Form> forms, floa
 		return Optional.of(candidates.getLast());
 	}
 
+	/** A wild creature and its level. */
+	public record LevelledPick(Species species, Influence influence, int level) {}
+
+	/**
+	 * A wild creature for this biome whose level range reaches [lo, hi] (others are left out), at a level in both.
+	 * Empty if nothing living here is in that range.
+	 */
+	public static Optional<LevelledPick> pickForLevels(Holder<Biome> biome, Level level, RandomSource random, int lo, int hi,
+			java.util.function.BiPredicate<Species, Influence> allowed) {
+		var pick = pickFor(biome, level, random, (s, inf) -> {
+			int[] r = s.levelRange(inf);
+			return r[0] <= hi && r[1] >= lo && allowed.test(s, inf);
+		});
+		return pick.map(p -> {
+			int[] r = p.species().levelRange(p.influence());
+			int a = Math.max(r[0], lo), b = Math.min(r[1], hi);
+			return new LevelledPick(p.species(), p.influence(), a + random.nextInt(Math.max(1, b - a + 1)));
+		});
+	}
+
+	/** Wild creatures appear within this many levels of the nearest player's character level. */
+	public static final int WILD_LEVEL_SPREAD = 5;
+
 	public Form form(Influence influence) {
 		return forms.getOrDefault(influence, Form.EMPTY);
 	}

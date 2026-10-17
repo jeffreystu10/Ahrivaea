@@ -208,8 +208,25 @@ public class BattleTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			context.takeScreenshot(TestScreenshotOptions.of("battle_5_victory"));
 			int poolBefore = server.computeOnServer(s -> Party.xp(s.getPlayerList().getPlayers().getFirst()));
-			// recruiting costs 10 XP per level; top the pool up so the test can afford one
-			server.runOnServer(s -> Party.addXp(s.getPlayerList().getPlayers().getFirst(), 500));
+			// recruiting costs 100 XP per level times its rarity's multiplier; top the pool up so the test can afford one
+			server.runOnServer(s -> Party.addXp(s.getPlayerList().getPlayers().getFirst(), 20000));
+			// the recruit limits: no rarer and no higher level than the creature you lead with
+			String rules = server.computeOnServer(s -> {
+				var cap = new dev.ahrivaea.party.RecruitRules.Cap(0, 4, "Cat");
+				StringBuilder out = new StringBuilder();
+				for (var sp : dev.ahrivaea.creature.Species.all()) {
+					for (var inf : sp.forms().keySet()) {
+						String r = dev.ahrivaea.party.RecruitRules.rarity(sp, inf);
+						boolean ok4 = dev.ahrivaea.party.RecruitRules.whyNot(cap, sp, inf, 4) == null;
+						boolean ok5 = dev.ahrivaea.party.RecruitRules.whyNot(cap, sp, inf, 5) == null;
+						if (ok4 != r.equals("Common") || ok5) out.append(sp.id()).append('/').append(inf.getSerializedName()).append(' ');
+						if (r.equals("Common") && dev.ahrivaea.party.RecruitRules.cost(sp, inf, 4) != 400) out.append("cost:").append(sp.id()).append(' ');
+						if (r.equals("Legendary") && dev.ahrivaea.party.RecruitRules.cost(sp, inf, 4) != 2000) out.append("cost:").append(sp.id()).append(' ');
+					}
+				}
+				return out.toString();
+			});
+			if (!rules.isEmpty()) failures.add("a Common Lv.4 lead should allow exactly Commons up to Lv.4 (400 XP for a Lv.4 Common, 2000 for a Legendary); wrong for: " + rules);
 			int partyBefore = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).size());
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).recruit(0));
 			context.waitTicks(10);

@@ -320,8 +320,15 @@ public class BattleScreen extends Screen {
 			for (int i = 0; i < rec.size(); i++) {
 				JsonObject d = rec.get(i).getAsJsonObject();
 				final int idx = i;
-				addRenderableWidget(Button.builder(Component.literal("Recruit " + d.get("name").getAsString() + " Lv." + d.get("level").getAsInt()
-						+ " (" + d.get("cost").getAsInt() + " XP)"), b -> recruit(idx)).bounds(width / 2 - 110, y + i * 22, 220, 20).build());
+				String rarity = d.has("rarity") ? d.get("rarity").getAsString() + " " : "";
+				boolean blocked = d.has("why");
+				Button rb = addRenderableWidget(Button.builder(Component.literal("Recruit " + rarity + d.get("name").getAsString() + " Lv." + d.get("level").getAsInt()
+						+ " (" + d.get("cost").getAsInt() + " XP)"), b -> recruit(idx)).bounds(width / 2 - 150, y + i * 22, 300, 20).build());
+				if (blocked) {
+					rb.active = false;
+					rb.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Can't recruit: " + d.get("why").getAsString())));
+					rb.setMessage(Component.literal(d.get("name").getAsString() + " Lv." + d.get("level").getAsInt() + ": " + d.get("why").getAsString()));
+				}
 			}
 			addRenderableWidget(Button.builder(Component.literal("Leave battle"), b -> leave()).bounds(width / 2 - 60, y + rec.size() * 22 + 8, 120, 20).build());
 			return;

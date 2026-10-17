@@ -423,6 +423,25 @@ public class CreatureEntity extends TamableAnimal {
 		return InteractionResult.SUCCESS;
 	}
 
+	/** Eating food from its owner's hand (outside battle): heals it by how filling the food is. */
+	public InteractionResult eat(Player player, ItemStack food) {
+		String name = displayName();
+		if (this.getHealth() >= this.getMaxHealth()) {
+			player.sendOverlayMessage(Component.literal(name + " is already at full health."));
+			return InteractionResult.FAIL;
+		}
+		float before = this.getHealth();
+		this.setHealth(Math.min(this.getMaxHealth(), before + Math.max(1, Math.round(this.getMaxHealth() * Healing.foodPercent(food) / 100f))));
+		ItemStack left = Healing.remainder(food);
+		food.consume(1, player);
+		Healing.giveBack(player, left);
+		ServerLevel level = (ServerLevel) this.level();
+		level.playSound(null, this.blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EAT.value(), net.minecraft.sounds.SoundSource.NEUTRAL, 1f, 1f);
+		level.sendParticles(net.minecraft.core.particles.ParticleTypes.HEART, this.getX(), this.getY() + this.getBbHeight() * 0.8, this.getZ(), 4, 0.4, 0.3, 0.4, 0);
+		player.sendOverlayMessage(Component.literal(name + ": +" + Math.round(this.getHealth() - before) + " HP (" + Math.round(this.getHealth()) + "/" + Math.round(this.getMaxHealth()) + ")"));
+		return InteractionResult.SUCCESS;
+	}
+
 	/** Saddles, treats, shears and getting on (server side; the creature is the player's own and not a base worker). */
 	private InteractionResult rideInteract(Player player, ItemStack stack) {
 		String name = displayName();
@@ -502,6 +521,8 @@ public class CreatureEntity extends TamableAnimal {
 		}
 		if (this.isTame() && this.isOwnedBy(player)) {
 			if (!this.level().isClientSide()) {
+				ItemStack held = player.getItemInHand(hand);
+				if (!player.isShiftKeyDown() && Healing.foodPercent(held) > 0) return eat(player, held);
 				InteractionResult ride = rideInteract(player, player.getItemInHand(hand));
 				if (ride != null) return ride;
 				if (player.isShiftKeyDown()) {

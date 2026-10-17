@@ -168,3 +168,22 @@ the box and their XP to give out. It's worked out on the server because only the
 - `/party recall` calls back every creature you've sent out nearby; `/party recall <entity>` one of them.
 
 Test: `PartyScreenTest` (screenshots `party_1_summary`, `party_2_screen`, `party_3_summary_one_out`).
+
+## Healing
+
+Outside battle your creatures eat food, like you do (`dev.ahrivaea.creature.Healing`). Right-click one you have
+out with food, or press Feed on the party screen (Party or Out tab) with food in your main hand, or
+`/party feed <slot>`. It heals a share of its max HP: 2.5% per hunger point the food fills plus 1.25% per point of
+saturation, between 3% and 60%. Bowls and bottles come back.
+
+| Food | Heals |
+|---|---|
+| Cookie, dried kelp, sweet berries | 3-6% |
+| Raw beef, carrot, apple | 10-13% |
+| Bread, baked potato, cooked cod | 20% |
+| Cooked chicken, mutton, salmon | 24-27% |
+| Steak, cooked porkchop | 36% |
+| Golden carrot | 33% |
+| Rabbit stew | 40% |
+
+In battle food does nothing; only brewed Healing and Regeneration potions heal (see design.md, Items).

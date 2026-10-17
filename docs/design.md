@@ -85,8 +85,10 @@ Which biome and time of day gives which influence: list to come (a draft is in
   moves' range.
 - **High ground:** attacking from 2+ blocks higher gives +10% hit chance.
 - **Water:** a unit standing in water deals half damage, except magic from a Water-influence move.
-- **Items** (your action): use a healing potion (heals 40%) or a golden apple (heals 50%) on yourself or a
-  unit next to you.
+- **Items** (your action): drink or throw a brewed healing potion on yourself or a unit next to you (the first one
+  in your inventory, hotbar first). Food doesn't work in battle. Healing heals 40% of max HP, Healing II 70%,
+  Regeneration 30%, long Regeneration 35%, Regeneration II 50%; splash and lingering versions also heal your
+  units next to the target. A drunk potion leaves its glass bottle.
 - **Rally** (your action): a creature next to you gets +(your Charisma ÷ 2)% damage on its next attack.
 - **Support:** each attack also gets +0.1% damage per point of Charisma of the attacker's neighbouring allies.
 - **Flee**: at any time, in either phase, and it always works. No XP; your creatures keep the damage they took.

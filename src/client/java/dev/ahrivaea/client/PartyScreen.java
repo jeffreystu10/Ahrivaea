@@ -137,6 +137,19 @@ public class PartyScreen extends Screen {
 				}
 			}
 		}
+		// feed it the food in your hand (outside battle food heals; in battle only potions do)
+		if (c != null && tab != Tab.BOX) {
+			Minecraft mc = Minecraft.getInstance();
+			boolean food = mc.player != null && mc.player.getMainHandItem().has(net.minecraft.core.component.DataComponents.FOOD);
+			int slot = selected + 1;
+			String cmd = tab == Tab.PARTY ? "party feed " + slot : "party feed out " + (c.has("entity") ? c.get("entity").getAsInt() : -1);
+			Button feed = addRenderableWidget(Button.builder(Component.literal("Feed"), b -> command(cmd)).bounds(right() + 208, 22 + 13, 36, 12)
+					.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal(food
+							? "Feed it the " + mc.player.getMainHandItem().getHoverName().getString() + " in your hand"
+							: "Hold food in your main hand to feed it (food heals outside battle)"))).build());
+			int hp = c.get("hp").getAsInt(), max = c.has("maxHp") ? c.get("maxHp").getAsInt() : hp;
+			feed.active = food && hp < max;
+		}
 		addRenderableWidget(Button.builder(Component.literal("Summary: " + (PartyClient.showSummary ? "on" : "off")), b -> {
 			PartyClient.setShowSummary(!PartyClient.showSummary);
 			rebuildWidgets();

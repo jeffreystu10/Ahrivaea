@@ -207,35 +207,32 @@ public final class Battle {
 		return null;
 	}
 
-	private ItemStack healingItem(ServerPlayer p) {
-		var inv = p.getInventory();
-		for (int i = 0; i < inv.getContainerSize(); i++) {
-			ItemStack s = inv.getItem(i);
-			if (s.is(Items.GOLDEN_APPLE)) return s;
-			if (s.is(Items.POTION)) {
-				PotionContents c = s.get(DataComponents.POTION_CONTENTS);
-				if (c != null && (c.is(Potions.HEALING) || c.is(Potions.STRONG_HEALING))) return s;
-			}
-		}
-		return ItemStack.EMPTY;
-	}
-
 	private String itemCheck(Unit u, Unit target) {
 		ServerPlayer p = player();
-		if (p == null || healingItem(p).isEmpty()) return "You have no healing potion or golden apple.";
+		if (p == null || dev.ahrivaea.creature.Healing.firstPotion(p).isEmpty())
+			return "You have no healing potions. Brew Healing or Regeneration potions (food only heals outside battle).";
 		if (target == null || target.side != u.side || !target.alive() || Pathing.distance(u.x, u.z, target.x, target.z) > 1) return "Use it on yourself or a unit next to you.";
 		return null;
 	}
 
+	/** Uses the first healing potion in the player's inventory; a splash or lingering one heals the target's neighbours too. */
 	private void useItem(Unit u, Unit target) {
 		ServerPlayer p = player();
-		ItemStack s = healingItem(p);
-		double share = s.is(Items.GOLDEN_APPLE) ? 0.5 : 0.4;
-		String what = s.is(Items.GOLDEN_APPLE) ? "a golden apple" : "a healing potion";
-		s.shrink(1);
-		int heal = (int) Math.round(target.maxHp * share);
-		target.hp = Math.min(target.maxHp, target.hp + heal);
-		say(u.name + " uses " + what + " on " + (target == u ? "themself" : target.name) + ": +" + heal + " HP");
+		ItemStack s = dev.ahrivaea.creature.Healing.firstPotion(p);
+		var heal = dev.ahrivaea.creature.Healing.potion(s);
+		if (heal == null) return;
+		boolean drinkable = s.is(Items.POTION);
+		if (!p.getAbilities().instabuild) s.shrink(1);
+		if (drinkable) dev.ahrivaea.creature.Healing.giveBack(p, new ItemStack(Items.GLASS_BOTTLE));
+		StringBuilder msg = new StringBuilder(u.name + " uses " + heal.name() + " on " + (target == u ? "themself" : target.name));
+		for (Unit t : units) {
+			boolean hit = t == target || (heal.splash() && t.side == target.side && t.alive() && Pathing.distance(t.x, t.z, target.x, target.z) == 1);
+			if (!hit) continue;
+			int amount = Math.min(t.maxHp - t.hp, (int) Math.round(t.maxHp * heal.percent() / 100.0));
+			t.hp += amount;
+			msg.append(t == target ? ": " : ", ").append(t == target ? "" : t.name + " ").append("+").append(amount).append(" HP");
+		}
+		say(msg.toString());
 	}
 
 	/** Running away always works, at any point of the battle. No XP; your creatures keep the damage they took. */

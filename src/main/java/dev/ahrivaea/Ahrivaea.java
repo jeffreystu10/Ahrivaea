@@ -110,6 +110,28 @@ public class Ahrivaea implements ModInitializer {
 								+ (e.isRideable() ? (e.hasSaddle() ? "; right-click to ride)" : "; put a saddle on it to ride it)") : ")")), false);
 						return 1;
 					})))
+					.then(Commands.literal("feed").then(Commands.literal("out").then(Commands.argument("entity", IntegerArgumentType.integer(0)).executes(ctx -> {
+						// one of your creatures out in the world (the party screen's Feed button on the Out tab)
+						ServerPlayer player = ctx.getSource().getPlayerOrException();
+						var found = player.level().getEntity(IntegerArgumentType.getInteger(ctx, "entity"));
+						if (!(found instanceof CreatureEntity e) || !e.isTame() || !e.isOwnedBy(player) || e.distanceTo(player) > dev.ahrivaea.party.PartySync.OUT_RANGE + 8) {
+							ctx.getSource().sendFailure(Component.literal("That creature isn't out with you."));
+							return 0;
+						}
+						if (dev.ahrivaea.creature.Healing.foodPercent(player.getMainHandItem()) <= 0) {
+							ctx.getSource().sendFailure(Component.literal("Hold some food in your main hand to feed it."));
+							return 0;
+						}
+						e.eat(player, player.getMainHandItem());
+						return 1;
+					})))
+							.then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
+						// the food in your main hand heals a party creature (outside battle)
+						ServerPlayer player = ctx.getSource().getPlayerOrException();
+						String msg = dev.ahrivaea.creature.Healing.feedParty(player, IntegerArgumentType.getInteger(ctx, "slot") - 1);
+						player.sendSystemMessage(Component.literal(msg));
+						return 1;
+					})))
 					.then(Commands.literal("recall")
 							.executes(ctx -> {
 								// every creature you sent out that's nearby

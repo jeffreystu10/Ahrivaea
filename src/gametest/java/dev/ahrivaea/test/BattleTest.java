@@ -299,6 +299,33 @@ public class BattleTest implements FabricClientGameTest {
 			});
 			context.waitFor(c -> c.level.dimension().equals(Arena.DIMENSION) && c.gui.screen() instanceof BattleScreen, 400);
 			context.waitTicks(10);
+			// in battle food doesn't heal, only brewed potions do (and a drunk potion leaves its bottle)
+			String items = server.computeOnServer(s -> {
+				ServerPlayer p = s.getPlayerList().getPlayers().getFirst();
+				Battle b = Battles.of(p);
+				if (b == null) return "no battle";
+				Unit me = b.playerUnit();
+				p.getInventory().clearContent();
+				p.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, 3));
+				p.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COOKED_BEEF, 3));
+				me.hp = 1;
+				me.acted = false;
+				String withFood = b.act(new Battle.Action("item", me.id, me.x, me.z, -1, me.id));
+				p.getInventory().add(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, net.minecraft.world.item.alchemy.Potions.HEALING));
+				me.acted = false;
+				String withPotion = b.act(new Battle.Action("item", me.id, me.x, me.z, -1, me.id));
+				var inv = p.getInventory();
+				int bottles = java.util.stream.IntStream.range(0, inv.getContainerSize())
+						.map(i -> inv.getItem(i).is(net.minecraft.world.item.Items.GLASS_BOTTLE) ? inv.getItem(i).getCount() : 0).sum();
+				int expected = 1 + (int) Math.round(me.maxHp * 0.4);
+				me.acted = false;
+				Battles.send(b);
+				return (withFood == null ? "food was accepted; " : "") + (withPotion != null ? "potion refused: " + withPotion + "; " : "")
+						+ (me.hp != Math.min(me.maxHp, expected) ? "hp " + me.hp + " not " + expected + "; " : "") + (bottles != 1 ? bottles + " bottles; " : "");
+			});
+			if (!items.isEmpty()) failures.add("battle healing: " + items);
+			context.waitTicks(3);
+
 			// the creature that was out is fighting with us; then all our creatures and the challenged one go down,
 			// which ends nothing: only being knocked out yourself loses (and only beating every enemy wins)
 			String joined = server.computeOnServer(s -> {

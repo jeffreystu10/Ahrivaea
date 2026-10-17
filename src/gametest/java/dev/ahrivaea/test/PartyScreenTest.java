@@ -61,6 +61,35 @@ public class PartyScreenTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("party_3_summary_one_out").withSize(1600, 900));
 			int out = context.computeOnClient(c -> PartyClient.outCount());
 			if (out != 1) failures.add("the summary should show the creature that's out, got " + out);
+			// food heals outside battle: the horse that's out eats cooked beef from our hand (36% of 116 HP), and
+			// the Cat in the party eats bread from the party screen (20% of its 71 HP)
+			server.runCommand("gamemode survival @a");
+			server.runCommand("item replace entity @a weapon.mainhand with minecraft:cooked_beef 4");
+			context.waitTicks(3);
+			context.runOnClient(c -> {
+				var e = c.level.getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, c.player.getBoundingBox().inflate(10), x -> x.isTame());
+				if (!e.isEmpty()) c.gameMode.interact(c.player, e.getFirst(), new net.minecraft.world.phys.EntityHitResult(e.getFirst()), net.minecraft.world.InteractionHand.MAIN_HAND);
+			});
+			context.waitTicks(5);
+			float horseHp = server.computeOnServer(s -> {
+				var p = s.getPlayerList().getPlayers().getFirst();
+				var e = s.overworld().getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, p.getBoundingBox().inflate(10), x -> x.isTame());
+				return e.isEmpty() ? -1f : e.getFirst().getHealth();
+			});
+			if (Math.abs(horseHp - (30 + Math.round(116 * 0.36f))) > 1) failures.add("cooked beef should heal the Horse that's out by 36% (to 72), it has " + horseHp);
+			server.runCommand("item replace entity @a weapon.mainhand with minecraft:bread 2");
+			context.waitTicks(3);
+			context.runOnClient(c -> c.player.connection.sendCommand("party feed 4"));
+			context.waitTicks(10);
+			float catHp = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).get(3).health());
+			int breadLeft = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().getMainHandItem().getCount());
+			if (Math.abs(catHp - (12 + Math.round(71 * 0.2f))) > 1 || breadLeft != 1) failures.add("bread should heal the Cat in the party by 20% (to 26) and be used up: hp " + catHp + ", bread left " + breadLeft);
+			context.runOnClient(c -> c.gui.setScreen(new PartyScreen()));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("party_4_fed").withSize(1600, 900));
+			context.runOnClient(c -> c.gui.setScreen(null));
+			context.waitTicks(3);
+
 			// call it back by its entity number, as the Out tab's button does
 			context.runOnClient(c -> {
 				var e = c.level.getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, c.player.getBoundingBox().inflate(10), x -> x.isTame());

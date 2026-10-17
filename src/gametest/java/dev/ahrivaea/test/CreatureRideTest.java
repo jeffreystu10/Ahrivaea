@@ -184,6 +184,10 @@ public class CreatureRideTest implements FabricClientGameTest {
 			if (dive[1] == 0) failures.add("riding a swimming creature should keep the rider breathing underwater");
 			if (swim < 8) failures.add("a ridden Orca should swim at speed, measured " + String.format("%.1f", swim) + " blocks/sec");
 			server.runCommand("ride @p dismount");
+			// tidy up before the world closes (closing with lots of force-loaded chunks and creatures sometimes hangs)
+			server.runCommand("kill @e[type=ahrivaea:creature]");
+			server.runCommand("forceload remove all");
+			context.waitTicks(20);
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

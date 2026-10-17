@@ -163,6 +163,29 @@ public class WildCreaturesTest implements FabricClientGameTest {
 			LOG.info("WildCreaturesTest: 1000 blocks travelled, {} wild creatures appeared, at most {} nearby at once; attempts: {}", spawned, most, why);
 			if (spawned < 8 || spawned > 22) failures.add("about 15 wild creatures should turn up over 1000 blocks, got " + spawned + "; attempts: " + why);
 			if (most > dev.ahrivaea.creature.WildSpawner.CAP) failures.add("no more than " + dev.ahrivaea.creature.WildSpawner.CAP + " wild creatures should be near at once, saw " + most);
+
+			// a big creature walled in by blocks gets itself out: it hops to the nearest open spot on solid ground
+			var here = context.computeOnClient(c -> c.player.blockPosition());
+			int ex = here.getX() + 10, ey = here.getY() - 1, ez = here.getZ() + 10;
+			server.runCommand("gamerule spawn_mobs false");
+			server.runCommand("kill @e[type=ahrivaea:creature]");
+			server.runCommand("execute positioned %d %d %d run ahrivaea spawn elephant none 10".formatted(ex, ey, ez));
+			context.waitTicks(5);
+			server.runCommand("fill %d %d %d %d %d %d minecraft:stone".formatted(ex - 3, ey, ez - 3, ex + 3, ey + 4, ez + 3));
+			boolean buried = server.computeOnServer(s -> {
+				var e = s.overworld().getEntitiesOfClass(CreatureEntity.class, new AABB(ex, ey, ez, ex + 1, ey + 1, ez + 1).inflate(6)).getFirst();
+				return !s.overworld().noCollision(e, e.getBoundingBox().deflate(0.1));
+			});
+			context.waitTicks(80);
+			String freed = server.computeOnServer(s -> {
+				var all = s.overworld().getEntitiesOfClass(CreatureEntity.class, new AABB(ex, ey, ez, ex + 1, ey + 1, ez + 1).inflate(20));
+				if (all.isEmpty()) return "gone";
+				var e = all.getFirst();
+				boolean free = s.overworld().noCollision(e, e.getBoundingBox().deflate(0.1));
+				return (free ? "free" : "still inside") + " at " + e.blockPosition().toShortString();
+			});
+			LOG.info("WildCreaturesTest: an Elephant buried in stone (buried {}): {}", buried, freed);
+			if (!buried || !freed.startsWith("free")) failures.add("a creature stuck inside blocks should move itself out (buried " + buried + "): " + freed);
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

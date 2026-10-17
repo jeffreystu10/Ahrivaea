@@ -2,6 +2,7 @@ package dev.ahrivaea.creature;
 
 import dev.ahrivaea.party.CaughtCreature;
 import dev.ahrivaea.party.Party;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -568,6 +569,75 @@ public class CreatureEntity extends TamableAnimal {
 		// a swimming mount keeps its rider breathing underwater
 		if (!this.level().isClientSide() && this.tickCount % 20 == 0 && ridesSwimming() && this.getControllingPassenger() instanceof Player rider)
 			rider.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WATER_BREATHING, 60, 0, true, false));
+		if (!this.level().isClientSide() && this.tickCount % 20 == 0) checkStuck();
+	}
+
+	// ---- getting unstuck ----
+
+	/** Seconds stuck so far: inside blocks, or trying to walk somewhere without getting anywhere. */
+	private int stuckSeconds;
+	private net.minecraft.world.phys.Vec3 lastCheck;
+	/** Inside blocks this long, or not getting anywhere this long, and it hops out. */
+	public static final int STUCK_INSIDE_SECONDS = 2, STUCK_STILL_SECONDS = 6;
+	/** How far it looks for somewhere to go. */
+	public static final int UNSTICK_RANGE = 12;
+	private static java.util.List<BlockPos> offsets;
+
+	/**
+	 * Big creatures can wedge themselves into blocks, or between trees and walls. Once a second: if it's inside
+	 * blocks for 2 seconds, or has been trying to walk somewhere for 6 seconds without moving, it's moved to the nearest
+	 * open spot on solid ground (or in water, for swimmers) where it fits. Not while ridden, sitting, in a battle or
+	 * frozen (NoAI).
+	 */
+	private void checkStuck() {
+		if (this.isNoAi() || this.isPassenger() || this.isVehicle() || dev.ahrivaea.battle.Battles.inBattle(this)) {
+			stuckSeconds = 0;
+			return;
+		}
+		net.minecraft.world.phys.Vec3 now = this.position();
+		boolean inside = !this.level().noCollision(this, this.getBoundingBox().deflate(0.1));
+		boolean trying = this.getNavigation().isInProgress() && !this.isOrderedToSit();
+		boolean still = lastCheck != null && now.distanceToSqr(lastCheck) < 0.05;
+		lastCheck = now;
+		stuckSeconds = inside || (trying && still) ? stuckSeconds + 1 : 0;
+		if (stuckSeconds < (inside ? STUCK_INSIDE_SECONDS : STUCK_STILL_SECONDS)) return;
+		stuckSeconds = 0;
+		BlockPos to = freeSpotNear(this.blockPosition());
+		if (to == null) return;
+		dev.ahrivaea.Ahrivaea.LOGGER.info("{} was stuck at {}; moved to {}", displayName(), this.blockPosition().toShortString(), to.toShortString());
+		this.getNavigation().stop();
+		this.teleportTo(to.getX() + 0.5, to.getY(), to.getZ() + 0.5);
+		this.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+		lastCheck = null;
+	}
+
+	/** The nearest spot (feet position) where it fits with solid ground under it, or water for a swimmer; null if none. */
+	public BlockPos freeSpotNear(BlockPos from) {
+		if (offsets == null) {
+			java.util.List<BlockPos> list = new java.util.ArrayList<>();
+			for (int dx = -UNSTICK_RANGE; dx <= UNSTICK_RANGE; dx++)
+				for (int dy = -UNSTICK_RANGE / 2; dy <= UNSTICK_RANGE; dy++)
+					for (int dz = -UNSTICK_RANGE; dz <= UNSTICK_RANGE; dz++)
+						if (dx != 0 || dy != 0 || dz != 0) list.add(new BlockPos(dx, dy, dz));
+			// nearest first; going up is preferred to going down by the same amount
+			list.sort(java.util.Comparator.comparingDouble(o -> o.getX() * o.getX() + o.getZ() * o.getZ() + (o.getY() < 0 ? 1.5 : 1) * o.getY() * o.getY()));
+			offsets = list;
+		}
+		boolean swims = getSpecies().map(sp -> sp.movement() == Species.Movement.SWIM).orElse(false);
+		net.minecraft.world.phys.AABB box = this.getBoundingBox();
+		net.minecraft.world.phys.Vec3 feet = this.position();
+		for (BlockPos o : offsets) {
+			BlockPos p = from.offset(o);
+			if (!this.level().isLoaded(p)) continue;
+			boolean water = this.level().getFluidState(p).is(net.minecraft.tags.FluidTags.WATER);
+			if (swims ? !water : !this.level().getBlockState(p.below()).isFaceSturdy(this.level(), p.below(), net.minecraft.core.Direction.UP)) continue;
+			if (!swims && !this.level().getFluidState(p).isEmpty()) continue;
+			net.minecraft.world.phys.AABB moved = box.move(p.getX() + 0.5 - feet.x, p.getY() - feet.y, p.getZ() + 0.5 - feet.z);
+			if (!this.level().noCollision(this, moved)) continue;
+			if (!swims && this.level().containsAnyLiquid(moved.deflate(0.05))) continue;
+			return p;
+		}
+		return null;
 	}
 
 	/** Back into its owner's party (or box if the party is full); it leaves the world. */

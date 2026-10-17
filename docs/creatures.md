@@ -54,6 +54,11 @@ count as travel. On land it picks walking and flying creatures, in water swimmer
 it looks for a cave floor near the player's height. Nothing spawns inside a base or in the battle arenas. Wild
 creatures despawn like animals do when no player is near; tamed ones and workers stay.
 
+**Getting unstuck.** Big creatures can wedge themselves into blocks or between trees and walls. Once a second each
+creature checks: inside blocks for 2 seconds, or trying to walk somewhere for 6 seconds without moving, and it
+hops to the nearest open spot within 12 blocks where it fits, with solid ground under it (or in water, for
+swimmers). Not while ridden, sitting, frozen (NoAI) or in a battle (`CreatureEntity.checkStuck`).
+
 **Which creature.** First its influence tier, then a creature of that tier from the forms whose `spawn` biomes
 include the spot (weighted as above, and within 5 levels of the player):
 

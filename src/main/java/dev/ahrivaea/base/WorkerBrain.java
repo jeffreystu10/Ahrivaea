@@ -50,6 +50,9 @@ import java.util.Set;
  * there, works for a while and finishes it, then picks the next. Ranching runs on its own timer alongside.
  */
 public final class WorkerBrain {
+	/** Study sessions so far (for the enchanting table's bottles). */
+	private int studies;
+
 	private final CreatureEntity self;
 	private final BlockPos core;
 
@@ -320,8 +323,8 @@ public final class WorkerBrain {
 				if (!carried.isEmpty() && chestFor(level, be, carried) == null) drop();
 			}
 			case STUDY -> {
-				// study now and then turns into a bottle o' enchanting (1 in 4), and rarely an enchanted book
-				if (level.getRandom().nextInt(4) == 0) output(level, t.target(), new ItemStack(Items.EXPERIENCE_BOTTLE));
+				// every 4th study session turns into a bottle o' enchanting (the 1st, 5th, 9th ...), and rarely an enchanted book
+				if (studies++ % 4 == 0) output(level, t.target(), new ItemStack(Items.EXPERIENCE_BOTTLE));
 				if (level.getRandom().nextInt(20) == 0) output(level, t.target(), net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(
 						level.getRandom(), new ItemStack(Items.BOOK), 10 + self.getCreatureLevel() / 2, level.registryAccess(), java.util.Optional.empty()));
 			}

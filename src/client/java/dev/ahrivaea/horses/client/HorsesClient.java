@@ -40,7 +40,8 @@ public class HorsesClient implements ClientModInitializer {
 			Minecraft mc = Minecraft.getInstance();
 			if (mc.player == null || mc.level == null || mc.gui.hud.isHidden() || !serverHasMod()) return;
 			if (mc.player.getVehicle() instanceof AbstractHorse h && HorseSpeed.covers(h)) {
-				HorseStats.draw(g, h, true, 6, 6);
+				// top left, or a third of the way down while the F3 debug text is on screen
+				HorseStats.draw(g, h, true, 6, mc.getDebugOverlay().showDebugScreen() ? g.guiHeight() / 3 : 6);
 				return;
 			}
 			AbstractHorse looked = lookedAt(mc);

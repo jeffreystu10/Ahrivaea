@@ -60,8 +60,9 @@ public class GuideScreen extends Screen {
 		return 8;
 	}
 
+	/** Kept a little below the top edge, clear of the F3 debug text. */
 	private int top() {
-		return 8;
+		return 22;
 	}
 
 	private int right() {

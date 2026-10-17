@@ -90,6 +90,19 @@ public class PartyScreenTest implements FabricClientGameTest {
 			context.runOnClient(c -> c.gui.setScreen(null));
 			context.waitTicks(3);
 
+			// with the F3 debug text on: the summary moves below it, and the party screen starts a little lower
+			context.runOnClient(c -> c.getDebugOverlay().debugEntries.setOverlayVisible(true));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("party_5_with_f3").withSize(1600, 900));
+			context.runOnClient(c -> c.gui.setScreen(new PartyScreen()));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("party_6_screen_with_f3").withSize(1600, 900));
+			context.runOnClient(c -> {
+				c.gui.setScreen(null);
+				c.getDebugOverlay().debugEntries.setOverlayVisible(false);
+			});
+			context.waitTicks(3);
+
 			// call it back by its entity number, as the Out tab's button does
 			context.runOnClient(c -> {
 				var e = c.level.getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, c.player.getBoundingBox().inflate(10), x -> x.isTame());

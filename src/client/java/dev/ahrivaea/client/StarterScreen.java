@@ -18,6 +18,8 @@ import net.minecraft.network.chat.Component;
  * on the right with its stats, how it moves and what it does, and "Choose" sends it to your party at level 1.
  */
 public class StarterScreen extends Screen {
+	/** Everything sits this much lower, clear of the F3 debug text. */
+	static final int TOP = 14;
 	private final JsonObject offer;
 	private int selected;
 	private CreatureEntity preview;
@@ -52,7 +54,7 @@ public class StarterScreen extends Screen {
 			Button b = addRenderableWidget(Button.builder(Component.literal(l.get(i).getAsJsonObject().get("name").getAsString()), btn -> {
 				selected = idx;
 				rebuildWidgets();
-			}).bounds(x0 + (i % COLS) * (BTN_W + 2), 24 + (i / COLS) * ROW, BTN_W, BTN_H).build());
+			}).bounds(x0 + (i % COLS) * (BTN_W + 2), 24 + TOP + (i / COLS) * ROW, BTN_W, BTN_H).build());
 			b.active = i != selected;
 		}
 		if (!l.isEmpty()) {
@@ -72,11 +74,11 @@ public class StarterScreen extends Screen {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
-		g.centeredText(font, "Choose your starter: it joins your party at level " + offer.get("level").getAsInt(), width / 2, 8, 0xFFFFD040);
+		g.centeredText(font, "Choose your starter: it joins your party at level " + offer.get("level").getAsInt(), width / 2, 8 + TOP, 0xFFFFD040);
 		JsonArray l = options();
 		if (l.isEmpty()) return;
 		JsonObject c = l.get(selected).getAsJsonObject();
-		int x = panelLeft(), y = 24, w = PANEL_W;
+		int x = panelLeft(), y = 24 + TOP, w = PANEL_W;
 		g.fill(x - 4, y - 4, x + w + 4, height - 30, 0x80000000);
 		g.text(font, c.get("name").getAsString(), x, y, 0xFFFFFFFF);
 		String move = c.get("movement").getAsString();

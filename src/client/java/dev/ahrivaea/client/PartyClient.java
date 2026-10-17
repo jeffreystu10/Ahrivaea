@@ -83,7 +83,8 @@ public final class PartyClient {
 		int h = 12 + rows * ROW + (out.isEmpty() || party.isEmpty() ? 0 : 4);
 		// top left, above the chat; below the mount's stats while riding a creature
 		var player = Minecraft.getInstance().player;
-		int x = 4, y = player != null && player.getVehicle() instanceof dev.ahrivaea.creature.CreatureEntity ? 80 : 4;
+		int top = MountHud.hudTop(Minecraft.getInstance(), g.guiHeight()) - 2;
+		int x = 4, y = player != null && player.getVehicle() instanceof dev.ahrivaea.creature.CreatureEntity ? top + 76 : top;
 		g.fill(x - 2, y - 2, x + WIDTH + 2, y + h, 0x90000000);
 		g.text(font, "Party  [" + OPEN.getTranslatedKeyMessage().getString() + "]", x + 1, y, 0xFFAAAAAA);
 		y += 12;

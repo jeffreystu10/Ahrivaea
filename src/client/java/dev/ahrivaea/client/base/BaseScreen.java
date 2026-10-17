@@ -16,13 +16,15 @@ import net.minecraft.network.chat.Component;
  * box on the right, each with a button to put that creature to work here.
  */
 public class BaseScreen extends Screen {
+	/** Everything sits this much lower, clear of the F3 debug text. */
+	static final int TOP = 14, Y0 = 58 + TOP;
 	private JsonObject state;
 	private int tick;
 	private int boxScroll, workerScroll;
 
 	/** How many worker rows fit above the Done button. */
 	private int workerRows() {
-		return Math.max(1, (height - 58 - 34) / 26);
+		return Math.max(1, (height - Y0 - 34) / 26);
 	}
 
 	public BaseScreen(JsonObject state) {
@@ -63,10 +65,10 @@ public class BaseScreen extends Screen {
 		workerScroll = Math.clamp(workerScroll, 0, Math.max(0, workers.size() - workerRows()));
 		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++) {
 			final int idx = i;
-			addRenderableWidget(Button.builder(Component.literal("Send away"), b -> send("unassign", idx)).bounds(left + 170, 58 + (i - workerScroll) * 26, 70, 18).build());
+			addRenderableWidget(Button.builder(Component.literal("Send away"), b -> send("unassign", idx)).bounds(left + 170, Y0 + (i - workerScroll) * 26, 70, 18).build());
 		}
 		boolean full = workers.size() >= state.get("cap").getAsInt();
-		int y = 58;
+		int y = Y0;
 		JsonArray party = state.getAsJsonArray("party");
 		for (int i = 0; i < party.size(); i++) {
 			final int idx = i;
@@ -104,18 +106,18 @@ public class BaseScreen extends Screen {
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
 		int left = width / 2 - 250, right = width / 2 + 10;
 		JsonArray workers = state.getAsJsonArray("workers");
-		g.centeredText(font, "Base (level " + state.get("level").getAsInt() + ", radius " + state.get("radius").getAsInt() + ")", width / 2, 10, 0xFFFFD040);
-		g.centeredText(font, state.get("upgrade").getAsString(), width / 2, 22, 0xFFAAAAAA);
-		g.text(font, "Workers " + workers.size() + "/" + state.get("cap").getAsInt() + (workers.size() > workerRows() ? " (scroll for more)" : ""), left, 42, 0xFFFFFFFF);
+		g.centeredText(font, "Base (level " + state.get("level").getAsInt() + ", radius " + state.get("radius").getAsInt() + ")", width / 2, 10 + TOP, 0xFFFFD040);
+		g.centeredText(font, state.get("upgrade").getAsString(), width / 2, 22 + TOP, 0xFFAAAAAA);
+		g.text(font, "Workers " + workers.size() + "/" + state.get("cap").getAsInt() + (workers.size() > workerRows() ? " (scroll for more)" : ""), left, 42 + TOP, 0xFFFFFFFF);
 		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++)
-			entry(g, workers.get(i).getAsJsonObject(), left, 58 + (i - workerScroll) * 26, true);
-		if (workers.isEmpty()) g.text(font, "Nobody works here yet: pick creatures on the right.", left, 58, 0xFFAAAAAA);
+			entry(g, workers.get(i).getAsJsonObject(), left, Y0 + (i - workerScroll) * 26, true);
+		if (workers.isEmpty()) g.text(font, "Nobody works here yet: pick creatures on the right.", left, Y0, 0xFFAAAAAA);
 		JsonArray party = state.getAsJsonArray("party");
-		g.text(font, "Party", right, 42, 0xFFFFFFFF);
-		for (int i = 0; i < party.size(); i++) entry(g, party.get(i).getAsJsonObject(), right, 58 + i * 26, false);
-		if (party.isEmpty()) g.text(font, "(empty)", right, 58, 0xFFAAAAAA);
+		g.text(font, "Party", right, 42 + TOP, 0xFFFFFFFF);
+		for (int i = 0; i < party.size(); i++) entry(g, party.get(i).getAsJsonObject(), right, Y0 + i * 26, false);
+		if (party.isEmpty()) g.text(font, "(empty)", right, Y0, 0xFFAAAAAA);
 		JsonArray box = state.getAsJsonArray("box");
-		int boxTop = 58 + Math.max(1, party.size()) * 26 + 22;
+		int boxTop = Y0 + Math.max(1, party.size()) * 26 + 22;
 		g.text(font, "Box (" + box.size() + (box.size() > 0 ? ", scroll for more" : "") + ")", right, boxTop - 16, 0xFFFFFFFF);
 		int rows = Math.max(1, (height - boxTop - 34) / 26);
 		for (int i = boxScroll; i < Math.min(box.size(), boxScroll + rows); i++) entry(g, box.get(i).getAsJsonObject(), right, boxTop + (i - boxScroll) * 26, false);

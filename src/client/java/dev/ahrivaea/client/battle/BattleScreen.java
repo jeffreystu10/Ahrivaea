@@ -22,6 +22,8 @@ import java.util.Map;
  * goes back a step. Blue squares: where it can move. Red: what it can hit from there.
  */
 public class BattleScreen extends Screen {
+	/** Everything along the top edge sits this much lower, clear of the F3 debug text. */
+	static final int TOP = 14;
 	private enum Step { UNIT, DESTINATION, ACTION, TARGET }
 
 	private Step step = Step.UNIT;
@@ -428,11 +430,11 @@ public class BattleScreen extends Screen {
 		String banner = state().has("result") ? "" : "Turn " + state().get("turn").getAsInt() + " - " + ("PLAYER".equals(phase()) ? "Your phase" : "Enemy phase");
 		if (!banner.isEmpty()) {
 			int w = font.width(banner) + 12;
-			g.fill(width / 2 - w / 2, 4, width / 2 + w / 2, 18, 0xA0000000);
-			g.centeredText(font, banner, width / 2, 7, "PLAYER".equals(phase()) ? 0xFF7FC8FF : 0xFFFF8080);
+			g.fill(width / 2 - w / 2, 4 + TOP, width / 2 + w / 2, 18 + TOP, 0xA0000000);
+			g.centeredText(font, banner, width / 2, 7 + TOP, "PLAYER".equals(phase()) ? 0xFF7FC8FF : 0xFFFF8080);
 		}
 		JsonArray log = state().getAsJsonArray("log");
-		int ly = 38;
+		int ly = 38 + TOP;
 		for (int i = state().has("result") ? log.size() : Math.max(0, log.size() - 6); i < log.size(); i++) {
 			String line = log.get(i).getAsString();
 			g.fill(4, ly - 1, 8 + font.width(line), ly + 9, 0x80000000);
@@ -465,8 +467,8 @@ public class BattleScreen extends Screen {
 		};
 		if (!hint.isEmpty() && !state().has("result")) {
 			int w = font.width(hint) + 12;
-			g.fill(width / 2 - w / 2, 20, width / 2 + w / 2, 32, 0xA0000000);
-			g.centeredText(font, hint, width / 2, 22, 0xFFFFFFA0);
+			g.fill(width / 2 - w / 2, 20 + TOP, width / 2 + w / 2, 32 + TOP, 0xA0000000);
+			g.centeredText(font, hint, width / 2, 22 + TOP, 0xFFFFFFA0);
 		}
 
 		// results

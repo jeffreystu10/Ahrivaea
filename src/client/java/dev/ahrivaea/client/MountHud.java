@@ -22,6 +22,11 @@ public final class MountHud {
 
 	private record Line(String text, int color) {}
 
+	/** Where the top-left panels start: the top, or a third of the way down while the F3 debug text is on screen. */
+	static int hudTop(Minecraft mc, int guiHeight) {
+		return mc.getDebugOverlay().showDebugScreen() ? guiHeight / 3 : 6;
+	}
+
 	public static void register() {
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
 			if (mc.player != null && mc.player.getVehicle() instanceof CreatureEntity c) {
@@ -53,7 +58,7 @@ public final class MountHud {
 			var font = mc.font;
 			int w = 0;
 			for (Line l : lines) w = Math.max(w, font.width(l.text()));
-			int x = 6, y = 6;
+			int x = 6, y = hudTop(mc, g.guiHeight());
 			g.fill(x - 3, y - 3, x + w + 3, y + lines.size() * 10 + 1, 0xB0000000);
 			for (int i = 0; i < lines.size(); i++) g.text(font, lines.get(i).text(), x, y + i * 10, lines.get(i).color());
 		});

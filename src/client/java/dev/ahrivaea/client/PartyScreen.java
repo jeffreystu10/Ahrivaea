@@ -15,6 +15,8 @@ import net.minecraft.network.chat.Component;
  * The buttons run the /party commands, so they behave exactly the same.
  */
 public class PartyScreen extends Screen {
+	/** Everything sits this much lower, clear of the F3 debug text. */
+	static final int TOP = 14;
 	enum Tab {
 		PARTY("Party"), OUT("Out"), BOX("Box");
 
@@ -66,7 +68,7 @@ public class PartyScreen extends Screen {
 	}
 
 	private int rows() {
-		return Math.max(1, (height - 46 - 32) / CARD_H);
+		return Math.max(1, (height - 46 - TOP - 32) / CARD_H);
 	}
 
 	private void command(String cmd) {
@@ -92,7 +94,7 @@ public class PartyScreen extends Screen {
 				scroll = 0;
 				confirmRelease = false;
 				rebuildWidgets();
-			}).bounds(x + i * 51, 20, 49, 18).build());
+			}).bounds(x + i * 51, 20 + TOP, 49, 18).build());
 			b.active = tab != t;
 		}
 		// the creatures in this tab, as cards to click
@@ -104,7 +106,7 @@ public class PartyScreen extends Screen {
 				selected = idx;
 				confirmRelease = false;
 				rebuildWidgets();
-			}).bounds(x, 44 + (i - scroll) * CARD_H, 152, CARD_H - 2).build());
+			}).bounds(x, 44 + TOP + (i - scroll) * CARD_H, 152, CARD_H - 2).build());
 			card.active = idx != selected;
 		}
 		// actions for the chosen one
@@ -144,7 +146,7 @@ public class PartyScreen extends Screen {
 			boolean food = mc.player != null && mc.player.getMainHandItem().has(net.minecraft.core.component.DataComponents.FOOD);
 			int slot = selected + 1;
 			String cmd = tab == Tab.PARTY ? "party feed " + slot : "party feed out " + (c.has("entity") ? c.get("entity").getAsInt() : -1);
-			Button feed = addRenderableWidget(Button.builder(Component.literal("Feed"), b -> command(cmd)).bounds(right() + 208, 22 + 13, 36, 12)
+			Button feed = addRenderableWidget(Button.builder(Component.literal("Feed"), b -> command(cmd)).bounds(right() + 208, 22 + TOP + 13, 36, 12)
 					.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal(food
 							? "Feed it the " + mc.player.getMainHandItem().getHoverName().getString() + " in your hand"
 							: "Hold food in your main hand to feed it (food heals outside battle)"))).build());
@@ -170,13 +172,13 @@ public class PartyScreen extends Screen {
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
 		if (PartyClient.state == null) return;
 		int x = left(), rx = right();
-		g.text(font, "Party", x, 6, 0xFFFFD040);
+		g.text(font, "Party", x, 6 + TOP, 0xFFFFD040);
 		String pool = "XP to give out: " + PartyClient.state.get("xp").getAsInt();
-		g.text(font, pool, rx + 244 - font.width(pool), 6, 0xFF9FE09F);
+		g.text(font, pool, rx + 244 - font.width(pool), 6 + TOP, 0xFF9FE09F);
 		JsonArray l = list();
 		for (int i = scroll; i < Math.min(l.size(), scroll + rows()); i++) {
 			JsonObject c = l.get(i).getAsJsonObject();
-			int y = 44 + (i - scroll) * CARD_H;
+			int y = 44 + TOP + (i - scroll) * CARD_H;
 			String lv = "Lv." + c.get("level").getAsInt();
 			String name = c.get("name").getAsString();
 			int room = 146 - font.width(lv) - 8;
@@ -191,9 +193,9 @@ public class PartyScreen extends Screen {
 			case PARTY -> "Empty. Catch creatures with a Vessel.";
 			case OUT -> "None out. Send one from your party.";
 			case BOX -> "Empty. Extras go here.";
-		}, x, 48, 0xFFAAAAAA);
-		else if (l.size() > rows()) g.text(font, "(scroll for more)", x, 44 + rows() * CARD_H, 0xFF888888);
-		details(g, chosen(), rx, 22);
+		}, x, 48 + TOP, 0xFFAAAAAA);
+		else if (l.size() > rows()) g.text(font, "(scroll for more)", x, 44 + TOP + rows() * CARD_H, 0xFF888888);
+		details(g, chosen(), rx, 22 + TOP);
 	}
 
 	/** Everything about one creature, in the right-hand column. */

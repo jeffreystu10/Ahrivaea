@@ -61,7 +61,10 @@ public class StarterScreen extends Screen {
 		}
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.level != null && !l.isEmpty()) {
-			if (preview == null) preview = new CreatureEntity(Ahrivaea.CREATURE, mc.level);
+			if (preview == null) {
+				preview = new CreatureEntity(Ahrivaea.CREATURE, mc.level);
+				preview.setId(-4242); // never added to the world, but rendering asks for an id
+			}
 			preview.previewAs(l.get(selected).getAsJsonObject().get("id").getAsString(), "none");
 		}
 	}

@@ -91,7 +91,7 @@ public class PartyScreenTest implements FabricClientGameTest {
 			context.waitTicks(3);
 
 			// with the F3 debug text on: the summary moves below it, and the party screen starts a little lower
-			context.runOnClient(c -> c.getDebugOverlay().debugEntries.setOverlayVisible(true));
+			context.runOnClient(c -> c.debugEntries.setOverlayVisible(true));
 			context.waitTicks(5);
 			context.takeScreenshot(TestScreenshotOptions.of("party_5_with_f3").withSize(1600, 900));
 			context.runOnClient(c -> c.gui.setScreen(new PartyScreen()));
@@ -99,7 +99,7 @@ public class PartyScreenTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("party_6_screen_with_f3").withSize(1600, 900));
 			context.runOnClient(c -> {
 				c.gui.setScreen(null);
-				c.getDebugOverlay().debugEntries.setOverlayVisible(false);
+				c.debugEntries.setOverlayVisible(false);
 			});
 			context.waitTicks(3);
 

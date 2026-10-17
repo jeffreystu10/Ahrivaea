@@ -63,13 +63,10 @@ public final class Battle {
 	public int turn = 1;
 	public Outcome outcome;
 	public int poolXp, characterXp;
-	/** What can be recruited afterwards: set by the creature the player led with when the battle started. */
-	public dev.ahrivaea.party.RecruitRules.Cap recruitCap = new dev.ahrivaea.party.RecruitRules.Cap(0, 1, "you");
-
 	/** Why a defeated creature can't be recruited (null if it can). */
 	public String whyNotRecruit(Defeated d) {
 		var s = dev.ahrivaea.creature.Species.get(d.species());
-		return s.isEmpty() ? "it no longer exists" : dev.ahrivaea.party.RecruitRules.whyNot(recruitCap, s.get(), d.influence(), d.level());
+		return s.isEmpty() ? "it no longer exists" : null;
 	}
 	final boolean startedWithCreatures;
 	private final List<Unit> enemyQueue = new ArrayList<>();
@@ -408,11 +405,12 @@ public final class Battle {
 		phase = Phase.OVER;
 		ServerPlayer p = player();
 		if (o == Outcome.WON) {
-			poolXp = BattleSettings.XP_PER_DEFEAT * defeated.size();
-			// your own XP: 5 for the win, and about 5 per creature beaten, more for ones above your level, less below
+			// your own XP: 5 for the win, and about 5 per creature beaten, more for ones above your level, less below;
+			// your creatures' XP pool gets the same, so they level at your pace
 			int me = p == null ? 1 : PlayerCharacter.get(p).level();
 			characterXp = 5;
 			for (Defeated d : defeated) characterXp += (int) Math.max(1, Math.round(5 * Math.clamp(1 + 0.1 * (d.level() - me), 0.2, 2.0)));
+			poolXp = characterXp;
 			say("Victory! +" + poolXp + " XP for your creatures, +" + characterXp + " XP for you.");
 			// what the defeated creatures drop; anything that doesn't fit in your inventory waits until you're home
 			for (Defeated d : defeated) {

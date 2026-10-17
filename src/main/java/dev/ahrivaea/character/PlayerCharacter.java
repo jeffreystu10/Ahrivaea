@@ -50,7 +50,7 @@ public record PlayerCharacter(int level, int xp, int points, Stats stats) {
 	}
 
 	public static int xpToNext(int level) {
-		return 100 + 25 * level;
+		return dev.ahrivaea.creature.BattleSettings.xpToNext(level);
 	}
 
 	/** Battle stats: spent points, plus armor (1.5 Defense per armor point), each capped at 100. */

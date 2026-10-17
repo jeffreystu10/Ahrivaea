@@ -69,7 +69,6 @@ public final class PartySync {
 	public static JsonObject view(ServerPlayer p) {
 		JsonObject o = new JsonObject();
 		o.addProperty("xp", Party.xp(p));
-		o.addProperty("xpPerLevel", BattleSettings.XP_PER_LEVEL);
 		JsonArray party = new JsonArray();
 		for (CaughtCreature c : Party.get(p)) party.add(describe(c));
 		o.add("party", party);
@@ -103,6 +102,7 @@ public final class PartySync {
 		j.addProperty("color", c.influence().color());
 		j.addProperty("level", c.level());
 		j.addProperty("xp", c.xp());
+		j.addProperty("xpNext", BattleSettings.xpToNext(c.level()));
 		j.addProperty("hp", Math.round(c.health()));
 		if (sp.isEmpty()) return j;
 		Species s = sp.get();

@@ -31,6 +31,7 @@
 		"ahrivaea_stellar.mixins.json",
 		"ahrivaea_horses.mixins.json",
 		"ahrivaea_minecarts.mixins.json",
+		"ahrivaea_towers.mixins.json",
 		{
 			"config": "ahrivaea.client.mixins.json",
 			"environment": "client"

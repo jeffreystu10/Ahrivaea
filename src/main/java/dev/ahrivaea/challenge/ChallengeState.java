@@ -25,7 +25,8 @@ public final class ChallengeState {
 			Codec.BOOL.fieldOf("complete").forGetter(s -> s.complete),
 			Codec.unboundedMap(Codec.STRING, Codec.INT).fieldOf("donations").forGetter(s -> s.donations),
 			Codec.unboundedMap(Codec.STRING, Codec.STRING).fieldOf("names").forGetter(s -> s.names),
-			Codec.unboundedMap(Codec.STRING, ChallengeDef.RewardItem.CODEC.listOf()).fieldOf("pending_rewards").forGetter(s -> s.pendingRewards)
+			Codec.unboundedMap(Codec.STRING, ChallengeDef.RewardItem.CODEC.listOf()).fieldOf("pending_rewards").forGetter(s -> s.pendingRewards),
+			Codec.STRING.optionalFieldOf("owner", "").forGetter(s -> s.owner)
 	).apply(i, ChallengeState::new));
 
 	/** Which challenge file this tower uses. */
@@ -40,9 +41,12 @@ public final class ChallengeState {
 	public final Map<String, Integer> donations;
 	public final Map<String, String> names;
 	public final Map<String, List<ChallengeDef.RewardItem>> pendingRewards;
+	/** The player (UUID) who controls the tower: its top donor when it was completed. Empty until then. */
+	public String owner;
 
 	public ChallengeState(String challenge, String palette, String dimension, BlockPos origin, int total, int stage, boolean complete,
-			Map<String, Integer> donations, Map<String, String> names, Map<String, List<ChallengeDef.RewardItem>> pendingRewards) {
+			Map<String, Integer> donations, Map<String, String> names, Map<String, List<ChallengeDef.RewardItem>> pendingRewards, String owner) {
+		this.owner = owner;
 		this.challenge = challenge;
 		this.palette = palette;
 		this.dimension = dimension;
@@ -57,7 +61,7 @@ public final class ChallengeState {
 	}
 
 	public static ChallengeState fresh(String challenge, String palette, String dimension, BlockPos origin) {
-		return new ChallengeState(challenge, palette, dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of());
+		return new ChallengeState(challenge, palette, dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of(), "");
 	}
 
 	/** Donor keys, most generous first (ties broken by name). */
@@ -65,6 +69,12 @@ public final class ChallengeState {
 		List<String> keys = new ArrayList<>(donations.keySet());
 		keys.sort(Comparator.<String>comparingInt(k -> -donations.get(k)).thenComparing(k -> names.getOrDefault(k, k)));
 		return keys;
+	}
+
+	/** Who controls it (a UUID string), or "" if nobody yet; towers completed before owners existed go to their top donor. */
+	public String controller() {
+		if (!owner.isEmpty()) return owner;
+		return complete && !donations.isEmpty() ? ranking().getFirst() : "";
 	}
 
 	public int rankOf(String key) {

@@ -133,6 +133,12 @@ public class CreatureEntity extends TamableAnimal {
 		}
 	}
 
+	/** Makes this (client-side, not in the world) creature show a species and influence, e.g. for a preview on a screen. */
+	public void previewAs(String speciesId, String influence) {
+		this.entityData.set(SPECIES, speciesId);
+		this.entityData.set(INFLUENCE, influence);
+	}
+
 	/** The species id; known on both server and client. */
 	public String getSpeciesId() {
 		return this.entityData.get(SPECIES);

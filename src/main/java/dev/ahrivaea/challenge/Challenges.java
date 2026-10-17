@@ -71,19 +71,49 @@ public final class Challenges {
 			open(sp, id);
 			return InteractionResult.SUCCESS;
 		});
-		// the tower can't be broken by players outside creative mode
-		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
-			if (!(level instanceof ServerLevel server) || player.isCreative()) return true;
-			for (var e : states(server.getServer()).entrySet()) {
-				var def = defOf(e.getKey(), e.getValue());
-				if (def.isPresent() && inLevel(e.getValue(), server) && box(server, def.get(), e.getValue()).isInside(pos)) {
-					player.sendOverlayMessage(Component.literal(def.get().name() + " is protected. Help rebuild it at its chest!"));
-					return false;
-				}
-			}
-			return true;
-		});
+		// breaking, placing and using blocks around a tower are also stopped by ServerLevelMixin (mayInteract); this
+		// catches any break that gets past it
+		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) ->
+				!(level instanceof ServerLevel server) || protectedFrom(server, player, pos, false) == null);
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> deliverPending(handler.getPlayer()));
+	}
+
+	// ---- protection ----
+
+	/** How far around a tower its protection reaches, sideways and up (blocks). */
+	public static final int PROTECT_RADIUS = 64;
+	/** And how far below the tower's base, so the stronghold under it stays open to everyone. */
+	public static final int PROTECT_BELOW = 8;
+	private static final Map<String, BoundingBox> AREAS = new HashMap<>();
+
+	/**
+	 * Whether this player is kept from changing the block at pos because it's in a tower's protected area: every
+	 * player until the tower is complete, then everyone but the player who controls it (its top donor). Players in
+	 * creative mode (operators) aren't. The offering chest can always be used. Returns the protecting tower's id,
+	 * or null if the player may go ahead; tells the player why when {@code tell}.
+	 */
+	public static String protectedFrom(ServerLevel level, net.minecraft.world.entity.Entity entity, BlockPos pos, boolean tell) {
+		if (!(entity instanceof ServerPlayer player) || player.isCreative() || player.isSpectator()) return null;
+		for (var e : states(level.getServer()).entrySet()) {
+			ChallengeState s = e.getValue();
+			if (!inLevel(s, level)) continue;
+			var def = defOf(e.getKey(), s);
+			if (def.isEmpty()) continue;
+			BoundingBox area = AREAS.computeIfAbsent(e.getKey() + "@" + s.origin.asLong(), k -> {
+				BoundingBox b = box(level, def.get(), s);
+				return new BoundingBox(b.minX() - PROTECT_RADIUS, b.minY() - PROTECT_BELOW, b.minZ() - PROTECT_RADIUS,
+						b.maxX() + PROTECT_RADIUS, level.getMaxY() + 1, b.maxZ() + PROTECT_RADIUS);
+			});
+			if (!area.isInside(pos)) continue;
+			if (s.origin.offset(def.get().chest()).equals(pos)) return null;
+			String owner = s.controller();
+			if (!owner.isEmpty() && owner.equals(player.getUUID().toString())) return null;
+			if (tell) player.sendOverlayMessage(Component.literal(owner.isEmpty()
+					? def.get().name() + " and the land around it are protected until it's rebuilt. Its top donor claims it."
+					: def.get().name() + " belongs to " + s.names.getOrDefault(owner, "its top donor") + "."));
+			return e.getKey();
+		}
+		return null;
 	}
 
 	// ---- state ----
@@ -258,6 +288,12 @@ public final class Challenges {
 
 	private static void complete(MinecraftServer server, ServerLevel level, String id, ChallengeDef def, ChallengeState s) {
 		List<String> ranking = s.ranking();
+		// the top donor claims the tower: only they can build in and around it now
+		if (!ranking.isEmpty()) {
+			s.owner = ranking.getFirst();
+			server.getPlayerList().broadcastSystemMessage(Component.literal(s.names.getOrDefault(s.owner, "?") + " claims " + def.name()
+					+ " as its top donor. Only they can build in and around it now.").withStyle(ChatFormatting.GOLD), false);
+		}
 		TowersMod.LOGGER.info("Challenge {} complete. Top donors: {}", id,
 				String.join(", ", ranking.stream().limit(5).map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 		server.getPlayerList().broadcastSystemMessage(Component.literal(def.name() + " has been fully rebuilt! Thank you all!")
@@ -323,6 +359,9 @@ public final class Challenges {
 				.append(Component.literal("█".repeat(20 - bars)).withStyle(ChatFormatting.DARK_GRAY))
 				.append(Component.literal(" " + s.total + "/" + def.goal() + " " + def.unit() + " (" + pct + "%), stage " + s.stage + "/" + def.stages()
 						+ (s.complete ? " - COMPLETE" : "")).withStyle(ChatFormatting.WHITE));
+		String owner = s.controller();
+		text.append(Component.literal(owner.isEmpty() ? "\nProtected until rebuilt; the top donor then claims it."
+				: "\nClaimed by " + s.names.getOrDefault(owner, "?") + " (only they can build around it).").withStyle(ChatFormatting.LIGHT_PURPLE));
 		List<String> ranking = s.ranking();
 		if (ranking.isEmpty()) text.append(Component.literal("\nNo offerings yet. Be the first!").withStyle(ChatFormatting.GRAY));
 		for (int i = 0; i < Math.min(10, ranking.size()); i++) {

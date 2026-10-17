@@ -59,6 +59,7 @@ public class Ahrivaea implements ModInitializer {
 		Party.init();
 		dev.ahrivaea.creature.Mounts.init();
 		dev.ahrivaea.party.PartySync.init();
+		dev.ahrivaea.party.Starters.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
 		dev.ahrivaea.creature.VanillaMobs.init();
@@ -84,6 +85,7 @@ public class Ahrivaea implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dev.ahrivaea.character.PlayerCharacter.registerCommands(dispatcher);
 			dev.ahrivaea.battle.Battles.registerCommands(dispatcher);
+			dev.ahrivaea.party.Starters.registerCommands(dispatcher);
 			dispatcher.register(Commands.literal("party")
 					.executes(ctx -> listParty(ctx.getSource().getPlayerOrException(), ctx.getSource()))
 					.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {
@@ -199,7 +201,7 @@ public class Ahrivaea implements ModInitializer {
 								int spent = Party.feed(player, slot, IntegerArgumentType.getInteger(ctx, "amount"));
 								CaughtCreature c = Party.get(player).get(slot);
 								String grew = c.level() > before ? " It grew to level " + c.level() + "!" : "";
-								ctx.getSource().sendSuccess(() -> Component.literal("Gave " + spent + " XP to " + formName(c) + " (" + c.xp() + "/" + BattleSettings.XP_PER_LEVEL + ")." + grew), false);
+								ctx.getSource().sendSuccess(() -> Component.literal("Gave " + spent + " XP to " + formName(c) + " (" + c.xp() + "/" + BattleSettings.xpToNext(c.level()) + ")." + grew), false);
 								return spent;
 							}))))
 			);
@@ -252,7 +254,7 @@ public class Ahrivaea implements ModInitializer {
 			var sp = Species.get(c.species());
 			sb.append("\n ").append(i + 1).append(". ").append(formName(c)).append(" Lv.").append(c.level())
 					.append(" (").append(c.influence().displayName()).append(")  ").append(Math.round(c.health())).append(" HP  ")
-					.append(c.xp()).append("/").append(BattleSettings.XP_PER_LEVEL).append(" XP");
+					.append(c.xp()).append("/").append(BattleSettings.xpToNext(c.level())).append(" XP");
 			sp.ifPresent(s -> {
 				Stats st = s.statsFor(c.influence());
 				sb.append("\n    HP ").append(st.hp()).append(" Atk ").append(st.attack()).append(" Def ").append(st.defense())

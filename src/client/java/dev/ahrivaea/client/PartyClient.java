@@ -36,6 +36,7 @@ public final class PartyClient {
 	static JsonObject state;
 	/** Whether the on-screen summary is shown (the party screen has a button for it; kept in config/ahrivaea_party.json). */
 	static boolean showSummary = true;
+	private static JsonObject pendingStarter;
 
 	public static void register() {
 		loadConfig();
@@ -46,7 +47,14 @@ public final class PartyClient {
 			if (ctx.client().gui.screen() instanceof PartyScreen s) s.refresh();
 		});
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> state = null);
+		// the starter screen opens as soon as nothing else is on screen (joining shows a loading screen first)
+		ClientPlayNetworking.registerGlobalReceiver(dev.ahrivaea.party.Starters.OfferPayload.TYPE, (payload, ctx) ->
+				pendingStarter = JsonParser.parseString(payload.json()).getAsJsonObject());
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+			if (pendingStarter != null && mc.gui.screen() == null && mc.player != null) {
+				mc.gui.setScreen(new StarterScreen(pendingStarter));
+				pendingStarter = null;
+			}
 			while (OPEN.consumeClick()) {
 				if (mc.gui.screen() != null || mc.player == null) continue;
 				if (state == null) mc.player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("This server doesn't use Ahrivaea Creatures."));

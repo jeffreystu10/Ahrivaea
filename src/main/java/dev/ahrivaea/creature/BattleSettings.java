@@ -15,7 +15,11 @@ public final class BattleSettings {
 	public static final double WATER_PENALTY = 0.5;
 	public static final int MOVE_BASE = 3, SPEED_PER_SQUARE = 25;
 
-	public static final int XP_PER_DEFEAT = 10;
-	public static final int XP_PER_LEVEL = 100;
-	public static final int RECRUIT_XP_PER_LEVEL = 10;
+	/**
+	 * Creature XP to go from this level to the next: the same curve as the player's own character (100 + 25 per
+	 * level), and creatures earn the same XP from a battle as the player does, so they level at the same pace.
+	 */
+	public static int xpToNext(int level) {
+		return 100 + 25 * level;
+	}
 }

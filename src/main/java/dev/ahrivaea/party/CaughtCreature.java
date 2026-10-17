@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ahrivaea.creature.Influence;
 
 /**
- * A creature stored in a player's party (not out in the world). xp is progress toward the next level (0–99).
+ * A creature stored in a player's party (not out in the world). xp is progress toward the next level (BattleSettings.xpToNext).
  * mountTier and mountFed are its riding training (see dev.ahrivaea.creature.Mounts); saddled is whether it wears one.
  */
 public record CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled) {

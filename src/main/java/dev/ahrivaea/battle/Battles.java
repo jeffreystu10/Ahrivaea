@@ -200,7 +200,6 @@ public final class Battles {
 			enemyCell = new int[] {Math.clamp(wild.getBlockX() - grid.originX, 0, grid.size - 1), Math.clamp(wild.getBlockZ() - grid.originZ, 0, grid.size - 1)};
 		}
 		Battle b = new Battle(player, level, grid, !party.isEmpty());
-		b.recruitCap = dev.ahrivaea.party.RecruitRules.capFor(player);
 		b.arenaSlot = slot;
 
 		int[] pc = b.freeCellNear(playerCell[0], playerCell[1], Unit.Side.PLAYER);
@@ -249,11 +248,12 @@ public final class Battles {
 				wild.discard();
 			}
 			for (int i = 0; i < extra; i++) {
-				// others of the area within 2 levels of the one you challenged (it, again, if nothing else fits)
-				var pick = Species.pickForLevels(biome, home, b.random, lead.level - 2, lead.level + 2, (sp, in) -> true);
+				// others of the area, no rarer and no higher level than the one you challenged and at most 2 levels
+				// below it (it, again, if nothing else fits)
+				var pick = dev.ahrivaea.party.RecruitRules.reinforcement(biome, home, b.random, wildSpecies.get(), lead.influence, lead.level);
 				Species s = pick.map(Species.LevelledPick::species).orElse(wildSpecies.get());
 				var inf = pick.map(Species.LevelledPick::influence).orElse(lead.influence);
-				int lvl = pick.map(Species.LevelledPick::level).orElse(Math.clamp(lead.level - 2 + b.random.nextInt(5), 0, 50));
+				int lvl = pick.map(Species.LevelledPick::level).orElse(Math.max(0, lead.level - b.random.nextInt(dev.ahrivaea.party.RecruitRules.REINFORCEMENT_LEVELS_BELOW + 1)));
 				int[] cell = b.freeCellNear(wc[0], wc[1], Unit.Side.ENEMY);
 				Unit u = b.addCreature(Unit.Side.ENEMY, s, inf, lvl, -1, -1, cell[0], cell[1]);
 				BlockPos at = b.cellPos(u);

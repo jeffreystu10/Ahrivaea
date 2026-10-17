@@ -105,10 +105,10 @@ public final class Party {
 		int spend = Math.min(amount, xp(player));
 		int level = c.level(), xp = c.xp(), spent = 0;
 		while (spent < spend && level < Stats.MAX_LEVEL) {
-			int step = Math.min(spend - spent, BattleSettings.XP_PER_LEVEL - xp);
+			int step = Math.min(spend - spent, BattleSettings.xpToNext(level) - xp);
 			xp += step;
 			spent += step;
-			if (xp >= BattleSettings.XP_PER_LEVEL) {
+			if (xp >= BattleSettings.xpToNext(level)) {
 				level++;
 				xp = 0;
 			}

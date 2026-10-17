@@ -115,8 +115,7 @@ public class PartyScreen extends Screen {
 			switch (tab) {
 				case PARTY -> {
 					addRenderableWidget(Button.builder(Component.literal("Send out"), b -> command("party send " + slot)).bounds(rx, by, 54, 20).build());
-					int perLevel = PartyClient.state.get("xpPerLevel").getAsInt();
-					int need = perLevel - c.get("xp").getAsInt();
+					int need = c.get("xpNext").getAsInt() - c.get("xp").getAsInt();
 					int pool = PartyClient.state.get("xp").getAsInt();
 					Button up = addRenderableWidget(Button.builder(Component.literal("+1 Lv (" + need + " XP)"), b -> command("party xp " + slot + " " + need))
 							.bounds(rx + 57, by, 76, 20).build());
@@ -197,7 +196,7 @@ public class PartyScreen extends Screen {
 		PartyClient.bar(g, x + 24, y + 2, 140, 5, max <= 0 ? 0 : hp / (float) max, PartyClient.hpColor(hp, max));
 		g.text(font, hp + "/" + max, x + 170, y, 0xFFDDDDDD);
 		y += 12;
-		int perLevel = PartyClient.state.get("xpPerLevel").getAsInt();
+		int perLevel = c.has("xpNext") ? c.get("xpNext").getAsInt() : 100;
 		g.text(font, "XP", x, y, 0xFFFFFFFF);
 		PartyClient.bar(g, x + 24, y + 2, 140, 5, c.get("xp").getAsInt() / (float) perLevel, 0xFF60A0FF);
 		g.text(font, c.get("xp").getAsInt() + "/" + perLevel, x + 170, y, 0xFFDDDDDD);

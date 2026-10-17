@@ -20,22 +20,23 @@ Scroll to zoom in and out, WASD or the arrow keys to look around.
 
 **Enemy phase.** The wild creatures move and attack one at a time. The log at the top left says what happened.
 
-**After.** Win and you get XP for your creatures (`/party xp`, 10 per creature beaten) and for yourself
-(`/character`: 5 for the win plus about 5 per creature beaten, up to double for ones above your level and as little
-as 1 for ones far below). Lose or flee and you get nothing; your creatures keep their damage either way (fainted
-ones come back at 1 HP).
+**After.** Win and you get XP for yourself (`/character`: 5 for the win plus about 5 per creature beaten, up to
+double for ones above your level and as little as 1 for ones far below) and the same amount for your creatures
+(`/party xp`). Creatures and your character level on the same curve (100 + 25 x level XP to the next level), so
+your creatures grow at your pace. Lose or flee and you get nothing; your creatures keep their damage either way
+(fainted ones come back at 1 HP).
 
-**Recruiting** (`dev.ahrivaea.party.RecruitRules`). You can recruit a defeated creature only if it's no rarer and
-no higher level than the creature you started the battle with: the first in your party (rarity order Common,
-Uncommon, Rare, Super Rare, Legendary). A Common Lv.4 lead can recruit Commons up to Lv.4. With no creatures, only
-Commons up to your character level. It costs creature XP: 100 per level, times 1 (Common), 1.5 (Uncommon), 2 (Rare),
-3 (Super Rare) or 5 (Legendary), so a Lv.4 Common is 400 XP. Ones you can't recruit show why on the results screen.
-Catching with a Vessel has the same rarity and level limits.
+**Recruiting** (`dev.ahrivaea.party.RecruitRules`). You can recruit any defeated creature if you have the creature
+XP: 100 per level, times 1 (Common), 1.5 (Uncommon), 2 (Rare), 3 (Super Rare) or 5 (Legendary), so a Lv.4 Common
+is 400 XP and a Lv.20 Legendary 10,000. Catching with a Vessel has no limits (the Vessel is its cost).
+
+**Reinforcements.** The wild creatures that join the one you challenged are never rarer or higher level than it:
+a Common Lv.4 brings only Commons of Lv.2 to 4 (if nothing from the area fits, more of its own kind).
 
 **Wild levels.** Wild creatures appear within 5 levels of the player's character level: only creatures whose biome
 level range reaches that band, at a level inside it (so high-level creatures don't appear until you're close to
-their level, and an area where nothing fits stays empty for you). The creatures that join a battle are within 2
-levels of the one you challenged. Vanilla mobs that turn into creatures near a player follow the same band.
+their level, and an area where nothing fits stays empty for you).
+Vanilla mobs that turn into creatures near a player follow the same band.
 
 **Your character.** `/character` shows your level, stats and points; `/character spend <stat> <points>` spends them.
 
@@ -93,3 +94,7 @@ and water take the colours of the biome the encounter happened in.
 | End | the End | end stone | — | obsidian | obsidian pillars |
 
 If you log out mid-battle, the battle counts as fled and you're sent back when you log in again.
+
+**Starter.** A new player (empty party) picks a starter when they first join: any of the Common creatures in their
+None form, shown with their stats and a turning model. It joins the party at level 1. `/starter` reopens the choice
+until one is picked (`dev.ahrivaea.party.Starters`, `client/StarterScreen`). Players who already had creatures skip it.

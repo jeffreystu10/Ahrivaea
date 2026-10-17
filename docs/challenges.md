@@ -48,7 +48,12 @@ their facing). The highest-priority palette whose biomes match wins; one with no
   and an announcement. Everyone sees "<player> offered 64 coal to The Old Tower (520/1000)".
 - At 1000 the tower is complete: title on every screen, fireworks, and rewards for the top donors.
   Offline winners get theirs the next time they log in. After that the chest just shows the final results.
-- Players outside creative mode can't break the tower's blocks.
+- **Protection, then a claim.** Like spawn protection, nobody can break, place or use blocks (buckets, fire,
+  doors ...) within 64 blocks of the tower, from 8 blocks below its base up to the sky, until it's rebuilt; the
+  stronghold under it stays open so the End can still be reached. When it's complete its top donor claims it
+  (announced to everyone), and from then on only they can build there. Towers finished before claims existed belong
+  to their top donor. The offering chest always works, and players in creative mode (operators) aren't affected.
+  `dev.ahrivaea.challenge.mixin.ServerLevelMixin` answers Minecraft's "may this player change this block" check.
 
 - `/challenge` shows the leaderboard of the nearest tower; `/challenge list` lists every tower found so far
   with its location and progress; `/challenge top <tower>` shows a particular one.

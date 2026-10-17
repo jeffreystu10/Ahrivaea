@@ -210,23 +210,34 @@ public class BattleTest implements FabricClientGameTest {
 			int poolBefore = server.computeOnServer(s -> Party.xp(s.getPlayerList().getPlayers().getFirst()));
 			// recruiting costs 100 XP per level times its rarity's multiplier; top the pool up so the test can afford one
 			server.runOnServer(s -> Party.addXp(s.getPlayerList().getPlayers().getFirst(), 20000));
-			// the recruit limits: no rarer and no higher level than the creature you lead with
+			// costs: 400 XP for a Lv.4 Common, 2000 for a Lv.4 Legendary; reinforcements for a Common Lv.4 are only
+			// Commons of level 2-4
 			String rules = server.computeOnServer(s -> {
-				var cap = new dev.ahrivaea.party.RecruitRules.Cap(0, 4, "Cat");
 				StringBuilder out = new StringBuilder();
+				var cat = dev.ahrivaea.creature.Species.get("cat").orElseThrow();
+				var none = dev.ahrivaea.creature.Influence.NONE;
 				for (var spc : dev.ahrivaea.creature.Species.all()) {
 					for (var inf : spc.forms().keySet()) {
 						String r = dev.ahrivaea.party.RecruitRules.rarity(spc, inf);
-						boolean ok4 = dev.ahrivaea.party.RecruitRules.whyNot(cap, spc, inf, 4) == null;
-						boolean ok5 = dev.ahrivaea.party.RecruitRules.whyNot(cap, spc, inf, 5) == null;
-						if (ok4 != r.equals("Common") || ok5) out.append(spc.id()).append('/').append(inf.getSerializedName()).append(' ');
+						boolean ok4 = dev.ahrivaea.party.RecruitRules.canReinforce(spc, inf, 4, cat, none, 4);
+						boolean ok5 = dev.ahrivaea.party.RecruitRules.canReinforce(spc, inf, 5, cat, none, 4);
+						boolean ok1 = dev.ahrivaea.party.RecruitRules.canReinforce(spc, inf, 1, cat, none, 4);
+						if (ok4 != r.equals("Common") || ok5 || ok1) out.append(spc.id()).append('/').append(inf.getSerializedName()).append(' ');
 						if (r.equals("Common") && dev.ahrivaea.party.RecruitRules.cost(spc, inf, 4) != 400) out.append("cost:").append(spc.id()).append(' ');
 						if (r.equals("Legendary") && dev.ahrivaea.party.RecruitRules.cost(spc, inf, 4) != 2000) out.append("cost:").append(spc.id()).append(' ');
 					}
 				}
+				// and the picks themselves, in a plains biome
+				var level = s.overworld();
+				var biome = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS);
+				for (int i = 0; i < 200; i++) {
+					var pick = dev.ahrivaea.party.RecruitRules.reinforcement(biome, level, level.getRandom(), cat, none, 4);
+					if (pick.isPresent() && !dev.ahrivaea.party.RecruitRules.canReinforce(pick.get().species(), pick.get().influence(), pick.get().level(), cat, none, 4))
+						out.append("pick:").append(pick.get().species().id()).append(" Lv.").append(pick.get().level()).append(' ');
+				}
 				return out.toString();
 			});
-			if (!rules.isEmpty()) failures.add("a Common Lv.4 lead should allow exactly Commons up to Lv.4 (400 XP for a Lv.4 Common, 2000 for a Legendary); wrong for: " + rules);
+			if (!rules.isEmpty()) failures.add("reinforcements for a Common Lv.4 should be Commons of Lv.2-4 (and a Lv.4 Common costs 400 XP, a Legendary 2000); wrong for: " + rules);
 			int partyBefore = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).size());
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).recruit(0));
 			context.waitTicks(10);

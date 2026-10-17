@@ -82,6 +82,11 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_3_three_quarters").withSize(1600, 900));
 
+			// unfinished, the tower and the land 64 blocks around it are protected from everyone in survival
+			BlockPos near = origin.offset(-20, -1, -20);
+			boolean placedBefore = placeDirt(context, server, near);
+			if (placedBefore) throw new AssertionError("Nobody should be able to build next to an unfinished tower");
+
 			// finish it with a second real offering, then look at the celebration and the leaderboard
 			server.runCommand("give @a minecraft:coal_block 30");
 			server.runCommand("tp @a %.1f %.1f %.1f 0 30".formatted(chest.getX() + 0.5, chest.getY() + 1.0, chest.getZ() - 2.5));
@@ -110,11 +115,33 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			boolean complete = server.computeOnServer(s -> Challenges.state(s, "coal").map(st -> st.complete).orElse(false));
 			int diamonds = context.computeOnClient(client -> count(client.player.getInventory(), Items.DIAMOND));
 			int blocksBack = context.computeOnClient(client -> count(client.player.getInventory(), Items.COAL_BLOCK));
+			// finished: the top donor (this player) claims it and can build around it
+			String owner = server.computeOnServer(s -> Challenges.state(s, "coal").map(st -> st.controller()).orElse(""));
+			String me = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().getUUID().toString());
+			if (!owner.equals(me)) throw new AssertionError("The top donor should claim the finished tower, owner is " + owner);
+			if (!placeDirt(context, server, near)) throw new AssertionError("The tower's owner should be able to build next to it");
+
 			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are needed, 2 come back
 			if (!complete || diamonds != 8 || blocksBack != 2) {
 				throw new AssertionError("Expected the tower complete, 8 diamonds for first place and 2 coal blocks back; got " + complete + ", " + diamonds + ", " + blocksBack);
 			}
 		}
+	}
+
+	/** In survival, right-click dirt onto the ground at pos's top; returns whether a dirt block appeared above it. */
+	private static boolean placeDirt(ClientGameTestContext context, TestServerContext server, BlockPos ground) {
+		server.runCommand("gamemode survival @a");
+		server.runCommand("setblock %d %d %d minecraft:stone".formatted(ground.getX(), ground.getY(), ground.getZ()));
+		server.runCommand("setblock %d %d %d minecraft:air".formatted(ground.getX(), ground.getY() + 1, ground.getZ()));
+		server.runCommand("tp @a %.1f %d %.1f 0 60".formatted(ground.getX() + 0.5, ground.getY() + 1, ground.getZ() - 1.5));
+		server.runCommand("item replace entity @a weapon.mainhand with minecraft:dirt 4");
+		context.waitTicks(10);
+		context.runOnClient(client -> client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND,
+				new BlockHitResult(Vec3.atCenterOf(ground).add(0, 0.5, 0), Direction.UP, ground, false)));
+		context.waitTicks(10);
+		boolean placed = server.computeOnServer(s -> s.overworld().getBlockState(ground.above()).is(net.minecraft.world.level.block.Blocks.DIRT));
+		server.runCommand("gamemode creative @a");
+		return placed;
 	}
 
 	private static int count(net.minecraft.world.Container inv, net.minecraft.world.item.Item item) {

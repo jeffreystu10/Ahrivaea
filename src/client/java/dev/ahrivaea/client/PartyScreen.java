@@ -157,6 +157,7 @@ public class PartyScreen extends Screen {
 			PartyClient.setShowSummary(!PartyClient.showSummary);
 			rebuildWidgets();
 		}).bounds(x, height - 26, 100, 20).build());
+		addRenderableWidget(Button.builder(Component.literal("Dex"), b -> DexScreen.open()).bounds(x + 104, height - 26, 48, 20).build());
 		addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose()).bounds(width / 2 - 40, height - 26, 80, 20).build());
 	}
 

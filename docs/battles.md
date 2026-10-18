@@ -25,7 +25,17 @@ creatures fainting doesn't end the battle, and you can fight on (or flee).
    it with the first move that reaches.
 
 Right-click or Escape goes back a step. **End turn** ends your phase early; **Flee** gets you out straight away, at any time, even during the enemy phase.
-Scroll to zoom in and out, WASD or the arrow keys to look around.
+
+**The view.** Click and drag the battlefield to look around, scroll to zoom in (towards the mouse) and out, WASD or
+the arrow keys also move the view, Space looks at the selected unit and R goes back to the whole field. A click
+only counts as a click if the mouse didn't move; otherwise it's a drag.
+
+**The screen.** A coloured banner says whose turn it is (blue: yours, red: the enemy's), with a hint under it.
+Your team's cards are on the left and the wild side's on the right: name, level, health, and "done" once a unit has
+acted; click a card to look at that unit (and pick it, if it's yours and can still act). Units on the field stand
+on a tinted square with a thick frame and a health bar (the selected one flashes yellow). When a unit has moved, its
+actions (moves with their range, Item, Rally, Wait) pop up beside it. Damage and healing float up as numbers. The
+selected or hovered unit's card is at the bottom left; the last three things that happened are at the bottom.
 
 **Enemy phase.** The wild creatures move and attack one at a time. The log at the top left says what happened.
 

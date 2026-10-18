@@ -103,6 +103,39 @@ public class PartyScreenTest implements FabricClientGameTest {
 			});
 			context.waitTicks(3);
 
+			// the dex (J): what's in the party is caught, a wild Cow nearby is seen, the rest unknown with a clue
+			var at = context.computeOnClient(c -> c.player.blockPosition());
+			server.runCommand("execute positioned %d %d %d run ahrivaea spawn cow none 5".formatted(at.getX() + 4, at.getY(), at.getZ()));
+			server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b}");
+			context.waitTicks(50);
+			context.getInput().pressKey(o -> PartyClient.DEX);
+			context.waitFor(c -> c.gui.screen() instanceof dev.ahrivaea.client.DexScreen d && d.loaded(), 100);
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("dex_1_list").withSize(1600, 900));
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).searchFor("Ashen"));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("dex_2_caught").withSize(1600, 900));
+			context.runOnClient(c -> {
+				var d = (dev.ahrivaea.client.DexScreen) c.gui.screen();
+				d.searchFor("");
+				d.selectFirst(1);
+			});
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("dex_3_seen").withSize(1600, 900));
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).selectFirst(0));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("dex_4_unknown").withSize(1600, 900));
+			context.runOnClient(c -> c.gui.setScreen(null));
+			String dex = server.computeOnServer(s -> {
+				var p = s.getPlayerList().getPlayers().getFirst();
+				return dev.ahrivaea.party.Dex.status(p, "dragon/fire") + " " + dev.ahrivaea.party.Dex.status(p, "cow/none") + " " + dev.ahrivaea.party.Dex.status(p, "kraken/water");
+			});
+			if (!dex.equals("2 1 0")) failures.add("the dex should have the Ashen Dragon caught, the Cow seen and the Kraken unknown: " + dex);
+			// the wild Cow goes again (the Horse that's out stays)
+			server.runOnServer(s -> s.overworld().getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, new net.minecraft.world.phys.AABB(at).inflate(30), x -> !x.isTame())
+					.forEach(net.minecraft.world.entity.Entity::discard));
+			context.waitTicks(5);
+
 			// call it back by its entity number, as the Out tab's button does
 			context.runOnClient(c -> {
 				var e = c.level.getEntitiesOfClass(dev.ahrivaea.creature.CreatureEntity.class, c.player.getBoundingBox().inflate(10), x -> x.isTame());

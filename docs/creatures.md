@@ -211,3 +211,17 @@ saturation, between 3% and 60%. Bowls and bottles come back.
 | Rabbit stew | 40% |
 
 In battle food does nothing; only brewed Healing and Regeneration potions heal (see design.md, Items).
+
+## Creature dex
+
+Press **J** (change it in Controls) or **Dex** on the party screen (`dev.ahrivaea.party.Dex`, `client/DexScreen`).
+Every creature form is numbered (#001 onwards, by name). For each player a form is:
+
+- **Unknown**: a "?" and a clue, the first place it lives ("Lives in Snowy Plains and elsewhere").
+- **Seen** once a wild one has been within 20 blocks in sight, or fought you: its name, model, influence, rarity,
+  levels, where it lives and how it moves.
+- **Caught** once one has been in your party or box (caught, recruited, a starter): everything, adding its seven
+  stats, battle movement, whether it can be ridden, its base jobs and its drops.
+
+A message tells you when something new is seen or caught. Filter by All / Seen / Caught, or search by name or
+number. Kept with the player (and on death).

@@ -61,6 +61,7 @@ public class Ahrivaea implements ModInitializer {
 		dev.ahrivaea.creature.Variant.init();
 		dev.ahrivaea.party.PartySync.init();
 		dev.ahrivaea.party.Starters.init();
+		dev.ahrivaea.party.Dex.init();
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
 		dev.ahrivaea.creature.VanillaMobs.init();

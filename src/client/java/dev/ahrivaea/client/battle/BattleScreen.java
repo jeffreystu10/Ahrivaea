@@ -17,9 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The battle seen from above. Click one of your units, click where it should go (or itself to stay), then
- * pick what it does: a move (then its target), an item or rally (you only), or wait. Right-click or Escape
- * goes back a step. Blue squares: where it can move. Red: what it can hit from there.
+ * The battle seen from above. Click one of your units (on the field or its card on the left), click where it
+ * should go (or itself to stay), then pick what it does from the menu beside it: a move (then its target), an item
+ * or rally (you only), or wait. Right-click or Escape goes back a step. Blue squares: where it can move. Red: what
+ * it can hit from there. Drag to look around, scroll to zoom in and out (towards the mouse), R for the whole field.
  */
 public class BattleScreen extends Screen {
 	/** Everything along the top edge sits this much lower, clear of the F3 debug text. */
@@ -32,6 +33,17 @@ public class BattleScreen extends Screen {
 	/** In the TARGET step: a move index, or -2 for item, -3 for rally. */
 	private int pending;
 	private int hoverX = -1, hoverZ = -1;
+	/** A left click that turns into a drag pans the camera instead of clicking a square. */
+	private boolean pressed, dragging;
+	private double pressX, pressY;
+	/** Unit cards: id -> screen rectangle {x0, y0, x1, y1}, set while drawing. */
+	private final Map<Integer, int[]> cards = new java.util.HashMap<>();
+	private int hoveredCard = -1;
+	/** Damage and healing numbers floating up from the squares where they happened. */
+	private record Popup(double wx, double wy, double wz, String text, int color, long start) {}
+	private final List<Popup> popups = new ArrayList<>();
+	private final Map<Integer, Integer> lastHp = new java.util.HashMap<>();
+	private static final int CARD_W = 118, CARD_H = 24;
 
 	public BattleScreen() {
 		super(Component.literal("Battle"));
@@ -49,10 +61,26 @@ public class BattleScreen extends Screen {
 
 	@Override
 	protected void init() {
+		noteHp();
 		rebuild();
 	}
 
+	/** Numbers for every change in health since the last update. */
+	private void noteHp() {
+		BattleGrid g = BattleClient.grid();
+		for (JsonObject u : units()) {
+			int id = u.get("id").getAsInt(), hp = u.get("hp").getAsInt();
+			Integer before = lastHp.put(id, hp);
+			if (before == null || before == hp || g == null) continue;
+			int x = u.get("x").getAsInt(), z = u.get("z").getAsInt();
+			int diff = hp - before;
+			popups.add(new Popup(g.originX + x + 0.5, g.y(x, z), g.originZ + z + 0.5, (diff > 0 ? "+" : "") + diff + (hp <= 0 ? " KO" : ""),
+					diff > 0 ? 0xFF60FF80 : 0xFFFF5040, net.minecraft.util.Util.getMillis()));
+		}
+	}
+
 	void refresh() {
+		noteHp();
 		JsonObject u = unit(selected);
 		if (u == null || u.get("hp").getAsInt() <= 0 || u.get("acted").getAsBoolean() || !"PLAYER".equals(phase())) reset();
 		rebuild();
@@ -175,32 +203,86 @@ public class BattleScreen extends Screen {
 			back();
 			return true;
 		}
-		int[] c = cellAt(event.x(), event.y());
-		if (c != null) clickCell(c[0], c[1]);
+		if (event.button() == 0) {
+			pressed = true;
+			dragging = false;
+			pressX = event.x();
+			pressY = event.y();
+		}
 		return true;
 	}
 
 	@Override
+	public boolean mouseDragged(MouseButtonEvent event, double dx, double dy) {
+		if (!pressed || event.button() != 0) return super.mouseDragged(event, dx, dy);
+		if (!dragging && Math.hypot(event.x() - pressX, event.y() - pressY) > 4) dragging = true;
+		if (dragging && BattleClient.grid() != null) {
+			double s = scale(BattleClient.grid().y(BattleClient.grid().size / 2, BattleClient.grid().size / 2));
+			BattleClient.pan(-dx / s, -dy / s);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean mouseReleased(MouseButtonEvent event) {
+		if (pressed && event.button() == 0) {
+			pressed = false;
+			if (!dragging) click(event.x(), event.y());
+			dragging = false;
+			return true;
+		}
+		return super.mouseReleased(event);
+	}
+
+	/** A click (not a drag): a unit card, else a battlefield square. */
+	private void click(double mx, double my) {
+		for (var e : cards.entrySet()) {
+			int[] r = e.getValue();
+			if (mx >= r[0] && mx < r[2] && my >= r[1] && my < r[3]) {
+				clickCard(e.getKey());
+				return;
+			}
+		}
+		int[] c = cellAt(mx, my);
+		if (c != null) clickCell(c[0], c[1]);
+	}
+
+	/** A unit's card: look at it, and pick it if it's one of yours that can still act (or target it). */
+	private void clickCard(int id) {
+		JsonObject t = unit(id);
+		if (t == null) return;
+		int x = t.get("x").getAsInt(), z = t.get("z").getAsInt();
+		BattleClient.centerOn(x, z);
+		if (t.get("hp").getAsInt() > 0 && (step == Step.TARGET || step == Step.ACTION || (mine(t) && !t.get("acted").getAsBoolean()))) clickCell(x, z);
+	}
+
+	@Override
 	public boolean mouseScrolled(double mx, double my, double sx, double sy) {
-		BattleClient.zoom(sy);
+		BattleGrid g = BattleClient.grid();
+		if (g == null) return true;
+		// zoom towards the point under the mouse
+		double s = scale(g.y(g.size / 2, g.size / 2));
+		BattleClient.zoomAt(sy, BattleClient.camX() + (mx - width / 2.0) / s, BattleClient.camZ() + (my - height / 2.0) / s);
 		return true;
 	}
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if (event.key() == 256) { // escape
+		int k = event.key();
+		if (k == com.mojang.blaze3d.platform.InputConstants.KEY_ESCAPE) {
 			back();
 			return true;
 		}
-		switch (event.key()) {
-			case 87, 265 -> BattleClient.pan(0, -2); // W, up
-			case 83, 264 -> BattleClient.pan(0, 2); // S, down
-			case 65, 263 -> BattleClient.pan(-2, 0); // A, left
-			case 68, 262 -> BattleClient.pan(2, 0); // D, right
-			default -> {
-				return super.keyPressed(event);
-			}
-		}
+		double d = Math.max(1, (BattleClient.camY() - BattleClient.minHeight()) / 6 + 1);
+		if (k == com.mojang.blaze3d.platform.InputConstants.KEY_W || k == com.mojang.blaze3d.platform.InputConstants.KEY_UP) BattleClient.pan(0, -d);
+		else if (k == com.mojang.blaze3d.platform.InputConstants.KEY_S || k == com.mojang.blaze3d.platform.InputConstants.KEY_DOWN) BattleClient.pan(0, d);
+		else if (k == com.mojang.blaze3d.platform.InputConstants.KEY_A || k == com.mojang.blaze3d.platform.InputConstants.KEY_LEFT) BattleClient.pan(-d, 0);
+		else if (k == com.mojang.blaze3d.platform.InputConstants.KEY_D || k == com.mojang.blaze3d.platform.InputConstants.KEY_RIGHT) BattleClient.pan(d, 0);
+		else if (k == com.mojang.blaze3d.platform.InputConstants.KEY_R) BattleClient.resetView();
+		else if (k == com.mojang.blaze3d.platform.InputConstants.KEY_SPACE) {
+			JsonObject u = unit(selected);
+			if (u != null) BattleClient.centerOn(u.get("x").getAsInt(), u.get("z").getAsInt());
+		} else return super.keyPressed(event);
 		return true;
 	}
 
@@ -318,21 +400,21 @@ public class BattleScreen extends Screen {
 		if (state().has("result")) {
 			JsonObject r = state().getAsJsonObject("result");
 			JsonArray rec = r.getAsJsonArray("recruits");
-			int y = height / 2 + 4;
+			int y = resultTop() + 84;
 			for (int i = 0; i < rec.size(); i++) {
 				JsonObject d = rec.get(i).getAsJsonObject();
 				final int idx = i;
 				String rarity = d.has("rarity") ? d.get("rarity").getAsString() + " " : "";
 				boolean blocked = d.has("why");
 				Button rb = addRenderableWidget(Button.builder(Component.literal("Recruit " + rarity + d.get("name").getAsString() + " Lv." + d.get("level").getAsInt()
-						+ " (" + d.get("cost").getAsInt() + " XP)"), b -> recruit(idx)).bounds(width / 2 - 150, y + i * 22, 300, 20).build());
+						+ " (" + d.get("cost").getAsInt() + " XP)"), b -> recruit(idx)).bounds(width / 2 - 140, y + i * 22, 280, 20).build());
 				if (blocked) {
 					rb.active = false;
 					rb.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Can't recruit: " + d.get("why").getAsString())));
 					rb.setMessage(Component.literal(d.get("name").getAsString() + " Lv." + d.get("level").getAsInt() + ": " + d.get("why").getAsString()));
 				}
 			}
-			addRenderableWidget(Button.builder(Component.literal("Leave battle"), b -> leave()).bounds(width / 2 - 60, y + rec.size() * 22 + 8, 120, 20).build());
+			addRenderableWidget(Button.builder(Component.literal("Leave battle"), b -> leave()).bounds(width / 2 - 60, y + rec.size() * 22 + 6, 120, 20).build());
 			return;
 		}
 		boolean myTurn = "PLAYER".equals(phase());
@@ -342,32 +424,54 @@ public class BattleScreen extends Screen {
 		run.active = true; // fleeing works in either phase
 		JsonObject u = unit(selected);
 		if (myTurn && u != null && step == Step.ACTION) {
-			int x = 6, y = height - 26;
+			// the action menu, beside the square it's moving to (like Fire Emblem)
+			List<String> labels = new ArrayList<>();
+			List<Runnable> actions = new ArrayList<>();
 			JsonArray moves = u.getAsJsonArray("moves");
 			for (int i = 0; i < moves.size(); i++) {
 				JsonObject m = moves.get(i).getAsJsonObject();
 				int min = m.get("min").getAsInt(), max = m.get("max").getAsInt();
-				String range = min == max ? "" + min : min + "-" + max;
 				final int idx = i;
-				addRenderableWidget(Button.builder(Component.literal(m.get("name").getAsString() + " (" + range + ")"), b -> chooseMove(idx)).bounds(x, y, 110, 20).build());
-				x += 114;
+				labels.add(m.get("name").getAsString() + "  " + (min == max ? "" + min : min + "-" + max));
+				actions.add(() -> chooseMove(idx));
 			}
 			if (u.get("player").getAsBoolean()) {
-				addRenderableWidget(Button.builder(Component.literal("Item"), b -> {
+				labels.add("Item");
+				actions.add(() -> {
 					pending = -2;
 					step = Step.TARGET;
 					rebuild();
-				}).bounds(x, y, 50, 20).build());
-				x += 54;
-				addRenderableWidget(Button.builder(Component.literal("Rally"), b -> {
+				});
+				labels.add("Rally");
+				actions.add(() -> {
 					pending = -3;
 					step = Step.TARGET;
 					rebuild();
-				}).bounds(x, y, 50, 20).build());
-				x += 54;
+				});
 			}
-			addRenderableWidget(Button.builder(Component.literal("Wait"), b -> waitHere()).bounds(x, y, 50, 20).build());
+			labels.add("Wait");
+			actions.add(this::waitHere);
+			int[] at = menuPos(labels.size());
+			for (int i = 0; i < labels.size(); i++) {
+				Runnable act = actions.get(i);
+				addRenderableWidget(Button.builder(Component.literal(labels.get(i)), b -> act.run()).bounds(at[0], at[1] + i * 18, MENU_W, 17).build());
+			}
 		}
+	}
+
+	private static final int MENU_W = 96;
+
+	/** Where the action menu goes: to the right of the destination square, kept on screen. */
+	private int[] menuPos(int items) {
+		double[] r = cellRect(destX, destZ);
+		int x = (int) r[2] + 6, y = (int) r[1] - 4;
+		if (x + MENU_W > width - 90) x = (int) r[0] - 6 - MENU_W;
+		return new int[]{Math.clamp(x, CARD_W + 10, Math.max(CARD_W + 10, width - 90 - MENU_W)), Math.clamp(y, TOP + 46, Math.max(TOP + 46, height - 30 - items * 18))};
+	}
+
+	private int resultTop() {
+		int recruits = state().getAsJsonObject("result").getAsJsonArray("recruits").size();
+		return Math.max(TOP + 10, height / 2 - (84 + recruits * 22 + 30) / 2);
 	}
 
 	// ---- drawing ----
@@ -378,16 +482,25 @@ public class BattleScreen extends Screen {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+		long now = net.minecraft.util.Util.getMillis();
+		popups.removeIf(p -> now - p.start() > 1400);
+	}
+
+	@Override
 	public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
 		if (state() == null || BattleClient.grid() == null) return;
 		BattleGrid grid = BattleClient.grid();
-		int[] hover = cellAt(mouseX, mouseY);
+		boolean over = cards.values().stream().anyMatch(r -> mouseX >= r[0] && mouseX < r[2] && mouseY >= r[1] && mouseY < r[3]);
+		int[] hover = over ? null : cellAt(mouseX, mouseY);
 		hoverX = hover == null ? -1 : hover[0];
 		hoverZ = hover == null ? -1 : hover[1];
 		JsonObject u = unit(selected);
+		boolean result = state().has("result");
 
 		// movement range and targets
-		if (u != null && "PLAYER".equals(phase())) {
+		if (u != null && "PLAYER".equals(phase()) && !result) {
 			if (step == Step.DESTINATION) {
 				for (int cell : reach(u).keySet()) {
 					int x = cell % grid.size, z = cell / grid.size;
@@ -410,87 +523,189 @@ public class BattleScreen extends Screen {
 				}
 			}
 		}
-		if (hoverX >= 0) outlineCell(g, hoverX, hoverZ, 0xFFFFFFFF);
+		if (hoverX >= 0 && !result) outlineCell(g, hoverX, hoverZ, 0xFFFFFFFF, 1);
 
-		// units: side frame and health bar
+		// units: a coloured base, a frame and a health bar over each
+		long now = net.minecraft.util.Util.getMillis();
 		for (JsonObject t : units()) {
 			if (t.get("hp").getAsInt() <= 0) continue;
 			int x = t.get("x").getAsInt(), z = t.get("z").getAsInt();
-			int frame = mine(t) ? (t.get("acted").getAsBoolean() ? 0xFF6070A0 : 0xFF4AA8FF) : 0xFFFF5050;
-			if (t.get("id").getAsInt() == selected) frame = 0xFFFFE040;
-			outlineCell(g, x, z, frame);
+			int id = t.get("id").getAsInt();
+			boolean acted = mine(t) && t.get("acted").getAsBoolean();
+			int frame = mine(t) ? (acted ? 0xFF6070A0 : 0xFF4AA8FF) : 0xFFFF5050;
+			if (id == selected) frame = (now / 250) % 2 == 0 ? 0xFFFFE040 : 0xFFFFFFA0;
+			else if (id == hoveredCard) frame = 0xFFFFFFFF;
+			fillCell(g, x, z, mine(t) ? (acted ? 0x30404060 : 0x303C8CFF) : 0x30FF4040);
+			outlineCell(g, x, z, frame, 2);
 			double[] r = cellRect(x, z);
-			int bw = (int) (r[2] - r[0]);
-			int filled = (int) Math.round(bw * t.get("hp").getAsDouble() / t.get("max").getAsDouble());
-			g.fill((int) r[0], (int) r[1] - 4, (int) r[0] + bw, (int) r[1] - 1, 0xC0000000);
-			g.fill((int) r[0], (int) r[1] - 4, (int) r[0] + filled, (int) r[1] - 1, mine(t) ? 0xFF40D060 : 0xFFE04040);
+			int bw = Math.max(16, (int) (r[2] - r[0]));
+			int bx = (int) ((r[0] + r[2]) / 2) - bw / 2, by = (int) r[1] - 7;
+			double frac = t.get("hp").getAsDouble() / t.get("max").getAsDouble();
+			g.fill(bx - 1, by - 1, bx + bw + 1, by + 4, 0xE0000000);
+			g.fill(bx, by, bx + (int) Math.round(bw * frac), by + 3, hpColor(frac, mine(t)));
 		}
 
-		// banner and log
-		String banner = state().has("result") ? "" : "Turn " + state().get("turn").getAsInt() + " - " + ("PLAYER".equals(phase()) ? "Your phase" : "Enemy phase");
-		if (!banner.isEmpty()) {
-			int w = font.width(banner) + 12;
-			g.fill(width / 2 - w / 2, 4 + TOP, width / 2 + w / 2, 18 + TOP, 0xA0000000);
-			g.centeredText(font, banner, width / 2, 7 + TOP, "PLAYER".equals(phase()) ? 0xFF7FC8FF : 0xFFFF8080);
-		}
-		JsonArray log = state().getAsJsonArray("log");
-		int ly = 38 + TOP;
-		for (int i = state().has("result") ? log.size() : Math.max(0, log.size() - 6); i < log.size(); i++) {
-			String line = log.get(i).getAsString();
-			g.fill(4, ly - 1, 8 + font.width(line), ly + 9, 0x80000000);
-			g.text(font, line, 6, ly, 0xFFFFFFFF);
-			ly += 11;
+		// floating damage and healing numbers
+		for (Popup p : popups) {
+			double age = (now - p.start()) / 1400.0;
+			double[] at = project(p.wx(), p.wy() + 1, p.wz());
+			int alpha = (int) (255 * Math.clamp(1.4 - age * 1.4, 0, 1));
+			if (alpha < 8) continue;
+			g.pose().pushMatrix();
+			g.pose().translate((float) at[0], (float) (at[1] - 10 - age * 24));
+			g.pose().scale(1.5f, 1.5f);
+			g.centeredText(font, p.text(), 0, 0, (alpha << 24) | (p.color() & 0xFFFFFF));
+			g.pose().popMatrix();
 		}
 
-		// details of the selected or hovered unit
-		JsonObject info = u != null ? u : unitAt(hoverX, hoverZ);
-		if (info != null && !state().has("result")) {
-			List<String> lines = new ArrayList<>();
-			lines.add(info.get("name").getAsString() + "  Lv." + info.get("level").getAsInt() + (info.get("player").getAsBoolean() ? "" : "  " + info.get("influence").getAsString()));
-			lines.add("HP " + info.get("hp").getAsInt() + "/" + info.get("max").getAsInt() + "   Moves " + info.get("squares").getAsInt() + " squares" + (info.get("flies").getAsBoolean() ? " (flies)" : ""));
-			for (JsonElement me : info.getAsJsonArray("moves")) {
-				JsonObject m = me.getAsJsonObject();
-				lines.add("  " + m.get("name").getAsString() + ": power " + m.get("power").getAsInt() + ", range " + m.get("min").getAsInt() + "-" + m.get("max").getAsInt()
-						+ ", " + m.get("kind").getAsString().toLowerCase(java.util.Locale.ROOT));
+		// turn banner
+		if (!result) {
+			boolean mineTurn = "PLAYER".equals(phase());
+			String banner = mineTurn ? "YOUR TURN" : "ENEMY TURN";
+			String sub = "Turn " + state().get("turn").getAsInt();
+			int bw = Math.max(170, font.width(banner) * 2 + 40), bx = width / 2 - bw / 2, by = TOP + 2;
+			int c1 = mineTurn ? 0xE0204A90 : 0xE0902020, c2 = mineTurn ? 0x80102850 : 0x80501010;
+			g.fillGradient(bx, by, bx + bw, by + 26, c1, c2);
+			g.fill(bx, by + 26, bx + bw, by + 27, mineTurn ? 0xFF7FC8FF : 0xFFFF8080);
+			g.pose().pushMatrix();
+			g.pose().translate(width / 2f, by + 4);
+			g.pose().scale(2f, 2f);
+			g.centeredText(font, banner, 0, 0, 0xFFFFFFFF);
+			g.pose().popMatrix();
+			g.text(font, sub, bx + bw - font.width(sub) - 4, by + 17, 0xFFDDDDDD);
+			String hint = switch (step) {
+				case UNIT -> mineTurn ? "Pick one of your creatures (or you)" : "The wild creatures are moving...";
+				case DESTINATION -> "Click where it should move (or itself to stay)";
+				case ACTION -> "Pick an action - or click an enemy in red";
+				case TARGET -> pending >= 0 ? "Click a target in red" : "Click a unit in green";
+			};
+			int hw = font.width(hint) + 12;
+			g.fill(width / 2 - hw / 2, by + 29, width / 2 + hw / 2, by + 41, 0xA0000000);
+			g.centeredText(font, hint, width / 2, by + 31, 0xFFFFFFA0);
+		}
+
+		// the two sides as cards: yours on the left, the wild ones on the right
+		cards.clear();
+		hoveredCard = -1;
+		if (!result) {
+			drawRoster(g, units().stream().filter(BattleScreen::mine).toList(), 4, "YOUR TEAM", 0xFF7FC8FF, mouseX, mouseY);
+			drawRoster(g, units().stream().filter(t -> !mine(t)).toList(), width - CARD_W - 4, "WILD", 0xFFFF8080, mouseX, mouseY);
+		}
+
+		// what happened lately, bottom middle
+		if (!result) {
+			JsonArray log = state().getAsJsonArray("log");
+			int lines = Math.min(3, log.size()), ly = height - 6 - lines * 10;
+			for (int i = log.size() - lines; i < log.size(); i++) {
+				String line = log.get(i).getAsString();
+				if (font.width(line) > width - 2 * CARD_W - 120) line = font.plainSubstrByWidth(line, width - 2 * CARD_W - 130) + "...";
+				int fade = i == log.size() - 1 ? 0xFFFFFFFF : 0xFFB0B0B0;
+				int lw = font.width(line);
+				g.fill(width / 2 - lw / 2 - 4, ly - 1, width / 2 + lw / 2 + 4, ly + 9, 0x90000000);
+				g.centeredText(font, line, width / 2, ly, fade);
+				ly += 10;
 			}
-			int w = 0;
-			for (String s : lines) w = Math.max(w, font.width(s));
-			int y0 = height - 34 - lines.size() * 10;
-			g.fill(4, y0 - 3, 10 + w, y0 + lines.size() * 10, 0xA0000000);
-			for (int i = 0; i < lines.size(); i++) g.text(font, lines.get(i), 7, y0 + i * 10, i == 0 ? (mine(info) ? 0xFF7FC8FF : 0xFFFF8080) : 0xFFFFFFFF);
 		}
-		String hint = switch (step) {
-			case UNIT -> "PLAYER".equals(phase()) ? "Click one of your units" : "";
-			case DESTINATION -> "Click where it should move (or itself to stay)";
-			case ACTION -> "Pick a move, then a target - or click an enemy in red";
-			case TARGET -> pending >= 0 ? "Click a target in red" : "Click a unit in green";
-		};
-		if (!hint.isEmpty() && !state().has("result")) {
-			int w = font.width(hint) + 12;
-			g.fill(width / 2 - w / 2, 20 + TOP, width / 2 + w / 2, 32 + TOP, 0xA0000000);
-			g.centeredText(font, hint, width / 2, 22 + TOP, 0xFFFFFFA0);
-		}
+
+		// details of the selected or hovered unit, bottom left
+		JsonObject info = u != null ? u : hoveredCard >= 0 ? unit(hoveredCard) : unitAt(hoverX, hoverZ);
+		if (info != null && !result) drawDetails(g, info, 4, height - 4);
 
 		// results
-		if (state().has("result")) {
-			JsonObject r = state().getAsJsonObject("result");
-			String o = r.get("outcome").getAsString();
-			String title = o.equals("WON") ? "Victory!" : o.equals("LOST") ? "Defeated" : "Escaped";
-			g.fill(width / 2 - 130, height / 2 - 60, width / 2 + 130, height / 2 + 44 + r.getAsJsonArray("recruits").size() * 22, 0xC0000000);
-			g.centeredText(font, title, width / 2, height / 2 - 52, o.equals("WON") ? 0xFFFFD040 : 0xFFFF8080);
-			if (o.equals("WON")) {
-				g.centeredText(font, "+" + r.get("xp").getAsInt() + " XP to give your creatures (/party xp)", width / 2, height / 2 - 38, 0xFFFFFFFF);
-				g.centeredText(font, "+" + r.get("charXp").getAsInt() + " XP for you (/character)", width / 2, height / 2 - 27, 0xFFFFFFFF);
-				// what the defeated creatures dropped (it's in your inventory)
-				StringBuilder drops = new StringBuilder();
-				JsonArray loot = r.has("loot") ? r.getAsJsonArray("loot") : new JsonArray();
-				for (int i = 0; i < loot.size(); i++) drops.append(i > 0 ? ", " : "").append(loot.get(i).getAsString());
-				String line = loot.isEmpty() ? "No drops" : "Drops: " + drops;
-				if (font.width(line) > 250) line = font.plainSubstrByWidth(line, 240) + "...";
-				g.centeredText(font, line, width / 2, height / 2 - 12, 0xFF9FE09F);
-			}
-		}
+		if (result) drawResult(g);
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
+	}
+
+	private static int hpColor(double frac, boolean mine) {
+		if (frac <= 0.25) return 0xFFE04040;
+		if (frac <= 0.5) return 0xFFE0C040;
+		return mine ? 0xFF40D060 : 0xFFE07040;
+	}
+
+	private void drawRoster(GuiGraphicsExtractor g, List<JsonObject> side, int x, String title, int titleColor, int mouseX, int mouseY) {
+		int y = TOP + 48;
+		g.fill(x, y - 11, x + CARD_W, y - 1, 0xA0000000);
+		g.text(font, title, x + 4, y - 10, titleColor);
+		for (JsonObject t : side) {
+			int id = t.get("id").getAsInt(), hp = Math.max(0, t.get("hp").getAsInt()), max = t.get("max").getAsInt();
+			boolean down = hp <= 0, acted = mine(t) && t.get("acted").getAsBoolean();
+			boolean hovered = mouseX >= x && mouseX < x + CARD_W && mouseY >= y && mouseY < y + CARD_H;
+			if (hovered) hoveredCard = id;
+			cards.put(id, new int[]{x, y, x + CARD_W, y + CARD_H});
+			int color = 0xFF000000 | t.get("color").getAsInt();
+			g.fill(x, y, x + CARD_W, y + CARD_H, down ? 0xB0201010 : hovered ? 0xD0303848 : 0xC0101418);
+			g.fill(x, y, x + 3, y + CARD_H, t.get("player").getAsBoolean() ? 0xFFFFFFFF : color);
+			if (id == selected) g.outline(x, y, CARD_W, CARD_H, 0xFFFFE040);
+			String name = t.get("name").getAsString();
+			String lv = t.get("player").getAsBoolean() ? "" : "Lv." + t.get("level").getAsInt();
+			int room = CARD_W - 10 - font.width(lv);
+			if (font.width(name) > room) name = font.plainSubstrByWidth(name, room - 6) + "..";
+			g.text(font, name, x + 6, y + 3, down ? 0xFF808080 : acted ? 0xFF9098B0 : 0xFFFFFFFF);
+			g.text(font, lv, x + CARD_W - 3 - font.width(lv), y + 3, 0xFFCCCCCC);
+			double frac = max <= 0 ? 0 : hp / (double) max;
+			g.fill(x + 6, y + 14, x + CARD_W - 40, y + 19, 0xFF303030);
+			g.fill(x + 6, y + 14, x + 6 + (int) Math.round((CARD_W - 46) * frac), y + 19, down ? 0xFF505050 : hpColor(frac, mine(t)));
+			String hpText = down ? "KO" : hp + "/" + max;
+			g.text(font, hpText, x + CARD_W - 3 - font.width(hpText), y + 13, down ? 0xFFFF6060 : 0xFFDDDDDD);
+			if (acted && !down) g.text(font, "done", x + CARD_W - 3 - font.width("done") - font.width(lv) - 4, y + 3, 0xFF707890);
+			y += CARD_H + 2;
+		}
+	}
+
+	/** A unit's card in full: name and influence, health, movement and its moves. */
+	private void drawDetails(GuiGraphicsExtractor g, JsonObject t, int x, int bottom) {
+		List<String> moves = new ArrayList<>();
+		for (JsonElement me : t.getAsJsonArray("moves")) {
+			JsonObject m = me.getAsJsonObject();
+			int min = m.get("min").getAsInt(), max = m.get("max").getAsInt();
+			moves.add(m.get("name").getAsString() + "  pow " + m.get("power").getAsInt() + "  range " + (min == max ? "" + min : min + "-" + max)
+					+ "  " + m.get("kind").getAsString().toLowerCase(java.util.Locale.ROOT));
+		}
+		String move = "Moves " + t.get("squares").getAsInt() + " squares" + (t.get("flies").getAsBoolean() ? ", flies" : "") + (t.get("lava").getAsBoolean() ? ", crosses lava" : "");
+		int w = Math.max(150, font.width(move) + 10);
+		for (String m : moves) w = Math.max(w, font.width(m) + 14);
+		w = Math.min(w, width / 2 - 20);
+		int h = 36 + moves.size() * 10 + 4, y = bottom - h;
+		int color = 0xFF000000 | t.get("color").getAsInt();
+		g.fill(x, y, x + w, y + h, 0xD0101418);
+		g.fill(x, y, x + w, y + 13, t.get("player").getAsBoolean() ? 0xFF404858 : (color & 0x00FFFFFF) | 0xC0000000);
+		String title = t.get("name").getAsString() + (t.get("player").getAsBoolean() ? "" : "  Lv." + t.get("level").getAsInt() + "  " + t.get("influence").getAsString());
+		g.text(font, title, x + 4, y + 3, 0xFFFFFFFF);
+		int hp = Math.max(0, t.get("hp").getAsInt()), max = t.get("max").getAsInt();
+		double frac = max <= 0 ? 0 : hp / (double) max;
+		g.fill(x + 4, y + 17, x + w - 60, y + 22, 0xFF303030);
+		g.fill(x + 4, y + 17, x + 4 + (int) Math.round((w - 64) * frac), y + 22, hpColor(frac, mine(t)));
+		g.text(font, "HP " + hp + "/" + max, x + w - 56, y + 16, 0xFFDDDDDD);
+		g.text(font, move, x + 4, y + 25, 0xFF9FD0FF);
+		for (int i = 0; i < moves.size(); i++) g.text(font, "• " + moves.get(i), x + 4, y + 36 + i * 10, 0xFFFFD27F);
+	}
+
+	private void drawResult(GuiGraphicsExtractor g) {
+		JsonObject r = state().getAsJsonObject("result");
+		String o = r.get("outcome").getAsString();
+		boolean won = o.equals("WON");
+		String title = won ? "VICTORY!" : o.equals("LOST") ? "DEFEATED" : "ESCAPED";
+		int recruits = r.getAsJsonArray("recruits").size();
+		int w = 300, x = width / 2 - w / 2, y = resultTop(), h = 84 + recruits * 22 + 30;
+		g.fill(x, y, x + w, y + h, 0xD0101418);
+		g.fillGradient(x, y, x + w, y + 30, won ? 0xF0A07010 : o.equals("LOST") ? 0xF0802020 : 0xF0405060, 0x60000000);
+		g.pose().pushMatrix();
+		g.pose().translate(width / 2f, y + 6);
+		g.pose().scale(2f, 2f);
+		g.centeredText(font, title, 0, 0, won ? 0xFFFFE070 : 0xFFFFFFFF);
+		g.pose().popMatrix();
+		if (won) {
+			g.centeredText(font, "+" + r.get("xp").getAsInt() + " XP for your creatures   +" + r.get("charXp").getAsInt() + " XP for you", width / 2, y + 38, 0xFFFFFFFF);
+			StringBuilder drops = new StringBuilder();
+			JsonArray loot = r.has("loot") ? r.getAsJsonArray("loot") : new JsonArray();
+			for (int i = 0; i < loot.size(); i++) drops.append(i > 0 ? ", " : "").append(loot.get(i).getAsString());
+			String line = loot.isEmpty() ? "No drops" : "Drops: " + drops;
+			if (font.width(line) > w - 16) line = font.plainSubstrByWidth(line, w - 26) + "...";
+			g.centeredText(font, line, width / 2, y + 52, 0xFF9FE09F);
+			if (recruits > 0) g.centeredText(font, "Recruit one of them (costs creature XP):", width / 2, y + 68, 0xFFAAAAAA);
+		} else {
+			g.centeredText(font, o.equals("LOST") ? "You were knocked out. Your creatures keep their damage." : "You got away safely.", width / 2, y + 44, 0xFFDDDDDD);
+		}
 	}
 
 	private void fillCell(GuiGraphicsExtractor g, int x, int z, int color) {
@@ -498,8 +713,9 @@ public class BattleScreen extends Screen {
 		g.fill((int) r[0] + 1, (int) r[1] + 1, (int) r[2], (int) r[3], color);
 	}
 
-	private void outlineCell(GuiGraphicsExtractor g, int x, int z, int color) {
+	private void outlineCell(GuiGraphicsExtractor g, int x, int z, int color, int thickness) {
 		double[] r = cellRect(x, z);
-		g.outline((int) r[0], (int) r[1], (int) (r[2] - r[0]), (int) (r[3] - r[1]), color);
+		for (int i = 0; i < thickness; i++)
+			g.outline((int) r[0] + i, (int) r[1] + i, (int) (r[2] - r[0]) - 2 * i, (int) (r[3] - r[1]) - 2 * i, color);
 	}
 }

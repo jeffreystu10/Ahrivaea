@@ -51,16 +51,50 @@ public final class BattleClient {
 	}
 
 	private static int maxHeight;
+	private static double homeY;
 
-	/** Scroll to zoom (closer or farther), WASD/arrows to pan; kept over the battlefield. */
-	public static void zoom(double steps) {
-		camY = Math.clamp(camY - steps * 2, maxHeight + 7, maxHeight + 7 + (grid == null ? 23 : grid.size));
+	/** Closest and farthest the camera goes (blocks above the highest ground). */
+	static double minHeight() {
+		return maxHeight + 5;
 	}
 
+	static double maxHeightAbove() {
+		return maxHeight + 6 + (grid == null ? 23 : grid.size * 1.2);
+	}
+
+	/** Scroll to zoom: closer or farther, towards (wx, wz), the point under the mouse. */
+	public static void zoomAt(double steps, double wx, double wz) {
+		double before = camY;
+		camY = Math.clamp(camY * Math.pow(0.88, steps) + (1 - Math.pow(0.88, steps)) * maxHeight, minHeight(), maxHeightAbove());
+		// keep the point under the mouse where it is
+		double k = (before - camY) / Math.max(1, before - maxHeight);
+		pan((wx - camX) * k, (wz - camZ) * k);
+	}
+
+	public static void zoom(double steps) {
+		zoomAt(steps, camX, camZ);
+	}
+
+	/** Moves the camera (blocks), kept over the battlefield. */
 	public static void pan(double dx, double dz) {
 		if (grid == null) return;
-		camX = Math.clamp(camX + dx, grid.originX, grid.originX + grid.size);
-		camZ = Math.clamp(camZ + dz, grid.originZ, grid.originZ + grid.size);
+		camX = Math.clamp(camX + dx, grid.originX - 2, grid.originX + grid.size + 2);
+		camZ = Math.clamp(camZ + dz, grid.originZ - 2, grid.originZ + grid.size + 2);
+	}
+
+	/** Looks at a square of the battlefield. */
+	public static void centerOn(int x, int z) {
+		if (grid == null) return;
+		camX = grid.originX + x + 0.5;
+		camZ = grid.originZ + z + 0.5;
+	}
+
+	/** Back to the starting view: the whole battlefield. */
+	public static void resetView() {
+		if (grid == null) return;
+		camX = grid.originX + grid.size / 2.0;
+		camZ = grid.originZ + grid.size / 2.0;
+		camY = homeY;
 	}
 
 	public static double camZ() {
@@ -92,6 +126,7 @@ public final class BattleClient {
 			camZ = grid.originZ + size / 2.0;
 			// high enough to see the whole field, whatever its size (13 above the top for 21×21)
 			camY = max + Math.round(size * 0.7f);
+			homeY = camY;
 			maxHeight = max;
 			hudWasHidden = mc.gui.hud.isHidden();
 			if (!hudWasHidden) mc.gui.hud.toggle();

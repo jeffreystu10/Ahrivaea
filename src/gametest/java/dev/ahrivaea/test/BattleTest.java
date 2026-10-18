@@ -90,6 +90,28 @@ public class BattleTest implements FabricClientGameTest {
 			server.runCommand("fill %d %d %d %d %d %d minecraft:stone".formatted(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
 			context.takeScreenshot(TestScreenshotOptions.of("battle_1_start"));
 
+			// the camera: scroll zooms in towards the mouse, dragging the battlefield looks around, R goes back
+			double[] cam0 = context.computeOnClient(c -> new double[]{BattleClient.camX(), BattleClient.camY(), BattleClient.camZ()});
+			context.getInput().setCursorPos(800, 450);
+			context.waitTick();
+			context.getInput().scroll(4);
+			context.waitTicks(3);
+			context.getInput().holdMouse(0);
+			for (int i = 0; i < 10; i++) {
+				context.getInput().moveCursor(-30, 12);
+				context.waitTick();
+			}
+			context.getInput().releaseMouse(0);
+			context.waitTicks(3);
+			double[] cam1 = context.computeOnClient(c -> new double[]{BattleClient.camX(), BattleClient.camY(), BattleClient.camZ()});
+			context.takeScreenshot(TestScreenshotOptions.of("battle_1b_zoomed_and_moved"));
+			if (cam1[1] > cam0[1] - 2) failures.add("scrolling should zoom in: camera height " + cam0[1] + " -> " + cam1[1]);
+			if (cam1[0] < cam0[0] + 1 || cam1[2] > cam0[2] - 0.3) failures.add("dragging left and down should move the view right and up: x " + cam0[0] + " -> " + cam1[0] + ", z " + cam0[2] + " -> " + cam1[2]);
+			boolean stillUnitStep = context.computeOnClient(c -> BattleClient.state() != null);
+			if (!stillUnitStep) failures.add("dragging shouldn't end anything");
+			context.runOnClient(c -> BattleClient.resetView());
+			context.waitTicks(2);
+
 			// select our first creature by clicking it, then click a square two steps away
 			JsonObject state = context.computeOnClient(c -> BattleClient.state());
 			JsonObject creature = null;

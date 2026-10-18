@@ -32,6 +32,8 @@ public final class PartyClient {
 	private PartyClient() {}
 
 	public static KeyMapping OPEN;
+	/** Opens the creature dex (J by default). */
+	public static KeyMapping DEX;
 	/** The latest party view from the server (null until it arrives, and on servers without the mod). */
 	static JsonObject state;
 	/** Whether the on-screen summary is shown (the party screen has a button for it; kept in config/ahrivaea_party.json). */
@@ -42,6 +44,11 @@ public final class PartyClient {
 		loadConfig();
 		KeyMapping.Category category = KeyMapping.Category.register(Ahrivaea.id("party"));
 		OPEN = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.ahrivaea.party", InputConstants.Type.KEYBOARD, SDLScancode.SDL_SCANCODE_K, category));
+		DEX = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.ahrivaea.dex", InputConstants.Type.KEYBOARD, SDLScancode.SDL_SCANCODE_J, category));
+		ClientPlayNetworking.registerGlobalReceiver(dev.ahrivaea.party.Dex.DataPayload.TYPE, (payload, ctx) -> {
+			JsonObject data = JsonParser.parseString(payload.json()).getAsJsonObject();
+			if (ctx.client().gui.screen() instanceof DexScreen s) s.setData(data);
+		});
 		ClientPlayNetworking.registerGlobalReceiver(PartySync.StatePayload.TYPE, (payload, ctx) -> {
 			state = JsonParser.parseString(payload.json()).getAsJsonObject();
 			if (ctx.client().gui.screen() instanceof PartyScreen s) s.refresh();
@@ -54,6 +61,11 @@ public final class PartyClient {
 			if (pendingStarter != null && mc.gui.screen() == null && mc.player != null) {
 				mc.gui.setScreen(new StarterScreen(pendingStarter));
 				pendingStarter = null;
+			}
+			while (DEX.consumeClick()) {
+				if (mc.gui.screen() != null || mc.player == null) continue;
+				if (state == null) mc.player.sendOverlayMessage(net.minecraft.network.chat.Component.literal("This server doesn't use Ahrivaea Creatures."));
+				else DexScreen.open();
 			}
 			while (OPEN.consumeClick()) {
 				if (mc.gui.screen() != null || mc.player == null) continue;

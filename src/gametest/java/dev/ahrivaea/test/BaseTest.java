@@ -127,6 +127,64 @@ public class BaseTest implements FabricClientGameTest {
 			for (var e : result.entrySet()) if (e.getValue() instanceof String why) failures.add(e.getKey() + ": " + why);
 			context.takeScreenshot(TestScreenshotOptions.of("base_2_after"));
 
+			// sorting: a chest with wheat in an item frame on it is the wheat chest. 10 wheat and some cobblestone put in an
+			// unlabelled chest get sorted: the wheat moves to the wheat chest, the cobblestone stays
+			BlockPos labelled = new BlockPos(cx + 7, y, cz - 2), plain = new BlockPos(cx + 2, y, cz);
+			server.runCommand("setblock %d %d %d minecraft:chest".formatted(labelled.getX(), labelled.getY(), labelled.getZ()));
+			server.runOnServer(s -> {
+				ServerLevel level = s.overworld();
+				var frame = new net.minecraft.world.entity.decoration.ItemFrame(level, labelled.south(), net.minecraft.core.Direction.SOUTH);
+				frame.setItem(new ItemStack(Items.WHEAT));
+				level.addFreshEntity(frame);
+				var c = (net.minecraft.world.Container) level.getBlockEntity(plain);
+				c.setItem(20, new ItemStack(Items.WHEAT, 10));
+				c.setItem(21, new ItemStack(Items.COBBLESTONE, 5));
+			});
+			String sorted = "";
+			for (int t = 0; t < 1200; t += 100) {
+				context.waitTicks(100);
+				sorted = server.computeOnServer(s -> {
+					ServerLevel level = s.overworld();
+					var wheatChest = (net.minecraft.world.Container) level.getBlockEntity(labelled);
+					var other = (net.minecraft.world.Container) level.getBlockEntity(plain);
+					int wheat = 0, strays = 0, left = 0, cobble = 0;
+					for (int i = 0; i < wheatChest.getContainerSize(); i++) {
+						ItemStack st = wheatChest.getItem(i);
+						if (st.is(Items.WHEAT)) wheat += st.getCount();
+						else if (!st.isEmpty()) strays += st.getCount();
+					}
+					for (int i = 0; i < other.getContainerSize(); i++) {
+						if (other.getItem(i).is(Items.WHEAT)) left += other.getItem(i).getCount();
+						if (other.getItem(i).is(Items.COBBLESTONE)) cobble += other.getItem(i).getCount();
+					}
+					return "wheat chest " + wheat + " wheat, " + strays + " other; plain chest " + left + " wheat, " + cobble + " cobblestone";
+				});
+				if (sorted.matches("wheat chest (1\\d|[2-9]\\d|\\d{3,}) wheat, 0 other; plain chest 0 wheat, 5 cobblestone")) break;
+			}
+			LOG.info("BaseTest sorting: {}", sorted);
+			if (!sorted.matches("wheat chest (1\\d|[2-9]\\d|\\d{3,}) wheat, 0 other; plain chest 0 wheat, 5 cobblestone"))
+				failures.add("Transport workers should sort the wheat into the wheat chest: " + sorted);
+			server.runCommand("tp @p %d %d %d -90 30".formatted(cx + 2, y + 2, cz - 1));
+			context.waitTicks(20);
+			context.takeScreenshot(TestScreenshotOptions.of("base_2b_sorted"));
+
+			// job settings: a worker with every job switched off stops working
+			String off = server.computeOnServer(s -> {
+				BaseCoreBlockEntity be = (BaseCoreBlockEntity) s.overworld().getBlockEntity(core);
+				for (int i = 0; i < be.workers().size(); i++) {
+					var w = be.workers().get(i);
+					if (!Bases.jobsOf(w.creature()).contains(Job.FISHING)) continue;
+					for (Job j : Bases.jobsOf(w.creature())) Bases.changeJob(be, i, j.getSerializedName(), "job_toggle");
+					return w.entity().toString();
+				}
+				return "";
+			});
+			context.waitTicks(400);
+			String offStatus = server.computeOnServer(s -> s.overworld().getEntity(java.util.UUID.fromString(off)) instanceof dev.ahrivaea.creature.CreatureEntity e && e.brain() != null
+					? e.brain().status() : "no worker");
+			LOG.info("BaseTest jobs off: {}", offStatus);
+			if (!offStatus.contains("switched off")) failures.add("a worker with its jobs switched off should stop: " + offStatus);
+
 			// the base's screen
 			server.runOnServer(s -> {
 				var p = s.getPlayerList().getPlayers().getFirst();
@@ -135,6 +193,9 @@ public class BaseTest implements FabricClientGameTest {
 			context.waitFor(c -> c.gui.screen() instanceof dev.ahrivaea.client.base.BaseScreen, 100);
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("base_3_screen"));
+			context.runOnClient(c -> ((dev.ahrivaea.client.base.BaseScreen) c.gui.screen()).showJobs(0));
+			context.waitTicks(10);
+			context.takeScreenshot(TestScreenshotOptions.of("base_3b_jobs"));
 			context.runOnClient(c -> c.gui.setScreen(null));
 
 			// the base is whole chunks: level 1 is the core's chunk and the 8 around it, each level one more ring

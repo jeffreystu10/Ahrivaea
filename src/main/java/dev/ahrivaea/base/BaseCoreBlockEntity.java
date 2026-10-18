@@ -291,14 +291,26 @@ public class BaseCoreBlockEntity extends BlockEntity {
 			if (misses < 3) continue;
 			missingChecks.remove(w.entity());
 			CreatureEntity e = Bases.spawnWorker(level, this, w.creature());
-			if (e != null) workers.set(i, new Worker(w.creature(), e.getUUID()));
+			if (e != null) workers.set(i, w.withEntity(e.getUUID()));
 			setChanged();
 		}
 	}
 
 	/** Called by a worker to keep the base's copy of it (level, health) up to date. */
 	void update(UUID entity, dev.ahrivaea.party.CaughtCreature now) {
-		for (int i = 0; i < workers.size(); i++) if (workers.get(i).entity().equals(entity)) workers.set(i, new Worker(now, entity));
+		for (int i = 0; i < workers.size(); i++) if (workers.get(i).entity().equals(entity)) workers.set(i, workers.get(i).withCreature(now));
+		setChanged();
+	}
+
+	/** The base's record of a worker (with its job settings), or null. */
+	public Worker workerFor(UUID entity) {
+		for (Worker w : workers) if (w.entity().equals(entity)) return w;
+		return null;
+	}
+
+	/** Changes a worker's job settings. */
+	void setWorker(int index, Worker w) {
+		workers.set(index, w);
 		setChanged();
 	}
 

@@ -21,6 +21,8 @@ public class BaseScreen extends Screen {
 	private JsonObject state;
 	private int tick;
 	private int boxScroll, workerScroll;
+	/** The worker whose jobs are being set up (-1: the main view). */
+	private int jobsFor = -1;
 
 	/** How many worker rows fit above the Done button. */
 	private int workerRows() {
@@ -51,20 +53,59 @@ public class BaseScreen extends Screen {
 	}
 
 	public void send(String kind, int index) {
+		send(kind, index, null);
+	}
+
+	public void send(String kind, int index, String job) {
 		JsonObject a = new JsonObject();
 		a.addProperty("kind", kind);
 		a.addProperty("index", index);
+		if (job != null) a.addProperty("job", job);
 		a.add("pos", state.getAsJsonArray("pos"));
 		ClientPlayNetworking.send(new Bases.ActionPayload(a.toString()));
 	}
 
+	/** Opens (or with -1 closes) the job settings of a worker. */
+	public void showJobs(int worker) {
+		jobsFor = worker;
+		rebuildWidgets();
+	}
+
+	private JsonArray jobList() {
+		JsonArray workers = state.getAsJsonArray("workers");
+		if (jobsFor < 0 || jobsFor >= workers.size()) return null;
+		JsonObject w = workers.get(jobsFor).getAsJsonObject();
+		return w.has("jobList") ? w.getAsJsonArray("jobList") : new JsonArray();
+	}
+
 	@Override
 	protected void init() {
+		JsonArray jobs = jobList();
+		if (jobs != null) {
+			int x = width / 2 - 220;
+			for (int i = 0; i < jobs.size(); i++) {
+				JsonObject job = jobs.get(i).getAsJsonObject();
+				String id = job.get("id").getAsString();
+				int y = Y0 + i * 40;
+				boolean on = job.get("on").getAsBoolean();
+				addRenderableWidget(Button.builder(Component.literal(on ? "On" : "Off"), b -> send("job_toggle", jobsFor, id)).bounds(x, y, 40, 20).build());
+				Button up = addRenderableWidget(Button.builder(Component.literal("▲"), b -> send("job_up", jobsFor, id)).bounds(x + 44, y, 20, 20).build());
+				up.active = i > 0;
+				Button down = addRenderableWidget(Button.builder(Component.literal("▼"), b -> send("job_down", jobsFor, id)).bounds(x + 66, y, 20, 20).build());
+				down.active = i < jobs.size() - 1;
+			}
+			addRenderableWidget(Button.builder(Component.literal("Back"), b -> showJobs(-1)).bounds(width / 2 - 40, height - 26, 80, 20).build());
+			return;
+		}
+		jobsFor = -1;
 		int left = width / 2 - 250, right = width / 2 + 10;
 		JsonArray workers = state.getAsJsonArray("workers");
 		workerScroll = Math.clamp(workerScroll, 0, Math.max(0, workers.size() - workerRows()));
 		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++) {
 			final int idx = i;
+			addRenderableWidget(Button.builder(Component.literal("Jobs"), b -> showJobs(idx))
+					.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Switch its jobs on or off, and choose which comes first")))
+					.bounds(left + 128, Y0 + (i - workerScroll) * 26, 40, 18).build());
 			addRenderableWidget(Button.builder(Component.literal("Send away"), b -> send("unassign", idx)).bounds(left + 170, Y0 + (i - workerScroll) * 26, 70, 18).build());
 		}
 		boolean full = workers.size() >= state.get("cap").getAsInt();
@@ -109,6 +150,23 @@ public class BaseScreen extends Screen {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
+		JsonArray jobs = jobList();
+		if (jobs != null) {
+			JsonObject w = state.getAsJsonArray("workers").get(jobsFor).getAsJsonObject();
+			g.centeredText(font, "Jobs: " + w.get("name").getAsString() + " Lv." + w.get("level").getAsInt(), width / 2, 10 + TOP, 0xFFFFD040);
+			g.centeredText(font, "It works on the first job in the list that has something to do. Jobs that are off are skipped.", width / 2, 22 + TOP, 0xFFAAAAAA);
+			g.text(font, "Now: " + w.get("status").getAsString(), width / 2 - 220, 42 + TOP, 0xFF9FE09F);
+			int x = width / 2 - 220 + 94;
+			for (int i = 0; i < jobs.size(); i++) {
+				JsonObject job = jobs.get(i).getAsJsonObject();
+				boolean on = job.get("on").getAsBoolean();
+				int y = Y0 + i * 40;
+				g.text(font, (i + 1) + ". " + job.get("name").getAsString() + (job.get("works").getAsBoolean() ? "" : " (not a base job yet)"), x, y + 1, on ? 0xFFFFFFFF : 0xFF777777);
+				g.text(font, job.get("desc").getAsString(), x, y + 12, on ? 0xFF9FC8FF : 0xFF666666);
+			}
+			if (jobs.isEmpty()) g.text(font, "This creature has no jobs.", width / 2 - 220, Y0, 0xFFAAAAAA);
+			return;
+		}
 		int left = width / 2 - 250, right = width / 2 + 10;
 		JsonArray workers = state.getAsJsonArray("workers");
 		int side = state.has("chunks") ? state.get("chunks").getAsInt() : 3;
@@ -131,9 +189,12 @@ public class BaseScreen extends Screen {
 
 	private void entry(GuiGraphicsExtractor g, JsonObject c, int x, int y, boolean worker) {
 		g.fill(x - 2, y - 2, x + 244, y + 22, 0x80000000);
-		g.text(font, c.get("name").getAsString() + " Lv." + c.get("level").getAsInt(), x, y, worker || c.get("works").getAsBoolean() ? 0xFFFFFFFF : 0xFFAAAAAA);
+		String title = c.get("name").getAsString() + " Lv." + c.get("level").getAsInt();
+		if (worker && font.width(title) > 124) title = font.plainSubstrByWidth(title, 119) + "...";
+		g.text(font, title, x, y, worker || c.get("works").getAsBoolean() ? 0xFFFFFFFF : 0xFFAAAAAA);
 		String sub = worker ? c.get("status").getAsString() : c.get("jobs").getAsString();
-		if (font.width(sub) > 165) sub = font.plainSubstrByWidth(sub, 160) + "...";
+		int room = worker ? 122 : 165;
+		if (font.width(sub) > room) sub = font.plainSubstrByWidth(sub, room - 5) + "...";
 		g.text(font, sub, x, y + 11, worker ? 0xFF9FE09F : 0xFF9FC8FF);
 	}
 

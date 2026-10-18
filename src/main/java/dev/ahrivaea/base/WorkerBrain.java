@@ -56,11 +56,13 @@ public final class WorkerBrain {
 	private final CreatureEntity self;
 	private final BlockPos core;
 
-	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH, BREW, STUDY, POWER, CRAFT, ICE, LIGHT }
+	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH, BREW, STUDY, POWER, CRAFT, ICE, LIGHT, SORT }
 
 	private record Task(Kind kind, BlockPos target, ItemEntity item, int duration, String doing) {}
 
 	private Task task;
+	/** The slot a SORT task takes from. */
+	private int sortSlot;
 	private int workTicks, travelTicks, cooldown, ranchTimer = 600;
 	private ItemStack carried = ItemStack.EMPTY;
 	private String status = "Getting settled";
@@ -108,8 +110,15 @@ public final class WorkerBrain {
 		return core;
 	}
 
-	private List<Job> jobs() {
+	/** Every job the creature has, in its own order. */
+	private List<Job> allJobs() {
 		return Species.get(self.getSpeciesId()).map(s -> s.jobsFor(self.getInfluence())).orElse(List.of());
+	}
+
+	/** The jobs it does here: in the order its owner set, without the ones switched off. */
+	private List<Job> jobs(BaseCoreBlockEntity be) {
+		Worker w = be.workerFor(self.getUUID());
+		return w == null ? allJobs() : w.active(allJobs());
 	}
 
 	/** Higher-level creatures work a little faster (up to 40% at level 50). */
@@ -134,9 +143,9 @@ public final class WorkerBrain {
 			if (restTicks % 20 == 0) self.heal(self.getMaxHealth() / 60f);
 			return;
 		}
-		ranch(level);
+		ranch(level, be);
 		// defenders drop everything when raiders come
-		if (jobs().contains(Job.DEFENSE) && defend(level, be)) return;
+		if (jobs(be).contains(Job.DEFENSE) && defend(level, be)) return;
 		if (task == null) {
 			if (--cooldown > 0) return;
 			task = plan(level, be);
@@ -144,7 +153,8 @@ public final class WorkerBrain {
 			lastDist = Double.MAX_VALUE;
 			if (task == null) {
 				cooldown = 40;
-				status = jobs().contains(Job.DEFENSE) ? "On guard" : jobs().stream().anyMatch(Job::working) ? "Idle (nothing to do)" : "Idle (no work it can do yet)";
+				status = jobs(be).contains(Job.DEFENSE) ? "On guard" : jobs(be).stream().anyMatch(Job::working) ? "Idle (nothing to do)"
+						: allJobs().stream().anyMatch(Job::working) ? "Idle (its jobs are switched off)" : "Idle (no work it can do yet)";
 				wander(level, be);
 				return;
 			}
@@ -209,7 +219,7 @@ public final class WorkerBrain {
 			if (chest != null) return new Task(Kind.DELIVER, chest, null, 10, "Putting " + Drops.describe(carried) + " away");
 			drop();
 		}
-		for (Job job : jobs()) {
+		for (Job job : jobs(be)) {
 			Task t = switch (job) {
 				case FARMING -> nearest(level, be, be.crops, p -> isRipe(level, p, level.getBlockState(p)), p -> new Task(Kind.HARVEST, p, null, scaled(30), "Harvesting " + name(level, p)));
 				case GROWTH -> any(level, be, be.growables, p -> level.getBlockState(p).getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b
@@ -276,8 +286,15 @@ public final class WorkerBrain {
 			return new Task(Kind.PICK_UP, i.blockPosition(), i, 5, "Picking up " + Drops.describe(i.getItem()));
 		}
 		// then finished smelting
-		return nearest(level, be, be.furnaces, p -> level.getBlockEntity(p) instanceof AbstractFurnaceBlockEntity f && !f.getItem(2).isEmpty(),
+		Task furnace = nearest(level, be, be.furnaces, p -> level.getBlockEntity(p) instanceof AbstractFurnaceBlockEntity f && !f.getItem(2).isEmpty(),
 				p -> new Task(Kind.EMPTY_FURNACE, p, null, 10, "Emptying the " + name(level, p)));
+		if (furnace != null) return furnace;
+		// then tidying: things in the wrong chest go to the chest labelled for them (see Sorting)
+		Sorting.Misplaced m = Sorting.misplaced(level, be.unclaimed(be.containers), be.containers, self.blockPosition());
+		if (m == null) return null;
+		sortSlot = m.slot();
+		Container from = HopperBlockEntity.getContainerAt(level, m.from());
+		return new Task(Kind.SORT, m.from(), null, 10, "Sorting " + (from == null ? "a chest" : Drops.describe(from.getItem(m.slot()))));
 	}
 
 	// ---- doing it ----
@@ -317,6 +334,13 @@ public final class WorkerBrain {
 			case EMPTY_FURNACE -> {
 				if (level.getBlockEntity(t.target()) instanceof AbstractFurnaceBlockEntity f) carried = f.removeItem(2, 64);
 			}
+			case SORT -> {
+				Container c = HopperBlockEntity.getContainerAt(level, t.target());
+				if (c != null && sortSlot < c.getContainerSize() && !c.getItem(sortSlot).isEmpty()) {
+					carried = c.removeItem(sortSlot, c.getItem(sortSlot).getCount());
+					c.setChanged();
+				}
+			}
 			case DELIVER -> {
 				Container c = HopperBlockEntity.getContainerAt(level, t.target());
 				if (c != null) carried = HopperBlockEntity.addItem(null, c, carried, null);
@@ -351,8 +375,8 @@ public final class WorkerBrain {
 		finish(be, 10);
 	}
 
-	private void ranch(ServerLevel level) {
-		if (!jobs().contains(Job.RANCHING) || --ranchTimer > 0) return;
+	private void ranch(ServerLevel level, BaseCoreBlockEntity be) {
+		if (!jobs(be).contains(Job.RANCHING) || --ranchTimer > 0) return;
 		ranchTimer = 2400 + level.getRandom().nextInt(1200);
 		Species.get(self.getSpeciesId()).ifPresent(s -> {
 			for (ItemStack stack : Drops.roll(s, self.getInfluence(), self.getCreatureLevel(), level.getRandom(), level.registryAccess()))
@@ -390,27 +414,9 @@ public final class WorkerBrain {
 		Block.popResourceFromFace(level, at, Direction.UP, stack);
 	}
 
+	/** Where to put what it's carrying: see {@link Sorting#chestFor}. */
 	private BlockPos chestFor(ServerLevel level, BaseCoreBlockEntity be, ItemStack stack) {
-		BlockPos best = null;
-		double bestD = Double.MAX_VALUE;
-		for (BlockPos p : be.containers) {
-			Container c = level.isLoaded(p) ? HopperBlockEntity.getContainerAt(level, p) : null;
-			if (c == null || !hasRoom(c, stack)) continue;
-			double d = p.distSqr(self.blockPosition());
-			if (d < bestD) {
-				best = p;
-				bestD = d;
-			}
-		}
-		return best;
-	}
-
-	private static boolean hasRoom(Container c, ItemStack stack) {
-		for (int i = 0; i < c.getContainerSize(); i++) {
-			ItemStack in = c.getItem(i);
-			if (in.isEmpty() || ItemStack.isSameItemSameComponents(in, stack) && in.getCount() < in.getMaxStackSize()) return true;
-		}
-		return false;
+		return Sorting.chestFor(level, be.containers, stack, self.blockPosition(), null, false);
 	}
 
 	// ---- defense ----

@@ -308,6 +308,18 @@ public final class Bases {
 			String status = "Coming back to the base";
 			if (level.getEntity(w.entity()) instanceof CreatureEntity e && e.brain() != null) status = e.brain().status();
 			j.addProperty("status", status);
+			// its jobs in the order it does them, and which are switched off
+			JsonArray jobList = new JsonArray();
+			for (Job job : w.ordered(jobsOf(w.creature()))) {
+				JsonObject jj = new JsonObject();
+				jj.addProperty("id", job.getSerializedName());
+				jj.addProperty("name", job.displayName());
+				jj.addProperty("desc", job.description());
+				jj.addProperty("on", !w.off().contains(job.getSerializedName()));
+				jj.addProperty("works", job.working());
+				jobList.add(jj);
+			}
+			j.add("jobList", jobList);
 			workers.add(j);
 		}
 		o.add("workers", workers);
@@ -318,6 +330,25 @@ public final class Bases {
 		for (CaughtCreature cc : Party.box(p)) box.add(describe(cc));
 		o.add("box", box);
 		return o;
+	}
+
+	public static List<Job> jobsOf(CaughtCreature c) {
+		return Species.get(c.species()).map(s -> s.jobsFor(c.influence())).orElse(List.of());
+	}
+
+	/** Switches one of a worker's jobs on or off, or moves it up or down its list. */
+	public static String changeJob(BaseCoreBlockEntity be, int index, String jobId, String kind) {
+		if (index < 0 || index >= be.workers.size()) return "No such worker.";
+		Worker w = be.workers.get(index);
+		List<Job> jobs = jobsOf(w.creature());
+		Job job = jobs.stream().filter(j -> j.getSerializedName().equals(jobId)).findFirst().orElse(null);
+		if (job == null) return "It doesn't have that job.";
+		be.setWorker(index, switch (kind) {
+			case "job_toggle" -> w.toggled(job);
+			case "job_up" -> w.moved(jobs, job, -1);
+			default -> w.moved(jobs, job, 1);
+		});
+		return null;
 	}
 
 	private static JsonObject describe(CaughtCreature c) {
@@ -350,6 +381,7 @@ public final class Bases {
 			case "assign_party" -> index >= 0 && index < Party.get(p).size() ? assign(p, be, Party.get(p).get(index), () -> Party.remove(p, index)) : "No such creature.";
 			case "assign_box" -> index >= 0 && index < Party.box(p).size() ? assign(p, be, Party.box(p).get(index), () -> Party.removeFromBox(p, index)) : "No such creature.";
 			case "unassign" -> unassign(p, be, index);
+			case "job_toggle", "job_up", "job_down" -> changeJob(be, index, j.has("job") ? j.get("job").getAsString() : "", kind);
 			case "toggle_loading" -> {
 				be.setChunkLoading(!be.chunkLoading());
 				p.sendSystemMessage(Component.literal(be.chunkLoading()

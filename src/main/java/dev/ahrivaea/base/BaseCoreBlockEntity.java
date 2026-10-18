@@ -74,6 +74,8 @@ public class BaseCoreBlockEntity extends BlockEntity {
 	private int scanIndex;
 	/** Targets a worker is already on, so two don't go for the same one. */
 	final Map<BlockPos, UUID> claimed = new HashMap<>();
+	/** Spots a farmer or logger emptied but had nothing to replant with: what goes there (from the base's chests). */
+	final Map<BlockPos, net.minecraft.world.item.Item> toPlant = new java.util.LinkedHashMap<>();
 	private final Map<UUID, Integer> missingChecks = new HashMap<>();
 
 	public BaseCoreBlockEntity(BlockPos pos, BlockState state) {
@@ -300,6 +302,11 @@ public class BaseCoreBlockEntity extends BlockEntity {
 	void update(UUID entity, dev.ahrivaea.party.CaughtCreature now) {
 		for (int i = 0; i < workers.size(); i++) if (workers.get(i).entity().equals(entity)) workers.set(i, workers.get(i).withCreature(now));
 		setChanged();
+	}
+
+	/** Marks a spot for a farmer or logger to plant with this (fetched from the base's chests). */
+	public void needsPlanting(BlockPos pos, net.minecraft.world.item.Item item) {
+		toPlant.put(pos.immutable(), item);
 	}
 
 	/** The base's record of a worker (with its job settings), or null. */

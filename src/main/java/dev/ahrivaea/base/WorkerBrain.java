@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayDeque;
@@ -56,11 +57,13 @@ public final class WorkerBrain {
 	private final CreatureEntity self;
 	private final BlockPos core;
 
-	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH, BREW, STUDY, POWER, CRAFT, ICE, LIGHT, SORT }
+	private enum Kind { HARVEST, TEND, FELL, MINE, SMELT, PICK_UP, DELIVER, EMPTY_FURNACE, FISH, BREW, STUDY, POWER, CRAFT, ICE, LIGHT, SORT, FETCH, PLANT }
 
 	private record Task(Kind kind, BlockPos target, ItemEntity item, int duration, String doing) {}
 
 	private Task task;
+	/** Where the seed or sapling it's fetching (or carrying) goes. */
+	private BlockPos plantAt;
 	/** The slot a SORT task takes from. */
 	private int sortSlot;
 	private int transportTrips;
@@ -130,6 +133,14 @@ public final class WorkerBrain {
 	/** How fast a creature of this level works: 1 at level 20, 2% more or less per level (62% at level 1, 160% at 50). */
 	public static double speedAt(int level) {
 		return Math.max(0.1, 1 + PER_LEVEL * (level - PAR_LEVEL));
+	}
+
+	/** Level 20 miners mine with silk touch (unless their owner switched it off on the jobs panel). */
+	public static final int SILK_TOUCH_LEVEL = 20;
+
+	private boolean silkTouch(BaseCoreBlockEntity be) {
+		Worker w = be.workerFor(self.getUUID());
+		return self.getCreatureLevel() >= SILK_TOUCH_LEVEL && (w == null || !w.off().contains(Worker.SILK_TOUCH));
 	}
 
 	public double speed() {
@@ -243,18 +254,27 @@ public final class WorkerBrain {
 	// ---- choosing what to do ----
 
 	private Task plan(ServerLevel level, BaseCoreBlockEntity be) {
+		// carrying a seed or sapling to plant
+		if (!carried.isEmpty() && plantAt != null) {
+			if (be.toPlant.get(plantAt) == carried.getItem()) return new Task(Kind.PLANT, plantAt, null, scaled(10), "Planting " + Drops.describe(carried.copyWithCount(1)));
+			plantAt = null;
+		}
 		if (!carried.isEmpty()) {
 			BlockPos chest = chestFor(level, be, carried);
 			if (chest != null) return new Task(Kind.DELIVER, chest, null, scaled(10), "Putting " + Drops.describe(carried) + " away");
 			drop();
 		}
 		for (Job job : jobs(be)) {
+			if (job == Job.FARMING || job == Job.LOGGING) {
+				Task replant = replantTask(level, be, job == Job.LOGGING);
+				if (replant != null) return replant;
+			}
 			Task t = switch (job) {
 				case FARMING -> nearest(level, be, be.crops, p -> isRipe(level, p, level.getBlockState(p)), p -> new Task(Kind.HARVEST, p, null, scaled(20), "Harvesting " + name(level, p)));
 				case GROWTH -> any(level, be, be.growables, p -> level.getBlockState(p).getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b
 						&& b.isValidBonemealTarget(level, p, level.getBlockState(p), net.minecraft.world.level.block.BonemealSource.MOB),
 						p -> new Task(Kind.TEND, p, null, scaled(40), "Tending " + name(level, p)));
-				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(15 * Math.max(1, sizeOf(naturalTree(level, p)))), "Felling a tree"));
+				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(15 * Math.max(1, sizeOf(naturalTree(level, p))) + 40), "Felling a tree"));
 				case MINING -> nearest(level, be, be.miningPosts, p -> level.getBlockState(p).is(Bases.MINING_POST), p -> new Task(Kind.MINE, p, null, scaled(40), "Mining"));
 				case SMELTING -> nearest(level, be, be.furnaces, p -> needsSmelting(level, p), p -> new Task(Kind.SMELT, p, null, 0, "Running the " + name(level, p)));
 				case FISHING -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.FISH, p, null, scaled(400), "Fishing"));
@@ -304,6 +324,34 @@ public final class WorkerBrain {
 		return best == null ? null : make.make(best);
 	}
 
+	/**
+	 * A spot that needs replanting (a seed or sapling it had none of): fetch one from a base chest that has it. Loggers
+	 * plant saplings, farmers everything else.
+	 */
+	private Task replantTask(ServerLevel level, BaseCoreBlockEntity be, boolean saplings) {
+		for (var it = be.toPlant.entrySet().iterator(); it.hasNext(); ) {
+			var e = it.next();
+			BlockPos spot = e.getKey();
+			if (!level.isLoaded(spot)) continue;
+			// something else grew or was put there: nothing to do
+			if (!level.getBlockState(spot).isAir() || !(e.getValue() instanceof net.minecraft.world.item.BlockItem bi)
+					|| !bi.getBlock().defaultBlockState().canSurvive(level, spot)) {
+				it.remove();
+				continue;
+			}
+			boolean isSapling = new ItemStack(e.getValue()).is(net.minecraft.tags.ItemTags.SAPLINGS);
+			if (isSapling != saplings || be.claimed.containsKey(spot)) continue;
+			for (BlockPos c : be.unclaimed(be.containers)) {
+				Container box = level.isLoaded(c) ? HopperBlockEntity.getContainerAt(level, c) : null;
+				if (box == null || !Sorting.holds(box, new ItemStack(e.getValue()))) continue;
+				plantAt = spot.immutable();
+				be.claimed.put(spot, self.getUUID());
+				return new Task(Kind.FETCH, c, null, scaled(10), "Fetching " + Drops.describe(new ItemStack(e.getValue())) + " to replant");
+			}
+		}
+		return null;
+	}
+
 	private Task transportTask(ServerLevel level, BaseCoreBlockEntity be) {
 		if (be.containers.isEmpty()) return null;
 		// every third trip goes to tidying, so a busy base still gets sorted
@@ -339,7 +387,7 @@ public final class WorkerBrain {
 
 	private void complete(ServerLevel level, BaseCoreBlockEntity be, Task t) {
 		switch (t.kind()) {
-			case HARVEST -> harvest(level, t.target());
+			case HARVEST -> harvest(level, be, t.target());
 			case TEND -> {
 				TENDED++;
 				// like a dose of bone meal half the time, otherwise a few growth ticks
@@ -352,9 +400,9 @@ public final class WorkerBrain {
 					for (int i = 0; i < 4 && level.getBlockState(t.target()) == s; i++) s.randomTick(level, t.target(), level.getRandom());
 				}
 			}
-			case FELL -> fell(level, t.target());
+			case FELL -> fell(level, be, t.target());
 			case MINE -> {
-				for (ItemStack s : MiningLoot.roll(level, t.target(), level.getRandom())) output(level, t.target(), s);
+				for (ItemStack s : MiningLoot.roll(level, t.target(), level.getRandom(), silkTouch(be))) output(level, t.target(), s);
 			}
 			case FISH -> {
 				LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(t.target()))
@@ -371,6 +419,32 @@ public final class WorkerBrain {
 			}
 			case EMPTY_FURNACE -> {
 				if (level.getBlockEntity(t.target()) instanceof AbstractFurnaceBlockEntity f) carried = f.removeItem(2, 64);
+			}
+			case FETCH -> {
+				Container c = HopperBlockEntity.getContainerAt(level, t.target());
+				var want = plantAt == null ? null : be.toPlant.get(plantAt);
+				if (c != null && want != null && carried.isEmpty()) {
+					for (int i = 0; i < c.getContainerSize(); i++) {
+						if (c.getItem(i).is(want)) {
+							carried = c.removeItem(i, 1);
+							c.setChanged();
+							break;
+						}
+					}
+				}
+				if (plantAt != null && carried.isEmpty()) {
+					be.claimed.remove(plantAt);
+					plantAt = null;
+				}
+			}
+			case PLANT -> {
+				if (carried.getItem() instanceof net.minecraft.world.item.BlockItem bi && level.getBlockState(t.target()).isAir()
+						&& bi.getBlock().defaultBlockState().canSurvive(level, t.target())) {
+					level.setBlockAndUpdate(t.target(), bi.getBlock().defaultBlockState());
+					carried.shrink(1);
+				}
+				be.toPlant.remove(t.target());
+				plantAt = null;
 			}
 			case SORT -> {
 				Container c = HopperBlockEntity.getContainerAt(level, t.target());
@@ -563,7 +637,7 @@ public final class WorkerBrain {
 		return false;
 	}
 
-	private void harvest(ServerLevel level, BlockPos p) {
+	private void harvest(ServerLevel level, BaseCoreBlockEntity be, BlockPos p) {
 		BlockState s = level.getBlockState(p);
 		if (!isRipe(level, p, s)) return;
 		Block b = s.getBlock();
@@ -582,12 +656,27 @@ public final class WorkerBrain {
 			level.destroyBlock(p.relative(s.getValue(AttachedStemBlock.FACING)), true, self);
 			return;
 		}
-		for (ItemStack drop : Block.getDrops(s, level, p, null)) Block.popResource(level, p, drop);
+		// replanting uses up one of the seeds (or carrots, potatoes ...) it drops, like a player; berry bushes stay
+		net.minecraft.world.item.Item seed = b.asItem();
+		boolean needsSeed = (b instanceof CropBlock || b instanceof NetherWartBlock || b instanceof CocoaBlock) && seed != Items.AIR;
+		boolean replanted = !needsSeed;
+		for (ItemStack drop : Block.getDrops(s, level, p, null)) {
+			if (!replanted && drop.is(seed)) {
+				drop.shrink(1);
+				replanted = true;
+			}
+			if (!drop.isEmpty()) Block.popResource(level, p, drop);
+		}
 		BlockState replant = b instanceof CropBlock c ? c.getStateForAge(0)
 				: b instanceof NetherWartBlock ? s.setValue(NetherWartBlock.AGE, 0)
 				: b instanceof SweetBerryBushBlock ? s.setValue(SweetBerryBushBlock.AGE, 1)
 				: b instanceof CocoaBlock ? s.setValue(CocoaBlock.AGE, 0) : Blocks.AIR.defaultBlockState();
-		level.setBlockAndUpdate(p, replant);
+		if (replanted) level.setBlockAndUpdate(p, replant);
+		else {
+			// none dropped: a farmer brings one from the chests later
+			level.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
+			if (!(b instanceof CocoaBlock)) be.toPlant.put(p.immutable(), seed);
+		}
 	}
 
 	// ---- smelting ----
@@ -652,16 +741,51 @@ public final class WorkerBrain {
 		return logs == null ? 0 : logs.size();
 	}
 
-	private void fell(ServerLevel level, BlockPos base) {
+	/**
+	 * Tree feller: the whole tree comes down at once from the ground, logs and its own leaves (so the saplings, sticks
+	 * and apples drop now instead of as the leaves decay). It's paid for up front: the task takes about as long as
+	 * chopping every log with a stone axe. Then it replants with one of the saplings that dropped, or, if none did,
+	 * with one fetched from the base's chests later.
+	 */
+	private void fell(ServerLevel level, BaseCoreBlockEntity be, BlockPos base) {
 		List<BlockPos> logs = naturalTree(level, base);
 		if (logs == null) return;
 		Block kind = level.getBlockState(base).getBlock();
+		List<BlockPos> leaves = leavesOf(level, logs);
 		logs.sort(Comparator.comparingInt((BlockPos p) -> p.getY()).reversed());
 		for (BlockPos p : logs) level.destroyBlock(p, true, self);
-		// replant where it stood (the leaves left behind decay and drop more saplings and apples)
+		for (BlockPos p : leaves) level.destroyBlock(p, true, self);
 		Block sapling = SAPLINGS.get(kind);
-		if (sapling != null && level.getBlockState(base).isAir() && sapling.defaultBlockState().canSurvive(level, base)) {
+		if (sapling == null || !level.getBlockState(base).isAir() || !sapling.defaultBlockState().canSurvive(level, base)) return;
+		// one of the saplings that just dropped
+		AABB around = new AABB(base).inflate(8, 16, 8);
+		for (ItemEntity drop : level.getEntitiesOfClass(ItemEntity.class, around, i -> i.isAlive() && i.getItem().is(sapling.asItem()))) {
+			drop.getItem().shrink(1);
+			if (drop.getItem().isEmpty()) drop.discard();
 			level.setBlockAndUpdate(base, sapling.defaultBlockState());
+			return;
 		}
+		be.toPlant.put(base.immutable(), sapling.asItem());
+	}
+
+	/** The natural leaves touching a tree's logs (and the leaves touching those), up to a few hundred. */
+	private static List<BlockPos> leavesOf(ServerLevel level, List<BlockPos> logs) {
+		Set<BlockPos> seen = new HashSet<>(logs);
+		ArrayDeque<BlockPos> todo = new ArrayDeque<>(logs);
+		List<BlockPos> out = new ArrayList<>();
+		while (!todo.isEmpty() && out.size() < 400) {
+			BlockPos p = todo.poll();
+			for (Direction d : Direction.values()) {
+				BlockPos n = p.relative(d);
+				if (!seen.add(n)) continue;
+				BlockState s = level.getBlockState(n);
+				// natural leaves only, and only close enough to the logs to belong to this tree
+				if (!s.is(BlockTags.LEAVES) || !s.hasProperty(LeavesBlock.PERSISTENT) || s.getValue(LeavesBlock.PERSISTENT)) continue;
+				if (logs.stream().noneMatch(l -> Math.abs(l.getX() - n.getX()) <= 4 && Math.abs(l.getY() - n.getY()) <= 4 && Math.abs(l.getZ() - n.getZ()) <= 4)) continue;
+				out.add(n);
+				todo.add(n);
+			}
+		}
+		return out;
 	}
 }

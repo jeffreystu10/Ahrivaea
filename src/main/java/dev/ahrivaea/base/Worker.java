@@ -58,9 +58,16 @@ public record Worker(CaughtCreature creature, UUID entity, List<String> order, L
 		return out;
 	}
 
+	/** In {@code off}: a level 20+ miner's silk touch is switched off. */
+	public static final String SILK_TOUCH = "silk_touch";
+
 	public Worker toggled(Job job) {
+		return toggled(job.getSerializedName());
+	}
+
+	public Worker toggled(String setting) {
 		List<String> o = new ArrayList<>(off);
-		if (!o.remove(job.getSerializedName())) o.add(job.getSerializedName());
+		if (!o.remove(setting)) o.add(setting);
 		return new Worker(creature, entity, order, o);
 	}
 

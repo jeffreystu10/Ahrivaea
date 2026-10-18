@@ -94,6 +94,14 @@ public class BaseScreen extends Screen {
 				Button down = addRenderableWidget(Button.builder(Component.literal("▼"), b -> send("job_down", jobsFor, id)).bounds(x + 66, y, 20, 20).build());
 				down.active = i < jobs.size() - 1;
 			}
+			JsonObject w = state.getAsJsonArray("workers").get(jobsFor).getAsJsonObject();
+			if (w.has("silk")) {
+				boolean silk = w.get("silk").getAsBoolean(), can = w.get("silkLevel").getAsBoolean();
+				Button b = addRenderableWidget(Button.builder(Component.literal("Silk touch: " + (!can ? "at level 20" : silk ? "On" : "Off")), x2 -> send("silk_toggle", jobsFor))
+						.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Level 20 and up: stone, ore blocks and glowstone come out whole instead of as cobblestone, raw ore and dust.")))
+						.bounds(x, Y0 + jobs.size() * 40 + 8, 130, 20).build());
+				b.active = can;
+			}
 			addRenderableWidget(Button.builder(Component.literal("Back"), b -> showJobs(-1)).bounds(width / 2 - 40, height - 26, 80, 20).build());
 			return;
 		}

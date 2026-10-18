@@ -198,6 +198,37 @@ public class BaseTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("base_3b_jobs"));
 			context.runOnClient(c -> c.gui.setScreen(null));
 
+			// silk touch (level 30 miners): stone and ore blocks, never cobblestone or raw ore
+			String silk = server.computeOnServer(s -> {
+				java.util.Map<String, Integer> seen = new java.util.TreeMap<>();
+				for (int i = 0; i < 300; i++)
+					for (ItemStack st : dev.ahrivaea.base.MiningLoot.roll(s.overworld(), new BlockPos(0, 64, 0), s.overworld().getRandom(), true))
+						seen.merge(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(st.getItem()).getPath(), st.getCount(), Integer::sum);
+				return seen.toString();
+			});
+			LOG.info("BaseTest silk touch finds: {}", silk);
+			if (silk.contains("cobblestone") || silk.contains("raw_") || !silk.contains("stone=")) failures.add("silk touch should give stone and ore blocks: " + silk);
+
+			// replanting from the chests: an empty spot marked for an oak sapling gets one fetched from a chest
+			BlockPos spot = new BlockPos(cx + 9, y, cz - 9);
+			server.runCommand("setblock %d %d %d minecraft:grass_block".formatted(spot.getX(), y - 1, spot.getZ()));
+			server.runCommand("setblock %d %d %d minecraft:air".formatted(spot.getX(), y, spot.getZ()));
+			server.runOnServer(s -> {
+				var c = (net.minecraft.world.Container) s.overworld().getBlockEntity(new BlockPos(cx + 2, y, cz + 2));
+				c.setItem(26, new ItemStack(Items.OAK_SAPLING, 3));
+				((BaseCoreBlockEntity) s.overworld().getBlockEntity(core)).needsPlanting(spot, Items.OAK_SAPLING);
+			});
+			String planted = "";
+			for (int t = 0; t < 1200 && !planted.startsWith("planted"); t += 100) {
+				context.waitTicks(100);
+				planted = server.computeOnServer(s -> {
+					var st = s.overworld().getBlockState(spot);
+					return (st.is(net.minecraft.tags.BlockTags.SAPLINGS) || st.is(net.minecraft.tags.BlockTags.LOGS) ? "planted " : "not yet ") + st;
+				});
+			}
+			LOG.info("BaseTest replant from chest: {}", planted);
+			if (!planted.startsWith("planted")) failures.add("a logger should fetch a sapling from a chest to replant: " + planted);
+
 			// work speed: level 20 is a player's speed, 2% more or less per level
 			String speeds = dev.ahrivaea.base.WorkerBrain.speedAt(1) + "/" + dev.ahrivaea.base.WorkerBrain.speedAt(20) + "/" + dev.ahrivaea.base.WorkerBrain.speedAt(50);
 			if (!speeds.equals("0.62/1.0/1.6")) failures.add("work speed should be 62% at level 1, 100% at 20 and 160% at 50: " + speeds);

@@ -321,6 +321,10 @@ public final class Bases {
 			}
 			j.add("jobList", jobList);
 			j.addProperty("speed", (int) Math.round(WorkerBrain.speedAt(w.creature().level()) * 100));
+			if (jobsOf(w.creature()).contains(Job.MINING)) {
+				j.addProperty("silkLevel", w.creature().level() >= WorkerBrain.SILK_TOUCH_LEVEL);
+				j.addProperty("silk", !w.off().contains(Worker.SILK_TOUCH));
+			}
 			workers.add(j);
 		}
 		o.add("workers", workers);
@@ -383,6 +387,11 @@ public final class Bases {
 			case "assign_box" -> index >= 0 && index < Party.box(p).size() ? assign(p, be, Party.box(p).get(index), () -> Party.removeFromBox(p, index)) : "No such creature.";
 			case "unassign" -> unassign(p, be, index);
 			case "job_toggle", "job_up", "job_down" -> changeJob(be, index, j.has("job") ? j.get("job").getAsString() : "", kind);
+			case "silk_toggle" -> {
+				if (index < 0 || index >= be.workers.size()) yield "No such worker.";
+				be.setWorker(index, be.workers.get(index).toggled(Worker.SILK_TOUCH));
+				yield null;
+			}
 			case "toggle_loading" -> {
 				be.setChunkLoading(!be.chunkLoading());
 				p.sendSystemMessage(Component.literal(be.chunkLoading()

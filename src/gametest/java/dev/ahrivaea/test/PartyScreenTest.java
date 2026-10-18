@@ -122,6 +122,19 @@ public class PartyScreenTest implements FabricClientGameTest {
 			});
 			context.waitTicks(5);
 			context.takeScreenshot(TestScreenshotOptions.of("dex_3_seen").withSize(1600, 900));
+			// a big flying one seen: it stands in its preview (not flying off the top)
+			server.runOnServer(s -> dev.ahrivaea.party.Dex.mark(s.getPlayerList().getPlayers().getFirst(), "dragon", dev.ahrivaea.creature.Influence.FROST, dev.ahrivaea.party.Dex.SEEN));
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).searchFor("Snowveil"));
+			context.waitFor(c -> true, 1);
+			context.runOnClient(c -> dev.ahrivaea.client.DexScreen.open());
+			context.waitFor(c -> c.gui.screen() instanceof dev.ahrivaea.client.DexScreen d && d.loaded(), 100);
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).searchFor("Dragon"));
+			context.waitTicks(5);
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).selectFirst(1));
+			context.waitTicks(5);
+			context.takeScreenshot(TestScreenshotOptions.of("dex_3b_big_seen").withSize(1600, 900));
+			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).searchFor(""));
+			context.waitTicks(2);
 			context.runOnClient(c -> ((dev.ahrivaea.client.DexScreen) c.gui.screen()).selectFirst(0));
 			context.waitTicks(5);
 			context.takeScreenshot(TestScreenshotOptions.of("dex_4_unknown").withSize(1600, 900));

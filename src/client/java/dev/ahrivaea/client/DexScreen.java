@@ -253,8 +253,8 @@ public class DexScreen extends Screen {
 			int v = stats.get(i).getAsInt();
 			int col = i % 2, sx = x + col * (PANEL_W / 2);
 			g.text(font, STAT_NAMES[i], sx, y, 0xFFFFFFFF);
-			PartyClient.bar(g, sx + 48, y + 2, 50, 5, v / 100f, 0xFFFFC040);
-			g.text(font, String.valueOf(v), sx + 100, y, 0xFFFFD27F);
+			PartyClient.bar(g, sx + 48, y + 2, 40, 5, v / 100f, 0xFFFFC040);
+			g.text(font, String.valueOf(v), sx + 92, y, 0xFFFFD27F);
 			if (col == 1 || i == stats.size() - 1) y += 10;
 		}
 		g.text(font, "Total " + j.get("total").getAsInt() + ", moves " + j.get("squares").getAsInt() + " squares" + (j.get("rideable").getAsBoolean() ? ", rideable" : ""), x, y + 1, 0xFFDDDDDD);

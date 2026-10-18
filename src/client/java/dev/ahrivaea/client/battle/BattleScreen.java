@@ -198,7 +198,10 @@ public class BattleScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-		if (super.mouseClicked(event, doubleClick)) return true;
+		boolean handled = super.mouseClicked(event, doubleClick);
+		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen click {} at {},{}: widget {}, step {}, child at {}", event.button(), event.x(), event.y(), handled, step,
+				getChildAt(event.x(), event.y()).map(w -> w instanceof net.minecraft.client.gui.components.AbstractWidget a ? a.getMessage().getString() + " active " + a.active + " visible " + a.visible : String.valueOf(w)).orElse("none"));
+		if (handled) return true;
 		if (event.button() == 1) {
 			back();
 			return true;

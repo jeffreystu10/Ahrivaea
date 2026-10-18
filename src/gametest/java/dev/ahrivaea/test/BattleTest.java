@@ -213,6 +213,7 @@ public class BattleTest implements FabricClientGameTest {
 			});
 			if (button == null) failures.add("clicking our own square again should open the action menu: " + screenState(context));
 			else {
+				LOG.info("BattleTest: clicking the move button at window {},{}", button[0], button[1]);
 				context.getInput().setCursorPos(button[0], button[1]);
 				context.waitTick();
 				context.getInput().pressMouse(0);

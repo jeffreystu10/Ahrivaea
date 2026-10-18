@@ -466,7 +466,7 @@ public class BattleScreen extends Screen {
 		double[] r = cellRect(destX, destZ);
 		int x = (int) r[2] + 6, y = (int) r[1] - 4;
 		if (x + MENU_W > width - 90) x = (int) r[0] - 6 - MENU_W;
-		return new int[]{Math.clamp(x, CARD_W + 10, Math.max(CARD_W + 10, width - 90 - MENU_W)), Math.clamp(y, TOP + 46, Math.max(TOP + 46, height - 30 - items * 18))};
+		return new int[]{Math.clamp(x, CARD_W + 10, Math.max(CARD_W + 10, width - 90 - MENU_W)), Math.clamp(y, TOP + 82, Math.max(TOP + 82, height - 30 - items * 18))};
 	}
 
 	private int resultTop() {
@@ -565,14 +565,14 @@ public class BattleScreen extends Screen {
 			String sub = "Turn " + state().get("turn").getAsInt();
 			int bw = Math.max(170, font.width(banner) * 2 + 40), bx = width / 2 - bw / 2, by = TOP + 2;
 			int c1 = mineTurn ? 0xE0204A90 : 0xE0902020, c2 = mineTurn ? 0x80102850 : 0x80501010;
-			g.fillGradient(bx, by, bx + bw, by + 26, c1, c2);
-			g.fill(bx, by + 26, bx + bw, by + 27, mineTurn ? 0xFF7FC8FF : 0xFFFF8080);
+			g.fillGradient(bx, by, bx + bw, by + 28, c1, c2);
+			g.fill(bx, by + 28, bx + bw, by + 29, mineTurn ? 0xFF7FC8FF : 0xFFFF8080);
 			g.pose().pushMatrix();
-			g.pose().translate(width / 2f, by + 4);
+			g.pose().translate(width / 2f, by + 2);
 			g.pose().scale(2f, 2f);
 			g.centeredText(font, banner, 0, 0, 0xFFFFFFFF);
 			g.pose().popMatrix();
-			g.text(font, sub, bx + bw - font.width(sub) - 4, by + 17, 0xFFDDDDDD);
+			g.centeredText(font, sub, width / 2, by + 19, 0xFFDDDDDD);
 			String hint = switch (step) {
 				case UNIT -> mineTurn ? "Pick one of your creatures (or you)" : "The wild creatures are moving...";
 				case DESTINATION -> "Click where it should move (or itself to stay)";
@@ -580,8 +580,8 @@ public class BattleScreen extends Screen {
 				case TARGET -> pending >= 0 ? "Click a target in red" : "Click a unit in green";
 			};
 			int hw = font.width(hint) + 12;
-			g.fill(width / 2 - hw / 2, by + 29, width / 2 + hw / 2, by + 41, 0xA0000000);
-			g.centeredText(font, hint, width / 2, by + 31, 0xFFFFFFA0);
+			g.fill(width / 2 - hw / 2, by + 31, width / 2 + hw / 2, by + 43, 0xA0000000);
+			g.centeredText(font, hint, width / 2, by + 33, 0xFFFFFFA0);
 		}
 
 		// the two sides as cards: yours on the left, the wild ones on the right
@@ -592,14 +592,14 @@ public class BattleScreen extends Screen {
 			drawRoster(g, units().stream().filter(t -> !mine(t)).toList(), width - CARD_W - 4, "WILD", 0xFFFF8080, mouseX, mouseY);
 		}
 
-		// what happened lately, bottom middle
+		// what happened lately, under the banner
 		if (!result) {
 			JsonArray log = state().getAsJsonArray("log");
-			int lines = Math.min(3, log.size()), ly = height - 6 - lines * 10;
+			int lines = Math.min(3, log.size()), ly = TOP + 48;
 			for (int i = log.size() - lines; i < log.size(); i++) {
 				String line = log.get(i).getAsString();
-				if (font.width(line) > width - 2 * CARD_W - 120) line = font.plainSubstrByWidth(line, width - 2 * CARD_W - 130) + "...";
-				int fade = i == log.size() - 1 ? 0xFFFFFFFF : 0xFFB0B0B0;
+				if (font.width(line) > width - 2 * CARD_W - 20) line = font.plainSubstrByWidth(line, width - 2 * CARD_W - 30) + "...";
+				int fade = i == log.size() - 1 ? 0xFFFFFFFF : 0xFF909090;
 				int lw = font.width(line);
 				g.fill(width / 2 - lw / 2 - 4, ly - 1, width / 2 + lw / 2 + 4, ly + 9, 0x90000000);
 				g.centeredText(font, line, width / 2, ly, fade);
@@ -643,9 +643,10 @@ public class BattleScreen extends Screen {
 			g.text(font, name, x + 6, y + 3, down ? 0xFF808080 : acted ? 0xFF9098B0 : 0xFFFFFFFF);
 			g.text(font, lv, x + CARD_W - 3 - font.width(lv), y + 3, 0xFFCCCCCC);
 			double frac = max <= 0 ? 0 : hp / (double) max;
-			g.fill(x + 6, y + 14, x + CARD_W - 40, y + 19, 0xFF303030);
-			g.fill(x + 6, y + 14, x + 6 + (int) Math.round((CARD_W - 46) * frac), y + 19, down ? 0xFF505050 : hpColor(frac, mine(t)));
 			String hpText = down ? "KO" : hp + "/" + max;
+			int barEnd = x + CARD_W - 6 - font.width(hpText);
+			g.fill(x + 6, y + 14, barEnd, y + 19, 0xFF303030);
+			g.fill(x + 6, y + 14, x + 6 + (int) Math.round((barEnd - x - 6) * frac), y + 19, down ? 0xFF505050 : hpColor(frac, mine(t)));
 			g.text(font, hpText, x + CARD_W - 3 - font.width(hpText), y + 13, down ? 0xFFFF6060 : 0xFFDDDDDD);
 			if (acted && !down) g.text(font, "done", x + CARD_W - 3 - font.width("done") - font.width(lv) - 4, y + 3, 0xFF707890);
 			y += CARD_H + 2;
@@ -673,9 +674,11 @@ public class BattleScreen extends Screen {
 		g.text(font, title, x + 4, y + 3, 0xFFFFFFFF);
 		int hp = Math.max(0, t.get("hp").getAsInt()), max = t.get("max").getAsInt();
 		double frac = max <= 0 ? 0 : hp / (double) max;
-		g.fill(x + 4, y + 17, x + w - 60, y + 22, 0xFF303030);
-		g.fill(x + 4, y + 17, x + 4 + (int) Math.round((w - 64) * frac), y + 22, hpColor(frac, mine(t)));
-		g.text(font, "HP " + hp + "/" + max, x + w - 56, y + 16, 0xFFDDDDDD);
+		String hpText = "HP " + hp + "/" + max;
+		int barEnd = x + w - 8 - font.width(hpText);
+		g.fill(x + 4, y + 17, barEnd, y + 22, 0xFF303030);
+		g.fill(x + 4, y + 17, x + 4 + (int) Math.round((barEnd - x - 4) * frac), y + 22, hpColor(frac, mine(t)));
+		g.text(font, hpText, x + w - 4 - font.width(hpText), y + 16, 0xFFDDDDDD);
 		g.text(font, move, x + 4, y + 25, 0xFF9FD0FF);
 		for (int i = 0; i < moves.size(); i++) g.text(font, "• " + moves.get(i), x + 4, y + 36 + i * 10, 0xFFFFD27F);
 	}

@@ -89,7 +89,7 @@ public class StarterScreen extends Screen {
 		if (preview != null) {
 			String id = c.get("id").getAsString();
 			float size = Math.max(0.5f, Math.max(GeoModels.height(id, "none"), GeoModels.extent(id, "none") * 0.7f) * GeoModels.scale(id, "none"));
-			int px = Math.max(8, Math.round(54 / size));
+			int px = Math.max(2, Math.round(54 / size));
 			float h = GeoModels.height(id, "none") * GeoModels.scale(id, "none");
 			InventoryScreen.extractEntityInInventoryFollowsMouse(g, x + w / 2 - 50, boxTop, x + w / 2 + 50, boxBottom, px, h / 2 - 0.4f, mouseX, mouseY, preview);
 		}

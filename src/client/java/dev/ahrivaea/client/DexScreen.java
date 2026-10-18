@@ -214,13 +214,13 @@ public class DexScreen extends Screen {
 		g.text(font, state, x + PANEL_W - font.width(state), y - 1, st >= Dex.CAUGHT ? 0xFFFF8080 : st >= Dex.SEEN ? 0xFF9FD0FF : 0xFF909090);
 		y += 14;
 		// the creature itself, or a mystery box
-		int boxTop = y, boxBottom = y + 62;
+		int boxTop = y, boxBottom = y + (st >= Dex.CAUGHT ? 50 : 62);
 		if (st >= Dex.SEEN && preview != null) {
 			String id = j.get("species").getAsString(), inf = j.get("influence").getAsString();
 			float size = Math.max(0.5f, Math.max(GeoModels.height(id, inf), GeoModels.extent(id, inf) * 0.7f) * GeoModels.scale(id, inf));
 			float h = GeoModels.height(id, inf) * GeoModels.scale(id, inf);
 			InventoryScreen.extractEntityInInventoryFollowsMouse(g, x + PANEL_W / 2 - 50, boxTop, x + PANEL_W / 2 + 50, boxBottom,
-					Math.max(8, Math.round(50 / size)), h / 2 - 0.4f, mouseX, mouseY, preview);
+					Math.max(2, Math.round((boxBottom - boxTop - 8) / size)), h / 2 - 0.4f, mouseX, mouseY, preview);
 		} else {
 			g.fill(x + PANEL_W / 2 - 24, boxTop + 4, x + PANEL_W / 2 + 24, boxBottom - 4, 0xFF202020);
 			g.pose().pushMatrix();
@@ -251,10 +251,11 @@ public class DexScreen extends Screen {
 		JsonArray stats = j.getAsJsonArray("stats");
 		for (int i = 0; i < stats.size() && y < bottom - 30; i++) {
 			int v = stats.get(i).getAsInt();
-			g.text(font, STAT_NAMES[i], x, y, 0xFFFFFFFF);
-			PartyClient.bar(g, x + 52, y + 2, 140, 5, v / 100f, 0xFFFFC040);
-			g.text(font, String.valueOf(v), x + 198, y, 0xFFFFD27F);
-			y += 9;
+			int col = i % 2, sx = x + col * (PANEL_W / 2);
+			g.text(font, STAT_NAMES[i], sx, y, 0xFFFFFFFF);
+			PartyClient.bar(g, sx + 48, y + 2, 50, 5, v / 100f, 0xFFFFC040);
+			g.text(font, String.valueOf(v), sx + 100, y, 0xFFFFD27F);
+			if (col == 1 || i == stats.size() - 1) y += 10;
 		}
 		g.text(font, "Total " + j.get("total").getAsInt() + ", moves " + j.get("squares").getAsInt() + " squares" + (j.get("rideable").getAsBoolean() ? ", rideable" : ""), x, y + 1, 0xFFDDDDDD);
 		y = wrap(g, "Jobs: " + j.get("jobs").getAsString(), x, y + 12, 0xFF9FC8FF);

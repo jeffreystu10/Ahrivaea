@@ -59,6 +59,19 @@ Every one of the 277 forms has at least one job it can do. Items from harvesting
 studying and ranching land on the ground; a Transport worker brings them to the chests (put a chest or barrel in
 the base). Mining fills the chest beside its post directly.
 
+### Replanting, felling and silk touch
+
+- **Farmers** replant with one of the seeds (or carrots, potatoes, nether wart, cocoa beans) the crop drops, like a
+  player; the rest go to the chests. If none dropped, the spot is remembered and a farmer fetches one from a base chest.
+- **Loggers** are tree fellers: they work from the ground and the whole tree comes down at once, its logs and its
+  own leaves, so saplings, sticks and apples drop straight away. The time it takes is the time to chop every log with
+  a stone axe, plus 2 seconds, paid before the tree falls. Then they replant with one of the saplings that dropped,
+  or fetch one from a base chest if none did.
+- **Miners** at level 20 and up mine with **silk touch**: stone instead of cobblestone, deepslate, and ore blocks
+  instead of raw ore, coal, diamonds and so on (one ore block per find), glowstone instead of dust. It can be switched
+  off per miner on its jobs panel. Miners don't dig real tunnels: they work a Mining Post, so they never get stuck
+  underground.
+
 ### Work speed
 
 A level 20 worker works as fast as a player would, or as a furnace or brewing stand does on its own. Every level

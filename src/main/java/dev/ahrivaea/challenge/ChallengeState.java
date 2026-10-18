@@ -28,9 +28,19 @@ public final class ChallengeState {
 			Codec.unboundedMap(Codec.STRING, Codec.STRING).fieldOf("names").forGetter(s -> s.names),
 			Codec.unboundedMap(Codec.STRING, ChallengeDef.RewardItem.CODEC.listOf()).fieldOf("pending_rewards").forGetter(s -> s.pendingRewards),
 			Codec.STRING.optionalFieldOf("owner", "").forGetter(s -> s.owner),
-			Codec.INT.listOf().optionalFieldOf("portal_room", List.of()).forGetter(s -> s.portalRoom),
-			BlockPos.CODEC.listOf().optionalFieldOf("gates", List.of()).forGetter(s -> s.gates)
-	).apply(i, ChallengeState::new));
+			Extras.MAP_CODEC.forGetter(s -> new Extras(s.portalRoom, s.gates, s.deposits, s.returns))
+	).apply(i, (challenge, palette, dimension, origin, total, stage, complete, donations, names, pending, owner, x) ->
+			new ChallengeState(challenge, palette, dimension, origin, total, stage, complete, donations, names, pending, owner, x.portalRoom(), x.gates(), x.deposits(), x.returns())));
+
+	/** Fields added later, saved alongside the others in the same map. */
+	record Extras(List<Integer> portalRoom, List<BlockPos> gates, Map<String, List<ItemStack>> deposits, Map<String, List<ItemStack>> returns) {
+		static final com.mojang.serialization.MapCodec<Extras> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.INT.listOf().optionalFieldOf("portal_room", List.of()).forGetter(Extras::portalRoom),
+				BlockPos.CODEC.listOf().optionalFieldOf("gates", List.of()).forGetter(Extras::gates),
+				Codec.unboundedMap(Codec.STRING, ItemStack.CODEC.listOf()).optionalFieldOf("deposits", Map.of()).forGetter(Extras::deposits),
+				Codec.unboundedMap(Codec.STRING, ItemStack.CODEC.listOf()).optionalFieldOf("returns", Map.of()).forGetter(Extras::returns)
+		).apply(i, Extras::new));
+	}
 
 	/** Which challenge file this tower uses. */
 	public String challenge;

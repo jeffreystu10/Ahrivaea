@@ -355,6 +355,12 @@ public class BattleScreen extends Screen {
 		rebuild();
 	}
 
+	/** For the tests: where the screen is in picking an order. */
+	public String debugState() {
+		return "step " + step + ", selected " + selected + ", dest " + destX + "," + destZ + ", pending " + pending + ", phase " + phase()
+				+ ", widgets " + children().size();
+	}
+
 	public void chooseMove(int i) {
 		pending = i;
 		step = Step.TARGET;

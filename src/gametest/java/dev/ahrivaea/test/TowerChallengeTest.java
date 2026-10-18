@@ -176,9 +176,10 @@ public class TowerChallengeTest implements FabricClientGameTest {
 				p0.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
 				p0.gameMode.destroyBlock(chest);
 				p0.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
-				return out + (lv.getBlockEntity(chest) instanceof dev.ahrivaea.base.BaseCoreBlockEntity ? ", kept" : ", broken");
+				return out + (lv.getBlockEntity(chest) instanceof dev.ahrivaea.base.BaseCoreBlockEntity ? ", kept" : ", broken")
+						+ ", cores in inventory " + count(p0.getInventory(), dev.ahrivaea.base.Bases.BASE_CORE.asItem());
 			});
-			if (!base.equals("base of me, kept")) throw new AssertionError("a finished tower's chest should become its owner's base, and stay: " + base);
+			if (!base.equals("base of me, kept, cores in inventory 1")) throw new AssertionError("a finished tower's chest should become its owner's base, and stay: " + base);
 			server.runCommand("tp @a %.1f %.1f %.1f 0 30".formatted(chest.getX() + 0.5, chest.getY() + 1.0, chest.getZ() - 2.5));
 			context.waitTicks(20);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_base_core").withSize(1600, 900));

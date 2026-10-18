@@ -26,6 +26,7 @@ import java.util.List;
  * clicks, ends the turn, watches the enemy phase, wins, recruits, and checks XP and the party afterwards.
  */
 public class BattleTest implements FabricClientGameTest {
+	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("ahrivaea");
 	@Override
 	public void runTest(ClientGameTestContext context) {
 		List<String> failures = new ArrayList<>();

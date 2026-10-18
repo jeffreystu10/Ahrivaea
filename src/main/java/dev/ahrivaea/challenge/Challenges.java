@@ -98,7 +98,10 @@ public final class Challenges {
 				ServerLevel lvl = level(server, st);
 				if (def.isEmpty() || lvl == null) continue;
 				BlockPos chest = st.origin.offset(def.get().chest());
-				if (lvl.isLoaded(chest) && lvl.getBlockState(chest).getBlock() instanceof net.minecraft.world.level.block.ChestBlock) makeBase(lvl, e.getKey(), def.get(), st);
+				if (lvl.isLoaded(chest) && lvl.getBlockState(chest).getBlock() instanceof net.minecraft.world.level.block.ChestBlock && makeBase(lvl, e.getKey(), def.get(), st)) {
+					save(server, e.getKey(), st);
+					for (ServerPlayer p : server.getPlayerList().getPlayers()) deliverPending(p);
+				}
 			}
 		});
 	}
@@ -189,6 +192,8 @@ public final class Challenges {
 				be.setChanged();
 			} catch (IllegalArgumentException ignored) {}
 		}
+		// the owner also gets a Base Core of their own, to put wherever they like
+		if (!owner.isEmpty()) s.pendingRewards.computeIfAbsent(owner, k -> new ArrayList<>()).add(new ChallengeDef.RewardItem(BASE_CORE, 1));
 		level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.4, 0.6, 0.4, 0.05);
 		level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1f, 1f);
 		TowersMod.LOGGER.info("Tower {}: the offering chest at {} is now a base for {}", id, pos.toShortString(), s.names.getOrDefault(owner, "nobody"));
@@ -416,10 +421,10 @@ public final class Challenges {
 			server.getPlayerList().broadcastSystemMessage(Component.literal(s.names.getOrDefault(s.owner, "?") + " claims " + def.name()
 					+ " as its top donor. Only they and their guild can build in and around it now.").withStyle(ChatFormatting.GOLD), false);
 		}
-		// the offering chest becomes the owner's base
+		// the offering chest becomes the owner's base, and they get a second Base Core to put wherever they like
 		if (makeBase(level, id, def, s) && !s.owner.isEmpty()) {
 			server.getPlayerList().broadcastSystemMessage(Component.literal("The offering chest of " + def.name() + " has become a Base Core for "
-					+ s.names.getOrDefault(s.owner, "?") + ".").withStyle(ChatFormatting.GOLD), false);
+					+ s.names.getOrDefault(s.owner, "?") + ", who also gets a Base Core of their own to place anywhere.").withStyle(ChatFormatting.GOLD), false);
 		}
 		// everything that was offered goes back to whoever gave it
 		s.deposits.forEach((key, items) -> items.forEach(it -> ChallengeState.addStacks(s.returns.computeIfAbsent(key, k -> new ArrayList<>()), it)));

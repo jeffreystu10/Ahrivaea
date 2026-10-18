@@ -199,7 +199,7 @@ public class BattleScreen extends Screen {
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 		boolean handled = super.mouseClicked(event, doubleClick);
-		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen click {} at {},{}: widget {}, step {}, child at {}", event.button(), event.x(), event.y(), handled, step,
+		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen " + System.identityHashCode(this) + " click {} at {},{}: widget {}, step {}, child at {}", event.button(), event.x(), event.y(), handled, step,
 				getChildAt(event.x(), event.y()).map(w -> w instanceof net.minecraft.client.gui.components.AbstractWidget a ? a.getMessage().getString() + " active " + a.active + " visible " + a.visible : String.valueOf(w)).orElse("none"));
 		if (handled) return true;
 		if (event.button() == 1) {
@@ -290,6 +290,7 @@ public class BattleScreen extends Screen {
 	}
 
 	private void back() {
+		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} back from {}", System.identityHashCode(this), step, new Throwable("where"));
 		switch (step) {
 			case TARGET -> step = Step.ACTION;
 			case ACTION -> step = Step.DESTINATION;
@@ -365,6 +366,7 @@ public class BattleScreen extends Screen {
 	}
 
 	public void chooseMove(int i) {
+		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} chooseMove {}", System.identityHashCode(this), i);
 		pending = i;
 		step = Step.TARGET;
 		rebuild();
@@ -404,6 +406,7 @@ public class BattleScreen extends Screen {
 	// ---- buttons ----
 
 	private void rebuild() {
+		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} rebuild at {}", System.identityHashCode(this), step);
 		clearWidgets();
 		if (state() == null) return;
 		if (state().has("result")) {

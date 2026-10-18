@@ -59,6 +59,34 @@ Every one of the 277 forms has at least one job it can do. Items from harvesting
 studying and ranching land on the ground; a Transport worker brings them to the chests (put a chest or barrel in
 the base). Mining fills the chest beside its post directly.
 
+### Choosing what each worker does
+
+The **Jobs** button by a worker on the base screen lists its jobs in the order it does them: it works on the first
+one that has something to do. Use ▲/▼ to change the order and **On/Off** to switch a job off, so a creature that
+can farm and fish only fishes, or fishes first. A worker with every job off stands idle ("its jobs are switched
+off"). Switching off Ranching or Defense stops those too. The settings stay with the worker (`Worker.order`,
+`Worker.off`; `Bases.changeJob`).
+
+### Sorting the chests
+
+Put an **item frame** on a chest or barrel and put an item in it: that chest is now labelled for that item and
+everything in its category. Categories are item tags: logs, planks, saplings, leaves, wool, fish, coal, arrows,
+sand, dirt, meat, eggs, mushrooms, each tool type, boats, candles, terracotta, beds, signs, rails, banners, and the
+common `c:` tags (ores, raw materials, ingots, gems, nuggets, dusts, seeds, crops, foods, potions, dyes, stones,
+cobblestone, music discs, armor, enchanted books, glass). So a frame with an oak log takes every log, one with raw
+iron every raw ore. Several frames on one chest label it for all of them; a frame on either half of a double chest
+labels both. Transport workers put what they carry in, in order of preference:
+
+1. a chest labelled for that exact item,
+2. a chest labelled for its category,
+3. an unlabelled chest that already holds some of it,
+4. the nearest unlabelled chest with room.
+
+They never put anything in a chest labelled for something else. On every third trip, and whenever there's nothing
+to carry, they also **tidy**: anything sitting in an unlabelled chest, or the wrong labelled one, that has a
+labelled chest with room is moved there. Unlabelled chests work as the overflow and the "inbox": put things in one
+and they're sorted for you. (`Sorting`.)
+
 ## Raids
 
 At nightfall, a base may be raided: 25% chance plus 5% per base level, at most once a night, and only while its
@@ -81,5 +109,10 @@ there's no night, it's once a day.
 a base.
 
 ## Still to come
+
+Sorting ideas not built yet: exact-only labels (a renamed frame), keeping a set amount of something in a chest,
+supply runs (fuel and ore from a labelled chest to the furnaces, ingredients to the brewing stands, torches to the
+lighting workers), a trash chest that destroys what's put in it, and a sorting terminal that shows every chest's
+contents.
 
 Riding (with rideable creatures).

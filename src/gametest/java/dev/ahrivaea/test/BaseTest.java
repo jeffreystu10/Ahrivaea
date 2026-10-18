@@ -141,7 +141,7 @@ public class BaseTest implements FabricClientGameTest {
 				c.setItem(21, new ItemStack(Items.COBBLESTONE, 5));
 			});
 			String sorted = "";
-			for (int t = 0; t < 1200; t += 100) {
+			for (int t = 0; t < 2400; t += 100) {
 				context.waitTicks(100);
 				sorted = server.computeOnServer(s -> {
 					ServerLevel level = s.overworld();

@@ -63,6 +63,7 @@ public final class WorkerBrain {
 	private Task task;
 	/** The slot a SORT task takes from. */
 	private int sortSlot;
+	private int transportTrips;
 	private int workTicks, travelTicks, cooldown, ranchTimer = 600;
 	private ItemStack carried = ItemStack.EMPTY;
 	private String status = "Getting settled";
@@ -277,6 +278,11 @@ public final class WorkerBrain {
 
 	private Task transportTask(ServerLevel level, BaseCoreBlockEntity be) {
 		if (be.containers.isEmpty()) return null;
+		// every third trip goes to tidying, so a busy base still gets sorted
+		if (++transportTrips % 3 == 0) {
+			Task sort = sortTask(level, be);
+			if (sort != null) return sort;
+		}
 		// loose items first (not ones still flying out of something)
 		List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, be.area(), i -> i.isAlive() && !i.hasPickUpDelay() && i.getAge() > 40);
 		items.removeIf(i -> be.claimed.containsKey(i.blockPosition()));
@@ -289,7 +295,11 @@ public final class WorkerBrain {
 		Task furnace = nearest(level, be, be.furnaces, p -> level.getBlockEntity(p) instanceof AbstractFurnaceBlockEntity f && !f.getItem(2).isEmpty(),
 				p -> new Task(Kind.EMPTY_FURNACE, p, null, 10, "Emptying the " + name(level, p)));
 		if (furnace != null) return furnace;
-		// then tidying: things in the wrong chest go to the chest labelled for them (see Sorting)
+		return sortTask(level, be);
+	}
+
+	/** Tidying: something in the wrong chest goes to the chest labelled for it (see Sorting). */
+	private Task sortTask(ServerLevel level, BaseCoreBlockEntity be) {
 		Sorting.Misplaced m = Sorting.misplaced(level, be.unclaimed(be.containers), be.containers, self.blockPosition());
 		if (m == null) return null;
 		sortSlot = m.slot();
@@ -474,7 +484,8 @@ public final class WorkerBrain {
 		RandomSource r = level.getRandom();
 		BlockPos spot = null;
 		for (int i = 0; i < 24 && spot == null; i++) {
-			int x = be.minX() + r.nextInt(be.maxX() - be.minX() + 1), z = be.minZ() + r.nextInt(be.maxZ() - be.minZ() + 1);
+			// somewhere in the base within 24 blocks of it, so it isn't sent across a big base for one torch
+			int x = Math.clamp(self.getBlockX() + r.nextInt(49) - 24, be.minX(), be.maxX()), z = Math.clamp(self.getBlockZ() + r.nextInt(49) - 24, be.minZ(), be.maxZ());
 			BlockPos top = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
 			if (!be.contains(top) || !level.getBlockState(top).isAir() || level.getLightEngine().getLayerListener(net.minecraft.world.level.LightLayer.BLOCK).getLightValue(top) >= 8) continue;
 			if (Blocks.TORCH.defaultBlockState().canSurvive(level, top) && !be.claimed.containsKey(top)) spot = top;

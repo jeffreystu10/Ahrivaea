@@ -13,7 +13,7 @@ public enum Job implements StringRepresentable {
 	FARMING("Farming", "harvests ripe crops in the base and replants them", true),
 	GROWTH("Growth", "makes crops, saplings and plants in the base grow faster", true),
 	LOGGING("Logging", "fells grown trees in the base (never ones you built) and replants saplings", true),
-	MINING("Mining", "works a Mining Post: stone and ores, depending on where the base is", true),
+	MINING("Mining", "digs out the chunk under a Mining Post, down to bedrock, into the chests beside the post", true),
 	SMELTING("Smelting", "keeps furnaces, smokers and blast furnaces in the base burning with no fuel", true),
 	TRANSPORT("Transport", "carries loose items and furnace output in the base to its chests", true),
 	RANCHING("Ranching", "produces its own drops now and then", true),

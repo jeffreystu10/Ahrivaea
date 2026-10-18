@@ -41,7 +41,7 @@ The creature list's ~190 job descriptions are sorted into these (the base screen
 | **Farming** | Harvests ripe crops (wheat, carrots, potatoes, beetroot, nether wart, berries, cocoa, pumpkins, melons, sugar cane, cactus, bamboo) and replants them | 43 |
 | **Growth** | Tends crops, saplings and other plants: half the time like a dose of bone meal, otherwise a few growth ticks | 37 |
 | **Logging** | Fells grown natural trees (ones with natural leaves; log buildings are safe) and plants a sapling where each stood | 29 |
-| **Mining** | Works a **Mining Post** (crafted: stone pickaxe on top, cobblestone and logs below): stone and ores, into a chest next to the post. Deeper than y=0: deepslate, more diamonds; in the Nether: netherrack, quartz, gold, ancient debris; in the End: end stone, chorus, pearls | 43 |
+| **Mining** | Digs out the chunk under a **Mining Post** (crafted: stone pickaxe on top, cobblestone and logs below) down to bedrock, into the chests beside the post: see Quarries below | 43 |
 | **Smelting** | Runs furnaces, smokers and blast furnaces that have something in them: no fuel needed, at the worker's speed | 28 |
 | **Transport** | Carries loose items and finished smelting to the base's chests and barrels | 58 |
 | **Ranching** | Every 2–3 minutes, produces its own drops (from the creature list) | 51 |
@@ -67,10 +67,34 @@ the base). Mining fills the chest beside its post directly.
   own leaves, so saplings, sticks and apples drop straight away. The time it takes is the time to chop every log with
   a stone axe, plus 2 seconds, paid before the tree falls. Then they replant with one of the saplings that dropped,
   or fetch one from a base chest if none did.
-- **Miners** at level 20 and up mine with **silk touch**: stone instead of cobblestone, deepslate, and ore blocks
-  instead of raw ore, coal, diamonds and so on (one ore block per find), glowstone instead of dust. It can be switched
-  off per miner on its jobs panel. Miners don't dig real tunnels: they work a Mining Post, so they never get stuck
-  underground.
+- **Miners** at level 20 and up mine with **silk touch** (stone, ore blocks, glowstone ...). It can be switched off
+  per miner on its jobs panel.
+
+### Quarries
+
+A Mining Post in a base turns the chunk it stands in into a quarry, dug by the base's miners:
+
+1. **The staircase.** They cut a staircase that spirals down inside the chunk's edge, one block down per step, with
+   room to walk, all the way to the bottom. Gaps under a step are filled with stone.
+2. **The layers.** Then they clear the chunk a layer at a time, from just below the post down to the layer above
+   bedrock, leaving a **one-block wall** around the chunk's edge and the staircase. Every gap in the wall is filled
+   with stone (cobbled deepslate below y=0) and any water or lava in the way is drained, so nothing flows or falls in.
+3. **Done:** an empty chunk-sized pit with a wall and a staircase down to bedrock.
+
+Everything they dig goes straight into the **chests and barrels touching the post** (dug as with a diamond pickaxe;
+silk touch from level 20; what a container held comes too). If there's no chest, or the chests are full, the miners
+stop, say so on the base screen, and the owner gets a message every couple of minutes: put another chest next to the
+post and they carry on. Several miners share a quarry, each taking its own blocks; a base can have several posts.
+
+Never dug: bedrock and unbreakable blocks, spawners, trial spawners and vaults, portals and end portal frames, base
+cores and mining posts, **anything in a stronghold**, and **blocks players placed** in a base's chunks (noted from
+this version on; blocks placed before can't be told apart). Other structures (ancient cities, mineshafts, trial
+chambers ...) are kept too, unless you set the quarry to dig them.
+
+Right-click the Mining Post to see its quarry (stage, layer, % done, blocks dug, chests) with buttons: **Pause /
+Resume**, **Structures: kept / dug**, **Restart** (`/quarry <x y z> pause|structures|restart`). Digging a block takes
+about 0.4 s for dirt and 1.2 s for stone at level 20 (plus walking), more for harder blocks, faster at higher levels.
+A miner that can't find its way down climbs straight to its next block. (`Quarry`, `PlacedBlocks`.)
 
 ### Work speed
 
@@ -83,7 +107,7 @@ The jobs panel shows each worker's speed. The times for a level 20 worker:
 | Farming | 1 s a crop (harvest and replant) |
 | Growth | 2 s a plant |
 | Logging | 0.75 s a log (like a stone axe), so about 4 s for a small oak |
-| Mining | 2 s a block from the Mining Post |
+| Mining | 0.4 s for dirt, 1.2 s for stone, longer for harder blocks (plus walking) |
 | Smelting | 10 s an item in a furnace, 5 s in a smoker or blast furnace (their own speed; no fuel) |
 | Brewing | 20 s a batch (the stand's own speed; no blaze powder) |
 | Fishing | 20 s a catch (about a player's average without Lure) |

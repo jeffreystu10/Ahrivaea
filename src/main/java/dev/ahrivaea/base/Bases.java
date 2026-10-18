@@ -327,13 +327,10 @@ public final class Bases {
 		int chests = Quarry.chests(level, post).size();
 		var text = Component.literal("Quarry: ").withStyle(net.minecraft.ChatFormatting.GOLD)
 				.append(Component.literal(q.describe(level, post)).withStyle(net.minecraft.ChatFormatting.WHITE))
-				.append(Component.literal("
-" + q.mined + " blocks dug; " + chests + (chests == 1 ? " chest" : " chests") + " by the post"
+				.append(Component.literal("\n" + q.mined + " blocks dug; " + chests + (chests == 1 ? " chest" : " chests") + " by the post"
 						+ (chests == 0 ? " (miners need one: put a chest or barrel next to the post)" : "")).withStyle(net.minecraft.ChatFormatting.GRAY))
-				.append(Component.literal("
-Digs out this chunk below the post, down to bedrock, leaving a wall around it and a staircase. Never strongholds, spawners or blocks players placed.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY))
-				.append(Component.literal("
-"))
+				.append(Component.literal("\nDigs out this chunk below the post, down to bedrock, leaving a wall around it and a staircase. Never strongholds, spawners or blocks players placed.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY))
+				.append(Component.literal("\n"))
 				.append(button(q.paused ? "[Resume]" : "[Pause]", "/quarry " + at + " pause"))
 				.append(Component.literal(" "))
 				.append(button(q.structures ? "[Structures: dug]" : "[Structures: kept]", "/quarry " + at + " structures"))

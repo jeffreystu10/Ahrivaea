@@ -225,7 +225,7 @@ public class BattleTest implements FabricClientGameTest {
 				LOG.info("BattleTest: mouse attack, after clicking the enemy: {}", screenState(context));
 				boolean attacked = server.computeOnServer(s -> {
 					Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
-					return b != null && (b.playerUnit().acted || b.phase != Battle.Phase.PLAYER);
+					return b == null || b.playerUnit().acted || b.phase != Battle.Phase.PLAYER; // (the hit may have won the battle)
 				});
 				if (!attacked) failures.add("attacking with the mouse (us, stay, move, enemy) should have worked: " + screenState(context));
 			}

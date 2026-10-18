@@ -26,7 +26,9 @@ public final class ChallengeState {
 			Codec.unboundedMap(Codec.STRING, Codec.INT).fieldOf("donations").forGetter(s -> s.donations),
 			Codec.unboundedMap(Codec.STRING, Codec.STRING).fieldOf("names").forGetter(s -> s.names),
 			Codec.unboundedMap(Codec.STRING, ChallengeDef.RewardItem.CODEC.listOf()).fieldOf("pending_rewards").forGetter(s -> s.pendingRewards),
-			Codec.STRING.optionalFieldOf("owner", "").forGetter(s -> s.owner)
+			Codec.STRING.optionalFieldOf("owner", "").forGetter(s -> s.owner),
+			Codec.INT.listOf().optionalFieldOf("portal_room", List.of()).forGetter(s -> s.portalRoom),
+			BlockPos.CODEC.listOf().optionalFieldOf("gates", List.of()).forGetter(s -> s.gates)
 	).apply(i, ChallengeState::new));
 
 	/** Which challenge file this tower uses. */
@@ -43,10 +45,17 @@ public final class ChallengeState {
 	public final Map<String, List<ChallengeDef.RewardItem>> pendingRewards;
 	/** The player (UUID) who controls the tower: its top donor when it was completed. Empty until then. */
 	public String owner;
+	/** The End portal room under the tower (minX, minY, minZ, maxX, maxY, maxZ), or empty if not found yet. */
+	public List<Integer> portalRoom;
+	/** The openings into the portal room that are sealed (reinforced deepslate) until the tower is complete. */
+	public List<BlockPos> gates;
 
 	public ChallengeState(String challenge, String palette, String dimension, BlockPos origin, int total, int stage, boolean complete,
-			Map<String, Integer> donations, Map<String, String> names, Map<String, List<ChallengeDef.RewardItem>> pendingRewards, String owner) {
+			Map<String, Integer> donations, Map<String, String> names, Map<String, List<ChallengeDef.RewardItem>> pendingRewards, String owner,
+			List<Integer> portalRoom, List<BlockPos> gates) {
 		this.owner = owner;
+		this.portalRoom = List.copyOf(portalRoom);
+		this.gates = List.copyOf(gates);
 		this.challenge = challenge;
 		this.palette = palette;
 		this.dimension = dimension;
@@ -61,7 +70,7 @@ public final class ChallengeState {
 	}
 
 	public static ChallengeState fresh(String challenge, String palette, String dimension, BlockPos origin) {
-		return new ChallengeState(challenge, palette, dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of(), "");
+		return new ChallengeState(challenge, palette, dimension, origin, 0, 0, false, Map.of(), Map.of(), Map.of(), "", List.of(), List.of());
 	}
 
 	/** Donor keys, most generous first (ties broken by name). */
@@ -75,6 +84,11 @@ public final class ChallengeState {
 	public String controller() {
 		if (!owner.isEmpty()) return owner;
 		return complete && !donations.isEmpty() ? ranking().getFirst() : "";
+	}
+
+	public net.minecraft.world.level.levelgen.structure.BoundingBox portalRoomBox() {
+		if (portalRoom.size() != 6) return null;
+		return new net.minecraft.world.level.levelgen.structure.BoundingBox(portalRoom.get(0), portalRoom.get(1), portalRoom.get(2), portalRoom.get(3), portalRoom.get(4), portalRoom.get(5));
 	}
 
 	public int rankOf(String key) {

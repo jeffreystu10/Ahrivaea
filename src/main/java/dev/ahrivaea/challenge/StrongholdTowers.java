@@ -45,7 +45,11 @@ public final class StrongholdTowers {
 			PENDING.clear();
 			for (ChunkPos pos : todo) {
 				int index = indexOf(level, pos);
-				if (index >= 0 && Challenges.state(server, towerId(index)).isEmpty()) generate(level, index);
+				if (index < 0) continue;
+				if (Challenges.state(server, towerId(index)).isEmpty()) generate(level, index);
+				// towers built before the portal rooms were sealed get theirs sealed now
+				var st = Challenges.state(server, towerId(index));
+				if (st.isPresent() && !st.get().complete && st.get().portalRoom.isEmpty()) Challenges.sealPortalRoom(level, towerId(index), portalRoom(level, pos));
 			}
 		});
 	}
@@ -71,6 +75,16 @@ public final class StrongholdTowers {
 	/** Which stronghold (0 = first one in the innermost ring) starts in this chunk, or -1. */
 	public static int indexOf(ServerLevel level, ChunkPos pos) {
 		return rings(level).indexOf(pos);
+	}
+
+	/** The stronghold's End portal room (its piece's box) in the stronghold that starts in this chunk, or null. */
+	public static net.minecraft.world.level.levelgen.structure.BoundingBox portalRoom(ServerLevel level, ChunkPos cp) {
+		Structure stronghold = stronghold(level);
+		if (stronghold == null) return null;
+		StructureStart start = level.getChunk(cp.x(), cp.z()).getStartForStructure(stronghold);
+		if (start == null || !start.isValid()) return null;
+		for (StructurePiece piece : start.getPieces()) if (piece instanceof StrongholdPieces.PortalRoom) return piece.getBoundingBox();
+		return null;
 	}
 
 	/** Builds (if it isn't already there) the tower over stronghold {@code index}; returns where it stands. */
@@ -112,6 +126,8 @@ public final class StrongholdTowers {
 		level.getChunk(x >> 4, z >> 4);
 		int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
 		BlockPos origin = new BlockPos(x - size.getX() / 2, y - 1, z - size.getZ() / 2);
-		return Challenges.place(level, def, origin, id) ? origin : null;
+		if (!Challenges.place(level, def, origin, id)) return null;
+		Challenges.sealPortalRoom(level, id, portalRoom(level, cp));
+		return origin;
 	}
 }

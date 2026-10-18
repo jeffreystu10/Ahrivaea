@@ -22,4 +22,9 @@ public final class BattleSettings {
 	public static int xpToNext(int level) {
 		return 100 + 25 * level;
 	}
+
+	/** Chance a battle won at night gives an ender pearl (on top of the creatures' own drops). */
+	public static final double NIGHT_PEARL_CHANCE = 0.10;
+	/** Chance each Fire creature beaten in the Nether gives a blaze rod. */
+	public static final double NETHER_BLAZE_ROD_CHANCE = 0.25;
 }

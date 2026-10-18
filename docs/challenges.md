@@ -48,6 +48,12 @@ their facing). The highest-priority palette whose biomes match wins; one with no
   and an announcement. Everyone sees "<player> offered 64 coal to The Old Tower (520/1000)".
 - At 1000 the tower is complete: title on every screen, fireworks, and rewards for the top donors.
   Offline winners get theirs the next time they log in. After that the chest just shows the final results.
+- **The way to the End.** The End portal room under every tower is sealed until the tower is complete: each
+  opening in its walls, floor and ceiling (the doorway, any cave holes) is filled with reinforced deepslate, and
+  nothing in or around the room can be broken, placed or used, the portal frames included, by anyone outside
+  creative mode. When the tower is finished the openings clear and everyone is told the way is open. Towers built
+  before this existed get their room sealed the next time their stronghold's chunk loads (if not yet complete).
+  `Challenges.sealPortalRoom`, `StrongholdTowers.portalRoom`.
 - **Protection, then a claim.** Like spawn protection, nobody can break, place or use blocks (buckets, fire,
   doors ...) within 64 blocks of the tower, from 8 blocks below its base up to the sky, until it's rebuilt; the
   stronghold under it stays open so the End can still be reached. When it's complete its top donor claims it

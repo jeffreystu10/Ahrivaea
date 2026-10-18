@@ -425,6 +425,13 @@ public final class Battle {
 				var sp = dev.ahrivaea.creature.Species.get(d.species());
 				if (sp.isPresent()) loot.addAll(dev.ahrivaea.creature.Drops.roll(sp.get(), d.influence(), d.level(), random, level.registryAccess()));
 			}
+			// the road to the End: a battle won at night may give an ender pearl, and Fire creatures beaten in the
+			// Nether may give a blaze rod (together they make Eyes of Ender, which lead to the towers)
+			net.minecraft.world.level.Level home = wild != null ? wild.level() : p != null ? p.level() : level;
+			if (home.isDarkOutside() && random.nextDouble() < BattleSettings.NIGHT_PEARL_CHANCE) loot.add(new net.minecraft.world.item.ItemStack(Items.ENDER_PEARL));
+			if (home.dimension() == net.minecraft.world.level.Level.NETHER)
+				for (Defeated d : defeated)
+					if (d.influence() == Influence.FIRE && random.nextDouble() < BattleSettings.NETHER_BLAZE_ROD_CHANCE) loot.add(new net.minecraft.world.item.ItemStack(Items.BLAZE_ROD));
 			for (var stack : loot) lootNames.add(dev.ahrivaea.creature.Drops.describe(stack));
 			if (p != null) {
 				for (var it = loot.iterator(); it.hasNext(); ) {

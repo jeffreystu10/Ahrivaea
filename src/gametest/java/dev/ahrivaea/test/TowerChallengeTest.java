@@ -42,6 +42,30 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			outside(context, server, origin);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_0_ruined").withSize(1600, 900));
 
+			// a stand-in End portal room (a stone box with a doorway) away from the tower: sealed until it's rebuilt
+			BlockPos room0 = origin.offset(-100, 1, 0), room1 = room0.offset(8, 5, 8);
+			server.runCommand("fill %d %d %d %d %d %d minecraft:stone_bricks hollow".formatted(room0.getX(), room0.getY(), room0.getZ(), room1.getX(), room1.getY(), room1.getZ()));
+			BlockPos door = room0.offset(4, 1, 0);
+			server.runCommand("fill %d %d %d %d %d %d minecraft:air".formatted(door.getX(), door.getY(), door.getZ(), door.getX(), door.getY() + 1, door.getZ()));
+			server.runCommand("setblock %d %d %d minecraft:end_portal_frame".formatted(room0.getX() + 4, room0.getY() + 1, room0.getZ() + 4));
+			server.runOnServer(s -> Challenges.sealPortalRoom(s.overworld(), "coal",
+					new net.minecraft.world.level.levelgen.structure.BoundingBox(room0.getX(), room0.getY(), room0.getZ(), room1.getX(), room1.getY(), room1.getZ())));
+			String sealed = server.computeOnServer(s -> {
+				var lv = s.overworld();
+				var p0 = s.getPlayerList().getPlayers().getFirst();
+				p0.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+				String out = (lv.getBlockState(door).is(net.minecraft.world.level.block.Blocks.REINFORCED_DEEPSLATE) ? "door sealed" : "door open")
+						+ ", wall " + (Challenges.protectedFrom(lv, p0, room0.offset(0, 2, 3), false) != null ? "protected" : "open")
+						+ ", frame " + (Challenges.protectedFrom(lv, p0, room0.offset(4, 1, 4), false) != null ? "protected" : "open");
+				p0.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+				return out;
+			});
+			if (!sealed.equals("door sealed, wall protected, frame protected")) throw new AssertionError("an unfinished tower's End portal room should be sealed: " + sealed);
+			server.runCommand("tp @a %d %d %d -90 20".formatted(door.getX(), door.getY() + 1, door.getZ() - 6));
+			context.runOnClient(client -> client.player.setYRot(0));
+			context.waitTicks(20);
+			context.takeScreenshot(TestScreenshotOptions.of("tower_portal_room_sealed").withSize(1600, 900));
+
 			// a real offering: 300 coal and 10 dirt through the chest screen
 			server.runCommand("clear @a");
 			server.runCommand("give @a minecraft:coal 300");
@@ -120,6 +144,22 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			String me = server.computeOnServer(s -> s.getPlayerList().getPlayers().getFirst().getUUID().toString());
 			if (!owner.equals(me)) throw new AssertionError("The top donor should claim the finished tower, owner is " + owner);
 			if (!placeDirt(context, server, near)) throw new AssertionError("The tower's owner should be able to build next to it");
+
+			// finished: the portal room's doorway is open, and nothing there is protected any more
+			String opened = server.computeOnServer(s -> {
+				var lv = s.overworld();
+				var p0 = s.getPlayerList().getPlayers().getFirst();
+				p0.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+				String out = (lv.getBlockState(door).isAir() ? "door open" : "door " + lv.getBlockState(door))
+						+ ", frame " + (Challenges.protectedFrom(lv, p0, room0.offset(4, 1, 4), false) != null ? "protected" : "open");
+				p0.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+				return out;
+			});
+			if (!opened.equals("door open, frame open")) throw new AssertionError("a finished tower's End portal room should be open: " + opened);
+			server.runCommand("tp @a %d %d %d -90 20".formatted(door.getX(), door.getY() + 1, door.getZ() - 6));
+			context.runOnClient(client -> client.player.setYRot(0));
+			context.waitTicks(20);
+			context.takeScreenshot(TestScreenshotOptions.of("tower_portal_room_open").withSize(1600, 900));
 
 			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are needed, 2 come back
 			if (!complete || diamonds != 8 || blocksBack != 2) {

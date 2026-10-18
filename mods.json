@@ -19,6 +19,7 @@
         "You win by beating every enemy and lose only if you're knocked out yourself. The creature you challenged is gone for good only if you win; otherwise it's back where it was afterwards",
         "Counterattacks, high ground, water and lava, influence matchups, crits and dodges (Luck), support (Charisma), fleeing at any time (always works); the enemy side plays itself",
         "Win XP for yourself and the same for your creatures (they level on the same curve as you, so at your pace), and the defeated creatures' drops. Recruit any defeated creature if you have the creature XP: 100 per level times 1 (Common) to 5 (Legendary), e.g. 400 for a Lv.4 Common. Reinforcements that join a wild creature are never rarer or higher level than it",
+        "The road to the End: a battle won at night has a 10% chance of an ender pearl, and each Fire creature beaten in the Nether a 25% chance of a blaze rod, for Eyes of Ender to find the towers",
         "Bases: a Base Core (5 levels, radius 24-40, 5-15 workers) where assigned creatures work on their own: farming, growth, logging, mining at a Mining Post, smelting and brewing without fuel, carrying items to chests, ranching, fishing, enchanting, powering a Creature Dynamo, running crafters, making ice and putting up torches",
         "Base raids at night (while you're nearby): aggressive creatures attack, Defense workers fight them in real time, raiders that reach the core steal from your chests; knocked-out workers rest instead of dying; /gamerule ahrivaea:base_raids",
         "Your character levels up to 50 and you spend stat points (/character); your weapon and armor count in battle",
@@ -101,6 +102,7 @@
         "New here? Pick your starter creature when you first join (or type /starter). It joins your party at level 1.",
         "Start a battle by hitting a wild creature with any sword. You're taken to an arena built for that biome, then brought back to where you were afterwards. Drag to look around the battlefield and scroll to zoom.",
         "In battle, click one of your units, click a square to move, then attack, use an item, rally or wait. Press End turn when you're done. Flee leaves the battle at any time.",
+        "Win battles at night for a chance of ender pearls, and beat Fire creatures in the Nether for blaze rods. Craft Eyes of Ender to find the ruined towers.",
         "Winning gives XP and the creatures' drops. You can recruit any creature you beat if you have the creature XP (100 per level, more for rarer ones). Your creatures earn the same XP you do. A Vessel on a weakened wild creature can catch it too.",
         "Heal your creatures with food outside battle: right-click one you have out, or press Feed on the party screen with food in your hand. In battle only brewed potions (Healing, Regeneration) heal; use them with Item.",
         "Press J for the creature dex: what you've seen and caught, with clues to where the others live.",
@@ -124,6 +126,7 @@
         "Offering chest; the tower rebuilds in 4 stages; fireworks and rewards for the top donors when finished",
         "Per-tower leaderboards",
         "Protected land: nobody can break, place or use blocks within 64 blocks of a tower (from 8 below its base up to the sky, so the stronghold stays open) until it's rebuilt. The top donor at completion claims it, and from then on only they can build there. The offering chest always works; creative-mode operators aren't affected",
+        "The End portal room under each tower is sealed (its openings filled with reinforced deepslate, everything in it protected) until the tower is complete; then the way to the End opens for everyone",
         "Challenges are set in Tower_Challenges.xlsx"
       ],
       "commands": "/challenge, /challenge list, /challenge top <tower>; operators: /challenge generate|place|credit|remove",
@@ -152,7 +155,8 @@
         "Each tower asks for its own item. Put it in the tower's offering chest; everyone on the server works together.",
         "The tower rebuilds in four stages as items come in. When it's finished, the top donors get rewards.",
         "/challenge shows the nearest tower's leaderboard and what it needs. /challenge list shows every tower found so far.",
-        "Towers and the land 64 blocks around them are protected until they're rebuilt. The top donor claims the finished tower, and only they can build in and around it."
+        "Towers and the land 64 blocks around them are protected until they're rebuilt. The top donor claims the finished tower, and only they can build in and around it.",
+        "You can't reach the End until a tower is rebuilt: its End portal room underneath is sealed. Finish the tower and the way opens."
       ]
     },
     {

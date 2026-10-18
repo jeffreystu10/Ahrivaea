@@ -117,3 +117,8 @@ If you log out mid-battle, the battle counts as fled and you're sent back when y
 **Starter.** A new player (empty party) picks a starter when they first join: any of the Common creatures in their
 None form, shown with their stats and a turning model. It joins the party at level 1. `/starter` reopens the choice
 until one is picked (`dev.ahrivaea.party.Starters`, `client/StarterScreen`). Players who already had creatures skip it.
+
+**The road to the End.** A battle won at night also has a 10% chance of an ender pearl, and every Fire creature
+beaten in the Nether a 25% chance of a blaze rod (`BattleSettings.NIGHT_PEARL_CHANCE`, `NETHER_BLAZE_ROD_CHANCE`).
+They make Eyes of Ender (vanilla recipe), which lead to the strongholds and the towers over them; a tower's End
+portal room opens when the tower is rebuilt (see challenges.md).

@@ -99,6 +99,12 @@ public final class Challenges {
 			if (!inLevel(s, level)) continue;
 			var def = defOf(e.getKey(), s);
 			if (def.isEmpty()) continue;
+			// the End portal room under an unfinished tower is sealed for everyone
+			BoundingBox room = s.portalRoomBox();
+			if (!s.complete && room != null && room.inflatedBy(1).isInside(pos)) {
+				if (tell) player.sendOverlayMessage(Component.literal("The way to the End is sealed until " + def.get().name() + " above is rebuilt."));
+				return e.getKey();
+			}
 			BoundingBox area = AREAS.computeIfAbsent(e.getKey() + "@" + s.origin.asLong(), k -> {
 				BoundingBox b = box(level, def.get(), s);
 				return new BoundingBox(b.minX() - PROTECT_RADIUS, b.minY() - PROTECT_BELOW, b.minZ() - PROTECT_RADIUS,
@@ -114,6 +120,47 @@ public final class Challenges {
 			return e.getKey();
 		}
 		return null;
+	}
+
+	// ---- the End portal room ----
+
+	/**
+	 * Seals the End portal room under an unfinished tower: every opening in its walls, floor and ceiling (doorways,
+	 * cave holes) is filled with reinforced deepslate, and nothing in or around it can be broken, placed or used
+	 * (see {@link #protectedFrom}) until the tower is complete, when the openings clear again.
+	 */
+	public static void sealPortalRoom(ServerLevel level, String id, BoundingBox room) {
+		var s = state(level.getServer(), id).orElse(null);
+		if (s == null || s.complete || room == null) return;
+		List<BlockPos> gates = new ArrayList<>(s.gates);
+		for (BlockPos p : BlockPos.betweenClosed(room.minX(), room.minY(), room.minZ(), room.maxX(), room.maxY(), room.maxZ())) {
+			boolean shell = p.getX() == room.minX() || p.getX() == room.maxX() || p.getY() == room.minY() || p.getY() == room.maxY()
+					|| p.getZ() == room.minZ() || p.getZ() == room.maxZ();
+			if (!shell) continue;
+			var st = level.getBlockState(p);
+			if (!st.getCollisionShape(level, p).isEmpty() && !(st.getBlock() instanceof net.minecraft.world.level.block.DoorBlock)) continue;
+			if (st.is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME) || st.is(net.minecraft.world.level.block.Blocks.END_PORTAL)) continue;
+			level.setBlock(p, net.minecraft.world.level.block.Blocks.REINFORCED_DEEPSLATE.defaultBlockState(), 2);
+			gates.add(p.immutable());
+		}
+		s.portalRoom = List.of(room.minX(), room.minY(), room.minZ(), room.maxX(), room.maxY(), room.maxZ());
+		s.gates = List.copyOf(gates);
+		save(level.getServer(), id, s);
+		TowersMod.LOGGER.info("Tower {}: sealed the End portal room at {} ({} openings)", id, room, gates.size());
+	}
+
+	private static void openPortalRoom(MinecraftServer server, ServerLevel level, ChallengeDef def, ChallengeState s) {
+		if (s.gates.isEmpty() || level == null) return;
+		for (BlockPos p : s.gates) if (level.getBlockState(p).is(net.minecraft.world.level.block.Blocks.REINFORCED_DEEPSLATE)) level.setBlock(p, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+		BoundingBox room = s.portalRoomBox();
+		if (room != null) {
+			var c = room.getCenter();
+			level.playSound(null, c, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1f, 1f);
+		}
+		TowersMod.LOGGER.info("Tower {}: the End portal room is open", def.name());
+		s.gates = List.of();
+		server.getPlayerList().broadcastSystemMessage(Component.literal("The way to the End beneath " + def.name() + " is open!")
+				.withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
 	}
 
 	// ---- state ----
@@ -288,6 +335,7 @@ public final class Challenges {
 
 	private static void complete(MinecraftServer server, ServerLevel level, String id, ChallengeDef def, ChallengeState s) {
 		List<String> ranking = s.ranking();
+		openPortalRoom(server, level, def, s);
 		// the top donor claims the tower: only they can build in and around it now
 		if (!ranking.isEmpty()) {
 			s.owner = ranking.getFirst();

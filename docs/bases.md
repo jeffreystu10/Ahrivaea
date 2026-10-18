@@ -6,7 +6,8 @@ Creatures you've recruited can work for you at a base.
 
 1. Get a **Base Core**. It can't be crafted: when a tower (Ahrivaea Tower Challenges) is fully rebuilt, its offering
    chest turns into a Base Core owned by the tower's top donor, who also gets a second one to place anywhere (see [challenges](challenges.md)). The base is the
-   area around it: 24 blocks out each way (level 1), 8 down and 16 up. (Creative mode still has Base Cores to place.)
+   area around it, in whole chunks: the core's chunk and every chunk around it (3x3 chunks at level 1), from 8
+   blocks below the core to 16 above. (Creative mode still has Base Cores to place.)
 2. Right-click the core. On the right are your party and box; **Work here** puts one to work. On the left are the
    workers, what each is doing right now, and **Send away** (it goes back to your party, or the box if that's full).
 3. Workers stay in the base and find work on their own. Each creature has up to two jobs (from the
@@ -14,13 +15,19 @@ Creatures you've recruited can work for you at a base.
 4. Upgrade the core by right-clicking it with: 4 iron blocks (level 2), 4 gold blocks (3), 2 diamond blocks (4),
    4 emerald blocks (5).
 
-| Level | Radius | Workers |
+| Level | Area (chunks) | Workers |
 |---|---|---|
-| 1 | 24 | 5 |
-| 2 | 28 | 7 |
-| 3 | 32 | 9 |
-| 4 | 36 | 12 |
-| 5 | 40 | 15 |
+| 1 | 3 x 3 (48 x 48 blocks) | 5 |
+| 2 | 5 x 5 (80 x 80) | 7 |
+| 3 | 7 x 7 (112 x 112) | 9 |
+| 4 | 9 x 9 (144 x 144) | 12 |
+| 5 | 11 x 11 (176 x 176) | 15 |
+
+**Keeping a base loaded.** While its owner is online, a base stays loaded and running (workers work, crops grow,
+furnaces smelt) wherever the owner is, even in another dimension. Each base has a **Keep loaded** switch at the
+bottom of its screen (on by default); turn it off for bases you don't need running. When the owner logs off, their
+bases unload like any other land. (`Bases.LOADERS` remembers every owned base; a ticket of the base's size plus two
+chunks makes every chunk of the base run entities. Raiders still only come while the owner is nearby.)
 
 Only the owner can manage a base or break the core, and only once all its workers are sent away. No wild
 creatures spawn inside a base. Workers can only be hurt by raiders.

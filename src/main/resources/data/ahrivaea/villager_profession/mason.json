@@ -1,0 +1,1494 @@
+{
+ "name": "Mason",
+ "description": "Stone, earth, bricks, terracotta, concrete, glass and ice.",
+ "outfit": "mason",
+ "icon": "minecraft:stone_bricks",
+ "order": 0,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:base_stone_overworld",
+    "amount": 64,
+    "text": "Mine 64 stone"
+   },
+   "sells": [
+    {
+     "item": "minecraft:andesite",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:calcite",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:cinnabar",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:clay",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:coarse_dirt",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:deepslate",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:diorite",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:dirt",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:dripstone_block",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:granite",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:gravel",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:mud",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:red_sand",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:sand",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:snow",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:snow_block",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:stone",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:tuff",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:andesite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:andesite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:andesite_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobbled_deepslate_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobbled_deepslate_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobbled_deepslate_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobblestone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobblestone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cobblestone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:diorite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:diorite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:diorite_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:granite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:granite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:granite_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:ice",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_andesite",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_cinnabar",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_deepslate",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_diorite",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_granite",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_sulfur",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_tuff",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sandstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sandstone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_stone",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_wall",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:base_stone_overworld",
+    "amount": 640,
+    "text": "Mine 640 stone"
+   },
+   "sells": [
+    {
+     "item": "minecraft:brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cinnabar_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cut_red_sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cut_sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_tile_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_tile_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:deepslate_tile_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_cobblestone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_cobblestone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_cobblestone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mud_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mud_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mud_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_andesite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_andesite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_cinnabar_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_cinnabar_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_cinnabar_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_deepslate_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_deepslate_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_deepslate_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_diorite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_diorite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_granite_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_granite_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_sulfur_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_sulfur_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_sulfur_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_tuff_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_tuff_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_tuff_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_sandstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_sandstone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_red_sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_red_sandstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_sandstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_sandstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_stone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stone_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stone_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stone_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sulfur_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tuff_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:white_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:white_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "#minecraft:stone_bricks",
+    "amount": 256,
+    "text": "Make 256 stone bricks"
+   },
+   "sells": [
+    {
+     "item": "minecraft:black_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:black_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:blue_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:blue_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:brown_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:brown_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cyan_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cyan_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:gray_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:gray_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:green_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:green_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:light_blue_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:light_blue_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:light_gray_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:light_gray_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:lime_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:lime_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:magenta_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:magenta_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_stone_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_stone_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mossy_stone_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:orange_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:orange_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pink_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pink_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:purple_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:purple_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:yellow_concrete_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:yellow_concrete_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:black_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brick",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_red_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cinnabar_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:clay_ball",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cut_red_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cut_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:deepslate_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:deepslate_tiles",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:packed_mud",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_terracotta",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:base_stone_overworld",
+    "amount": 4000,
+    "text": "Mine 4,000 stone"
+   },
+   "sells": [
+    {
+     "item": "minecraft:black_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:black_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:black_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_stone_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_tuff_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cracked_deepslate_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cracked_deepslate_tiles",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cracked_stone_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mossy_cobblestone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mossy_stone_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mud_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:smooth_red_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:smooth_sandstone",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:stone_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:sulfur_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:tuff_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_terracotta",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:base_stone_overworld",
+    "amount": 15000,
+    "text": "Mine 15,000 stone"
+   },
+   "sells": [
+    {
+     "item": "minecraft:black_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:black_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cyan_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:gray_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:green_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_blue_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_gray_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lime_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:magenta_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:purple_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_concrete",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_concrete_powder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_glazed_terracotta",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_stained_glass",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:yellow_stained_glass_pane",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_cinnabar",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:chiseled_deepslate",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:chiseled_sulfur",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:chiseled_tuff",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:pointed_dripstone",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:snowball",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:sulfur_spike",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:tinted_glass",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:packed_ice",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:blue_ice",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:ochre_froglight",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pearlescent_froglight",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:verdant_froglight",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  }
+ ]
+}

@@ -412,6 +412,13 @@ public final class Battle {
 		outcome = o;
 		phase = Phase.OVER;
 		ServerPlayer p = player();
+		if (o == Outcome.WON && p != null) {
+			// for villager deeds
+			dev.ahrivaea.villager.Villagers.award(p, dev.ahrivaea.villager.Villagers.BATTLES_WON);
+			var where = (wild != null ? wild.level() : p.level()).dimension();
+			if (where == net.minecraft.world.level.Level.NETHER) dev.ahrivaea.villager.Villagers.award(p, dev.ahrivaea.villager.Villagers.NETHER_BATTLES_WON);
+			if (where == net.minecraft.world.level.Level.END) dev.ahrivaea.villager.Villagers.award(p, dev.ahrivaea.villager.Villagers.END_BATTLES_WON);
+		}
 		if (o == Outcome.WON) {
 			// your own XP: 5 for the win, and about 5 per creature beaten, more for ones above your level, less below;
 			// your creatures' XP pool gets the same, so they level at your pace

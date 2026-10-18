@@ -1,0 +1,189 @@
+{
+ "name": "Leatherworker",
+ "description": "Leather, leather armor, saddles, harnesses and leads.",
+ "outfit": "leatherworker",
+ "icon": "minecraft:leather",
+ "order": 6,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "picked_up",
+    "of": "minecraft:leather",
+    "amount": 16,
+    "text": "Gather 16 leather"
+   },
+   "sells": [
+    {
+     "item": "minecraft:leather",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:rabbit_hide",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:black_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:blue_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:white_harness",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:leather_chestplate",
+    "amount": 4,
+    "text": "Make 4 leather tunics"
+   },
+   "sells": [
+    {
+     "item": "minecraft:brown_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cyan_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:gray_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:green_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:light_blue_harness",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:item_frame",
+    "amount": 32,
+    "text": "Make 32 item frames"
+   },
+   "sells": [
+    {
+     "item": "minecraft:light_gray_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lime_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:magenta_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:orange_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pink_harness",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:battles_won",
+    "amount": 300,
+    "text": "Win 300 battles"
+   },
+   "sells": [
+    {
+     "item": "minecraft:lead",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:purple_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:red_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:yellow_harness",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:leather_boots",
+     "count": 1,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "picked_up",
+    "of": "minecraft:leather",
+    "amount": 1000,
+    "text": "Gather 1,000 leather"
+   },
+   "sells": [
+    {
+     "item": "minecraft:leather_helmet",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:leather_leggings",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:saddle",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:leather_chestplate",
+     "count": 1,
+     "cost": 9
+    },
+    {
+     "item": "minecraft:name_tag",
+     "count": 1,
+     "cost": 10
+    }
+   ]
+  }
+ ]
+}

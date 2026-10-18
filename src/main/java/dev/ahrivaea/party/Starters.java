@@ -87,7 +87,8 @@ public final class Starters {
 	public static List<Species> options() {
 		List<Species> out = new ArrayList<>();
 		for (Species s : Species.all())
-			if (s.forms().containsKey(Influence.NONE) && RecruitRules.rank(RecruitRules.rarity(s, Influence.NONE)) == 0) out.add(s);
+			if (s.forms().containsKey(Influence.NONE) && RecruitRules.rank(RecruitRules.rarity(s, Influence.NONE)) == 0
+					&& !dev.ahrivaea.villager.Villagers.isVillager(s.id())) out.add(s); // villagers are found in villages
 		out.sort(Comparator.comparing(s -> s.nameFor(Influence.NONE)));
 		return out;
 	}

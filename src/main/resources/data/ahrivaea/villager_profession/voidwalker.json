@@ -1,0 +1,264 @@
+{
+ "name": "Voidwalker",
+ "description": "Everything from the End: pearls, purpur, shulkers, elytra.",
+ "outfit": "cleric",
+ "icon": "minecraft:ender_pearl",
+ "order": 15,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "advancement",
+    "of": "minecraft:story/enter_the_end",
+    "amount": 1,
+    "text": "Enter the End"
+   },
+   "sells": [
+    {
+     "item": "minecraft:end_stone",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:end_stone_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:end_stone_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:end_stone_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:purpur_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:purpur_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:chorus_flower",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:end_stone_bricks",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:end_battles_won",
+    "amount": 25,
+    "text": "Win 25 battles in the End"
+   },
+   "sells": [
+    {
+     "item": "minecraft:purpur_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:purpur_pillar",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "ahrivaea:purpur_shard",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:black_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:chorus_fruit",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:end_rod",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:popped_chorus_fruit",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:white_shulker_box",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "advancement",
+    "of": "minecraft:end/find_end_city",
+    "amount": 1,
+    "text": "Find an End city"
+   },
+   "sells": [
+    {
+     "item": "minecraft:blue_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:brown_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cyan_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:gray_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:green_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:light_blue_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:light_gray_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lime_shulker_box",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:end_battles_won",
+    "amount": 300,
+    "text": "Win 300 battles in the End"
+   },
+   "sells": [
+    {
+     "item": "minecraft:magenta_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:orange_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pink_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:purple_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:red_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:yellow_shulker_box",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:ender_pearl",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:ender_eye",
+     "count": 1,
+     "cost": 9
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:end_battles_won",
+    "amount": 1000,
+    "text": "Win 1,000 battles in the End"
+   },
+   "sells": [
+    {
+     "item": "minecraft:shulker_shell",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:dragon_breath",
+     "count": 1,
+     "cost": 20
+    },
+    {
+     "item": "minecraft:ender_chest",
+     "count": 1,
+     "cost": 20
+    },
+    {
+     "item": "minecraft:shulker_box",
+     "count": 1,
+     "cost": 30
+    },
+    {
+     "item": "minecraft:end_crystal",
+     "count": 1,
+     "cost": 40
+    },
+    {
+     "item": "minecraft:dragon_head",
+     "count": 1,
+     "cost": 500
+    },
+    {
+     "item": "minecraft:elytra",
+     "count": 1,
+     "cost": 2000
+    },
+    {
+     "item": "minecraft:dragon_egg",
+     "count": 1,
+     "cost": 5000
+    }
+   ]
+  }
+ ]
+}

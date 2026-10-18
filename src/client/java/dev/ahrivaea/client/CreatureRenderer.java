@@ -20,6 +20,7 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 	private CreatureRenderer(EntityRendererProvider.Context context, CreatureModel placeholder) {
 		super(context, placeholder, 0.4f);
 		this.placeholder = placeholder;
+		addLayer(new VillagerOutfitLayer(this));
 	}
 
 	@Override
@@ -46,6 +47,9 @@ public class CreatureRenderer extends MobRenderer<CreatureEntity, CreatureRender
 		}
 		state.texture = GeoModels.texture(species, influence, entity.getVariant().getSerializedName());
 		state.sitting = entity.isInSittingPose();
+		state.villager = species.equals("villager") && state.geo != null;
+		var job = entity.getAttached(dev.ahrivaea.villager.Villagers.JOB);
+		state.outfit = job == null ? "" : dev.ahrivaea.villager.Villagers.outfit(job.profession());
 		// creatures without their own model yet: the placeholder, tinted the colour of their influence
 		state.tint = state.geo == null ? 0xFF000000 | entity.getInfluence().color() : -1;
 	}

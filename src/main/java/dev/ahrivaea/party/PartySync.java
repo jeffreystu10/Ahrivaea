@@ -98,6 +98,11 @@ public final class PartySync {
 		JsonObject j = new JsonObject();
 		var sp = Species.get(c.species());
 		j.addProperty("name", c.variant().prefix() + sp.map(s -> s.nameFor(c.influence())).orElse(c.species()));
+		j.addProperty("species", c.species());
+		if (c.job().trained()) {
+			var pr = dev.ahrivaea.villager.Profession.get(c.job().profession());
+			if (pr != null) j.addProperty("profession", (c.job().rank() == 0 ? "Training as a " : pr.ranks().get(Math.min(c.job().rank(), pr.ranks().size()) - 1).name() + " ") + pr.name());
+		}
 		j.addProperty("variant", c.variant().getSerializedName());
 		j.addProperty("influence", c.influence().displayName());
 		j.addProperty("color", c.influence().color());

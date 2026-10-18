@@ -81,6 +81,13 @@ public final class Dex {
 		return species + "/" + influence.getSerializedName();
 	}
 
+	/** How many forms the player has seen (or caught, with CAUGHT). */
+	public static int count(ServerPlayer p, int atLeast) {
+		int n = 0;
+		for (int s : p.getAttachedOrElse(ATTACHMENT, Map.of()).values()) if (s >= atLeast) n++;
+		return n;
+	}
+
 	public static int status(ServerPlayer p, String key) {
 		return p.getAttachedOrElse(ATTACHMENT, Map.of()).getOrDefault(key, 0);
 	}
@@ -153,7 +160,7 @@ public final class Dex {
 		var spawn = s.form(inf).spawn().or(s::spawn);
 		List<String> biomes = spawn.map(Species.Spawn::biomes).orElse(List.of());
 		// even an unknown creature gives a clue: the first place it lives
-		j.addProperty("hint", biomes.isEmpty() ? "Not found in the wild" : "Lives in " + biomeName(biomes.getFirst()) + (biomes.size() > 1 ? " and elsewhere" : ""));
+		j.addProperty("hint", s.id().equals("villager") ? "Lives in villages" : biomes.isEmpty() ? "Not found in the wild" : "Lives in " + biomeName(biomes.getFirst()) + (biomes.size() > 1 ? " and elsewhere" : ""));
 		if (status < SEEN) return j;
 		j.addProperty("name", s.nameFor(inf));
 		j.addProperty("rarity", RecruitRules.rarity(s, inf));

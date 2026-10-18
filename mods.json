@@ -32,9 +32,10 @@
         "Your party on screen: a small summary in the top-left corner (each creature's name, level and HP, plus the ones you've sent out), and a party screen on K (rebindable in Controls) with each creature's HP, XP, all seven stats now and at level 50, jobs and riding, and buttons to send it out, level it up with your XP, move it to or from the box, call it back or release it. The summary can be turned off from the screen",
         "Healing: outside battle your creatures eat food (right-click one you have out, or Feed on the party screen / /party feed <slot> for party creatures), healing more for more filling food (a steak 36%, bread 20%, an apple 13%). In battle only brewed potions heal: Healing 40%, Healing II 70%, Regeneration 30-50%; splash and lingering ones heal neighbours too",
         "Creature dex (J, or Dex on the party screen): every form numbered; unknown ones show a clue to where they live, seen ones their name, model, rarity, levels and habitat, caught ones everything (stats, jobs, drops)",
-        "Model import from Blockbench: tools/import_models.py turns Mythic Mob Library .bbmodel files (zipped or not) into the creature's model, idle/fly animations and textures, and sizes its hitbox to match"
+        "Model import from Blockbench: tools/import_models.py turns Mythic Mob Library .bbmodel files (zipped or not) into the creature's model, idle/fly animations and textures, and sizes its hitbox to match",
+        "Villagers: villager creatures live in villages (vanilla villagers become them); recruit one and train it in one of 17 professions (Mason, Carpenter, Gardener, Farmer, Cook, Weaver, Leatherworker, Fisherman, Smith, Hunter, Librarian, Alchemist, Engineer, Explorer, Netherwright, Voidwalker, Jeweler). Each has 5 ranks, Novice to Master, each earned with a deed (mine stone, catch fish, win battles in the Nether, enter the End ...), and sells its items for creature XP: between them nearly every item in the game (not creative-only things or Base Cores), with rare things like beacons and elytra at Master. Trades are made by tools/villager_trades.py (Villager_Trades.xlsx)"
       ],
-      "commands": "/starter, /party, /party send|release <slot>, /party recall [entity], /party feed <slot>, /party xp <slot> <amount>, /party box [take <n>|store <slot>], /character, /character spend <stat> <points>; operators: /ahrivaea spawn|givexp|selftest, /battle start|end|recruit, /battle arena <theme>, /battle home, /character givexp, /gamerule ahrivaea:vanilla_mobs, /gamerule ahrivaea:base_raids, /gamerule ahrivaea:wild_spawn_distance, /gamerule ahrivaea:variant_odds, /base raid",
+      "commands": "/starter, /party, /party send|release <slot>, /party recall [entity], /party feed <slot>, /party xp <slot> <amount>, /party box [take <n>|store <slot>], /character, /character spend <stat> <points>; operators: /ahrivaea spawn|givexp|selftest, /battle start|end|recruit, /battle arena <theme>, /battle home, /character givexp, /gamerule ahrivaea:vanilla_mobs, /gamerule ahrivaea:base_raids, /gamerule ahrivaea:wild_spawn_distance, /gamerule ahrivaea:variant_odds, /base raid, /villager [party <slot> | out <entity>]",
       "players_install": "Yes (creatures, models, items, blocks and screens)",
       "status": "Creature list phases 1 and 2 done (creatures, drops, bases with every job, raids, no vanilla mobs); real models for every creature but the Whale; Enraged and Mutated variants; placeholder moves; riding (placeholder treat textures; the saddle isn't drawn on the model yet)",
       "added": "2026-10-14",
@@ -98,7 +99,9 @@
         "assets/ahrivaea/items/*_treat.json",
         "assets/ahrivaea/models/item/*_treat.json",
         "assets/ahrivaea/textures/item/*_treat.png",
-        "data/ahrivaea/recipe/*_treat.json"
+        "data/ahrivaea/recipe/*_treat.json",
+        "dev/ahrivaea/villager/**",
+        "data/ahrivaea/villager_profession/**"
       ],
       "guide": [
         "Creatures live everywhere instead of the usual Minecraft mobs. They never attack you first.",
@@ -120,7 +123,8 @@
         "Your bases keep working while you're online, wherever you are. Use the Keep loaded button on a base's screen to switch that off for a base you don't need running.",
         "At night your base may be raided. Creatures with the Defense job fight back, and you can help with a sword. Raiders who reach the core steal from nearby chests.",
         "Riding: right-click your own medium or bigger creature with a saddle, then right-click it to get on. Fliers: jump to take off, look where you want to go. Swimmers dive where you look. Shears take the saddle off.",
-        "Make a mount faster with treats: 8 Swift Treats for tier 1, 8 Golden Treats for tier 2, 4 Racing Treats for tier 3. Fast creatures (Speed 60 and 80, which grows with level) go on to tiers 4 and 5."
+        "Make a mount faster with treats: 8 Swift Treats for tier 1, 8 Golden Treats for tier 2, 4 Racing Treats for tier 3. Fast creatures (Speed 60 and 80, which grows with level) go on to tiers 4 and 5.",
+        "Villagers live in villages. Recruit one in a battle, then right-click it (or press Villager on the party screen, or type /villager) to train it in a profession. Each rank takes a deed, like mining 64 stone for a Novice Mason, and lets it sell more for your creature XP. Masters sell the rarest things, beacons and elytra included."
       ]
     },
     {

@@ -303,6 +303,7 @@ public class CreatureEntity extends TamableAnimal {
 		setVariant(c.variant());
 		setMountTraining(c.mountTier(), c.mountFed());
 		if (c.saddled() && isRideable()) setSaddle(true);
+		if (c.job().trained()) setAttached(dev.ahrivaea.villager.Villagers.JOB, c.job());
 	}
 
 	@Override
@@ -547,6 +548,11 @@ public class CreatureEntity extends TamableAnimal {
 				if (!player.isShiftKeyDown() && Healing.foodPercent(held) > 0) return eat(player, held);
 				InteractionResult ride = rideInteract(player, player.getItemInHand(hand));
 				if (ride != null) return ride;
+				// a villager: its training and shop
+				if (!player.isShiftKeyDown() && dev.ahrivaea.villager.Villagers.isVillager(getSpeciesId()) && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+					dev.ahrivaea.villager.Villagers.open(sp, dev.ahrivaea.villager.Villagers.Handle.out(this));
+					return InteractionResult.SUCCESS;
+				}
 				if (player.isShiftKeyDown()) {
 					// sneak + right click: call it back into the party
 					recallTo(player);
@@ -657,7 +663,8 @@ public class CreatureEntity extends TamableAnimal {
 	}
 
 	public CaughtCreature toCaught() {
-		return new CaughtCreature(getSpeciesId(), getInfluence(), getCreatureLevel(), xp, this.getHealth(), getMountTier(), getMountFed(), hasSaddle(), getVariant());
+		return new CaughtCreature(getSpeciesId(), getInfluence(), getCreatureLevel(), xp, this.getHealth(), getMountTier(), getMountFed(), hasSaddle(), getVariant(),
+				getAttachedOrElse(dev.ahrivaea.villager.Villagers.JOB, dev.ahrivaea.villager.VillagerJob.NONE));
 	}
 
 	@Override

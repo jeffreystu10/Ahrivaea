@@ -62,6 +62,8 @@ public class Ahrivaea implements ModInitializer {
 		dev.ahrivaea.party.PartySync.init();
 		dev.ahrivaea.party.Starters.init();
 		dev.ahrivaea.party.Dex.init();
+		dev.ahrivaea.villager.Villagers.init();
+		ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id("villager_professions"), (ResourceManagerReloadListener) dev.ahrivaea.villager.Profession::reload);
 		dev.ahrivaea.item.DropItems.init();
 		dev.ahrivaea.base.Bases.init();
 		dev.ahrivaea.creature.VanillaMobs.init();
@@ -88,6 +90,7 @@ public class Ahrivaea implements ModInitializer {
 			dev.ahrivaea.character.PlayerCharacter.registerCommands(dispatcher);
 			dev.ahrivaea.battle.Battles.registerCommands(dispatcher);
 			dev.ahrivaea.party.Starters.registerCommands(dispatcher);
+			dev.ahrivaea.villager.Villagers.registerCommands(dispatcher);
 			dispatcher.register(Commands.literal("party")
 					.executes(ctx -> listParty(ctx.getSource().getPlayerOrException(), ctx.getSource()))
 					.then(Commands.literal("send").then(Commands.argument("slot", IntegerArgumentType.integer(1, Party.MAX)).executes(ctx -> {

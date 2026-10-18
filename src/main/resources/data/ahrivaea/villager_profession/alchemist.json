@@ -1,0 +1,658 @@
+{
+ "name": "Alchemist",
+ "description": "Potions and everything for brewing them.",
+ "outfit": "cleric",
+ "icon": "minecraft:brewing_stand",
+ "order": 11,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "advancement",
+    "of": "minecraft:nether/brew_potion",
+    "amount": 1,
+    "text": "Brew a potion"
+   },
+   "sells": [
+    {
+     "item": "minecraft:sulfur",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:potent_sulfur",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:glass_bottle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:glowstone",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:blaze_powder",
+    "amount": 32,
+    "text": "Make 32 blaze powder"
+   },
+   "sells": [
+    {
+     "item": "minecraft:glowstone_dust",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:honey_bottle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:rabbit_foot",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:breeze_rod",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "used",
+    "of": "minecraft:potion",
+    "amount": 50,
+    "text": "Drink 50 potions"
+   },
+   "sells": [
+    {
+     "item": "minecraft:fermented_spider_eye",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:turtle_scute",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:wind_charge",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:night_vision"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:invisibility"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:leaping"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:fire_resistance"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:swiftness"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:slowness"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:water_breathing"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:healing"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:harming"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:poison"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:regeneration"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:strength"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:weakness"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 3,
+     "potion": "minecraft:slow_falling"
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "used",
+    "of": "minecraft:splash_potion",
+    "amount": 100,
+    "text": "Throw 100 splash potions"
+   },
+   "sells": [
+    {
+     "item": "minecraft:experience_bottle",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:glistering_melon_slice",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:golden_carrot",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:long_night_vision"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:long_invisibility"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strong_leaping"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:long_fire_resistance"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strong_swiftness"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:long_water_breathing"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strong_healing"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strong_regeneration"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strong_strength"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:turtle_master"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:wind_charged"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:weaving"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:oozing"
+    },
+    {
+     "item": "minecraft:potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:infested"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:night_vision"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:invisibility"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:leaping"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:fire_resistance"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:swiftness"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:slowness"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:water_breathing"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:healing"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:harming"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:poison"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:regeneration"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:strength"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:weakness"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 5,
+     "potion": "minecraft:slow_falling"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:night_vision"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:invisibility"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:leaping"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:fire_resistance"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:swiftness"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:slowness"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:water_breathing"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:healing"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:harming"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:poison"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:regeneration"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strength"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:weakness"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:slow_falling"
+    },
+    {
+     "item": "minecraft:cauldron",
+     "count": 1,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "used",
+    "of": "minecraft:potion",
+    "amount": 600,
+    "text": "Drink 600 potions"
+   },
+   "sells": [
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:long_night_vision"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:long_invisibility"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strong_leaping"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:long_fire_resistance"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strong_swiftness"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:long_water_breathing"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strong_healing"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strong_regeneration"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:strong_strength"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:turtle_master"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:wind_charged"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:weaving"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:oozing"
+    },
+    {
+     "item": "minecraft:splash_potion",
+     "count": 1,
+     "cost": 8,
+     "potion": "minecraft:infested"
+    },
+    {
+     "item": "minecraft:brewing_stand",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:long_night_vision"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:long_invisibility"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:strong_leaping"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:long_fire_resistance"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:strong_swiftness"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:long_water_breathing"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:strong_healing"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:strong_regeneration"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:strong_strength"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:turtle_master"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:wind_charged"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:weaving"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:oozing"
+    },
+    {
+     "item": "minecraft:lingering_potion",
+     "count": 1,
+     "cost": 12,
+     "potion": "minecraft:infested"
+    },
+    {
+     "item": "minecraft:ominous_bottle",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:turtle_helmet",
+     "count": 1,
+     "cost": 30
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,549 @@
+{
+ "name": "Netherwright",
+ "description": "Everything from the Nether, netherite included.",
+ "outfit": "weaponsmith",
+ "icon": "minecraft:netherrack",
+ "order": 14,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "advancement",
+    "of": "minecraft:story/enter_the_nether",
+    "amount": 1,
+    "text": "Enter the Nether"
+   },
+   "sells": [
+    {
+     "item": "minecraft:basalt",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:blackstone",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:netherrack",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:soul_sand",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:soul_soil",
+     "count": 64,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:blackstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:blackstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:blackstone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:nether_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:nether_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:nether_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_basalt",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_bricks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_button",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_pressure_plate",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:quartz_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:quartz_stairs",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:nether_battles_won",
+    "amount": 25,
+    "text": "Win 25 battles in the Nether"
+   },
+   "sells": [
+    {
+     "item": "minecraft:polished_blackstone_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:polished_blackstone_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_nether_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_nether_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_nether_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_quartz_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:smooth_quartz_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:chiseled_nether_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cracked_nether_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cracked_polished_blackstone_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:nether_brick_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:nether_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:quartz_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_nether_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crimson_fungus",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:crimson_nylium",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:crimson_roots",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "mined",
+    "of": "minecraft:netherrack",
+    "amount": 2000,
+    "text": "Mine 2,000 netherrack"
+   },
+   "sells": [
+    {
+     "item": "minecraft:chiseled_quartz_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dried_ghast",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:fire_charge",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:gilded_blackstone",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:nether_gold_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:nether_quartz_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:nether_sprouts",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:nether_wart_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:quartz_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:quartz_pillar",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:shroomlight",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:smooth_basalt",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:soul_torch",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:twisting_vines",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:warped_fungus",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:warped_nylium",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:warped_roots",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:warped_wart_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:weeping_vines",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:warped_fungus_on_a_stick",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "custom",
+    "of": "ahrivaea:nether_battles_won",
+    "amount": 300,
+    "text": "Win 300 battles in the Nether"
+   },
+   "sells": [
+    {
+     "item": "minecraft:chiseled_polished_blackstone",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:smooth_quartz",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:magma_block",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:nether_wart",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:quartz",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:soul_campfire",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:soul_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:obsidian",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:magma_cream",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:nether_brick",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:netherite_horse_armor",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:piglin_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:blaze_powder",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:crying_obsidian",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:blaze_rod",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:ghast_tear",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:wither_rose",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:netherite_nautilus_armor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:lodestone",
+     "count": 1,
+     "cost": 30
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "advancement",
+    "of": "minecraft:nether/obtain_ancient_debris",
+    "amount": 1,
+    "text": "Find ancient debris"
+   },
+   "sells": [
+    {
+     "item": "minecraft:piglin_head",
+     "count": 1,
+     "cost": 30
+    },
+    {
+     "item": "minecraft:respawn_anchor",
+     "count": 1,
+     "cost": 40
+    },
+    {
+     "item": "minecraft:wither_skeleton_skull",
+     "count": 1,
+     "cost": 60
+    },
+    {
+     "item": "minecraft:ancient_debris",
+     "count": 1,
+     "cost": 70
+    },
+    {
+     "item": "minecraft:netherite_scrap",
+     "count": 1,
+     "cost": 70
+    },
+    {
+     "item": "minecraft:netherite_shovel",
+     "count": 1,
+     "cost": 240
+    },
+    {
+     "item": "minecraft:netherite_upgrade_smithing_template",
+     "count": 1,
+     "cost": 250
+    },
+    {
+     "item": "minecraft:netherite_ingot",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "minecraft:netherite_hoe",
+     "count": 1,
+     "cost": 320
+    },
+    {
+     "item": "minecraft:netherite_spear",
+     "count": 1,
+     "cost": 400
+    },
+    {
+     "item": "minecraft:netherite_sword",
+     "count": 1,
+     "cost": 400
+    },
+    {
+     "item": "minecraft:netherite_axe",
+     "count": 1,
+     "cost": 480
+    },
+    {
+     "item": "minecraft:netherite_pickaxe",
+     "count": 1,
+     "cost": 480
+    },
+    {
+     "item": "minecraft:netherite_boots",
+     "count": 1,
+     "cost": 640
+    },
+    {
+     "item": "minecraft:netherite_helmet",
+     "count": 1,
+     "cost": 800
+    },
+    {
+     "item": "minecraft:netherite_leggings",
+     "count": 1,
+     "cost": 1040
+    },
+    {
+     "item": "minecraft:netherite_chestplate",
+     "count": 1,
+     "cost": 1200
+    },
+    {
+     "item": "minecraft:nether_star",
+     "count": 1,
+     "cost": 2400
+    },
+    {
+     "item": "minecraft:netherite_block",
+     "count": 1,
+     "cost": 2700
+    }
+   ]
+  }
+ ]
+}

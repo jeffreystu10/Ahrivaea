@@ -1,0 +1,649 @@
+{
+ "name": "Explorer",
+ "description": "Maps, compasses, music discs, trims, sherds and keepsakes.",
+ "outfit": "cartographer",
+ "icon": "minecraft:compass",
+ "order": 13,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:walk_one_cm",
+    "amount": 200000,
+    "text": "Walk 2 km"
+   },
+   "sells": [
+    {
+     "item": "minecraft:resin_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:resin_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:resin_brick_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:chiseled_resin_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:resin_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cartography_table",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:decorated_pot",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:glow_item_frame",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:resin_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:resin_brick",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:resin_clump",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:suspicious_gravel",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:suspicious_sand",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:flower_banner_pattern",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:armor_stand",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:black_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:blue_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:bordure_indented_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:firework_rocket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:firework_star",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:item_frame",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:painting",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:white_bundle",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "dex_seen",
+    "of": "",
+    "amount": 40,
+    "text": "See 40 creature forms in your dex"
+   },
+   "sells": [
+    {
+     "item": "minecraft:brown_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:creeper_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cyan_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:field_masoned_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:flow_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:globe_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:gray_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:green_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:guster_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:light_blue_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:light_gray_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lime_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:magenta_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:mojang_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:orange_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pink_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:purple_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:red_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:skull_banner_pattern",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:yellow_bundle",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:brush",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:map",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:compass",
+     "count": 1,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:walk_one_cm",
+    "amount": 5000000,
+    "text": "Walk 50 km"
+   },
+   "sells": [
+    {
+     "item": "minecraft:spyglass",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:clock",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:angler_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:archer_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:arms_up_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:blade_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:brewer_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:burn_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:danger_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:disc_fragment_5",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:explorer_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:flow_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:friend_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:guster_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:heart_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:heartbreak_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:howl_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:miner_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:mourner_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:plenty_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:prize_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:scrape_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:sheaf_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:shelter_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "dex_seen",
+    "of": "",
+    "amount": 120,
+    "text": "See 120 creature forms in your dex"
+   },
+   "sells": [
+    {
+     "item": "minecraft:skull_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:snort_pottery_sherd",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:goat_horn",
+     "count": 1,
+     "cost": 20
+    },
+    {
+     "item": "minecraft:bolt_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:coast_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:dune_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:eye_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:flow_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:host_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_11",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_13",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_5",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_blocks",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_bounce",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_cat",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_chirp",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_creator",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_creator_music_box",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_far",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_lava_chicken",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_mall",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_mellohi",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_otherside",
+     "count": 1,
+     "cost": 25
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "dex_seen",
+    "of": "",
+    "amount": 220,
+    "text": "See 220 creature forms in your dex"
+   },
+   "sells": [
+    {
+     "item": "minecraft:music_disc_pigstep",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_precipice",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_relic",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_stal",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_strad",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_tears",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_wait",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:music_disc_ward",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:raiser_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:rib_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:sentry_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:shaper_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:silence_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:snout_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:spire_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:tide_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:vex_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:ward_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:wayfinder_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:wild_armor_trim_smithing_template",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:creaking_heart",
+     "count": 1,
+     "cost": 30
+    },
+    {
+     "item": "minecraft:recovery_compass",
+     "count": 1,
+     "cost": 40
+    },
+    {
+     "item": "minecraft:sniffer_egg",
+     "count": 1,
+     "cost": 50
+    }
+   ]
+  }
+ ]
+}

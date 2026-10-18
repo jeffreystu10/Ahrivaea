@@ -1,0 +1,25 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "head": {
+     "rotation": [
+      "0",
+      "-(12*math.sin(query.life_time*1*60+57.296))",
+      "0"
+     ]
+    },
+    "nose": {
+     "rotation": [
+      "0",
+      "0",
+      "3*math.sin(query.life_time*1*45)"
+     ]
+    }
+   }
+  }
+ }
+}

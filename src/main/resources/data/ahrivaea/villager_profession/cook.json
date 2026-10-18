@@ -1,0 +1,179 @@
+{
+ "name": "Cook",
+ "description": "Meat and cooked food, cakes, pies and stews.",
+ "outfit": "butcher",
+ "icon": "minecraft:cooked_beef",
+ "order": 4,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:bread",
+    "amount": 16,
+    "text": "Bake 16 bread"
+   },
+   "sells": [
+    {
+     "item": "minecraft:baked_potato",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bowl",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bread",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_beef",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_chicken",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "used",
+    "of": "#c:foods",
+    "amount": 100,
+    "text": "Eat 100 meals"
+   },
+   "sells": [
+    {
+     "item": "minecraft:cooked_mutton",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_porkchop",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_rabbit",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "ahrivaea:banana",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:mushroom_stew",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:cake",
+    "amount": 8,
+    "text": "Bake 8 cakes"
+   },
+   "sells": [
+    {
+     "item": "minecraft:beef",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:chicken",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:mutton",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:poisonous_potato",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "used",
+    "of": "#c:foods",
+    "amount": 1000,
+    "text": "Eat 1,000 meals"
+   },
+   "sells": [
+    {
+     "item": "minecraft:porkchop",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:rabbit",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:smoker",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:campfire",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:beetroot_soup",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:interact_with_smoker",
+    "amount": 500,
+    "text": "Use a smoker 500 times"
+   },
+   "sells": [
+    {
+     "item": "minecraft:cookie",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pumpkin_pie",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:rabbit_stew",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:cake",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  }
+ ]
+}

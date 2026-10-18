@@ -1,0 +1,536 @@
+{
+ "name": "Librarian",
+ "description": "Books, paper, bookshelves and enchanted books.",
+ "outfit": "librarian",
+ "icon": "minecraft:book",
+ "order": 10,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:book",
+    "amount": 16,
+    "text": "Make 16 books"
+   },
+   "sells": [
+    {
+     "item": "minecraft:paper",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chiseled_bookshelf",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:lectern",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:acacia_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bamboo_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:birch_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:book",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:writable_book",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:enchant_item",
+    "amount": 5,
+    "text": "Enchant 5 items"
+   },
+   "sells": [
+    {
+     "item": "minecraft:candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cherry_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:crimson_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:dark_oak_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:jungle_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:mangrove_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oak_shelf",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:bookshelf",
+    "amount": 32,
+    "text": "Make 32 bookshelves"
+   },
+   "sells": [
+    {
+     "item": "minecraft:black_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:blue_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:brown_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pale_oak_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:poplar_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:spruce_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:warped_shelf",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:white_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:aqua_affinity",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:silk_touch",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:flame",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:infinity",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:channeling",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 32,
+     "enchantment": "minecraft:multishot",
+     "level": 1
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 44,
+     "enchantment": "minecraft:knockback",
+     "level": 2
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 44,
+     "enchantment": "minecraft:fire_aspect",
+     "level": 2
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 44,
+     "enchantment": "minecraft:punch",
+     "level": 2
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:respiration",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:thorns",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:depth_strider",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:looting",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:sweeping_edge",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:unbreaking",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:fortune",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:luck_of_the_sea",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:lure",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:loyalty",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:riptide",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:quick_charge",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 56,
+     "enchantment": "minecraft:lunge",
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:enchant_item",
+    "amount": 60,
+    "text": "Enchant 60 items"
+   },
+   "sells": [
+    {
+     "item": "minecraft:cyan_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:gray_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:green_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:light_blue_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:light_gray_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:lime_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:magenta_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:protection",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:fire_protection",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:feather_falling",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:blast_protection",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:projectile_protection",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:piercing",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 68,
+     "enchantment": "minecraft:breach",
+     "level": 4
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:sharpness",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:smite",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:bane_of_arthropods",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:efficiency",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:power",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:impaling",
+     "level": 5
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 80,
+     "enchantment": "minecraft:density",
+     "level": 5
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:enchant_item",
+    "amount": 250,
+    "text": "Enchant 250 items"
+   },
+   "sells": [
+    {
+     "item": "minecraft:orange_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pink_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:purple_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:red_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:yellow_candle",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bookshelf",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:enchanting_table",
+     "count": 1,
+     "cost": 60
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 150,
+     "enchantment": "minecraft:frost_walker",
+     "level": 2
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 150,
+     "enchantment": "minecraft:soul_speed",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 150,
+     "enchantment": "minecraft:swift_sneak",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 150,
+     "enchantment": "minecraft:wind_burst",
+     "level": 3
+    },
+    {
+     "item": "minecraft:enchanted_book",
+     "count": 1,
+     "cost": 150,
+     "enchantment": "minecraft:mending",
+     "level": 1
+    }
+   ]
+  }
+ ]
+}

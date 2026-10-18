@@ -82,9 +82,22 @@ public final class VanillaMobs {
 		});
 	}
 
+	/** Vanilla villagers (and wandering traders) become villager creatures, however many there are. */
+	public static final java.util.Set<String> VILLAGERS = java.util.Set.of("villager", "wandering_trader");
+
 	private static void replace(Replace r) {
 		ServerLevel level = r.level();
-		if (!level.isLoaded(r.pos()) || WildSpawner.wildAround(level, r.pos(), 8) >= CROWD) return;
+		if (!level.isLoaded(r.pos())) return;
+		if (VILLAGERS.contains(r.mob())) {
+			var sp = Species.get(dev.ahrivaea.villager.Villagers.SPECIES);
+			if (sp.isPresent()) {
+				int[] range = sp.get().levelRange(Influence.NONE);
+				int lvl = range[0] + level.getRandom().nextInt(Math.max(1, range[1] - range[0] + 1));
+				Ahrivaea.spawn(level, sp.get(), Influence.NONE, lvl, -1, r.pos().getX() + 0.5, r.pos().getY(), r.pos().getZ() + 0.5);
+				return;
+			}
+		}
+		if (WildSpawner.wildAround(level, r.pos(), 8) >= CROWD) return;
 		var biome = level.getBiome(r.pos());
 		boolean water = level.getFluidState(r.pos()).is(FluidTags.WATER);
 		Species.Pick pick = null;

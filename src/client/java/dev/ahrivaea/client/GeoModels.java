@@ -177,7 +177,11 @@ public final class GeoModels {
 		return texture(species, influence);
 	}
 
+	/** Villagers wear Minecraft's own villager skin (their clothes are drawn over it: see VillagerOutfitLayer). */
+	public static final Identifier VILLAGER_SKIN = Identifier.withDefaultNamespace("textures/entity/villager/villager.png");
+
 	public static Identifier texture(String species, String influence) {
+		if (species.equals("villager")) return VILLAGER_SKIN;
 		// a form that borrows another form's model wears that form's texture (textures are laid out for their model)
 		String key = key(species, influence);
 		if (key != null && textures.contains(key)) return Ahrivaea.id("textures/entity/creature/" + key + ".png");

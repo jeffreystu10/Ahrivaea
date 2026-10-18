@@ -9,7 +9,7 @@ import dev.ahrivaea.creature.Influence;
  * mountTier and mountFed are its riding training (see dev.ahrivaea.creature.Mounts); saddled is whether it wears one.
  */
 public record CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled,
-		dev.ahrivaea.creature.Variant variant) {
+		dev.ahrivaea.creature.Variant variant, dev.ahrivaea.villager.VillagerJob job) {
 	public static final Codec<CaughtCreature> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Codec.STRING.fieldOf("species").forGetter(CaughtCreature::species),
 			Influence.CODEC.optionalFieldOf("influence", Influence.NONE).forGetter(CaughtCreature::influence),
@@ -19,8 +19,14 @@ public record CaughtCreature(String species, Influence influence, int level, int
 			Codec.INT.optionalFieldOf("mount_tier", 0).forGetter(CaughtCreature::mountTier),
 			Codec.INT.optionalFieldOf("mount_fed", 0).forGetter(CaughtCreature::mountFed),
 			Codec.BOOL.optionalFieldOf("saddled", false).forGetter(CaughtCreature::saddled),
-			dev.ahrivaea.creature.Variant.CODEC.optionalFieldOf("variant", dev.ahrivaea.creature.Variant.NONE).forGetter(CaughtCreature::variant)
+			dev.ahrivaea.creature.Variant.CODEC.optionalFieldOf("variant", dev.ahrivaea.creature.Variant.NONE).forGetter(CaughtCreature::variant),
+			dev.ahrivaea.villager.VillagerJob.CODEC.optionalFieldOf("villager", dev.ahrivaea.villager.VillagerJob.NONE).forGetter(CaughtCreature::job)
 	).apply(i, CaughtCreature::new));
+
+	public CaughtCreature(String species, Influence influence, int level, int xp, float health, int mountTier, int mountFed, boolean saddled,
+			dev.ahrivaea.creature.Variant variant) {
+		this(species, influence, level, xp, health, mountTier, mountFed, saddled, variant, dev.ahrivaea.villager.VillagerJob.NONE);
+	}
 
 	public CaughtCreature(String species, Influence influence, int level, int xp, float health) {
 		this(species, influence, level, xp, health, 0, 0, false);
@@ -31,10 +37,14 @@ public record CaughtCreature(String species, Influence influence, int level, int
 	}
 
 	public CaughtCreature withProgress(int level, int xp) {
-		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant);
+		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant, job);
 	}
 
 	public CaughtCreature withHealth(float health) {
-		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant);
+		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant, job);
+	}
+
+	public CaughtCreature withJob(dev.ahrivaea.villager.VillagerJob job) {
+		return new CaughtCreature(species, influence, level, xp, health, mountTier, mountFed, saddled, variant, job);
 	}
 }

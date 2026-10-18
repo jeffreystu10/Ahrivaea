@@ -1,0 +1,204 @@
+{
+ "name": "Jeweler",
+ "description": "Gems, amethyst and the rarest treasures: beacons, totems, nether stars.",
+ "outfit": "nitwit",
+ "icon": "minecraft:diamond",
+ "order": 16,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "mined",
+    "of": "#c:ores",
+    "amount": 64,
+    "text": "Mine 64 ores"
+   },
+   "sells": [
+    {
+     "item": "minecraft:amethyst_cluster",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:large_amethyst_bud",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:medium_amethyst_bud",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:sculk",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:sculk_vein",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:small_amethyst_bud",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:diamond_ores",
+    "amount": 10,
+    "text": "Mine 10 diamond ore"
+   },
+   "sells": [
+    {
+     "item": "minecraft:amethyst_shard",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:lapis_lazuli",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:amethyst_block",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "ahrivaea:ivory",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:lapis_block",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:emerald",
+     "count": 1,
+     "cost": 12
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "dex_caught",
+    "of": "",
+    "amount": 40,
+    "text": "Catch 40 creature forms"
+   },
+   "sells": [
+    {
+     "item": "minecraft:echo_shard",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:trial_key",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:golden_apple",
+     "count": 1,
+     "cost": 20
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "dex_caught",
+    "of": "",
+    "amount": 100,
+    "text": "Catch 100 creature forms"
+   },
+   "sells": [
+    {
+     "item": "minecraft:calibrated_sculk_sensor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:diamond",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:sculk_catalyst",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:sculk_sensor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:sculk_shrieker",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:ominous_trial_key",
+     "count": 1,
+     "cost": 60
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "dex_caught",
+    "of": "",
+    "amount": 180,
+    "text": "Catch 180 creature forms"
+   },
+   "sells": [
+    {
+     "item": "minecraft:emerald_block",
+     "count": 1,
+     "cost": 108
+    },
+    {
+     "item": "minecraft:diamond_block",
+     "count": 1,
+     "cost": 225
+    },
+    {
+     "item": "minecraft:totem_of_undying",
+     "count": 1,
+     "cost": 400
+    },
+    {
+     "item": "minecraft:heavy_core",
+     "count": 1,
+     "cost": 500
+    },
+    {
+     "item": "minecraft:enchanted_golden_apple",
+     "count": 1,
+     "cost": 600
+    },
+    {
+     "item": "minecraft:mace",
+     "count": 1,
+     "cost": 1200
+    },
+    {
+     "item": "minecraft:beacon",
+     "count": 1,
+     "cost": 2500
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,479 @@
+{
+ "name": "Gardener",
+ "description": "Saplings, leaves, flowers, grass, moss and other plants.",
+ "outfit": "shepherd",
+ "icon": "minecraft:poppy",
+ "order": 2,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "picked_up",
+    "of": "#minecraft:saplings",
+    "amount": 16,
+    "text": "Gather 16 saplings"
+   },
+   "sells": [
+    {
+     "item": "minecraft:acacia_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:acacia_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:azalea_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bush",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dead_bush",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:fern",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:flowering_azalea_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:glow_lichen",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_sapling",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "used",
+    "of": "minecraft:bone_meal",
+    "amount": 64,
+    "text": "Use 64 bone meal"
+   },
+   "sells": [
+    {
+     "item": "minecraft:large_fern",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:leaf_litter",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_propagule",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mushroom_stem",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:short_dry_grass",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:short_grass",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_sapling",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tall_dry_grass",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:tall_grass",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:vine",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "picked_up",
+    "of": "#minecraft:flowers",
+    "amount": 200,
+    "text": "Gather 200 flowers"
+   },
+   "sells": [
+    {
+     "item": "minecraft:moss_carpet",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:orange_poplar_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_moss_carpet",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:red_poplar_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:yellow_poplar_leaves",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:allium",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:azure_bluet",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cornflower",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:dandelion",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:flower_pot",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:flowering_azalea",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:lily_of_the_valley",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:moss_block",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:oxeye_daisy",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_moss_block",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:poppy",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "picked_up",
+    "of": "#minecraft:saplings",
+    "amount": 800,
+    "text": "Gather 800 saplings"
+   },
+   "sells": [
+    {
+     "item": "minecraft:blue_orchid",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_mushroom",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brown_mushroom_block",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:orange_tulip",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_hanging_moss",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_petals",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pink_tulip",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_mushroom",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_mushroom_block",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:red_tulip",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:shelf_mushroom",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:sunflower",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:torchflower",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:white_tulip",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:wildflowers",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:azalea",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:big_dripleaf",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "dex_seen",
+    "of": "",
+    "amount": 150,
+    "text": "See 150 creature forms in your dex"
+   },
+   "sells": [
+    {
+     "item": "minecraft:closed_eyeblossom",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:firefly_bush",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:golden_dandelion",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:grass_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:hanging_roots",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:lilac",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:mycelium",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:open_eyeblossom",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:peony",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:pitcher_plant",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:podzol",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:red_shrub",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:rooted_dirt",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:rose_bush",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:small_dripleaf",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:spore_blossom",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  }
+ ]
+}

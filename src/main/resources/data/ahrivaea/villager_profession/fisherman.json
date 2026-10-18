@@ -1,0 +1,449 @@
+{
+ "name": "Fisherman",
+ "description": "Fish, coral, prismarine and treasures of the sea.",
+ "outfit": "fisherman",
+ "icon": "minecraft:cod",
+ "order": 7,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:fish_caught",
+    "amount": 10,
+    "text": "Catch 10 fish"
+   },
+   "sells": [
+    {
+     "item": "minecraft:dark_prismarine_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_prismarine_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:kelp",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:lily_pad",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:prismarine_brick_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:prismarine_brick_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:prismarine_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:prismarine_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:prismarine_wall",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:seagrass",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cod",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_cod",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cooked_salmon",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:ink_sac",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:prismarine_shard",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:salmon",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:fish_caught",
+    "amount": 60,
+    "text": "Catch 60 fish"
+   },
+   "sells": [
+    {
+     "item": "minecraft:prismarine_bricks",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:turtle_egg",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:brain_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:brain_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:brain_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bubble_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bubble_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bubble_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dark_prismarine",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_brain_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_brain_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_brain_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_bubble_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_bubble_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_bubble_coral_fan",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:fish_caught",
+    "amount": 250,
+    "text": "Catch 250 fish"
+   },
+   "sells": [
+    {
+     "item": "minecraft:dead_fire_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_fire_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_fire_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_horn_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_horn_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_horn_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_tube_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_tube_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dead_tube_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dried_kelp",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:dried_kelp_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:fire_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:fire_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:fire_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:glow_ink_sac",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:horn_coral",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:fish_caught",
+    "amount": 750,
+    "text": "Catch 750 fish"
+   },
+   "sells": [
+    {
+     "item": "minecraft:horn_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:horn_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:prismarine",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:pufferfish",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:sea_pickle",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:tropical_fish",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:tube_coral",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:tube_coral_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:tube_coral_fan",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:prismarine_crystals",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_nautilus_armor",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:axolotl_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cod_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:fishing_rod",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pufferfish_bucket",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "custom",
+    "of": "minecraft:fish_caught",
+    "amount": 2000,
+    "text": "Catch 2,000 fish"
+   },
+   "sells": [
+    {
+     "item": "minecraft:salmon_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:sulfur_cube_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:tadpole_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:tropical_fish_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:water_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:sea_lantern",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:sponge",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:wet_sponge",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:nautilus_shell",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:diamond_nautilus_armor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:golden_nautilus_armor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:iron_nautilus_armor",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "minecraft:heart_of_the_sea",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "minecraft:trident",
+     "count": 1,
+     "cost": 500
+    },
+    {
+     "item": "minecraft:conduit",
+     "count": 1,
+     "cost": 600
+    }
+   ]
+  }
+ ]
+}

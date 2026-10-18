@@ -117,6 +117,8 @@ public class PartyScreen extends Screen {
 			switch (tab) {
 				case PARTY -> {
 					addRenderableWidget(Button.builder(Component.literal("Send out"), b -> command("party send " + slot)).bounds(rx, by, 54, 20).build());
+					if (c.has("species") && c.get("species").getAsString().equals("villager"))
+						addRenderableWidget(Button.builder(Component.literal("Villager: train and trade"), b -> command("villager party " + slot)).bounds(rx, by - 24, 160, 20).build());
 					int need = c.get("xpNext").getAsInt() - c.get("xp").getAsInt();
 					int pool = PartyClient.state.get("xp").getAsInt();
 					Button up = addRenderableWidget(Button.builder(Component.literal("Level up"), b -> command("party xp " + slot + " " + need))
@@ -132,8 +134,12 @@ public class PartyScreen extends Screen {
 						}
 					}).bounds(rx + 185, by, 59, 20).build());
 				}
-				case OUT -> addRenderableWidget(Button.builder(Component.literal("Call back"), b -> command("party recall " + c.get("entity").getAsInt()))
-						.bounds(rx, by, 90, 20).build());
+				case OUT -> {
+					addRenderableWidget(Button.builder(Component.literal("Call back"), b -> command("party recall " + c.get("entity").getAsInt()))
+							.bounds(rx, by, 90, 20).build());
+					if (c.has("species") && c.get("species").getAsString().equals("villager"))
+						addRenderableWidget(Button.builder(Component.literal("Villager"), b -> command("villager out " + c.get("entity").getAsInt())).bounds(rx + 93, by, 70, 20).build());
+				}
 				case BOX -> {
 					Button take = addRenderableWidget(Button.builder(Component.literal("To party"), b -> command("party box take " + slot)).bounds(rx, by, 90, 20).build());
 					take.active = PartyClient.state.getAsJsonArray("party").size() < 6;

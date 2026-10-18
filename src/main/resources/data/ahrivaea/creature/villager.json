@@ -1,0 +1,53 @@
+{
+ "name": "Villager",
+ "forms": {
+  "none": {
+   "stats": {
+    "hp": 50,
+    "attack": 35,
+    "defense": 45,
+    "speed": 55,
+    "magic": 60,
+    "luck": 70,
+    "charisma": 95
+   },
+   "rarity": "Common",
+   "drops": [
+    {
+     "item": "minecraft:emerald",
+     "chance": 0.15,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "minecraft:bread",
+     "chance": 0.3,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "jobs": [
+    {
+     "job": "farming",
+     "text": "Tends the village fields"
+    },
+    {
+     "job": "transport",
+     "text": "Fetches and carries"
+    }
+   ],
+   "size": 1.85
+  }
+ },
+ "stats": {
+  "hp": 50,
+  "attack": 35,
+  "defense": 45,
+  "speed": 55,
+  "magic": 60,
+  "luck": 70,
+  "charisma": 95
+ },
+ "size": 1.0,
+ "movement": "walk"
+}

@@ -1,0 +1,254 @@
+{
+ "name": "Farmer",
+ "description": "Crops, seeds, produce, eggs, milk and honey.",
+ "outfit": "farmer",
+ "icon": "minecraft:wheat",
+ "order": 3,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "mined",
+    "of": "minecraft:wheat",
+    "amount": 48,
+    "text": "Harvest 48 wheat"
+   },
+   "sells": [
+    {
+     "item": "minecraft:apple",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:beetroot",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:beetroot_seeds",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cactus",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:carrot",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:melon_seeds",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:melon_slice",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:potato",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:bread",
+    "amount": 64,
+    "text": "Bake 64 bread"
+   },
+   "sells": [
+    {
+     "item": "minecraft:pumpkin_seeds",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:sugar_cane",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:wheat",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:wheat_seeds",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cactus_flower",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cocoa_beans",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:glow_berries",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:egg",
+     "count": 16,
+     "cost": 3
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:crops",
+    "amount": 1000,
+    "text": "Harvest 1,000 crops"
+   },
+   "sells": [
+    {
+     "item": "minecraft:sugar",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:sweet_berries",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:torchflower_seeds",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blue_egg",
+     "count": 16,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:brown_egg",
+     "count": 16,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:bee_nest",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:beehive",
+     "count": 16,
+     "cost": 5
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "used",
+    "of": "minecraft:bone_meal",
+    "amount": 500,
+    "text": "Use 500 bone meal"
+   },
+   "sells": [
+    {
+     "item": "minecraft:carved_pumpkin",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:composter",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:honeycomb_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:jack_o_lantern",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:pitcher_pod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bone_meal",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:hay_block",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:honeycomb",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:crops",
+    "amount": 8000,
+    "text": "Harvest 8,000 crops"
+   },
+   "sells": [
+    {
+     "item": "minecraft:melon",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pumpkin",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "ahrivaea:swift_feed",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "ahrivaea:swift_treat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:milk_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "ahrivaea:racing_feed",
+     "count": 1,
+     "cost": 25
+    },
+    {
+     "item": "ahrivaea:racing_treat",
+     "count": 1,
+     "cost": 25
+    }
+   ]
+  }
+ ]
+}

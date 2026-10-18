@@ -1,0 +1,344 @@
+{
+ "name": "Engineer",
+ "description": "Redstone, rails, minecarts and machines.",
+ "outfit": "toolsmith",
+ "icon": "minecraft:redstone",
+ "order": 12,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:redstone_torch",
+    "amount": 16,
+    "text": "Make 16 redstone torches"
+   },
+   "sells": [
+    {
+     "item": "minecraft:heavy_weighted_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:light_weighted_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:stone_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:stone_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:exposed_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:honey_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:oxidized_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:slime_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:trapped_chest",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:waxed_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:weathered_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:carrot_on_a_stick",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:repeater",
+    "amount": 32,
+    "text": "Make 32 repeaters"
+   },
+   "sells": [
+    {
+     "item": "minecraft:waxed_exposed_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:waxed_oxidized_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:waxed_weathered_lightning_rod",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:iron_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:iron_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:redstone",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_bulb",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:piston",
+    "amount": 48,
+    "text": "Make 48 pistons"
+   },
+   "sells": [
+    {
+     "item": "minecraft:waxed_exposed_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_bulb",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:activator_rail",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:dropper",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lever",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:note_block",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:rail",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:redstone_torch",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:repeater",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:tripwire_hook",
+     "count": 1,
+     "cost": 2
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:hopper",
+    "amount": 64,
+    "text": "Make 64 hoppers"
+   },
+   "sells": [
+    {
+     "item": "minecraft:daylight_detector",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:detector_rail",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lightning_rod",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:target",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:comparator",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:dispenser",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:observer",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:piston",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:powered_rail",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:redstone_lamp",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:tnt",
+     "count": 1,
+     "cost": 3
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:observer",
+    "amount": 200,
+    "text": "Make 200 observers"
+   },
+   "sells": [
+    {
+     "item": "minecraft:sticky_piston",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:redstone_block",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:hopper",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:minecart",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:chest_minecart",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crafter",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:furnace_minecart",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bell",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:tnt_minecart",
+     "count": 1,
+     "cost": 12
+    },
+    {
+     "item": "minecraft:hopper_minecart",
+     "count": 1,
+     "cost": 16
+    },
+    {
+     "item": "minecraft:jukebox",
+     "count": 1,
+     "cost": 25
+    }
+   ]
+  }
+ ]
+}

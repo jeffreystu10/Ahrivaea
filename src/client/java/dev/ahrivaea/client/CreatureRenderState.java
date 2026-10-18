@@ -15,6 +15,9 @@ public class CreatureRenderState extends LivingEntityRenderState {
 	public float extent = 1f;
 	/** Drawn at the size the model was made, not scaled with the creature's hitbox. */
 	public boolean realSize;
+	/** A villager, and the vanilla profession outfit it wears ("" for none). */
+	public boolean villager;
+	public String outfit = "";
 	/** Off the ground (plays the model's "fly" animation if it has one). */
 	public boolean flying;
 }

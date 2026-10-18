@@ -1,0 +1,1214 @@
+{
+ "name": "Carpenter",
+ "description": "Logs, planks and everything made of wood.",
+ "outfit": "toolsmith",
+ "icon": "minecraft:oak_planks",
+ "order": 1,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:logs",
+    "amount": 32,
+    "text": "Chop 32 logs"
+   },
+   "sells": [
+    {
+     "item": "minecraft:acacia_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:acacia_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:acacia_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:acacia_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:acacia_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo_mosaic_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo_mosaic_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:bamboo_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:birch_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:crimson_hyphae",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:crimson_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:crimson_stem",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stick",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:torch",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:warped_hyphae",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:warped_planks",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:warped_stem",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "#minecraft:planks",
+    "amount": 256,
+    "text": "Make 256 planks"
+   },
+   "sells": [
+    {
+     "item": "minecraft:birch_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cherry_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:crimson_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:crimson_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:dark_oak_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:jungle_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:mangrove_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oak_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:pale_oak_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:poplar_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:spruce_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_acacia_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_acacia_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_bamboo_block",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_birch_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_birch_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_cherry_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_cherry_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_crimson_hyphae",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_crimson_stem",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_dark_oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_dark_oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_jungle_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_jungle_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_mangrove_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_mangrove_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_pale_oak_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_pale_oak_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_poplar_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_poplar_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_spruce_log",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_spruce_wood",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_warped_hyphae",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:stripped_warped_stem",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:warped_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:warped_stairs",
+     "count": 64,
+     "cost": 6
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:logs",
+    "amount": 640,
+    "text": "Chop 640 logs"
+   },
+   "sells": [
+    {
+     "item": "minecraft:acacia_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:acacia_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:acacia_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:acacia_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bamboo_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bamboo_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bamboo_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bamboo_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:barrel",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:birch_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:birch_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:birch_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:birch_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cherry_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cherry_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:cherry_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:chest",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crafting_table",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crimson_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crimson_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crimson_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:dark_oak_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:dark_oak_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:dark_oak_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:jungle_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:jungle_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:jungle_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:ladder",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mangrove_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mangrove_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mangrove_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:oak_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:oak_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:oak_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_oak_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_oak_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_oak_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:poplar_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:poplar_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:poplar_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:spruce_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:spruce_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:spruce_pressure_plate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:warped_button",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:warped_fence",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:warped_pressure_plate",
+     "count": 64,
+     "cost": 10
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:chest",
+    "amount": 64,
+    "text": "Make 64 chests"
+   },
+   "sells": [
+    {
+     "item": "minecraft:cherry_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:crimson_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:dark_oak_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:jungle_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:mangrove_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:oak_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:pale_oak_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:poplar_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:spruce_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:warped_fence_gate",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:bamboo_block",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bamboo_mosaic",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:mangrove_roots",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:muddy_mangrove_roots",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:scaffolding",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:acacia_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:acacia_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:acacia_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bamboo_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bamboo_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bamboo_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:birch_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:birch_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:birch_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cherry_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cherry_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cherry_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:crimson_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:crimson_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:crimson_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:dark_oak_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:dark_oak_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:dark_oak_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:jungle_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:jungle_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:jungle_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:mangrove_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:mangrove_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:mangrove_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oak_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oak_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oak_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pale_oak_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pale_oak_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pale_oak_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:poplar_door",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:logs",
+    "amount": 5000,
+    "text": "Chop 5,000 logs"
+   },
+   "sells": [
+    {
+     "item": "minecraft:acacia_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:bamboo_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:birch_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cherry_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:crimson_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:dark_oak_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:jungle_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:mangrove_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oak_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:pale_oak_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:poplar_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:poplar_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:poplar_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:spruce_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:spruce_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:spruce_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:spruce_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:warped_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:warped_hanging_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:warped_sign",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:warped_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:acacia_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:acacia_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:bamboo_chest_raft",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:bamboo_raft",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:birch_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:birch_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cherry_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:cherry_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:dark_oak_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:dark_oak_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:jungle_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:jungle_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:mangrove_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:mangrove_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:oak_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:oak_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pale_oak_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:pale_oak_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:poplar_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:poplar_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:spruce_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:spruce_chest_boat",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "ahrivaea:vessel",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "ahrivaea:mining_post",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "ahrivaea:creature_dynamo",
+     "count": 1,
+     "cost": 10
+    }
+   ]
+  }
+ ]
+}

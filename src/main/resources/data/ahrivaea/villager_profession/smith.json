@@ -1,0 +1,1199 @@
+{
+ "name": "Smith",
+ "description": "Ores, metals, copper, tools, weapons and armor.",
+ "outfit": "armorer",
+ "icon": "minecraft:iron_ingot",
+ "order": 8,
+ "ranks": [
+  {
+   "name": "Novice",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:iron_ores",
+    "amount": 16,
+    "text": "Mine 16 iron ore"
+   },
+   "sells": [
+    {
+     "item": "minecraft:cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:exposed_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:exposed_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oxidized_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:oxidized_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_exposed_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_exposed_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_oxidized_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_oxidized_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_weathered_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:waxed_weathered_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:weathered_cut_copper_slab",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:weathered_cut_copper_stairs",
+     "count": 64,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:charcoal",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:coal",
+     "count": 64,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:blast_furnace",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:coal_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_coal_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_diamond_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_emerald_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_gold_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_iron_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_lapis_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:deepslate_redstone_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:diamond_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:emerald_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:furnace",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:gold_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:grindstone",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:iron_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:lapis_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:redstone_ore",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:smithing_table",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:stonecutter",
+     "count": 16,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:bucket",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:stone_shovel",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_hoe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_shovel",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Apprentice",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:iron_ingot",
+    "amount": 192,
+    "text": "Smelt 192 iron ingots"
+   },
+   "sells": [
+    {
+     "item": "minecraft:chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_ingot",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_nugget",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_ore",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_torch",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:deepslate_copper_ore",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:gold_nugget",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:iron_nugget",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:raw_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_block",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_horse_armor",
+     "count": 1,
+     "cost": 1
+    }
+   ]
+  },
+  {
+   "name": "Journeyman",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:anvil",
+    "amount": 4,
+    "text": "Make 4 anvils"
+   },
+   "sells": [
+    {
+     "item": "minecraft:exposed_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:exposed_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:oxidized_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_exposed_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_oxidized_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_bars",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_chain",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_chest",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_golem_statue",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_grate",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_lantern",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:waxed_weathered_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_chiseled_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_door",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_copper_trapdoor",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:weathered_cut_copper",
+     "count": 16,
+     "cost": 8
+    }
+   ]
+  },
+  {
+   "name": "Expert",
+   "deed": {
+    "type": "mined",
+    "of": "#minecraft:diamond_ores",
+    "amount": 40,
+    "text": "Mine 40 diamond ore"
+   },
+   "sells": [
+    {
+     "item": "minecraft:waxed_weathered_cut_copper",
+     "count": 16,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:stone_axe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:stone_hoe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:stone_pickaxe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:stone_spear",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:stone_sword",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_axe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_pickaxe",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_spear",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:wooden_sword",
+     "count": 1,
+     "cost": 1
+    },
+    {
+     "item": "minecraft:coal_block",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:copper_shovel",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:flint_and_steel",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:gold_ingot",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:iron_bars",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:iron_chain",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:iron_ingot",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:lava_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:powder_snow_bucket",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:raw_gold",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:raw_iron",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:shears",
+     "count": 1,
+     "cost": 2
+    },
+    {
+     "item": "minecraft:copper_hoe",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:copper_spear",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:copper_sword",
+     "count": 1,
+     "cost": 3
+    },
+    {
+     "item": "minecraft:copper_axe",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:copper_pickaxe",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:leather_horse_armor",
+     "count": 1,
+     "cost": 4
+    },
+    {
+     "item": "minecraft:copper_block",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:copper_boots",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:golden_shovel",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:iron_shovel",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:raw_copper_block",
+     "count": 1,
+     "cost": 5
+    },
+    {
+     "item": "minecraft:copper_helmet",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:shield",
+     "count": 1,
+     "cost": 6
+    },
+    {
+     "item": "minecraft:golden_hoe",
+     "count": 1,
+     "cost": 7
+    },
+    {
+     "item": "minecraft:iron_hoe",
+     "count": 1,
+     "cost": 7
+    },
+    {
+     "item": "ahrivaea:golden_feed",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "ahrivaea:golden_treat",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_leggings",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:golden_spear",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:golden_sword",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:iron_spear",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:iron_sword",
+     "count": 1,
+     "cost": 8
+    },
+    {
+     "item": "minecraft:copper_chestplate",
+     "count": 1,
+     "cost": 9
+    }
+   ]
+  },
+  {
+   "name": "Master",
+   "deed": {
+    "type": "crafted",
+    "of": "minecraft:netherite_ingot",
+    "amount": 4,
+    "text": "Make 4 netherite ingots"
+   },
+   "sells": [
+    {
+     "item": "minecraft:golden_axe",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:golden_pickaxe",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:iron_axe",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:iron_horse_armor",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:iron_pickaxe",
+     "count": 1,
+     "cost": 10
+    },
+    {
+     "item": "minecraft:golden_boots",
+     "count": 1,
+     "cost": 13
+    },
+    {
+     "item": "minecraft:iron_boots",
+     "count": 1,
+     "cost": 13
+    },
+    {
+     "item": "minecraft:iron_block",
+     "count": 1,
+     "cost": 14
+    },
+    {
+     "item": "minecraft:raw_iron_block",
+     "count": 1,
+     "cost": 14
+    },
+    {
+     "item": "minecraft:damaged_anvil",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:golden_horse_armor",
+     "count": 1,
+     "cost": 15
+    },
+    {
+     "item": "minecraft:golden_helmet",
+     "count": 1,
+     "cost": 16
+    },
+    {
+     "item": "minecraft:iron_helmet",
+     "count": 1,
+     "cost": 16
+    },
+    {
+     "item": "minecraft:gold_block",
+     "count": 1,
+     "cost": 18
+    },
+    {
+     "item": "minecraft:raw_gold_block",
+     "count": 1,
+     "cost": 18
+    },
+    {
+     "item": "minecraft:chainmail_boots",
+     "count": 1,
+     "cost": 20
+    },
+    {
+     "item": "minecraft:golden_leggings",
+     "count": 1,
+     "cost": 21
+    },
+    {
+     "item": "minecraft:iron_leggings",
+     "count": 1,
+     "cost": 21
+    },
+    {
+     "item": "minecraft:chainmail_helmet",
+     "count": 1,
+     "cost": 24
+    },
+    {
+     "item": "minecraft:golden_chestplate",
+     "count": 1,
+     "cost": 24
+    },
+    {
+     "item": "minecraft:iron_chestplate",
+     "count": 1,
+     "cost": 24
+    },
+    {
+     "item": "minecraft:chipped_anvil",
+     "count": 1,
+     "cost": 30
+    },
+    {
+     "item": "minecraft:chainmail_leggings",
+     "count": 1,
+     "cost": 32
+    },
+    {
+     "item": "minecraft:chainmail_chestplate",
+     "count": 1,
+     "cost": 36
+    },
+    {
+     "item": "minecraft:diamond_shovel",
+     "count": 1,
+     "cost": 36
+    },
+    {
+     "item": "minecraft:anvil",
+     "count": 1,
+     "cost": 45
+    },
+    {
+     "item": "minecraft:diamond_hoe",
+     "count": 1,
+     "cost": 48
+    },
+    {
+     "item": "minecraft:diamond_spear",
+     "count": 1,
+     "cost": 60
+    },
+    {
+     "item": "minecraft:diamond_sword",
+     "count": 1,
+     "cost": 60
+    },
+    {
+     "item": "minecraft:diamond_axe",
+     "count": 1,
+     "cost": 72
+    },
+    {
+     "item": "minecraft:diamond_pickaxe",
+     "count": 1,
+     "cost": 72
+    },
+    {
+     "item": "minecraft:diamond_boots",
+     "count": 1,
+     "cost": 96
+    },
+    {
+     "item": "minecraft:diamond_helmet",
+     "count": 1,
+     "cost": 120
+    },
+    {
+     "item": "minecraft:diamond_horse_armor",
+     "count": 1,
+     "cost": 120
+    },
+    {
+     "item": "minecraft:diamond_leggings",
+     "count": 1,
+     "cost": 156
+    },
+    {
+     "item": "minecraft:diamond_chestplate",
+     "count": 1,
+     "cost": 180
+    },
+    {
+     "item": "ahrivaea:stellar_axe",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_boots",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_chestplate",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_helmet",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_hoe",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_leggings",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_pickaxe",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_shovel",
+     "count": 1,
+     "cost": 300
+    },
+    {
+     "item": "ahrivaea:stellar_sword",
+     "count": 1,
+     "cost": 400
+    }
+   ]
+  }
+ ]
+}

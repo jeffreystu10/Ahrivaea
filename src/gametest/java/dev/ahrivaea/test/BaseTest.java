@@ -136,6 +136,30 @@ public class BaseTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("base_3_screen"));
 			context.runOnClient(c -> c.gui.setScreen(null));
+
+			// the base is whole chunks: level 1 is the core's chunk and the 8 around it, each level one more ring
+			int ccx = cx >> 4;
+			String area = server.computeOnServer(s -> {
+				BaseCoreBlockEntity be = (BaseCoreBlockEntity) s.overworld().getBlockEntity(core);
+				be.setBaseLevel(1);
+				String one = be.contains(new BlockPos((ccx + 1) * 16 + 15, y, cz)) + "/" + be.contains(new BlockPos((ccx + 2) * 16, y, cz));
+				be.setBaseLevel(3);
+				String three = be.contains(new BlockPos((ccx - 3) * 16, y, cz)) + "/" + be.contains(new BlockPos((ccx - 3) * 16 - 1, y, cz));
+				return one + " " + three;
+			});
+			if (!area.equals("true/false true/false")) failures.add("a level 1 base should be 3x3 chunks and a level 3 one 7x7: " + area);
+
+			// and it stays loaded and running while its owner is online, however far away they go, unless switched off
+			BlockPos edge = new BlockPos((ccx + 3) * 16 + 8, y, cz);
+			server.runCommand("tp @p %d 200 %d".formatted(cx + 5000, cz));
+			context.waitTicks(100);
+			String away = server.computeOnServer(s -> s.overworld().isPositionEntityTicking(edge) + "/" + s.overworld().isPositionEntityTicking(core));
+			server.runOnServer(s -> ((BaseCoreBlockEntity) s.overworld().getBlockEntity(core)).setChunkLoading(false));
+			context.waitTicks(100);
+			String off = server.computeOnServer(s -> s.overworld().isPositionEntityTicking(edge) + "/" + s.overworld().isPositionEntityTicking(core));
+			LOG.info("BaseTest chunk loading: owner far away {}, switched off {}", away, off);
+			if (!away.equals("true/true")) failures.add("a base should keep running while its owner is far away: " + away);
+			if (!off.equals("false/false")) failures.add("a base that's switched off shouldn't stay loaded: " + off);
 		}
 		if (!failures.isEmpty()) throw new AssertionError(String.join("; ", failures));
 	}

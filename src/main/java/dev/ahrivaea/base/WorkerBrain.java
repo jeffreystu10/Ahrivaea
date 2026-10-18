@@ -369,7 +369,7 @@ public final class WorkerBrain {
 	private void wander(ServerLevel level, BaseCoreBlockEntity be) {
 		if (self.getNavigation().isInProgress() || level.getRandom().nextInt(4) != 0) return;
 		RandomSource r = level.getRandom();
-		int range = Math.max(4, be.radius() / 3);
+		int range = Math.clamp(be.radius() / 3, 4, 16);
 		BlockPos to = core.offset(r.nextInt(2 * range + 1) - range, 0, r.nextInt(2 * range + 1) - range);
 		self.getNavigation().moveTo(to.getX() + 0.5, level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, to.getX(), to.getZ()), to.getZ() + 0.5, 0.8);
 	}
@@ -468,7 +468,7 @@ public final class WorkerBrain {
 		RandomSource r = level.getRandom();
 		BlockPos spot = null;
 		for (int i = 0; i < 24 && spot == null; i++) {
-			int x = core.getX() + r.nextInt(2 * be.radius() + 1) - be.radius(), z = core.getZ() + r.nextInt(2 * be.radius() + 1) - be.radius();
+			int x = be.minX() + r.nextInt(be.maxX() - be.minX() + 1), z = be.minZ() + r.nextInt(be.maxZ() - be.minZ() + 1);
 			BlockPos top = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
 			if (!be.contains(top) || !level.getBlockState(top).isAir() || level.getLightEngine().getLayerListener(net.minecraft.world.level.LightLayer.BLOCK).getLightValue(top) >= 8) continue;
 			if (Blocks.TORCH.defaultBlockState().canSurvive(level, top) && !be.claimed.containsKey(top)) spot = top;

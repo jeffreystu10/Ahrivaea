@@ -43,8 +43,8 @@ public class BaseCoreBlock extends BaseEntityBlock {
 		super.setPlacedBy(level, pos, state, placer, stack);
 		if (!level.isClientSide() && placer instanceof ServerPlayer p && level.getBlockEntity(pos) instanceof BaseCoreBlockEntity be) {
 			be.setOwner(p);
-			p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Base set up: creatures you assign here work within "
-					+ be.radius() + " blocks. Right-click the core to assign them."));
+			p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Base set up: creatures you assign here work in this chunk and the 8 around it,"
+					+ " and it stays loaded while you're online. Right-click the core to assign them."));
 		}
 	}
 

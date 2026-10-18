@@ -38,8 +38,10 @@ import java.util.UUID;
  * scanning a slice of the area every tick so the whole base is covered every few seconds.
  */
 public class BaseCoreBlockEntity extends BlockEntity {
-	/** Per level 1-5: radius (blocks, horizontally) and worker cap. */
-	public static final int[] RADIUS = {0, 24, 28, 32, 36, 40};
+	/**
+	 * The base is whole chunks: the core's chunk and, at level n, every chunk within n of it (level 1: 3x3 chunks,
+	 * level 5: 11x11). Per level 1-5, the worker cap.
+	 */
 	public static final int[] CAP = {0, 5, 7, 9, 12, 15};
 	public static final int MAX_LEVEL = 5;
 	/** How far below and above the core the base reaches. */
@@ -61,6 +63,8 @@ public class BaseCoreBlockEntity extends BlockEntity {
 	private UUID owner;
 	private String ownerName = "";
 	private int level = 1;
+	/** Whether the base stays loaded while its owner is online (see Bases.updateLoader). */
+	private boolean chunkLoading = true;
 	final List<Worker> workers = new ArrayList<>();
 
 	// the survey (not saved: rebuilt by scanning)
@@ -88,14 +92,47 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		owner = p.getUUID();
 		ownerName = p.getPlainTextName();
 		setChanged();
+		if (getLevel() instanceof ServerLevel sl) Bases.updateLoader(sl, this);
 	}
 
 	public int baseLevel() {
 		return level;
 	}
 
+	/** How many chunks the base reaches out from the core's chunk in each direction (its level). */
+	public int chunks() {
+		return level;
+	}
+
+	/** About how far the base reaches from the core sideways, in blocks (the edges are whole chunks). */
 	public int radius() {
-		return RADIUS[level];
+		return level * 16 + 8;
+	}
+
+	public boolean chunkLoading() {
+		return chunkLoading;
+	}
+
+	public void setChunkLoading(boolean on) {
+		chunkLoading = on;
+		setChanged();
+		if (getLevel() instanceof ServerLevel sl) Bases.updateLoader(sl, this);
+	}
+
+	public int minX() {
+		return ((getBlockPos().getX() >> 4) - level) << 4;
+	}
+
+	public int maxX() {
+		return (((getBlockPos().getX() >> 4) + level) << 4) + 15;
+	}
+
+	public int minZ() {
+		return ((getBlockPos().getZ() >> 4) - level) << 4;
+	}
+
+	public int maxZ() {
+		return (((getBlockPos().getZ() >> 4) + level) << 4) + 15;
 	}
 
 	public int cap() {
@@ -108,19 +145,20 @@ public class BaseCoreBlockEntity extends BlockEntity {
 
 	public boolean contains(BlockPos p) {
 		BlockPos c = getBlockPos();
-		return Math.abs(p.getX() - c.getX()) <= radius() && Math.abs(p.getZ() - c.getZ()) <= radius()
+		return p.getX() >= minX() && p.getX() <= maxX() && p.getZ() >= minZ() && p.getZ() <= maxZ()
 				&& p.getY() >= c.getY() - DOWN && p.getY() <= c.getY() + UP;
 	}
 
 	public AABB area() {
 		BlockPos c = getBlockPos();
-		return new AABB(c.getX() - radius(), c.getY() - DOWN, c.getZ() - radius(), c.getX() + radius() + 1, c.getY() + UP + 1, c.getZ() + radius() + 1);
+		return new AABB(minX(), c.getY() - DOWN, minZ(), maxX() + 1, c.getY() + UP + 1, maxZ() + 1);
 	}
 
 	/** For operators and tests: set the level directly. */
 	public void setBaseLevel(int level) {
 		this.level = Math.clamp(level, 1, MAX_LEVEL);
 		setChanged();
+		if (getLevel() instanceof ServerLevel sl) Bases.updateLoader(sl, this);
 	}
 
 	// ---- upgrades ----
@@ -144,7 +182,9 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		if (!p.isCreative()) stack.shrink(u.count());
 		level++;
 		setChanged();
-		p.sendSystemMessage(Component.literal("Base upgraded to level " + level + ": radius " + radius() + ", up to " + cap() + " workers."));
+		Bases.updateLoader((ServerLevel) level(), this);
+		int side = 2 * level + 1;
+		p.sendSystemMessage(Component.literal("Base upgraded to level " + level + ": " + side + "x" + side + " chunks, up to " + cap() + " workers."));
 		((ServerLevel) this.level()).playSound(null, getBlockPos(), net.minecraft.sounds.SoundEvents.BEACON_POWER_SELECT, net.minecraft.sounds.SoundSource.BLOCKS, 1f, 1f);
 	}
 
@@ -160,6 +200,7 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		if (owner != null) out.store("owner", UUIDUtil.CODEC, owner);
 		out.putString("owner_name", ownerName);
 		out.putInt("base_level", level);
+		out.putBoolean("chunk_loading", chunkLoading);
 		var list = out.list("workers", Worker.CODEC);
 		for (Worker w : workers) list.add(w);
 	}
@@ -170,8 +211,16 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		owner = in.read("owner", UUIDUtil.CODEC).orElse(null);
 		ownerName = in.getStringOr("owner_name", "");
 		level = Math.clamp(in.getIntOr("base_level", 1), 1, MAX_LEVEL);
+		chunkLoading = in.getBooleanOr("chunk_loading", true);
 		workers.clear();
 		for (Worker w : in.listOrEmpty("workers", Worker.CODEC)) workers.add(w);
+	}
+
+	/** The core was broken or replaced (not just unloaded): it stops keeping the base loaded. */
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+		if (getLevel() instanceof ServerLevel sl) Bases.forgetLoader(sl, pos);
 	}
 
 	@Override
@@ -185,20 +234,25 @@ public class BaseCoreBlockEntity extends BlockEntity {
 	public static void serverTick(Level level, BlockPos pos, BlockState state, BaseCoreBlockEntity be) {
 		ServerLevel sl = (ServerLevel) level;
 		Bases.index(sl, pos);
-		be.scan(sl, 2048);
-		if (sl.getGameTime() % 100 == 0) be.checkWorkers(sl);
+		// the whole base is surveyed about every 10 seconds, however big it is
+		int side = (2 * be.level + 1) * 16;
+		be.scan(sl, Math.max(2048, side * side * (DOWN + UP + 1) / 200));
+		if (sl.getGameTime() % 100 == 0) {
+			be.checkWorkers(sl);
+			Bases.updateLoader(sl, be);
+		}
 	}
 
 	/** Looks at the next {@code count} blocks of the base and updates the survey. */
 	void scan(ServerLevel level, int count) {
-		int r = radius(), side = 2 * r + 1, height = DOWN + UP + 1, total = side * side * height;
+		int side = maxX() - minX() + 1, height = DOWN + UP + 1, total = side * side * height;
 		BlockPos c = getBlockPos();
 		BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
 		for (int i = 0; i < count; i++) {
 			int n = scanIndex++ % total;
 			if (scanIndex >= total) scanIndex = 0;
 			int y = n / (side * side), rest = n % (side * side);
-			p.set(c.getX() - r + rest % side, c.getY() - DOWN + y, c.getZ() - r + rest / side);
+			p.set(minX() + rest % side, c.getY() - DOWN + y, minZ() + rest / side);
 			if (!level.isLoaded(p)) continue;
 			survey(level, p.immutable(), level.getBlockState(p));
 		}

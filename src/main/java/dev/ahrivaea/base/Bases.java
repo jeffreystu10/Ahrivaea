@@ -99,6 +99,98 @@ public final class Bases {
 		}
 	}
 
+	// ---- keeping bases loaded ----
+
+	/**
+	 * Keeps a base's chunks loaded and running (crops grow, workers work) while its owner is online. Not saved: the
+	 * tickets are put back from {@link #LOADERS} after a restart.
+	 */
+	public static final net.minecraft.server.level.TicketType BASE_TICKET = Registry.register(BuiltInRegistries.TICKET_TYPE, Ahrivaea.id("base"),
+			new net.minecraft.server.level.TicketType(net.minecraft.server.level.TicketType.NO_TIMEOUT,
+					net.minecraft.server.level.TicketType.FLAG_LOADING | net.minecraft.server.level.TicketType.FLAG_SIMULATION | net.minecraft.server.level.TicketType.FLAG_KEEP_DIMENSION_ACTIVE));
+
+	/** A base that may keep itself loaded: where it is, who owns it, how many chunks out it reaches, and whether it's on. */
+	public record Loader(String dimension, BlockPos pos, java.util.UUID owner, int chunks, boolean on) {
+		static final com.mojang.serialization.Codec<Loader> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
+				com.mojang.serialization.Codec.STRING.fieldOf("dimension").forGetter(Loader::dimension),
+				BlockPos.CODEC.fieldOf("pos").forGetter(Loader::pos),
+				net.minecraft.core.UUIDUtil.CODEC.fieldOf("owner").forGetter(Loader::owner),
+				com.mojang.serialization.Codec.INT.fieldOf("chunks").forGetter(Loader::chunks),
+				com.mojang.serialization.Codec.BOOL.fieldOf("on").forGetter(Loader::on)
+		).apply(i, Loader::new));
+
+		String key() {
+			return dimension + "|" + pos.asLong();
+		}
+
+		/** The ticket's radius: two more than the base, so every chunk of the base runs entities, not just loads. */
+		int ticketRadius() {
+			return chunks + 2;
+		}
+	}
+
+	/** Every owned base, so they can be loaded while their chunks aren't (saved with the overworld). */
+	public static final AttachmentType<Map<String, Loader>> LOADERS = AttachmentRegistry.create(Ahrivaea.id("base_loaders"),
+			b -> b.persistent(com.mojang.serialization.Codec.unboundedMap(com.mojang.serialization.Codec.STRING, Loader.CODEC)).initializer(Map::of));
+	/** Tickets this server has handed out, by loader key. */
+	private static final Map<String, Loader> TICKETS = new HashMap<>();
+
+	private static Map<String, Loader> loaders(net.minecraft.server.MinecraftServer server) {
+		return server.overworld().getAttachedOrCreate(LOADERS);
+	}
+
+	/** Records (or updates) a base in the list of bases that may keep themselves loaded. */
+	static void updateLoader(ServerLevel level, BaseCoreBlockEntity be) {
+		if (be.owner() == null) return;
+		Loader l = new Loader(level.dimension().identifier().toString(), be.getBlockPos().immutable(), be.owner(), be.chunks(), be.chunkLoading());
+		Map<String, Loader> all = loaders(level.getServer());
+		if (l.equals(all.get(l.key()))) return;
+		Map<String, Loader> copy = new HashMap<>(all);
+		copy.put(l.key(), l);
+		level.getServer().overworld().setAttached(LOADERS, copy);
+		refreshTickets(level.getServer());
+	}
+
+	static void forgetLoader(ServerLevel level, BlockPos pos) {
+		String key = level.dimension().identifier().toString() + "|" + pos.asLong();
+		Map<String, Loader> all = loaders(level.getServer());
+		if (!all.containsKey(key)) return;
+		Map<String, Loader> copy = new HashMap<>(all);
+		copy.remove(key);
+		level.getServer().overworld().setAttached(LOADERS, copy);
+		refreshTickets(level.getServer());
+	}
+
+	/** Loads the bases that are switched on and whose owner is online; lets go of the rest. */
+	static void refreshTickets(net.minecraft.server.MinecraftServer server) {
+		Map<String, Loader> want = new HashMap<>();
+		for (Loader l : loaders(server).values())
+			if (l.on() && server.getPlayerList().getPlayer(l.owner()) != null) want.put(l.key(), l);
+		for (var e : new ArrayList<>(TICKETS.entrySet())) {
+			if (e.getValue().equals(want.get(e.getKey()))) continue;
+			ServerLevel lv = levelOf(server, e.getValue());
+			if (lv != null) lv.getChunkSource().removeTicketWithRadius(BASE_TICKET, net.minecraft.world.level.ChunkPos.containing(e.getValue().pos()), e.getValue().ticketRadius());
+			TICKETS.remove(e.getKey());
+		}
+		for (Loader l : want.values()) {
+			if (TICKETS.containsKey(l.key())) continue;
+			ServerLevel lv = levelOf(server, l);
+			if (lv == null) continue;
+			lv.getChunkSource().addTicketWithRadius(BASE_TICKET, net.minecraft.world.level.ChunkPos.containing(l.pos()), l.ticketRadius());
+			TICKETS.put(l.key(), l);
+		}
+	}
+
+	private static ServerLevel levelOf(net.minecraft.server.MinecraftServer server, Loader l) {
+		return server.getLevel(ResourceKey.create(Registries.DIMENSION, net.minecraft.resources.Identifier.parse(l.dimension())));
+	}
+
+	/** How many of a player's bases are kept loaded right now. */
+	public static int loadedBases(ServerPlayer p) {
+		String me = p.getUUID().toString();
+		return (int) TICKETS.values().stream().filter(l -> l.owner().toString().equals(me)).count();
+	}
+
 	// ---- where the bases are ----
 
 	private static final Map<ResourceKey<Level>, Set<BlockPos>> CORES = new HashMap<>();
@@ -140,6 +232,11 @@ public final class Bases {
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !entity.hasAttached(WORKER_OF)
 				|| source.getEntity() != null && Raids.isRaider(source.getEntity()));
 		Raids.init();
+		// bases follow their owners: loaded while they're online (and the base is switched on)
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
+			if (server.getTickCount() % 20 == 3) refreshTickets(server);
+		});
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(server -> TICKETS.clear());
 		net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register((d, reg, env) -> d.register(
 				net.minecraft.commands.Commands.literal("base").requires(net.minecraft.commands.Commands.hasPermission(net.minecraft.commands.Commands.LEVEL_GAMEMASTERS))
 						.then(net.minecraft.commands.Commands.literal("raid").executes(ctx -> {
@@ -199,6 +296,8 @@ public final class Bases {
 		o.add("pos", pos);
 		o.addProperty("level", be.baseLevel());
 		o.addProperty("radius", be.radius());
+		o.addProperty("chunks", 2 * be.chunks() + 1);
+		o.addProperty("loading", be.chunkLoading());
 		o.addProperty("cap", be.cap());
 		var up = BaseCoreBlockEntity.upgradeFrom(be.baseLevel());
 		o.addProperty("upgrade", up == null ? "Fully upgraded" : "Next level: right-click the core with " + up.count() + " " + up.item().getDefaultInstance().getHoverName().getString());
@@ -251,6 +350,13 @@ public final class Bases {
 			case "assign_party" -> index >= 0 && index < Party.get(p).size() ? assign(p, be, Party.get(p).get(index), () -> Party.remove(p, index)) : "No such creature.";
 			case "assign_box" -> index >= 0 && index < Party.box(p).size() ? assign(p, be, Party.box(p).get(index), () -> Party.removeFromBox(p, index)) : "No such creature.";
 			case "unassign" -> unassign(p, be, index);
+			case "toggle_loading" -> {
+				be.setChunkLoading(!be.chunkLoading());
+				p.sendSystemMessage(Component.literal(be.chunkLoading()
+						? "This base stays loaded while you're online (" + loadedBases(p) + " of your bases are now)."
+						: "This base is only loaded when someone is nearby now."));
+				yield null;
+			}
 			default -> null;
 		};
 		if (problem != null) p.sendOverlayMessage(Component.literal(problem));

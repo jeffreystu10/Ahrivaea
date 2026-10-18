@@ -85,6 +85,11 @@ public class BaseScreen extends Screen {
 			b.active = !full;
 		}
 		addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose()).bounds(width / 2 - 40, height - 26, 80, 20).build());
+		boolean loading = !state.has("loading") || state.get("loading").getAsBoolean();
+		addRenderableWidget(Button.builder(Component.literal("Keep loaded: " + (loading ? "On" : "Off")), b -> send("toggle_loading", -1))
+				.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("On: the whole base stays loaded and working while you're online, wherever you are. "
+						+ "Turn it off for bases you don't need running.")))
+				.bounds(width / 2 - 200, height - 26, 150, 20).build());
 	}
 
 	@Override
@@ -106,7 +111,8 @@ public class BaseScreen extends Screen {
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
 		int left = width / 2 - 250, right = width / 2 + 10;
 		JsonArray workers = state.getAsJsonArray("workers");
-		g.centeredText(font, "Base (level " + state.get("level").getAsInt() + ", radius " + state.get("radius").getAsInt() + ")", width / 2, 10 + TOP, 0xFFFFD040);
+		int side = state.has("chunks") ? state.get("chunks").getAsInt() : 3;
+		g.centeredText(font, "Base (level " + state.get("level").getAsInt() + ": " + side + " x " + side + " chunks)", width / 2, 10 + TOP, 0xFFFFD040);
 		g.centeredText(font, state.get("upgrade").getAsString(), width / 2, 22 + TOP, 0xFFAAAAAA);
 		g.text(font, "Workers " + workers.size() + "/" + state.get("cap").getAsInt() + (workers.size() > workerRows() ? " (scroll for more)" : ""), left, 42 + TOP, 0xFFFFFFFF);
 		for (int i = workerScroll; i < Math.min(workers.size(), workerScroll + workerRows()); i++)

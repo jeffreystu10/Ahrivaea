@@ -139,7 +139,7 @@ public final class Raids {
 		var biome = level.getBiome(core);
 		for (int i = 0; i < count; i++) {
 			double angle = level.getRandom().nextDouble() * Math.PI * 2;
-			int r = be.radius() - 2;
+			int r = Math.min(be.radius() - 2, 30); // at the edge of a small base; within 30 blocks of the core in a big one
 			Vec3 want = new Vec3(core.getX() + 0.5 + Math.cos(angle) * r, core.getY(), core.getZ() + 0.5 + Math.sin(angle) * r);
 			Vec3 at = ArenaReturn.safeSpot(level, new Vec3(want.x, level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					(int) Math.floor(want.x), (int) Math.floor(want.z)), want.z));

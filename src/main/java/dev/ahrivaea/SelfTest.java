@@ -67,18 +67,18 @@ public final class SelfTest {
 		ok &= water;
 
 		// every item, for the villager trade tables (tools/villager_trades.py): id, rarity, stack size, block or not, food or not
-		StringBuilder line = new StringBuilder();
+		StringBuilder dump = new StringBuilder();
 		for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
 			var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
 			var st = item.getDefaultInstance();
-			line.append(id).append('|').append(st.getRarity().name().charAt(0)).append('|').append(st.getMaxStackSize()).append('|')
+			dump.append(id).append('|').append(st.getRarity().name().charAt(0)).append('|').append(st.getMaxStackSize()).append('|')
 					.append(item instanceof net.minecraft.world.item.BlockItem ? 'B' : '-').append(st.has(net.minecraft.core.component.DataComponents.FOOD) ? 'F' : '-').append(' ');
-			if (line.length() > 2600) {
-				Ahrivaea.LOGGER.info("ITEMDUMP {}", line);
-				line.setLength(0);
+			if (dump.length() > 2600) {
+				Ahrivaea.LOGGER.info("ITEMDUMP {}", dump);
+				dump.setLength(0);
 			}
 		}
-		if (!line.isEmpty()) Ahrivaea.LOGGER.info("ITEMDUMP {}", line);
+		if (!dump.isEmpty()) Ahrivaea.LOGGER.info("ITEMDUMP {}", dump);
 
 		say.accept(ok ? "selftest passed" : "selftest FAILED");
 		return ok;

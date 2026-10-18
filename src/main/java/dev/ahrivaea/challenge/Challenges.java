@@ -68,14 +68,39 @@ public final class Challenges {
 			if (!(level instanceof ServerLevel server) || !(player instanceof ServerPlayer sp)) return InteractionResult.PASS;
 			String id = chestAt(server, hit.getBlockPos());
 			if (id == null) return InteractionResult.PASS;
+			// a completed tower's chest is a base core now (if Ahrivaea Creatures is installed), which handles its own clicks
+			if (state(server.getServer(), id).map(st -> st.complete).orElse(true)
+					&& !(server.getBlockState(hit.getBlockPos()).getBlock() instanceof net.minecraft.world.level.block.ChestBlock)) return InteractionResult.PASS;
 			open(sp, id);
 			return InteractionResult.SUCCESS;
 		});
 		// breaking, placing and using blocks around a tower are also stopped by ServerLevelMixin (mayInteract); this
 		// catches any break that gets past it
-		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) ->
-				!(level instanceof ServerLevel server) || protectedFrom(server, player, pos, false) == null);
+		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
+			if (!(level instanceof ServerLevel server)) return true;
+			if (protectedFrom(server, player, pos, false) != null) return false;
+			// a completed tower's base core stays where the offering chest was
+			String id = chestAt(server, pos);
+			if (id != null && !player.isCreative() && state(server.getServer(), id).map(st -> st.complete).orElse(false)) {
+				player.sendOverlayMessage(Component.literal("This base belongs to the tower; it can't be moved."));
+				return false;
+			}
+			return true;
+		});
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> deliverPending(handler.getPlayer()));
+		// towers completed before completion made a base: their chest becomes one once it's loaded
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
+			if (server.getTickCount() % 100 != 13) return;
+			for (var e : states(server).entrySet()) {
+				ChallengeState st = e.getValue();
+				if (!st.complete) continue;
+				var def = defOf(e.getKey(), st);
+				ServerLevel lvl = level(server, st);
+				if (def.isEmpty() || lvl == null) continue;
+				BlockPos chest = st.origin.offset(def.get().chest());
+				if (lvl.isLoaded(chest) && lvl.getBlockState(chest).getBlock() instanceof net.minecraft.world.level.block.ChestBlock) makeBase(lvl, e.getKey(), def.get(), st);
+			}
+		});
 	}
 
 	// ---- protection ----
@@ -111,15 +136,63 @@ public final class Challenges {
 						b.maxX() + PROTECT_RADIUS, level.getMaxY() + 1, b.maxZ() + PROTECT_RADIUS);
 			});
 			if (!area.isInside(pos)) continue;
-			if (s.origin.offset(def.get().chest()).equals(pos)) return null;
+			if (!s.complete && s.origin.offset(def.get().chest()).equals(pos)) return null;
 			String owner = s.controller();
-			if (!owner.isEmpty() && owner.equals(player.getUUID().toString())) return null;
+			if (!owner.isEmpty() && (owner.equals(player.getUUID().toString()) || sameGuild(level.getServer(), player, owner, s))) return null;
 			if (tell) player.sendOverlayMessage(Component.literal(owner.isEmpty()
 					? def.get().name() + " and the land around it are protected until it's rebuilt. Its top donor claims it."
-					: def.get().name() + " belongs to " + s.names.getOrDefault(owner, "its top donor") + "."));
+					: def.get().name() + " belongs to " + s.names.getOrDefault(owner, "its top donor") + " and their guild."));
 			return e.getKey();
 		}
 		return null;
+	}
+
+	/**
+	 * Whether the player is in the same guild as a tower's owner. Guilds are scoreboard teams (the Ahrivaea Guilds mod
+	 * makes them), so this works whether or not that mod is installed, and for owners who are offline.
+	 */
+	static boolean sameGuild(MinecraftServer server, ServerPlayer player, String ownerKey, ChallengeState s) {
+		var team = player.getTeam();
+		if (team == null) return false;
+		ServerPlayer online = null;
+		try {
+			online = server.getPlayerList().getPlayer(UUID.fromString(ownerKey));
+		} catch (IllegalArgumentException ignored) {}
+		String name = online != null ? online.getScoreboardName() : s.names.get(ownerKey);
+		if (name == null) return false;
+		var ownerTeam = server.getScoreboard().getPlayersTeam(name);
+		return ownerTeam != null && ownerTeam.getName().equals(team.getName());
+	}
+
+	// ---- the base a completed tower becomes ----
+
+	/** The Base Core block from the main Ahrivaea mod (by name, so this mod doesn't need it). */
+	public static final Identifier BASE_CORE = Identifier.fromNamespaceAndPath("ahrivaea", "base_core");
+
+	/**
+	 * Turns a completed tower's offering chest into a Base Core owned by the tower's owner: the only way to get a
+	 * base. Does nothing if the Ahrivaea mod (which has bases) isn't installed.
+	 */
+	static boolean makeBase(ServerLevel level, String id, ChallengeDef def, ChallengeState s) {
+		var block = BuiltInRegistries.BLOCK.getOptional(BASE_CORE);
+		if (block.isEmpty() || level == null) return false;
+		BlockPos pos = s.origin.offset(def.chest());
+		level.setBlock(pos, block.get().defaultBlockState(), 3);
+		String owner = s.controller();
+		var be = level.getBlockEntity(pos);
+		if (be != null && !owner.isEmpty()) {
+			try {
+				net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
+				tag.store("owner", net.minecraft.core.UUIDUtil.CODEC, UUID.fromString(owner));
+				tag.putString("owner_name", s.names.getOrDefault(owner, ""));
+				be.loadCustomOnly(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, level.registryAccess(), tag));
+				be.setChanged();
+			} catch (IllegalArgumentException ignored) {}
+		}
+		level.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.4, 0.6, 0.4, 0.05);
+		level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1f, 1f);
+		TowersMod.LOGGER.info("Tower {}: the offering chest at {} is now a base for {}", id, pos.toShortString(), s.names.getOrDefault(owner, "nobody"));
+		return true;
 	}
 
 	// ---- the End portal room ----
@@ -291,6 +364,7 @@ public final class Challenges {
 			int remaining = def.goal() - s.total - given;
 			int take = Math.min(stack.getCount(), Math.max(0, (remaining + worth - 1) / worth));
 			given += take * worth;
+			if (take > 0) ChallengeState.addStacks(s.deposits.computeIfAbsent(player.getUUID().toString(), k -> new ArrayList<>()), stack.copyWithCount(take));
 			if (take < stack.getCount()) back.add(stack.copyWithCount(stack.getCount() - take));
 		}
 		for (ItemStack b : back) player.getInventory().placeItemBackInInventory(b, Prediction.SERVER_ONLY);
@@ -340,8 +414,20 @@ public final class Challenges {
 		if (!ranking.isEmpty()) {
 			s.owner = ranking.getFirst();
 			server.getPlayerList().broadcastSystemMessage(Component.literal(s.names.getOrDefault(s.owner, "?") + " claims " + def.name()
-					+ " as its top donor. Only they can build in and around it now.").withStyle(ChatFormatting.GOLD), false);
+					+ " as its top donor. Only they and their guild can build in and around it now.").withStyle(ChatFormatting.GOLD), false);
 		}
+		// the offering chest becomes the owner's base
+		if (makeBase(level, id, def, s) && !s.owner.isEmpty()) {
+			server.getPlayerList().broadcastSystemMessage(Component.literal("The offering chest of " + def.name() + " has become a Base Core for "
+					+ s.names.getOrDefault(s.owner, "?") + ".").withStyle(ChatFormatting.GOLD), false);
+		}
+		// everything that was offered goes back to whoever gave it
+		s.deposits.forEach((key, items) -> items.forEach(it -> ChallengeState.addStacks(s.returns.computeIfAbsent(key, k -> new ArrayList<>()), it)));
+		if (!s.deposits.isEmpty()) {
+			server.getPlayerList().broadcastSystemMessage(Component.literal("Everything offered to " + def.name() + " goes back to the players who gave it.")
+					.withStyle(ChatFormatting.YELLOW), false);
+		}
+		s.deposits.clear();
 		TowersMod.LOGGER.info("Challenge {} complete. Top donors: {}", id,
 				String.join(", ", ranking.stream().limit(5).map(k -> s.names.getOrDefault(k, k) + " " + s.donations.get(k)).toList()));
 		server.getPlayerList().broadcastSystemMessage(Component.literal(def.name() + " has been fully rebuilt! Thank you all!")
@@ -384,6 +470,18 @@ public final class Challenges {
 		MinecraftServer server = player.level().getServer();
 		String key = player.getUUID().toString();
 		for (var e : states(server).entrySet()) {
+			List<ItemStack> back = e.getValue().returns.remove(key);
+			if (back != null && !back.isEmpty()) {
+				int count = 0;
+				for (ItemStack it : back) {
+					count += it.getCount();
+					player.getInventory().placeItemBackInInventory(it.copy(), Prediction.SERVER_ONLY);
+				}
+				String name = defOf(e.getKey(), e.getValue()).map(ChallengeDef::name).orElse(e.getKey());
+				player.sendSystemMessage(Component.literal("The " + count + " items you offered to " + name + " came back to you"
+						+ " (anything that didn't fit is at your feet).").withStyle(ChatFormatting.GOLD));
+				save(server, e.getKey(), e.getValue());
+			}
 			List<ChallengeDef.RewardItem> items = e.getValue().pendingRewards.remove(key);
 			if (items == null || items.isEmpty()) continue;
 			for (ChallengeDef.RewardItem it : items) {
@@ -409,7 +507,7 @@ public final class Challenges {
 						+ (s.complete ? " - COMPLETE" : "")).withStyle(ChatFormatting.WHITE));
 		String owner = s.controller();
 		text.append(Component.literal(owner.isEmpty() ? "\nProtected until rebuilt; the top donor then claims it."
-				: "\nClaimed by " + s.names.getOrDefault(owner, "?") + " (only they can build around it).").withStyle(ChatFormatting.LIGHT_PURPLE));
+				: "\nClaimed by " + s.names.getOrDefault(owner, "?") + " (only they and their guild can build around it).").withStyle(ChatFormatting.LIGHT_PURPLE));
 		List<String> ranking = s.ranking();
 		if (ranking.isEmpty()) text.append(Component.literal("\nNo offerings yet. Be the first!").withStyle(ChatFormatting.GRAY));
 		for (int i = 0; i < Math.min(10, ranking.size()); i++) {

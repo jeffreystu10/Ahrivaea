@@ -159,10 +159,56 @@ public class TowerChallengeTest implements FabricClientGameTest {
 			context.waitTicks(20);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_portal_room_open").withSize(1600, 900));
 
-			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are needed, 2 come back
-			if (!complete || diamonds != 8 || blocksBack != 2) {
-				throw new AssertionError("Expected the tower complete, 8 diamonds for first place and 2 coal blocks back; got " + complete + ", " + diamonds + ", " + blocksBack);
+			// 750 + 30 blocks x 9 = 1020 > 1000: 28 blocks are taken and 2 come back at once; when it's complete,
+			// everything offered (300 coal, 28 coal blocks) comes back too
+			int coalBack = context.computeOnClient(client -> count(client.player.getInventory(), Items.COAL));
+			if (!complete || diamonds != 8 || blocksBack != 30 || coalBack != 300) {
+				throw new AssertionError("Expected the tower complete, 8 diamonds for first place and all 30 coal blocks and 300 coal back; got "
+						+ complete + ", " + diamonds + ", " + blocksBack + ", " + coalBack);
 			}
+
+			// the offering chest is now the owner's Base Core, which stays put
+			String base = server.computeOnServer(s -> {
+				var lv = s.overworld();
+				var p0 = s.getPlayerList().getPlayers().getFirst();
+				String out = lv.getBlockEntity(chest) instanceof dev.ahrivaea.base.BaseCoreBlockEntity core
+						? "base of " + (p0.getUUID().equals(core.owner()) ? "me" : String.valueOf(core.owner())) : "no base: " + lv.getBlockState(chest);
+				p0.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+				p0.gameMode.destroyBlock(chest);
+				p0.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+				return out + (lv.getBlockEntity(chest) instanceof dev.ahrivaea.base.BaseCoreBlockEntity ? ", kept" : ", broken");
+			});
+			if (!base.equals("base of me, kept")) throw new AssertionError("a finished tower's chest should become its owner's base, and stay: " + base);
+			server.runCommand("tp @a %.1f %.1f %.1f 0 30".formatted(chest.getX() + 0.5, chest.getY() + 1.0, chest.getZ() - 2.5));
+			context.waitTicks(20);
+			context.takeScreenshot(TestScreenshotOptions.of("tower_base_core").withSize(1600, 900));
+
+			// guilds: when Bob owns the tower, this player may build there only while in Bob's guild (Bob is offline)
+			String guild = server.computeOnServer(s -> {
+				var lv = s.overworld();
+				var p0 = s.getPlayerList().getPlayers().getFirst();
+				var st = Challenges.state(s, "coal").orElseThrow();
+				String mine = st.owner;
+				st.owner = st.names.entrySet().stream().filter(e -> e.getValue().equals("Bob")).findFirst().orElseThrow().getKey();
+				p0.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+				String before = Challenges.protectedFrom(lv, p0, near, false) != null ? "protected" : "open";
+				String made = dev.ahrivaea.guilds.Guilds.create(p0, "Testers");
+				var team = s.getScoreboard().getPlayerTeam("guild_testers");
+				s.getScoreboard().addPlayerToTeam("Bob", team);
+				String during = Challenges.protectedFrom(lv, p0, near, false) != null ? "protected" : "open";
+				dev.ahrivaea.guilds.Guilds.remove(s, "Bob", "");
+				String after = Challenges.protectedFrom(lv, p0, near, false) != null ? "protected" : "open";
+				st.owner = mine;
+				p0.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+				return before + ", " + made + ", " + during + ", " + after + ", friendly fire " + team.isAllowFriendlyFire()
+						+ ", " + p0.getTeam().getName();
+			});
+			if (!guild.equals("protected, null, open, protected, friendly fire false, guild_testers"))
+				throw new AssertionError("a tower owner's guild should be able to build there: " + guild);
+			outside(context, server, origin);
+			context.runOnClient(client -> client.player.connection.sendCommand("guild"));
+			context.waitTicks(40);
+			context.takeScreenshot(TestScreenshotOptions.of("guild_info").withSize(1600, 900));
 		}
 	}
 

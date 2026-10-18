@@ -47,7 +47,16 @@ their facing). The highest-priority palette whose biomes match wins; one with no
 - Every 250 coal, the next quarter of the finished tower is rebuilt from the bottom up, with a dust cloud
   and an announcement. Everyone sees "<player> offered 64 coal to The Old Tower (520/1000)".
 - At 1000 the tower is complete: title on every screen, fireworks, and rewards for the top donors.
-  Offline winners get theirs the next time they log in. After that the chest just shows the final results.
+  Offline winners get theirs the next time they log in.
+- **Everything comes back.** Every item a player puts in the chest is recorded (`ChallengeState.deposits`), and when
+  the tower is complete it all goes back to whoever gave it: straight into the inventory of players who are online
+  (what doesn't fit drops at their feet), the next time they join for the rest. Offerings made before this existed
+  weren't recorded, so they don't come back. Operator `/challenge credit` donations have no items.
+- **The tower becomes a base.** When it's complete the offering chest turns into a **Base Core** (from Ahrivaea
+  Creatures) owned by the top donor. That's the only way to get a base: the Base Core has no recipe. The core can't
+  be broken or moved (except in creative mode); it works like any other base (right-click to assign workers,
+  upgrade with blocks), and only its owner can manage it. Towers completed before this get their core the next time
+  the chest's chunk is loaded. Without Ahrivaea Creatures installed the chest just stays a chest.
 - **The way to the End.** The End portal room under every tower is sealed until the tower is complete: each
   opening in its walls, floor and ceiling (the doorway, any cave holes) is filled with reinforced deepslate, and
   nothing in or around the room can be broken, placed or used, the portal frames included, by anyone outside
@@ -57,8 +66,10 @@ their facing). The highest-priority palette whose biomes match wins; one with no
 - **Protection, then a claim.** Like spawn protection, nobody can break, place or use blocks (buckets, fire,
   doors ...) within 64 blocks of the tower, from 8 blocks below its base up to the sky, until it's rebuilt; the
   stronghold under it stays open so the End can still be reached. When it's complete its top donor claims it
-  (announced to everyone), and from then on only they can build there. Towers finished before claims existed belong
-  to their top donor. The offering chest always works, and players in creative mode (operators) aren't affected.
+  (announced to everyone), and from then on only they **and their guild** can build there. A guild is any
+  scoreboard team, so Ahrivaea Guilds' guilds work (and so do vanilla `/team` teams); it's checked by name, so it
+  works while the owner is offline. Towers finished before claims existed belong to their top donor. The offering
+  chest works for everyone until the tower is complete, and players in creative mode (operators) aren't affected.
   `dev.ahrivaea.challenge.mixin.ServerLevelMixin` answers Minecraft's "may this player change this block" check.
 
 - `/challenge` shows the leaderboard of the nearest tower; `/challenge list` lists every tower found so far

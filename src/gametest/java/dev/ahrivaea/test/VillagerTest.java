@@ -127,14 +127,15 @@ public class VillagerTest implements FabricClientGameTest {
 				var list = s.overworld().getEntitiesOfClass(CreatureEntity.class, p.getBoundingBox().inflate(10), e -> e.isOwnedBy(p) && Villagers.isVillager(e.getSpeciesId()));
 				if (list.isEmpty()) return "not out";
 				var e = list.getFirst();
-				e.setOrderedToSit(true);
-				s.getPlayerList().getPlayers().getFirst().teleportTo(e.getX(), e.getY(), e.getZ() - 3.5);
-				p.setYRot(0);
-				p.setXRot(10);
+				// stand it still, facing the camera 3.5 blocks to its south
+				e.setNoAi(true);
+				e.setYRot(0);
+				e.setYHeadRot(0);
+				e.setYBodyRot(0);
+				s.getCommands().performPrefixedCommand(s.createCommandSourceStack(), "tp @a %.2f %.2f %.2f 180 10".formatted(e.getX(), e.getY(), e.getZ() + 3.5));
 				return e.getAttachedOrElse(Villagers.JOB, dev.ahrivaea.villager.VillagerJob.NONE).profession();
 			});
 			if (!out.equals("mason")) failures.add("the villager out in the world should still be a mason: " + out);
-			server.runCommand("tp @a ~ ~ ~ 0 10");
 			context.runOnClient(c -> {
 				if (!c.gui.hud.isHidden()) c.gui.hud.toggle();
 			});

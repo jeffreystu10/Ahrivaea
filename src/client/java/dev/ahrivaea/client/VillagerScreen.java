@@ -276,7 +276,8 @@ public class VillagerScreen extends Screen {
 		for (int i = 0; i < at.length; i++) {
 			int row = at[i][0] - scroll;
 			int r = offers.get(i).getAsJsonObject().get("rank").getAsInt();
-			if (at[i][1] == 0 && row - 1 >= 0 && row - 1 < rowsShown()) {
+			boolean firstOfRank = i == 0 || offers.get(i - 1).getAsJsonObject().get("rank").getAsInt() != r;
+			if (firstOfRank && row - 1 >= 0 && row - 1 < rowsShown()) {
 				g.text(font, ranks.get(r).getAsJsonObject().get("name").getAsString() + (r < rank ? "" : " (locked)"), shopX(), shopY() + (row - 1) * CELL + 8,
 						r < rank ? 0xFFFFD040 : 0xFF888888);
 			}

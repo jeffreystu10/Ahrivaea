@@ -118,10 +118,11 @@ public class QuarryTest implements FabricClientGameTest {
 					|| !check.contains("fluids 0") || !check.contains("wall holes 0") || !check.contains("top layer left 0"))
 				failures.add("the quarry should be dug into the chest, keeping the wall, spawner and placed block: " + check + "; " + state);
 
+			server.runCommand("gamemode spectator @a");
 			server.runCommand("tp @a %d %d %d -90 45".formatted(bx - 6, y + 12, bz + 8));
-			context.runOnClient(c -> c.player.getAbilities().flying = true);
-			context.waitTicks(30);
+			context.waitTicks(40);
 			context.takeScreenshot(TestScreenshotOptions.of("quarry_1_dug").withSize(1600, 900));
+			server.runCommand("gamemode creative @a");
 
 			// a full chest stops them, with a message; a second chest starts them again
 			server.runOnServer(s -> {

@@ -169,7 +169,7 @@ public class BaseTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("base_2b_sorted"));
 
 			// job settings: a worker with every job switched off stops working
-			String off = server.computeOnServer(s -> {
+			String idle = server.computeOnServer(s -> {
 				BaseCoreBlockEntity be = (BaseCoreBlockEntity) s.overworld().getBlockEntity(core);
 				for (int i = 0; i < be.workers().size(); i++) {
 					var w = be.workers().get(i);
@@ -180,7 +180,7 @@ public class BaseTest implements FabricClientGameTest {
 				return "";
 			});
 			context.waitTicks(400);
-			String offStatus = server.computeOnServer(s -> s.overworld().getEntity(java.util.UUID.fromString(off)) instanceof dev.ahrivaea.creature.CreatureEntity e && e.brain() != null
+			String offStatus = server.computeOnServer(s -> s.overworld().getEntity(java.util.UUID.fromString(idle)) instanceof dev.ahrivaea.creature.CreatureEntity e && e.brain() != null
 					? e.brain().status() : "no worker");
 			LOG.info("BaseTest jobs off: {}", offStatus);
 			if (!offStatus.contains("switched off")) failures.add("a worker with its jobs switched off should stop: " + offStatus);

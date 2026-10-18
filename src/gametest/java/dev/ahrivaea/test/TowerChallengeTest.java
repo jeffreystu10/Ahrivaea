@@ -61,8 +61,7 @@ public class TowerChallengeTest implements FabricClientGameTest {
 				return out;
 			});
 			if (!sealed.equals("door sealed, wall protected, frame protected")) throw new AssertionError("an unfinished tower's End portal room should be sealed: " + sealed);
-			server.runCommand("tp @a %d %d %d -90 20".formatted(door.getX(), door.getY() + 1, door.getZ() - 6));
-			context.runOnClient(client -> client.player.setYRot(0));
+			server.runCommand("tp @a %.1f %d %.1f 0 10".formatted(door.getX() + 0.5, door.getY() + 1, door.getZ() - 5.5));
 			context.waitTicks(20);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_portal_room_sealed").withSize(1600, 900));
 
@@ -156,8 +155,7 @@ public class TowerChallengeTest implements FabricClientGameTest {
 				return out;
 			});
 			if (!opened.equals("door open, frame open")) throw new AssertionError("a finished tower's End portal room should be open: " + opened);
-			server.runCommand("tp @a %d %d %d -90 20".formatted(door.getX(), door.getY() + 1, door.getZ() - 6));
-			context.runOnClient(client -> client.player.setYRot(0));
+			server.runCommand("tp @a %.1f %d %.1f 0 10".formatted(door.getX() + 0.5, door.getY() + 1, door.getZ() - 5.5));
 			context.waitTicks(20);
 			context.takeScreenshot(TestScreenshotOptions.of("tower_portal_room_open").withSize(1600, 900));
 

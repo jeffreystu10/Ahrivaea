@@ -18,7 +18,8 @@
 			"dev.ahrivaea.horses.HorsesMod",
 			"dev.ahrivaea.minecarts.MinecartsMod",
 			"dev.ahrivaea.woodcutting.WoodcuttingMod",
-			"dev.ahrivaea.guilds.GuildsMod"
+			"dev.ahrivaea.guilds.GuildsMod",
+			"dev.ahrivaea.lights.LightsMod"
 		],
 		"client": [
 			"dev.ahrivaea.client.AhrivaeaClient",

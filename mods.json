@@ -371,6 +371,36 @@
       ]
     },
     {
+      "key": "lights",
+      "id": "ahrivaea_lights",
+      "name": "Ahrivaea Handheld Lights",
+      "summary": "Hold a torch, lantern or any other light and the area around you lights up as you walk, without placing anything.",
+      "features": [
+        "Holding a light in either hand lights up the space around you at that light's brightness: torches 14, lanterns, glowstone, sea lanterns, froglights, jack o'lanterns and campfires 15, soul torches 10, redstone torches 7, and so on (any block that gives off light, modded ones too)",
+        "Glowing items work as well: lava buckets 15, glow berries 14, nether stars and end crystals 12, blaze rods and fire charges 10, blaze powder and glowstone dust 8, glow ink sacs, magma cream, spectral arrows and bottles o' enchanting 6",
+        "The light follows you (an invisible light block at your head, or feet in low spaces) and goes when you put the item away, log off or die; underwater it lights the water too",
+        "It's real light, so every player sees it, including players without the mod",
+        "Lights left behind by a crash are cleared when their chunk loads; /gamerule ahrivaea:held_lights false turns it off"
+      ],
+      "commands": "(none); /gamerule ahrivaea:held_lights",
+      "players_install": "No (server only; works for players without the mod)",
+      "status": "Working",
+      "added": "2026-10-18",
+      "docs": "docs/lights.md",
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.lights.LightsMod"
+        ]
+      },
+      "mixins": [],
+      "include": [
+        "dev/ahrivaea/lights/**"
+      ],
+      "guide": [
+        "Hold a torch, lantern, glowstone or any other light (a lava bucket or glow berries work too) and the area around you lights up as you move. No need to place it."
+      ]
+    },
+    {
       "key": "guide",
       "id": "ahrivaea_guide",
       "name": "Ahrivaea Guide",

@@ -208,6 +208,24 @@ public final class Bases {
 		return level.isLoaded(pos) && level.getBlockEntity(pos) instanceof BaseCoreBlockEntity be ? be : null;
 	}
 
+	/** Whether a spot is in any (loaded) base's chunks, at any height. */
+	public static boolean inAnyBaseColumn(ServerLevel level, BlockPos pos) {
+		for (BlockPos c : CORES.getOrDefault(level.dimension(), Set.of())) {
+			BaseCoreBlockEntity be = coreAt(level, c);
+			if (be != null && pos.getX() >= be.minX() && pos.getX() <= be.maxX() && pos.getZ() >= be.minZ() && pos.getZ() <= be.maxZ()) return true;
+		}
+		return false;
+	}
+
+	/** The (loaded) base whose chunks a spot is in, or null. */
+	public static BaseCoreBlockEntity baseAt(ServerLevel level, BlockPos pos) {
+		for (BlockPos c : CORES.getOrDefault(level.dimension(), Set.of())) {
+			BaseCoreBlockEntity be = coreAt(level, c);
+			if (be != null && pos.getX() >= be.minX() && pos.getX() <= be.maxX() && pos.getZ() >= be.minZ() && pos.getZ() <= be.maxZ()) return be;
+		}
+		return null;
+	}
+
 	/** Whether a spot is inside any (loaded) base. */
 	public static boolean inAnyBase(ServerLevel level, BlockPos pos) {
 		for (BlockPos c : CORES.getOrDefault(level.dimension(), Set.of())) {
@@ -228,6 +246,25 @@ public final class Bases {
 		});
 		// no wild creatures turn up inside a base
 		WildSpawner.BLOCKED.add(Bases::inAnyBase);
+		WildSpawner.BLOCKED.add(Bases::inAnyBaseColumn);
+		// a broken block stops counting as player-placed
+		PlayerBlockBreakEvents.AFTER.register((level, player, pos, state, be) -> {
+			if (level instanceof ServerLevel sl) PlacedBlocks.removed(sl, pos);
+		});
+		// right-click a Mining Post: its quarry's state, with buttons to pause it and to dig structures
+		net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
+			if (!(level instanceof ServerLevel sl) || !(player instanceof ServerPlayer sp) || hand != net.minecraft.world.InteractionHand.MAIN_HAND
+					|| !sl.getBlockState(hit.getBlockPos()).is(MINING_POST)) return net.minecraft.world.InteractionResult.PASS;
+			quarryInfo(sp, hit.getBlockPos());
+			return net.minecraft.world.InteractionResult.SUCCESS;
+		});
+		net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register((d, reg, env) -> d.register(
+				net.minecraft.commands.Commands.literal("quarry")
+						.then(net.minecraft.commands.Commands.argument("post", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos())
+								.then(net.minecraft.commands.Commands.literal("pause").executes(ctx -> quarryCommand(ctx.getSource(), net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(ctx, "post"), "pause")))
+								.then(net.minecraft.commands.Commands.literal("structures").executes(ctx -> quarryCommand(ctx.getSource(), net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(ctx, "post"), "structures")))
+								.then(net.minecraft.commands.Commands.literal("restart").executes(ctx -> quarryCommand(ctx.getSource(), net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(ctx, "post"), "restart")))
+								.executes(ctx -> quarryCommand(ctx.getSource(), net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(ctx, "post"), "info")))));
 		// workers can only be hurt by raiders (and are knocked out, not killed: see Raids)
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !entity.hasAttached(WORKER_OF)
 				|| source.getEntity() != null && Raids.isRaider(source.getEntity()));
@@ -269,6 +306,80 @@ public final class Bases {
 			if (be == null || !be.isWorker(c.getUUID())) c.discard();
 			else c.capSize(CreatureEntity.BASE_HITBOX); // workers saved before the cap existed
 		});
+	}
+
+	// ---- quarries ----
+
+	/** Tells the player about the quarry under a Mining Post, with buttons to change it. */
+	public static void quarryInfo(ServerPlayer p, BlockPos post) {
+		ServerLevel level = p.level();
+		BaseCoreBlockEntity be = baseAt(level, post);
+		if (be == null) {
+			p.sendSystemMessage(Component.literal("This Mining Post isn't in a base. Put it in your base and give it a chest: your miners will dig out the chunk below it."));
+			return;
+		}
+		if (be.owner() != null && !be.owner().equals(p.getUUID())) {
+			p.sendOverlayMessage(Component.literal("This is " + be.ownerName() + "'s quarry."));
+			return;
+		}
+		Quarry q = be.quarry(post);
+		String at = post.getX() + " " + post.getY() + " " + post.getZ();
+		int chests = Quarry.chests(level, post).size();
+		var text = Component.literal("Quarry: ").withStyle(net.minecraft.ChatFormatting.GOLD)
+				.append(Component.literal(q.describe(level, post)).withStyle(net.minecraft.ChatFormatting.WHITE))
+				.append(Component.literal("
+" + q.mined + " blocks dug; " + chests + (chests == 1 ? " chest" : " chests") + " by the post"
+						+ (chests == 0 ? " (miners need one: put a chest or barrel next to the post)" : "")).withStyle(net.minecraft.ChatFormatting.GRAY))
+				.append(Component.literal("
+Digs out this chunk below the post, down to bedrock, leaving a wall around it and a staircase. Never strongholds, spawners or blocks players placed.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY))
+				.append(Component.literal("
+"))
+				.append(button(q.paused ? "[Resume]" : "[Pause]", "/quarry " + at + " pause"))
+				.append(Component.literal(" "))
+				.append(button(q.structures ? "[Structures: dug]" : "[Structures: kept]", "/quarry " + at + " structures"))
+				.append(Component.literal(" "))
+				.append(button("[Restart]", "/quarry " + at + " restart"));
+		p.sendSystemMessage(text);
+	}
+
+	private static net.minecraft.network.chat.MutableComponent button(String label, String cmd) {
+		return Component.literal(label).withStyle(s -> s.withColor(net.minecraft.ChatFormatting.AQUA)
+				.withClickEvent(new net.minecraft.network.chat.ClickEvent.RunCommand(cmd))
+				.withHoverEvent(new net.minecraft.network.chat.HoverEvent.ShowText(Component.literal(cmd))));
+	}
+
+	private static int quarryCommand(net.minecraft.commands.CommandSourceStack src, BlockPos post, String what) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+		ServerPlayer p = src.getPlayerOrException();
+		ServerLevel level = p.level();
+		BaseCoreBlockEntity be = baseAt(level, post);
+		if (be == null || !level.getBlockState(post).is(MINING_POST) || be.owner() != null && !be.owner().equals(p.getUUID()) && !p.isCreative()) {
+			src.sendFailure(Component.literal("That isn't a Mining Post in your base."));
+			return 0;
+		}
+		Quarry q = be.quarry(post);
+		switch (what) {
+			case "pause" -> q.paused = !q.paused;
+			case "structures" -> q.structures = !q.structures;
+			case "restart" -> {
+				q.phase = Quarry.STAIRS;
+				q.step = 0;
+				q.layer = Integer.MIN_VALUE;
+			}
+			default -> {}
+		}
+		be.setChanged();
+		quarryInfo(p, post);
+		return 1;
+	}
+
+	/** Tells a base's owner (now and then) that a quarry has stopped for want of a chest. */
+	static void alertNoChest(ServerLevel level, BaseCoreBlockEntity be, BlockPos post, Quarry q) {
+		if (level.getGameTime() - q.lastAlert < 2400) return;
+		q.lastAlert = level.getGameTime();
+		ServerPlayer owner = be.owner() == null ? null : level.getServer().getPlayerList().getPlayer(be.owner());
+		if (owner != null) owner.sendSystemMessage(Component.literal("Your quarry at " + post.getX() + ", " + post.getZ()
+				+ " has stopped: the chests by its Mining Post are full (or there are none). Put another chest next to the post.")
+				.withStyle(net.minecraft.ChatFormatting.YELLOW));
 	}
 
 	// ---- assigning workers ----

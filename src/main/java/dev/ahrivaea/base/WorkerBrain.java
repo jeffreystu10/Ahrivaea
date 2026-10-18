@@ -173,7 +173,7 @@ public final class WorkerBrain {
 			return;
 		}
 		// stray too far and it comes straight back
-		if (!be.contains(self.blockPosition()) && self.distanceToSqr(Vec3.atCenterOf(core)) > Math.pow(be.radius() + 8, 2)) {
+		if (!be.contains(self.blockPosition()) && !be.inQuarry(self.blockPosition()) && self.distanceToSqr(Vec3.atCenterOf(core)) > Math.pow(be.radius() + 8, 2)) {
 			self.teleportTo(core.getX() + 1.5, core.getY() + 1, core.getZ() + 0.5);
 			drop();
 		}
@@ -193,7 +193,7 @@ public final class WorkerBrain {
 			lastDist = Double.MAX_VALUE;
 			if (task == null) {
 				cooldown = 40;
-				status = jobs(be).contains(Job.DEFENSE) ? "On guard" : jobs(be).stream().anyMatch(Job::working) ? "Idle (nothing to do)"
+				status = waiting != null && jobs(be).contains(Job.MINING) ? waiting : jobs(be).contains(Job.DEFENSE) ? "On guard" : jobs(be).stream().anyMatch(Job::working) ? "Idle (nothing to do)"
 						: allJobs().stream().anyMatch(Job::working) ? "Idle (its jobs are switched off)" : "Idle (no work it can do yet)";
 				wander(level, be);
 				return;
@@ -206,7 +206,7 @@ public final class WorkerBrain {
 			return;
 		}
 		// measured from the worker's middle, so a wider worker reaches a little farther
-		double reach = (task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH || task.kind() == Kind.ICE ? 3 : 2.3) + self.getBbWidth() / 2 - 0.35;
+		double reach = (task.kind() == Kind.MINE ? 4 : task.kind() == Kind.FELL ? 3.5 : task.kind() == Kind.FISH || task.kind() == Kind.ICE ? 3 : 2.3) + self.getBbWidth() / 2 - 0.35;
 		double d = self.position().distanceTo(where);
 		if (d > reach) {
 			status = "On the way: " + task.doing();
@@ -214,6 +214,16 @@ public final class WorkerBrain {
 			if (d < lastDist - 0.5) {
 				lastDist = d;
 				travelTicks = Math.min(travelTicks, 1);
+			}
+			// a miner that can't find its way down the hole climbs straight there
+			if (task.kind() == Kind.MINE && travelTicks > 100) {
+				BlockPos stand = standNear(level, task.target());
+				if (stand != null) {
+					self.getNavigation().stop();
+					self.teleportTo(stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5);
+					travelTicks = 1;
+					return;
+				}
 			}
 			if (travelTicks > 300) finish(be, 100); // can't get there
 			return;
@@ -275,7 +285,7 @@ public final class WorkerBrain {
 						&& b.isValidBonemealTarget(level, p, level.getBlockState(p), net.minecraft.world.level.block.BonemealSource.MOB),
 						p -> new Task(Kind.TEND, p, null, scaled(40), "Tending " + name(level, p)));
 				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(15 * Math.max(1, sizeOf(naturalTree(level, p))) + 40), "Felling a tree"));
-				case MINING -> nearest(level, be, be.miningPosts, p -> level.getBlockState(p).is(Bases.MINING_POST), p -> new Task(Kind.MINE, p, null, scaled(40), "Mining"));
+				case MINING -> quarryTask(level, be);
 				case SMELTING -> nearest(level, be, be.furnaces, p -> needsSmelting(level, p), p -> new Task(Kind.SMELT, p, null, 0, "Running the " + name(level, p)));
 				case FISHING -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.FISH, p, null, scaled(400), "Fishing"));
 				case TRANSPORT -> transportTask(level, be);
@@ -352,6 +362,66 @@ public final class WorkerBrain {
 		return null;
 	}
 
+	/** The Mining Post whose quarry the current MINE task is for; why a miner is waiting, if it is. */
+	private BlockPos minePost;
+	private String waiting;
+
+	/**
+	 * The next block to dig in one of the base's quarries (the nearest post first): see {@link Quarry}. Digging a
+	 * block takes about as long as a player with a diamond pickaxe and the walk to it, more for harder blocks.
+	 */
+	private Task quarryTask(ServerLevel level, BaseCoreBlockEntity be) {
+		waiting = null;
+		List<BlockPos> posts = new ArrayList<>(be.miningPosts);
+		posts.sort(Comparator.comparingDouble(p -> p.distSqr(self.blockPosition())));
+		for (BlockPos post : posts) {
+			if (!level.isLoaded(post) || !level.getBlockState(post).is(Bases.MINING_POST)) continue;
+			Quarry q = be.quarry(post);
+			if (q.paused || q.phase == Quarry.DONE) continue;
+			List<Container> chests = Quarry.chests(level, post);
+			if (chests.isEmpty()) {
+				q.needsChest = true;
+				waiting = "Waiting: its Mining Post needs a chest next to it";
+				Bases.alertNoChest(level, be, post, q);
+				continue;
+			}
+			BlockPos target = q.next(level, post, self.blockPosition(), p -> !be.claimed.containsKey(p));
+			be.setChanged();
+			if (target == null) continue;
+			BlockState s = level.getBlockState(target);
+			if (!Quarry.fits(chests, Quarry.drops(level, target, s, silkTouch(be)))) {
+				q.needsChest = true;
+				waiting = "Waiting: the quarry's chests are full, it needs another chest";
+				Bases.alertNoChest(level, be, post, q);
+				continue;
+			}
+			q.needsChest = false;
+			minePost = post;
+			float hardness = Math.max(0, s.getDestroySpeed(level, target));
+			return new Task(Kind.MINE, target, null, scaled(Math.min(200, 8 + (int) (10 * hardness))), "Digging " + name(level, target)
+					+ (q.phase == Quarry.STAIRS ? " (the staircase)" : " (layer y=" + target.getY() + ")"));
+		}
+		return null;
+	}
+
+	/** Somewhere to stand within reach of a block (feet and head clear, solid underneath), nearest the worker. */
+	private BlockPos standNear(ServerLevel level, BlockPos target) {
+		BlockPos best = null;
+		double bestD = Double.MAX_VALUE;
+		for (BlockPos p : BlockPos.betweenClosed(target.offset(-2, -3, -2), target.offset(2, 1, 2))) {
+			if (p.equals(target) || p.above().equals(target)) continue;
+			if (!level.getBlockState(p).getCollisionShape(level, p).isEmpty() || !level.getBlockState(p.above()).getCollisionShape(level, p.above()).isEmpty()) continue;
+			if (!level.getFluidState(p).isEmpty() || level.getBlockState(p.below()).getCollisionShape(level, p.below()).isEmpty()) continue;
+			if (Vec3.atCenterOf(p).distanceTo(Vec3.atCenterOf(target)) > 3.5) continue;
+			double d = p.distSqr(self.blockPosition());
+			if (d < bestD) {
+				best = p.immutable();
+				bestD = d;
+			}
+		}
+		return best;
+	}
+
 	private Task transportTask(ServerLevel level, BaseCoreBlockEntity be) {
 		if (be.containers.isEmpty()) return null;
 		// every third trip goes to tidying, so a busy base still gets sorted
@@ -402,7 +472,20 @@ public final class WorkerBrain {
 			}
 			case FELL -> fell(level, be, t.target());
 			case MINE -> {
-				for (ItemStack s : MiningLoot.roll(level, t.target(), level.getRandom(), silkTouch(be))) output(level, t.target(), s);
+				Quarry q = minePost == null ? null : be.quarry(minePost);
+				BlockState s = level.getBlockState(t.target());
+				if (q != null && q.keep(level, t.target(), s) == null) {
+					List<Container> chests = Quarry.chests(level, minePost);
+					List<ItemStack> drops = Quarry.drops(level, t.target(), s, silkTouch(be));
+					if (!chests.isEmpty() && Quarry.fits(chests, drops)) {
+						if (s.hasBlockEntity() && level.getBlockEntity(t.target()) instanceof Container c) c.clearContent();
+						level.levelEvent(net.minecraft.world.level.block.LevelEvent.PARTICLES_DESTROY_BLOCK, t.target(), Block.getId(s));
+						level.setBlock(t.target(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+						Quarry.store(chests, drops);
+						q.mined++;
+						be.setChanged();
+					}
+				}
 			}
 			case FISH -> {
 				LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(t.target()))

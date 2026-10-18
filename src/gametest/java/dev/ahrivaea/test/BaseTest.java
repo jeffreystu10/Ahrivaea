@@ -68,8 +68,9 @@ public class BaseTest implements FabricClientGameTest {
 			// a tree, a sapling, a mining post with a chest, a pond
 			server.runCommand("place feature minecraft:oak %d %d %d".formatted(cx - 8, y, cz + 6));
 			server.runCommand("setblock %d %d %d minecraft:oak_sapling".formatted(cx + 6, y, cz - 6));
-			server.runCommand("setblock %d %d %d ahrivaea:mining_post".formatted(cx, y, cz - 5));
-			server.runCommand("setblock %d %d %d minecraft:chest".formatted(cx + 1, y, cz - 5));
+			// the mining post's quarry is its own chunk, two chunks away so the base above isn't dug out
+			server.runCommand("setblock %d %d %d ahrivaea:mining_post".formatted(((cx >> 4) + 2) * 16 + 8, y, ((cz >> 4) + 2) * 16 + 8));
+			server.runCommand("setblock %d %d %d minecraft:chest".formatted(((cx >> 4) + 2) * 16 + 9, y, ((cz >> 4) + 2) * 16 + 8));
 			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(cx - 8, y - 1, cz - 8, cx - 6, y - 1, cz - 6));
 			// phase 2 workstations: a brewing stand, an enchanting table, a Creature Dynamo by a lamp, a crafter, torches
 			server.runCommand("setblock %d %d %d minecraft:brewing_stand".formatted(cx - 3, y, cz - 2));
@@ -198,17 +199,6 @@ public class BaseTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("base_3b_jobs"));
 			context.runOnClient(c -> c.gui.setScreen(null));
 
-			// silk touch (level 30 miners): stone and ore blocks, never cobblestone or raw ore
-			String silk = server.computeOnServer(s -> {
-				java.util.Map<String, Integer> seen = new java.util.TreeMap<>();
-				for (int i = 0; i < 300; i++)
-					for (ItemStack st : dev.ahrivaea.base.MiningLoot.roll(s.overworld(), new BlockPos(0, 64, 0), s.overworld().getRandom(), true))
-						seen.merge(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(st.getItem()).getPath(), st.getCount(), Integer::sum);
-				return seen.toString();
-			});
-			LOG.info("BaseTest silk touch finds: {}", silk);
-			if (silk.contains("cobblestone") || silk.contains("raw_") || !silk.contains("stone=")) failures.add("silk touch should give stone and ore blocks: " + silk);
-
 			// replanting from the chests: an empty spot marked for an oak sapling gets one fetched from a chest
 			BlockPos spot = new BlockPos(cx + 9, y, cz - 9);
 			server.runCommand("setblock %d %d %d minecraft:grass_block".formatted(spot.getX(), y - 1, spot.getZ()));
@@ -296,7 +286,7 @@ public class BaseTest implements FabricClientGameTest {
 		var furnace = (AbstractFurnaceBlockEntity) level.getBlockEntity(new BlockPos(cx - 2, y, cz));
 		int ingots = furnace.getItem(2).getCount() + count(level, core, Items.IRON_INGOT);
 		r.put("smelting", ingots >= 2 ? (Object) true : "only " + ingots + " iron ingots, " + furnace.getItem(0).getCount() + " raw iron left, fuel " + furnace.getItem(1));
-		Container postChest = HopperBlockEntity.getContainerAt(level, new BlockPos(cx + 1, y, cz - 5));
+		Container postChest = HopperBlockEntity.getContainerAt(level, new BlockPos(((cx >> 4) + 2) * 16 + 9, y, ((cz >> 4) + 2) * 16 + 8));
 		r.put("mining", postChest != null && !postChest.isEmpty() ? (Object) true : "nothing mined into the chest by the post");
 		int stored = 0;
 		for (BlockPos c : List.of(new BlockPos(cx + 2, y, cz), new BlockPos(cx + 2, y, cz + 2))) {

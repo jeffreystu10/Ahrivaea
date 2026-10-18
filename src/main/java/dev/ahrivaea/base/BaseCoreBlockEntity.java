@@ -74,9 +74,34 @@ public class BaseCoreBlockEntity extends BlockEntity {
 	private int scanIndex;
 	/** Targets a worker is already on, so two don't go for the same one. */
 	final Map<BlockPos, UUID> claimed = new HashMap<>();
+	/** The quarries of this base's Mining Posts, by post position (saved). */
+	final Map<BlockPos, Quarry> quarries = new HashMap<>();
+
+	/** A post's quarry (made the first time it's asked for). */
+	public Quarry quarry(BlockPos post) {
+		return quarries.computeIfAbsent(post.immutable(), k -> {
+			setChanged();
+			return new Quarry();
+		});
+	}
+
+	/** Whether a spot is down one of this base's quarries (workers there are at work, not lost). */
+	public boolean inQuarry(BlockPos p) {
+		if (!(getLevel() instanceof ServerLevel sl)) return false;
+		for (BlockPos post : miningPosts) if (Quarry.inHole(sl, post, p)) return true;
+		return false;
+	}
+
 	/** Spots a farmer or logger emptied but had nothing to replant with: what goes there (from the base's chests). */
 	final Map<BlockPos, net.minecraft.world.item.Item> toPlant = new java.util.LinkedHashMap<>();
 	private final Map<UUID, Integer> missingChecks = new HashMap<>();
+
+	record QuarryEntry(BlockPos post, Quarry quarry) {
+		static final com.mojang.serialization.Codec<QuarryEntry> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
+				BlockPos.CODEC.fieldOf("post").forGetter(QuarryEntry::post),
+				Quarry.CODEC.fieldOf("quarry").forGetter(QuarryEntry::quarry)
+		).apply(i, QuarryEntry::new));
+	}
 
 	public BaseCoreBlockEntity(BlockPos pos, BlockState state) {
 		super(Bases.BASE_CORE_ENTITY, pos, state);
@@ -203,6 +228,8 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		out.putString("owner_name", ownerName);
 		out.putInt("base_level", level);
 		out.putBoolean("chunk_loading", chunkLoading);
+		var qs = out.list("quarries", QuarryEntry.CODEC);
+		quarries.forEach((pos, q) -> qs.add(new QuarryEntry(pos, q)));
 		var list = out.list("workers", Worker.CODEC);
 		for (Worker w : workers) list.add(w);
 	}
@@ -214,6 +241,8 @@ public class BaseCoreBlockEntity extends BlockEntity {
 		ownerName = in.getStringOr("owner_name", "");
 		level = Math.clamp(in.getIntOr("base_level", 1), 1, MAX_LEVEL);
 		chunkLoading = in.getBooleanOr("chunk_loading", true);
+		quarries.clear();
+		for (QuarryEntry e : in.listOrEmpty("quarries", QuarryEntry.CODEC)) quarries.put(e.post(), e.quarry());
 		workers.clear();
 		for (Worker w : in.listOrEmpty("workers", Worker.CODEC)) workers.add(w);
 	}

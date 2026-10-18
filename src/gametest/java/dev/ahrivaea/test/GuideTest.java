@@ -85,7 +85,7 @@ public class GuideTest implements FabricClientGameTest {
 				return s.shownCount();
 			});
 			LOG.info("GuideTest: recipes with a Vessel: {}", vessel);
-			if (vessel != 2) failures.add("the Vessel is made by one recipe and used in one (Base Core), found " + vessel);
+			if (vessel != 1) failures.add("the Vessel is made by one recipe (the Base Core that used it has no recipe now), found " + vessel);
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_5_vessel").withSize(1600, 900));
 

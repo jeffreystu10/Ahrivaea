@@ -320,6 +320,7 @@ public final class Bases {
 				jobList.add(jj);
 			}
 			j.add("jobList", jobList);
+			j.addProperty("speed", (int) Math.round(WorkerBrain.speedAt(w.creature().level()) * 100));
 			workers.add(j);
 		}
 		o.add("workers", workers);

@@ -11,7 +11,7 @@ Creatures you've recruited can work for you at a base.
 2. Right-click the core. On the right are your party and box; **Work here** puts one to work. On the left are the
    workers, what each is doing right now, and **Send away** (it goes back to your party, or the box if that's full).
 3. Workers stay in the base and find work on their own. Each creature has up to two jobs (from the
-   creature list) and does the first one it has something to do for. Higher-level creatures work a little faster.
+   creature list) and does the first one it has something to do for. How fast it works depends on its level (see Work speed below).
 4. Upgrade the core by right-clicking it with: 4 iron blocks (level 2), 4 gold blocks (3), 2 diamond blocks (4),
    4 emerald blocks (5).
 
@@ -42,12 +42,12 @@ The creature list's ~190 job descriptions are sorted into these (the base screen
 | **Growth** | Tends crops, saplings and other plants: half the time like a dose of bone meal, otherwise a few growth ticks | 37 |
 | **Logging** | Fells grown natural trees (ones with natural leaves; log buildings are safe) and plants a sapling where each stood | 29 |
 | **Mining** | Works a **Mining Post** (crafted: stone pickaxe on top, cobblestone and logs below): stone and ores, into a chest next to the post. Deeper than y=0: deepslate, more diamonds; in the Nether: netherrack, quartz, gold, ancient debris; in the End: end stone, chorus, pearls | 43 |
-| **Smelting** | Runs furnaces, smokers and blast furnaces that have something in them: no fuel needed, twice as fast | 28 |
+| **Smelting** | Runs furnaces, smokers and blast furnaces that have something in them: no fuel needed, at the worker's speed | 28 |
 | **Transport** | Carries loose items and finished smelting to the base's chests and barrels | 58 |
 | **Ranching** | Every 2–3 minutes, produces its own drops (from the creature list) | 51 |
 | **Fishing** | Fishes from water in the base (the normal fishing loot, with luck from its level) | 33 |
 | **Defense** | Guards the base and fights off raids (below) | 82 |
-| **Brewing** | Runs brewing stands that have something to brew: no blaze powder needed, twice as fast | 22 |
+| **Brewing** | Runs brewing stands that have something to brew: no blaze powder needed, at the worker's speed | 22 |
 | **Enchanting** | Studies at an enchanting table: 1–2 bottles o' enchanting a minute, and 1 time in 20 an enchanted book | 8 |
 | **Redstone** | Powers a **Creature Dynamo** (crafted: copper ingots in the corners, redstone on the sides, a block of redstone in the middle): a full redstone signal on every side while it works, plus a redstone dust every minute | 24 |
 | **Crafting** | Works **Crafters** in the base: crafts whatever each is set up for, every few seconds, as a redstone pulse would | 16 |
@@ -58,6 +58,31 @@ The creature list's ~190 job descriptions are sorted into these (the base screen
 Every one of the 277 forms has at least one job it can do. Items from harvesting, felling, fishing, ice-making,
 studying and ranching land on the ground; a Transport worker brings them to the chests (put a chest or barrel in
 the base). Mining fills the chest beside its post directly.
+
+### Work speed
+
+A level 20 worker works as fast as a player would, or as a furnace or brewing stand does on its own. Every level
+above 20 makes it 2% faster and every level below 2% slower: 62% at level 1, 120% at level 30, 160% at level 50.
+The jobs panel shows each worker's speed. The times for a level 20 worker:
+
+| Job | Level 20 time |
+|---|---|
+| Farming | 1 s a crop (harvest and replant) |
+| Growth | 2 s a plant |
+| Logging | 0.75 s a log (like a stone axe), so about 4 s for a small oak |
+| Mining | 2 s a block from the Mining Post |
+| Smelting | 10 s an item in a furnace, 5 s in a smoker or blast furnace (their own speed; no fuel) |
+| Brewing | 20 s a batch (the stand's own speed; no blaze powder) |
+| Fishing | 20 s a catch (about a player's average without Lure) |
+| Crafting | 1 s a craft |
+| Transport | 0.25 s to pick up, 0.5 s to put away, sort or empty a furnace (plus walking) |
+| Lighting | 0.5 s a torch |
+| Enchanting | 60 s a study session |
+| Ice | 15 s a batch |
+| Ranching | its drops every 2-3 minutes |
+| Redstone | a redstone dust every minute of powering |
+
+Walking speed doesn't change with level. (`WorkerBrain.speedAt`, `PAR_LEVEL`, `PER_LEVEL`.)
 
 ### Choosing what each worker does
 

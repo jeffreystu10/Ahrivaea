@@ -198,6 +198,10 @@ public class BaseTest implements FabricClientGameTest {
 			context.takeScreenshot(TestScreenshotOptions.of("base_3b_jobs"));
 			context.runOnClient(c -> c.gui.setScreen(null));
 
+			// work speed: level 20 is a player's speed, 2% more or less per level
+			String speeds = dev.ahrivaea.base.WorkerBrain.speedAt(1) + "/" + dev.ahrivaea.base.WorkerBrain.speedAt(20) + "/" + dev.ahrivaea.base.WorkerBrain.speedAt(50);
+			if (!speeds.equals("0.62/1.0/1.6")) failures.add("work speed should be 62% at level 1, 100% at 20 and 160% at 50: " + speeds);
+
 			// the base is whole chunks: level 1 is the core's chunk and the 8 around it, each level one more ring
 			int ccx = cx >> 4;
 			String area = server.computeOnServer(s -> {

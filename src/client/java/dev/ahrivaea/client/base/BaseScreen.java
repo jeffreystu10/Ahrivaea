@@ -156,6 +156,10 @@ public class BaseScreen extends Screen {
 			g.centeredText(font, "Jobs: " + w.get("name").getAsString() + " Lv." + w.get("level").getAsInt(), width / 2, 10 + TOP, 0xFFFFD040);
 			g.centeredText(font, "It works on the first job in the list that has something to do. Jobs that are off are skipped.", width / 2, 22 + TOP, 0xFFAAAAAA);
 			g.text(font, "Now: " + w.get("status").getAsString(), width / 2 - 220, 42 + TOP, 0xFF9FE09F);
+			if (w.has("speed")) {
+				String speed = "Works at " + w.get("speed").getAsInt() + "% speed (100% at level 20, 2% more each level)";
+				g.text(font, speed, width / 2 + 220 - font.width(speed), 42 + TOP, 0xFFFFD040);
+			}
 			int x = width / 2 - 220 + 94;
 			for (int i = 0; i < jobs.size(); i++) {
 				JsonObject job = jobs.get(i).getAsJsonObject();

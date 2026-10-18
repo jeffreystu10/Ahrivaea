@@ -122,9 +122,37 @@ public final class WorkerBrain {
 		return w == null ? allJobs() : w.active(allJobs());
 	}
 
-	/** Higher-level creatures work a little faster (up to 40% at level 50). */
+	/** The level at which a worker works as fast as a player (or a furnace or brewing stand on its own). */
+	public static final int PAR_LEVEL = 20;
+	/** How much faster (or slower) it works per level above (or below) that. */
+	public static final double PER_LEVEL = 0.02;
+
+	/** How fast a creature of this level works: 1 at level 20, 2% more or less per level (62% at level 1, 160% at 50). */
+	public static double speedAt(int level) {
+		return Math.max(0.1, 1 + PER_LEVEL * (level - PAR_LEVEL));
+	}
+
+	public double speed() {
+		return speedAt(self.getCreatureLevel());
+	}
+
+	/** A job that takes a player (or a level 20 worker) this many ticks, at this worker's speed. */
 	private int scaled(int ticks) {
-		return Math.max(10, (int) (ticks * (1 - self.getCreatureLevel() / 125.0)));
+		return Math.max(2, (int) Math.round(ticks / speed()));
+	}
+
+	/**
+	 * Furnaces and brewing stands run at their own speed; a worker running one adds (or, below level 20, takes away)
+	 * the difference, a tick at a time: this carries the fraction left over.
+	 */
+	private double extraProgress;
+
+	/** The whole ticks to add to (or take from) a block's progress this tick. */
+	private int extraTicks() {
+		extraProgress += speed() - 1;
+		int whole = (int) extraProgress;
+		extraProgress -= whole;
+		return whole;
 	}
 
 	public void tick(ServerLevel level) {
@@ -198,7 +226,7 @@ public final class WorkerBrain {
 			}
 			if (workTicks % 20 == 1) CreatureDynamoBlock.power(level, task.target());
 			// now and then the work turns up some redstone
-			if (workTicks % 1200 == 0) output(level, task.target(), new ItemStack(Items.REDSTONE));
+			if (workTicks % scaled(1200) == 0) output(level, task.target(), new ItemStack(Items.REDSTONE));
 			return;
 		}
 		if (workTicks % 10 == 0) level.sendParticles(ParticleTypes.HAPPY_VILLAGER, where.x, where.y + 0.5, where.z, 2, 0.3, 0.3, 0.3, 0);
@@ -217,19 +245,19 @@ public final class WorkerBrain {
 	private Task plan(ServerLevel level, BaseCoreBlockEntity be) {
 		if (!carried.isEmpty()) {
 			BlockPos chest = chestFor(level, be, carried);
-			if (chest != null) return new Task(Kind.DELIVER, chest, null, 10, "Putting " + Drops.describe(carried) + " away");
+			if (chest != null) return new Task(Kind.DELIVER, chest, null, scaled(10), "Putting " + Drops.describe(carried) + " away");
 			drop();
 		}
 		for (Job job : jobs(be)) {
 			Task t = switch (job) {
-				case FARMING -> nearest(level, be, be.crops, p -> isRipe(level, p, level.getBlockState(p)), p -> new Task(Kind.HARVEST, p, null, scaled(30), "Harvesting " + name(level, p)));
+				case FARMING -> nearest(level, be, be.crops, p -> isRipe(level, p, level.getBlockState(p)), p -> new Task(Kind.HARVEST, p, null, scaled(20), "Harvesting " + name(level, p)));
 				case GROWTH -> any(level, be, be.growables, p -> level.getBlockState(p).getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock b
 						&& b.isValidBonemealTarget(level, p, level.getBlockState(p), net.minecraft.world.level.block.BonemealSource.MOB),
-						p -> new Task(Kind.TEND, p, null, scaled(60), "Tending " + name(level, p)));
-				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(60), "Felling a tree"));
-				case MINING -> nearest(level, be, be.miningPosts, p -> level.getBlockState(p).is(Bases.MINING_POST), p -> new Task(Kind.MINE, p, null, scaled(100), "Mining"));
+						p -> new Task(Kind.TEND, p, null, scaled(40), "Tending " + name(level, p)));
+				case LOGGING -> nearest(level, be, be.trees, p -> naturalTree(level, p) != null, p -> new Task(Kind.FELL, p, null, scaled(15 * Math.max(1, sizeOf(naturalTree(level, p)))), "Felling a tree"));
+				case MINING -> nearest(level, be, be.miningPosts, p -> level.getBlockState(p).is(Bases.MINING_POST), p -> new Task(Kind.MINE, p, null, scaled(40), "Mining"));
 				case SMELTING -> nearest(level, be, be.furnaces, p -> needsSmelting(level, p), p -> new Task(Kind.SMELT, p, null, 0, "Running the " + name(level, p)));
-				case FISHING -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.FISH, p, null, scaled(240), "Fishing"));
+				case FISHING -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.FISH, p, null, scaled(400), "Fishing"));
 				case TRANSPORT -> transportTask(level, be);
 				case BREWING -> nearest(level, be, be.brewingStands, p -> needsBrewing(level, p), p -> new Task(Kind.BREW, p, null, 0, "Brewing potions"));
 				case ENCHANTING -> nearest(level, be, be.enchantingTables, p -> level.getBlockState(p).is(Blocks.ENCHANTING_TABLE),
@@ -237,7 +265,7 @@ public final class WorkerBrain {
 				case REDSTONE -> nearest(level, be, be.dynamos, p -> level.getBlockState(p).is(Bases.CREATURE_DYNAMO),
 						p -> new Task(Kind.POWER, p, null, 0, "Powering the Creature Dynamo"));
 				case CRAFTING -> nearest(level, be, be.crafters, p -> level.getBlockEntity(p) instanceof net.minecraft.world.level.block.entity.CrafterBlockEntity c && !c.isEmpty(),
-						p -> new Task(Kind.CRAFT, p, null, scaled(60), "Working the crafter"));
+						p -> new Task(Kind.CRAFT, p, null, scaled(20), "Working the crafter"));
 				case ICE -> nearest(level, be, be.water, p -> level.getFluidState(p).isSource(), p -> new Task(Kind.ICE, p, null, scaled(300), "Making ice"));
 				case LIGHTING -> lightingTask(level, be);
 				default -> null;
@@ -289,11 +317,11 @@ public final class WorkerBrain {
 		items.sort(Comparator.comparingDouble(i -> i.distanceToSqr(self)));
 		if (!items.isEmpty()) {
 			ItemEntity i = items.getFirst();
-			return new Task(Kind.PICK_UP, i.blockPosition(), i, 5, "Picking up " + Drops.describe(i.getItem()));
+			return new Task(Kind.PICK_UP, i.blockPosition(), i, scaled(5), "Picking up " + Drops.describe(i.getItem()));
 		}
 		// then finished smelting
 		Task furnace = nearest(level, be, be.furnaces, p -> level.getBlockEntity(p) instanceof AbstractFurnaceBlockEntity f && !f.getItem(2).isEmpty(),
-				p -> new Task(Kind.EMPTY_FURNACE, p, null, 10, "Emptying the " + name(level, p)));
+				p -> new Task(Kind.EMPTY_FURNACE, p, null, scaled(10), "Emptying the " + name(level, p)));
 		if (furnace != null) return furnace;
 		return sortTask(level, be);
 	}
@@ -304,7 +332,7 @@ public final class WorkerBrain {
 		if (m == null) return null;
 		sortSlot = m.slot();
 		Container from = HopperBlockEntity.getContainerAt(level, m.from());
-		return new Task(Kind.SORT, m.from(), null, 10, "Sorting " + (from == null ? "a chest" : Drops.describe(from.getItem(m.slot()))));
+		return new Task(Kind.SORT, m.from(), null, scaled(10), "Sorting " + (from == null ? "a chest" : Drops.describe(from.getItem(m.slot()))));
 	}
 
 	// ---- doing it ----
@@ -387,7 +415,7 @@ public final class WorkerBrain {
 
 	private void ranch(ServerLevel level, BaseCoreBlockEntity be) {
 		if (!jobs(be).contains(Job.RANCHING) || --ranchTimer > 0) return;
-		ranchTimer = 2400 + level.getRandom().nextInt(1200);
+		ranchTimer = scaled(2400 + level.getRandom().nextInt(1200));
 		Species.get(self.getSpeciesId()).ifPresent(s -> {
 			for (ItemStack stack : Drops.roll(s, self.getInfluence(), self.getCreatureLevel(), level.getRandom(), level.registryAccess()))
 				Block.popResource(level, self.blockPosition(), stack);
@@ -463,14 +491,16 @@ public final class WorkerBrain {
 				&& dev.ahrivaea.base.mixin.BrewingAccess.ahrivaea$isBrewable(level, b);
 	}
 
-	/** One tick of running a brewing stand: no blaze powder needed, twice as fast. False when there's nothing to brew. */
+	/** One tick of running a brewing stand: no blaze powder needed, at the worker's speed (normal at level 20). False when there's nothing to brew. */
 	private boolean brewTick(ServerLevel level, BlockPos p) {
 		if (!(level.getBlockEntity(p) instanceof net.minecraft.world.level.block.entity.BrewingStandBlockEntity b)) return false;
 		var a = (dev.ahrivaea.base.mixin.BrewingAccess) b;
 		boolean brewing = a.ahrivaea$brewTime() > 0;
 		if (!brewing && !dev.ahrivaea.base.mixin.BrewingAccess.ahrivaea$isBrewable(level, b)) return false;
 		if (a.ahrivaea$fuel() < 1) a.ahrivaea$setFuel(1);
-		if (a.ahrivaea$brewTime() > 2) a.ahrivaea$setBrewTime(a.ahrivaea$brewTime() - 1);
+		// the stand counts down 400 ticks by itself; the worker speeds that up (or slows it down) by its speed
+		int extra = extraTicks();
+		if (a.ahrivaea$brewTime() > 2) a.ahrivaea$setBrewTime(Math.clamp(a.ahrivaea$brewTime() - extra, 2, 400));
 		b.setChanged();
 		if (workTicks % 20 == 0) level.sendParticles(ParticleTypes.WITCH, p.getX() + 0.5, p.getY() + 0.8, p.getZ() + 0.5, 3, 0.2, 0.2, 0.2, 0);
 		return true;
@@ -492,7 +522,7 @@ public final class WorkerBrain {
 		}
 		if (spot == null) return null;
 		if (carried.isEmpty() && !takeTorch(level, be)) return null;
-		return new Task(Kind.LIGHT, spot, null, scaled(20), "Lighting up a dark spot");
+		return new Task(Kind.LIGHT, spot, null, scaled(10), "Lighting up a dark spot");
 	}
 
 	private boolean takeTorch(ServerLevel level, BaseCoreBlockEntity be) {
@@ -567,7 +597,7 @@ public final class WorkerBrain {
 				&& f.getItem(2).getCount() < f.getItem(2).getMaxStackSize();
 	}
 
-	/** One tick of running a furnace: it burns with no fuel and cooks twice as fast. False when there's nothing left to cook. */
+	/** One tick of running a furnace: it burns with no fuel and cooks at the worker's speed (normal at level 20). False when there's nothing left to cook. */
 	private boolean smeltTick(ServerLevel level, BlockPos p) {
 		if (!(level.getBlockEntity(p) instanceof AbstractFurnaceBlockEntity f) || !needsSmelting(level, p)) return false;
 		FurnaceAccess a = (FurnaceAccess) f;
@@ -577,7 +607,9 @@ public final class WorkerBrain {
 			BlockState s = level.getBlockState(p);
 			if (s.hasProperty(AbstractFurnaceBlock.LIT) && !s.getValue(AbstractFurnaceBlock.LIT)) level.setBlock(p, s.setValue(AbstractFurnaceBlock.LIT, true), Block.UPDATE_ALL);
 		}
-		if (a.ahrivaea$cookTotal() > 0 && a.ahrivaea$cookTime() < a.ahrivaea$cookTotal() - 1) a.ahrivaea$setCookTime(a.ahrivaea$cookTime() + 1);
+		// the furnace cooks at its own speed; the worker adds (or takes away) the difference
+		int extra = extraTicks();
+		if (a.ahrivaea$cookTotal() > 0 && extra != 0) a.ahrivaea$setCookTime(Math.clamp(a.ahrivaea$cookTime() + extra, 0, a.ahrivaea$cookTotal() - 1));
 		f.setChanged();
 		if (workTicks % 20 == 0) level.sendParticles(ParticleTypes.FLAME, p.getX() + 0.5, p.getY() + 0.6, p.getZ() + 0.5, 3, 0.2, 0.1, 0.2, 0);
 		return true;
@@ -614,6 +646,10 @@ public final class WorkerBrain {
 				if (dx != 0 || dy != 0 || dz != 0) todo.add(p.offset(dx, dy, dz));
 		}
 		return leaves && logs.size() < 200 ? logs : null;
+	}
+
+	private static int sizeOf(List<BlockPos> logs) {
+		return logs == null ? 0 : logs.size();
 	}
 
 	private void fell(ServerLevel level, BlockPos base) {

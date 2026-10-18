@@ -144,7 +144,7 @@ labels both. Transport workers put what they carry in, in order of preference:
 3. an unlabelled chest that already holds some of it,
 4. the nearest unlabelled chest with room.
 
-They never put anything in a chest labelled for something else. On every third trip, and whenever there's nothing
+They never put anything in a chest labelled for something else, or in the chests beside a Mining Post (those hold its quarry's finds; they do take things out of them to labelled chests). On every third trip, and whenever there's nothing
 to carry, they also **tidy**: anything sitting in an unlabelled chest, or the wrong labelled one, that has a
 labelled chest with room is moved there. Unlabelled chests work as the overflow and the "inbox": put things in one
 and they're sorted for you. (`Sorting`.)

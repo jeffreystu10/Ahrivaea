@@ -322,7 +322,7 @@ public class BaseTest implements FabricClientGameTest {
 	/** Items of a kind in the base's chests, the post chest, and lying around. */
 	private static int count(ServerLevel level, BlockPos core, net.minecraft.world.item.Item item) {
 		int n = 0;
-		for (BlockPos c : List.of(core.offset(2, 0, 0), core.offset(2, 0, 2), core.offset(1, 0, -5), core.offset(-2, 0, -4))) {
+		for (BlockPos c : List.of(core.offset(2, 0, 0), core.offset(2, 0, 2), core.offset(-2, 0, -4))) {
 			Container ct = HopperBlockEntity.getContainerAt(level, c);
 			for (int i = 0; ct != null && i < ct.getContainerSize(); i++) if (ct.getItem(i).is(item)) n += ct.getItem(i).getCount();
 		}

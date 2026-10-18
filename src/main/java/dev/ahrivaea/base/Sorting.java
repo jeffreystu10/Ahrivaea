@@ -108,7 +108,7 @@ public final class Sorting {
 		int bestRank = -1;
 		double bestD = Double.MAX_VALUE;
 		for (BlockPos p : containers) {
-			if (skip.contains(p) || !level.isLoaded(p)) continue;
+			if (skip.contains(p) || !level.isLoaded(p) || quarryChest(level, p)) continue;
 			Container c = HopperBlockEntity.getContainerAt(level, p);
 			if (c == null || !hasRoom(c, stack)) continue;
 			List<ItemStack> labels = labels(level, p);
@@ -129,6 +129,14 @@ public final class Sorting {
 			}
 		}
 		return best;
+	}
+
+	/** A chest beside a Mining Post holds its quarry's finds: nothing else is put in it (things are taken out, though). */
+	public static boolean quarryChest(ServerLevel level, BlockPos p) {
+		for (BlockPos part : parts(level, p))
+			for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values())
+				if (level.getBlockState(part.relative(d)).is(Bases.MINING_POST)) return true;
+		return false;
 	}
 
 	/** Something to tidy: a stack in a container that belongs in a labelled chest elsewhere. */

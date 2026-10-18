@@ -97,12 +97,12 @@ public class BattleTest implements FabricClientGameTest {
 			context.waitTick();
 			context.getInput().scroll(4);
 			context.waitTicks(3);
-			context.getInput().holdMouse(0);
+			context.getInput().holdMouse(com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT);
 			for (int i = 0; i < 10; i++) {
 				context.getInput().moveCursor(-30, 12);
 				context.waitTick();
 			}
-			context.getInput().releaseMouse(0);
+			context.getInput().releaseMouse(com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT);
 			context.waitTicks(3);
 			double[] cam1 = context.computeOnClient(c -> new double[]{BattleClient.camX(), BattleClient.camY(), BattleClient.camZ()});
 			context.takeScreenshot(TestScreenshotOptions.of("battle_1b_zoomed_and_moved"));
@@ -216,7 +216,7 @@ public class BattleTest implements FabricClientGameTest {
 				LOG.info("BattleTest: clicking the move button at window {},{}", button[0], button[1]);
 				context.getInput().setCursorPos(button[0], button[1]);
 				context.waitTick();
-				context.getInput().pressMouse(0);
+				context.getInput().pressMouse(com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT);
 				context.waitTicks(3);
 				LOG.info("BattleTest: mouse attack, after picking the move: {}", screenState(context));
 				context.takeScreenshot(TestScreenshotOptions.of("battle_4c_pick_target"));
@@ -449,6 +449,6 @@ public class BattleTest implements FabricClientGameTest {
 		});
 		context.getInput().setCursorPos(p[0], p[1]);
 		context.waitTick();
-		context.getInput().pressMouse(0);
+		context.getInput().pressMouse(com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT);
 	}
 }

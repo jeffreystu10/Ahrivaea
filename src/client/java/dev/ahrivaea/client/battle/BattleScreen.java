@@ -25,6 +25,8 @@ import java.util.Map;
 public class BattleScreen extends Screen {
 	/** Everything along the top edge sits this much lower, clear of the F3 debug text. */
 	static final int TOP = 14;
+	/** Mouse buttons are numbered from 1 (left) in this version of Minecraft, not from 0. */
+	static final int LEFT = com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT, RIGHT = com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_RIGHT;
 	private enum Step { UNIT, DESTINATION, ACTION, TARGET }
 
 	private Step step = Step.UNIT;
@@ -198,15 +200,12 @@ public class BattleScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-		boolean handled = super.mouseClicked(event, doubleClick);
-		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen " + System.identityHashCode(this) + " click {} at {},{}: widget {}, step {}, child at {}", event.button(), event.x(), event.y(), handled, step,
-				getChildAt(event.x(), event.y()).map(w -> w instanceof net.minecraft.client.gui.components.AbstractWidget a ? a.getMessage().getString() + " active " + a.active + " visible " + a.visible : String.valueOf(w)).orElse("none"));
-		if (handled) return true;
-		if (event.button() == 1) {
+		if (super.mouseClicked(event, doubleClick)) return true;
+		if (event.button() == RIGHT) {
 			back();
 			return true;
 		}
-		if (event.button() == 0) {
+		if (event.button() == LEFT) {
 			pressed = true;
 			dragging = false;
 			pressX = event.x();
@@ -217,7 +216,7 @@ public class BattleScreen extends Screen {
 
 	@Override
 	public boolean mouseDragged(MouseButtonEvent event, double dx, double dy) {
-		if (!pressed || event.button() != 0) return super.mouseDragged(event, dx, dy);
+		if (!pressed || event.button() != LEFT) return super.mouseDragged(event, dx, dy);
 		if (!dragging && Math.hypot(event.x() - pressX, event.y() - pressY) > 4) dragging = true;
 		if (dragging && BattleClient.grid() != null) {
 			double s = scale(BattleClient.grid().y(BattleClient.grid().size / 2, BattleClient.grid().size / 2));
@@ -228,7 +227,7 @@ public class BattleScreen extends Screen {
 
 	@Override
 	public boolean mouseReleased(MouseButtonEvent event) {
-		if (pressed && event.button() == 0) {
+		if (pressed && event.button() == LEFT) {
 			pressed = false;
 			if (!dragging) click(event.x(), event.y());
 			dragging = false;
@@ -290,7 +289,6 @@ public class BattleScreen extends Screen {
 	}
 
 	private void back() {
-		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} back from {}", System.identityHashCode(this), step, new Throwable("where"));
 		switch (step) {
 			case TARGET -> step = Step.ACTION;
 			case ACTION -> step = Step.DESTINATION;
@@ -366,7 +364,6 @@ public class BattleScreen extends Screen {
 	}
 
 	public void chooseMove(int i) {
-		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} chooseMove {}", System.identityHashCode(this), i);
 		pending = i;
 		step = Step.TARGET;
 		rebuild();
@@ -406,7 +403,6 @@ public class BattleScreen extends Screen {
 	// ---- buttons ----
 
 	private void rebuild() {
-		org.slf4j.LoggerFactory.getLogger("ahrivaea").info("BattleScreen {} rebuild at {}", System.identityHashCode(this), step);
 		clearWidgets();
 		if (state() == null) return;
 		if (state().has("result")) {
@@ -476,8 +472,10 @@ public class BattleScreen extends Screen {
 	/** Where the action menu goes: to the right of the destination square, kept on screen. */
 	private int[] menuPos(int items) {
 		double[] r = cellRect(destX, destZ);
-		int x = (int) r[2] + 6, y = (int) r[1] - 4;
-		if (x + MENU_W > width - 90) x = (int) r[0] - 6 - MENU_W;
+		// one square clear of the destination, so it doesn't cover an enemy standing next to it
+		int cell = (int) Math.ceil(r[2] - r[0]);
+		int x = (int) r[2] + cell + 4, y = (int) r[1] - 4;
+		if (x + MENU_W > width - 90) x = (int) r[0] - cell - 4 - MENU_W;
 		return new int[]{Math.clamp(x, CARD_W + 10, Math.max(CARD_W + 10, width - 90 - MENU_W)), Math.clamp(y, TOP + 82, Math.max(TOP + 82, height - 30 - items * 18))};
 	}
 

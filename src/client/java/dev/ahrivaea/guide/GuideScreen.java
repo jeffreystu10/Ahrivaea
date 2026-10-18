@@ -192,7 +192,7 @@ public class GuideScreen extends Screen {
 			}
 		}
 		// an item: show what makes and uses it
-		if (!hovered.isEmpty() && event.button() == 0) {
+		if (!hovered.isEmpty() && event.button() == com.mojang.blaze3d.platform.InputConstants.MOUSE_BUTTON_LEFT) {
 			focus = hovered.getItem();
 			mod = null;
 			page = Page.RECIPES;

@@ -36,9 +36,36 @@ jobs:
         run: |
           set -o pipefail
           sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri mesa-vulkan-drivers > /dev/null
-          # if the game hangs, save what every thread was doing just before the time runs out
-          ( sleep 1740; for p in $(jps -l | grep -viE "gradle|jps" | cut -d' ' -f1); do jstack "$p"; done > client-threads.txt 2>&1 ) &
-          timeout 1800 xvfb-run -a -s "-screen 0 1920x1080x24" ./gradlew runClientGameTest --stacktrace 2>&1 | tee client.log || {
+          # Fabric's client test framework can deadlock while a test world closes (game, server and test runner each
+          # waiting for another). If the log goes quiet for 5 minutes, save every thread's stack, stop, and run the
+          # tests once more.
+          run_tests() {
+            rm -f client.log hung
+            timeout 1800 xvfb-run -a -s "-screen 0 1920x1080x24" ./gradlew runClientGameTest --stacktrace > client.log 2>&1 &
+            local pid=$! last=0 quiet=0
+            while kill -0 $pid 2>/dev/null; do
+              sleep 15
+              size=$(stat -c %s client.log 2>/dev/null || echo 0)
+              if [ "$size" = "$last" ]; then quiet=$((quiet + 15)); else quiet=0; last=$size; fi
+              if [ $quiet -ge 300 ]; then
+                echo "No output for 5 minutes: the client tests are stuck"
+                for p in $(jps -l | grep -viE "gradle|jps" | cut -d' ' -f1); do jstack "$p"; done > client-threads.txt 2>&1
+                touch hung
+                pkill -f runClientGameTest; pkill -f "net.fabricmc.devlaunchinjector" ; pkill -f java; sleep 5
+                return 1
+              fi
+            done
+            wait $pid
+          }
+          ok=0
+          for attempt in 1 2; do
+            if run_tests; then ok=1; break; fi
+            cat client.log | tail -5
+            [ -f hung ] || break
+            echo "::warning title=Client test::the client tests hung (Fabric test framework deadlock); trying again ($attempt)"
+            ./gradlew --stop > /dev/null 2>&1 || true
+          done
+          [ $ok = 1 ] || {
             msg=$( (grep -E "AssertionError|Exception|Caused by|at dev\.ahrivaea|\(ahrivaea\)|FAILURE|What went wrong|error:|Test failed|FAILED" -A1 client.log | grep -vE "flite|GLX|Realms|Narrator|resource path|Anisotropic|SignedJWT|BackendCreation|renderpearl|text2speech" | cut -c1-400 | head -40; echo "--- last lines ---"; grep -v "^\s*at " client.log | grep -vE "flite|resource path" | cut -c1-300 | tail -25) | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
             echo "::error title=Client test::${msg}"
             exit 1

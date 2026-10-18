@@ -195,13 +195,13 @@ public class BattleTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			// the way a player attacks, all with the mouse: click yourself, click your square again (stay), pick the
 			// first move in the menu beside it, click the enemy
-			LOG.info("BattleTest: mouse attack, start: {}", context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+			LOG.info("BattleTest: mouse attack, start: {}", screenState(context));
 			click(context, meF[0], meF[1]);
 			context.waitTicks(3);
-			LOG.info("BattleTest: mouse attack, after clicking us: {}", context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+			LOG.info("BattleTest: mouse attack, after clicking us: {}", screenState(context));
 			click(context, meF[0], meF[1]);
 			context.waitTicks(3);
-			LOG.info("BattleTest: mouse attack, after staying: {}", context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+			LOG.info("BattleTest: mouse attack, after staying: {}", screenState(context));
 			context.takeScreenshot(TestScreenshotOptions.of("battle_4b_action_menu"));
 			double[] button = context.computeOnClient(c -> {
 				BattleScreen s = (BattleScreen) c.gui.screen();
@@ -211,22 +211,22 @@ public class BattleTest implements FabricClientGameTest {
 					return new double[]{(b.getX() + b.getWidth() / 2.0) * sc, (b.getY() + b.getHeight() / 2.0) * sc};
 				return null;
 			});
-			if (button == null) failures.add("clicking our own square again should open the action menu: " + context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+			if (button == null) failures.add("clicking our own square again should open the action menu: " + screenState(context));
 			else {
 				context.getInput().setCursorPos(button[0], button[1]);
 				context.waitTick();
 				context.getInput().pressMouse(0);
 				context.waitTicks(3);
-				LOG.info("BattleTest: mouse attack, after picking the move: {}", context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+				LOG.info("BattleTest: mouse attack, after picking the move: {}", screenState(context));
 				context.takeScreenshot(TestScreenshotOptions.of("battle_4c_pick_target"));
 				click(context, meF[0] + 1, meF[1]);
 				context.waitTicks(10);
-				LOG.info("BattleTest: mouse attack, after clicking the enemy: {}", context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+				LOG.info("BattleTest: mouse attack, after clicking the enemy: {}", screenState(context));
 				boolean attacked = server.computeOnServer(s -> {
 					Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
 					return b != null && (b.playerUnit().acted || b.phase != Battle.Phase.PLAYER);
 				});
-				if (!attacked) failures.add("attacking with the mouse (us, stay, move, enemy) should have worked: " + context.computeOnClient(c -> ((BattleScreen) c.gui.screen()).debugState()));
+				if (!attacked) failures.add("attacking with the mouse (us, stay, move, enemy) should have worked: " + screenState(context));
 			}
 			int enemiesBefore = server.computeOnServer(s -> {
 				Battle b = Battles.of(s.getPlayerList().getPlayers().getFirst());
@@ -434,6 +434,11 @@ public class BattleTest implements FabricClientGameTest {
 	}
 
 	/** Moves the real mouse to the middle of a battlefield square and clicks. */
+	private static String screenState(ClientGameTestContext context) {
+		String out = context.computeOnClient(c -> c.gui.screen() instanceof BattleScreen s ? s.debugState() : "no battle screen");
+		return out;
+	}
+
 	private static void click(ClientGameTestContext context, int x, int z) {
 		double[] p = context.computeOnClient(c -> {
 			BattleScreen s = (BattleScreen) c.gui.screen();

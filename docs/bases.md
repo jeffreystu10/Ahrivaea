@@ -5,7 +5,7 @@ Creatures you've recruited can work for you at a base.
 ## Setting up
 
 1. Get a **Base Core**. It can't be crafted: when a tower (Ahrivaea Tower Challenges) is fully rebuilt, its offering
-   chest turns into a Base Core owned by the tower's top donor (see [challenges](challenges.md)). The base is the
+   chest turns into a Base Core owned by the tower's top donor, who also gets a second one to place anywhere (see [challenges](challenges.md)). The base is the
    area around it: 24 blocks out each way (level 1), 8 down and 16 up. (Creative mode still has Base Cores to place.)
 2. Right-click the core. On the right are your party and box; **Work here** puts one to work. On the left are the
    workers, what each is doing right now, and **Send away** (it goes back to your party, or the box if that's full).

@@ -53,7 +53,8 @@ their facing). The highest-priority palette whose biomes match wins; one with no
   (what doesn't fit drops at their feet), the next time they join for the rest. Offerings made before this existed
   weren't recorded, so they don't come back. Operator `/challenge credit` donations have no items.
 - **The tower becomes a base.** When it's complete the offering chest turns into a **Base Core** (from Ahrivaea
-  Creatures) owned by the top donor. That's the only way to get a base: the Base Core has no recipe. The core can't
+  Creatures) owned by the top donor, and the top donor also gets a second Base Core item to place anywhere
+  (towers finished earlier give it when their chest turns into a base). That's the only way to get a base: the Base Core has no recipe. The core can't
   be broken or moved (except in creative mode); it works like any other base (right-click to assign workers,
   upgrade with blocks), and only its owner can manage it. Towers completed before this get their core the next time
   the chest's chunk is loaded. Without Ahrivaea Creatures installed the chest just stays a chest.

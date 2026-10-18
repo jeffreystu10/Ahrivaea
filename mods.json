@@ -107,7 +107,7 @@
         "Press J for the creature dex: what you've seen and caught, with clues to where the others live.",
         "Your party shows in the top-left corner of the screen. Press K (change it in Controls) for the party screen: stats, XP, riding, and buttons to send creatures out, level them up, call them back or use the box.",
         "/party shows your party (up to 6). Extra creatures go to your box: /party box. /character shows your own level; spend points with /character spend.",
-        "Bases: there's no recipe for a Base Core. When a tower is fully rebuilt, its offering chest turns into a Base Core for the tower's top donor. Right-click it to put party or box creatures to work. Each works by its job: farming, logging, mining (place a Mining Post), smelting, brewing, enchanting, fishing, ranching and more. Put chests near the core for what they make.",
+        "Bases: there's no recipe for a Base Core. When a tower is fully rebuilt, its offering chest turns into a Base Core for the tower's top donor, who also gets a second Base Core to place anywhere. Right-click it to put party or box creatures to work. Each works by its job: farming, logging, mining (place a Mining Post), smelting, brewing, enchanting, fishing, ranching and more. Put chests near the core for what they make.",
         "Upgrade a base by right-clicking its core while holding 4 iron blocks, then 4 gold blocks, 2 diamond blocks and 4 emerald blocks. Each level reaches farther and takes more workers.",
         "At night your base may be raided. Creatures with the Defense job fight back, and you can help with a sword. Raiders who reach the core steal from nearby chests.",
         "Riding: right-click your own medium or bigger creature with a saddle, then right-click it to get on. Fliers: jump to take off, look where you want to go. Swimmers dive where you look. Shears take the saddle off.",
@@ -126,7 +126,7 @@
         "Per-tower leaderboards",
         "Protected land: nobody can break, place or use blocks within 64 blocks of a tower (from 8 below its base up to the sky, so the stronghold stays open) until it's rebuilt. The top donor at completion claims it, and from then on only they and their guild (any scoreboard team, such as an Ahrivaea Guilds guild) can build there. Creative-mode operators aren't affected",
         "The End portal room under each tower is sealed (its openings filled with reinforced deepslate, everything in it protected) until the tower is complete; then the way to the End opens for everyone",
-        "When the tower is complete its offering chest turns into a Base Core (from Ahrivaea Creatures) owned by the top donor: the only way to get a base. It can't be broken or moved",
+        "When the tower is complete its offering chest turns into a Base Core (from Ahrivaea Creatures) owned by the top donor, who also gets a second Base Core item to place anywhere: completing towers is the only way to get bases. The tower's core can't be broken or moved",
         "Everything offered is recorded per player and handed back when the tower is complete (players who are offline get theirs when they next join; what doesn't fit drops at their feet)",
         "Challenges are set in Tower_Challenges.xlsx"
       ],
@@ -158,7 +158,7 @@
         "/challenge shows the nearest tower's leaderboard and what it needs. /challenge list shows every tower found so far.",
         "Towers and the land 64 blocks around them are protected until they're rebuilt. The top donor claims the finished tower, and only they can build in and around it.",
         "You can't reach the End until a tower is rebuilt: its End portal room underneath is sealed. Finish the tower and the way opens.",
-        "When a tower is finished, everything you put in its chest comes back to you, and the chest becomes a Base Core for the top donor.",
+        "When a tower is finished, everything you put in its chest comes back to you, the chest becomes a Base Core for the top donor, and the top donor gets a second Base Core to place anywhere.",
         "The top donor's guild can build at the tower too."
       ]
     },

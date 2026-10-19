@@ -5,7 +5,7 @@
   "name": "Ahrivaea client tests",
   "environment": "*",
   "entrypoints": {
-    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots", "dev.ahrivaea.test.GuideTest", "dev.ahrivaea.test.GatewayTest", "dev.ahrivaea.test.TowerChallengeTest", "dev.ahrivaea.test.StrongholdTowerScreenshots", "dev.ahrivaea.test.StellarGearTest", "dev.ahrivaea.test.BattleTest", "dev.ahrivaea.test.ArenaScreenshots", "dev.ahrivaea.test.RideTest", "dev.ahrivaea.test.CreatureRideTest", "dev.ahrivaea.test.PartyScreenTest", "dev.ahrivaea.test.StarterTest", "dev.ahrivaea.test.WoodcuttingTest", "dev.ahrivaea.test.WildCreaturesTest", "dev.ahrivaea.test.BaseTest", "dev.ahrivaea.test.RaidTest", "dev.ahrivaea.test.VillagerTest", "dev.ahrivaea.test.QuarryTest", "dev.ahrivaea.test.LightsTest"]
+    "fabric-client-gametest": ["dev.ahrivaea.test.CreatureScreenshots", "dev.ahrivaea.test.GuideTest", "dev.ahrivaea.test.GatewayTest", "dev.ahrivaea.test.TowerChallengeTest", "dev.ahrivaea.test.StrongholdTowerScreenshots", "dev.ahrivaea.test.StellarGearTest", "dev.ahrivaea.test.BattleTest", "dev.ahrivaea.test.ArenaScreenshots", "dev.ahrivaea.test.RideTest", "dev.ahrivaea.test.CreatureRideTest", "dev.ahrivaea.test.PartyScreenTest", "dev.ahrivaea.test.StarterTest", "dev.ahrivaea.test.WoodcuttingTest", "dev.ahrivaea.test.WildCreaturesTest", "dev.ahrivaea.test.BaseTest", "dev.ahrivaea.test.RaidTest", "dev.ahrivaea.test.VillagerTest", "dev.ahrivaea.test.QuarryTest", "dev.ahrivaea.test.LightsTest", "dev.ahrivaea.test.MapTest"]
   },
   "depends": {"ahrivaea": "*"}
 }

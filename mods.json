@@ -402,6 +402,44 @@
       ]
     },
     {
+      "key": "map",
+      "id": "ahrivaea_map",
+      "name": "Ahrivaea Map",
+      "summary": "A minimap and a full-screen map of everywhere you've been, with the creatures around you and every player on the server.",
+      "features": [
+        "Everywhere you've explored is drawn as you go, coloured like a vanilla map (shaded by slope, water by depth); each dimension has its own map, the Nether's under the roof",
+        "The map is saved on your computer (ahrivaea_map/ in the game folder), one per world or server, so it's all still there next time",
+        "Minimap in the top-right corner (100 blocks across, north up) with your coordinates; N shows or hides it",
+        "Full map with M: scroll to zoom from 8 px a block to 8 blocks a px, drag to look around, hover for names",
+        "Creatures within 128 blocks show as dots in their influence colour, rimmed white if they're yours, gold if another player's",
+        "Every player in your dimension shows as their face, wherever they are (pinned to the minimap's edge when far off); players in other dimensions are listed under the full map",
+        "Game rules ahrivaea_map:show_players and ahrivaea_map:show_creatures turn either off for a server"
+      ],
+      "commands": "(none; M opens the map, N toggles the minimap); /gamerule ahrivaea_map:show_players, /gamerule ahrivaea_map:show_creatures",
+      "players_install": "Yes (and on the server)",
+      "status": "Working",
+      "added": "2026-10-18",
+      "docs": "docs/map.md",
+      "entrypoints": {
+        "main": [
+          "dev.ahrivaea.map.MapMod"
+        ],
+        "client": [
+          "dev.ahrivaea.map.client.MapClient"
+        ]
+      },
+      "mixins": [],
+      "include": [
+        "dev/ahrivaea/map/**",
+        "assets/ahrivaea_map/**"
+      ],
+      "guide": [
+        "Press M for the map of everywhere you've been. Scroll to zoom and drag to look around.",
+        "The minimap sits in the top-right corner; press N to hide or show it.",
+        "Creatures near you are dots in their influence colour (white rim: yours). Other players show as their faces."
+      ]
+    },
+    {
       "key": "guide",
       "id": "ahrivaea_guide",
       "name": "Ahrivaea Guide",

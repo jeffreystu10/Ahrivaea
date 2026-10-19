@@ -44,7 +44,7 @@ public class GuideTest implements FabricClientGameTest {
 				return d.mods.size() + " mods, " + recipes + " recipes, " + broken + " with unknown items; recipes/items per mod: " + sb;
 			});
 			LOG.info("GuideTest: {}", summary);
-			if (!summary.startsWith("9 mods")) failures.add("the guide should list 9 mods: " + summary);
+			if (!summary.startsWith("10 mods")) failures.add("the guide should list 10 mods: " + summary);
 			if (!summary.contains(" 0 with unknown items")) failures.add("every recipe's items should be known: " + summary);
 			if (!summary.contains("woodcutting=256/")) failures.add("woodcutting should have 256 recipes: " + summary);
 			if (!summary.contains("stellar=9/")) failures.add("stellar should have 9 smithing recipes: " + summary);
@@ -53,7 +53,7 @@ public class GuideTest implements FabricClientGameTest {
 			String on = context.computeOnClient(c -> "guide " + GuideData.load().forThisServer().mods.size()
 					+ ", horses " + dev.ahrivaea.horses.client.HorsesClient.serverHasMod() + ", minecarts " + dev.ahrivaea.minecarts.MinecartsMod.serverHasMod);
 			LOG.info("GuideTest: in single player: {}", on);
-			if (!on.equals("guide 9, horses true, minecarts true")) failures.add("in single player, every mod should be on: " + on);
+			if (!on.equals("guide 10, horses true, minecarts true")) failures.add("in single player, every mod should be on: " + on);
 			context.runOnClient(c -> c.gui.setScreen(new GuideScreen(GuideData.load(), null)));
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("guide_1_all_mods").withSize(1600, 900));

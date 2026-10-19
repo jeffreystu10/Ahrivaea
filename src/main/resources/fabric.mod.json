@@ -19,13 +19,15 @@
 			"dev.ahrivaea.minecarts.MinecartsMod",
 			"dev.ahrivaea.woodcutting.WoodcuttingMod",
 			"dev.ahrivaea.guilds.GuildsMod",
-			"dev.ahrivaea.lights.LightsMod"
+			"dev.ahrivaea.lights.LightsMod",
+			"dev.ahrivaea.map.MapMod"
 		],
 		"client": [
 			"dev.ahrivaea.client.AhrivaeaClient",
 			"dev.ahrivaea.horses.client.HorsesClient",
 			"dev.ahrivaea.guide.GuideClient",
-			"dev.ahrivaea.minecarts.client.MinecartsClient"
+			"dev.ahrivaea.minecarts.client.MinecartsClient",
+			"dev.ahrivaea.map.client.MapClient"
 		]
 	},
 	"mixins": [

@@ -125,8 +125,8 @@ model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 
 get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
-Wave 2's library models are arriving in batches (20 so far, imported like the rest). Until theirs arrive, the other
-13 wave 2 creatures, the Iron Golem and the Whale have stand-in models built by `tools/build_models.py` from the
+All of wave 2 has its library models (imported like the rest). Until theirs arrive, the Iron Golem and the Whale
+have stand-in models built by `tools/build_models.py` from the
 descriptions in `tools/model_defs.py`, in the library's style (blocky parts, a 64x16 palette texture, idle and fly
 animations, Enraged and Mutated textures made by recolouring the palette). Run `python3 tools/build_models.py
 [species ...]` after changing one; a real library model imported later replaces its files (then take

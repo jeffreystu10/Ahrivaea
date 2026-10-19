@@ -6,46 +6,87 @@
    "animation_length": 1,
    "bones": {
     "body": {
-     "rotation": [
-      "1*math.sin(query.life_time*1*120+0)",
-      "3*math.sin(query.life_time*1*90+0)",
+     "position": [
+      "0",
+      "1.854*math.sin(query.life_time*1*126+0)",
       "0"
      ]
     },
-    "head": {
+    "flake": {
      "rotation": [
       "0",
-      "9*math.sin(query.life_time*1*90+57)",
+      "-query.life_time*1*18",
       "0"
      ]
     },
-    "arm_left": {
+    "shards": {
      "rotation": [
-      "9*math.sin(query.life_time*1*288+180)",
       "0",
+      "-query.life_time*1*108",
       "0"
      ]
-    },
-    "arm_right": {
-     "rotation": [
-      "9*math.sin(query.life_time*1*288+0)",
-      "0",
-      "0"
-     ]
-    },
-    "leg_left": {
-     "rotation": [
-      "12*math.sin(query.life_time*1*288+0)",
-      "0",
-      "0"
-     ]
-    },
-    "leg_right": {
-     "rotation": [
-      "12*math.sin(query.life_time*1*288+180)",
-      "0",
-      "0"
-     ]
+    }
+   }
+  },
+  "attack": {
+   "loop": false,
+   "animation_length": 0.691,
+   "bones": {
+    "body": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.207": [
+       "-11.716",
+       "0",
+       "0"
+      ],
+      "0.328": [
+       "16.402",
+       "5.24",
+       "0"
+      ],
+      "0.449": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.691": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     "position": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.207": [
+       "0",
+       "-1.316",
+       "2.097"
+      ],
+      "0.328": [
+       "0",
+       "3.948",
+       "-8.387"
+      ],
+      "0.449": [
+       "0",
+       "0",
+       "-2.796"
+      ],
+      "0.691": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
     }
    }
   }

@@ -5,68 +5,116 @@
    "loop": true,
    "animation_length": 1,
    "bones": {
-    "fly_root": {
+    "body": {
      "position": [
       "0",
-      "1.4*math.sin(query.life_time*1*110+0)",
+      "4.703*math.sin(query.life_time*0.72*180+0)",
       "0"
      ]
     },
-    "core": {
+    "swirl": {
      "rotation": [
       "0",
-      "12*math.sin(query.life_time*1*90+0)",
+      "-query.life_time*0.72*162",
       "0"
      ]
     },
-    "ring_1": {
+    "swirl_2": {
      "rotation": [
       "0",
-      "query.life_time*1*180",
+      "-query.life_time*0.72*-162",
       "0"
      ]
     },
-    "ring_2": {
-     "rotation": [
+    "eye_float": {
+     "position": [
       "0",
-      "query.life_time*1*-120",
+      "3.919*math.sin(query.life_time*0.72*288+0)",
       "0"
      ]
     },
-    "ring_3": {
-     "rotation": [
+    "eye_float_2": {
+     "position": [
       "0",
-      "query.life_time*1*260",
+      "3.919*math.sin(query.life_time*0.72*288+57.296)",
       "0"
      ]
     },
-    "tendril_1": {
-     "rotation": [
-      "14*math.sin(query.life_time*1*220+0)",
+    "eye_float_3": {
+     "position": [
       "0",
-      "10*math.sin(query.life_time*1*180+0)"
+      "3.919*math.sin(query.life_time*0.72*288+114.592)",
+      "0"
      ]
     },
-    "tendril_2": {
-     "rotation": [
-      "14*math.sin(query.life_time*1*220+80)",
+    "eye_float_4": {
+     "position": [
       "0",
-      "10*math.sin(query.life_time*1*180+50)"
+      "3.919*math.sin(query.life_time*0.72*288+171.887)",
+      "0"
      ]
-    },
-    "tendril_3": {
-     "rotation": [
-      "14*math.sin(query.life_time*1*220+160)",
-      "0",
-      "10*math.sin(query.life_time*1*180+100)"
-     ]
-    },
-    "tendril_4": {
-     "rotation": [
-      "14*math.sin(query.life_time*1*220+240)",
-      "0",
-      "10*math.sin(query.life_time*1*180+150)"
-     ]
+    }
+   }
+  },
+  "attack": {
+   "loop": false,
+   "animation_length": 0.696,
+   "bones": {
+    "body": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "-11.158",
+       "0",
+       "0"
+      ],
+      "0.33": [
+       "15.621",
+       "5.61",
+       "0"
+      ],
+      "0.452": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.696": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     "position": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "0",
+       "-2.08",
+       "2.858"
+      ],
+      "0.33": [
+       "0",
+       "6.24",
+       "-11.433"
+      ],
+      "0.452": [
+       "0",
+       "0",
+       "-3.811"
+      ],
+      "0.696": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
     }
    }
   }

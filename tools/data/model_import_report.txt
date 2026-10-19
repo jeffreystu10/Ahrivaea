@@ -1,4 +1,4 @@
-295 models in use
+308 models in use
   aboleth/earth: from "aboleth" (M), size 2.02, 4 textures, animations idle
   angel/radiant: from "angel" (M), size 2.68, 4 textures, animations idle, fly
   animated_armor/arcane: from "animatedarmor" (M), size 2.39, 4 textures, animations idle
@@ -16,6 +16,7 @@
   black_pudding/earth: from "blackpudding" (M), size 2.0, 4 textures, animations idle
   boggart/earth: from "boggart" (S), size 1.26, 4 textures, animations idle
   bone_golem/void: from "bonegolem" (L), size 5.62, 4 textures, animations idle
+  brain_dog/void: from "braindog" (S), size 1.19, 4 textures, animations idle, attack
   brownie/fae: from "brownie" (S), size 1.57, 4 textures, animations idle
   bugbear/none: from "bugbear" (M), size 2.51, 4 textures, animations idle
   caladrius/radiant: from "caladrius" (L), size 5.25, 4 textures, animations idle, fly
@@ -36,11 +37,13 @@
   clockwork_raven/arcane: from "clockworkraven" (S), size 1.43, 4 textures, animations idle, fly
   clockwork_soldier/arcane: from "clockworksoldier" (M), size 2.6, 4 textures, animations idle
   cloud_of_darkness/darkness: from "cloudofdarkness" (S), size 1.19, 4 textures, animations idle, attack
+  cloud_rider/storm: from "cloudrider" (M), size 2.72, 4 textures, animations idle, attack
   cockatrice/fire: from "cockatrice" (S), size 1.19, 4 textures, animations idle, fly
   coral_crawler/water: from "coralcrawler" (M), size 2.04, 4 textures, animations idle, attack
   couatl/fae: from "couatl" (L), size 4.77, 4 textures, animations idle, fly
   cow/none: from "cow" (M), size 2.38, 4 textures, animations idle
   crab/none: from "crab" (S), size 1.17, 4 textures, animations idle
+  crystalline_construct/frost: from "crystallineconstruct" (M), size 4.51, 4 textures, animations idle, attack
   cultist/none: from "cultist" (M), size 2.4, 4 textures, animations idle
   cyclops/earth: from "cyclops" (L), size 5.6, 4 textures, animations idle
   dark_elf/void: from "darkelf" (M), size 2.4, 4 textures, animations idle
@@ -70,6 +73,7 @@
   dryad/nature: from "dryad" (M), size 2.41, 4 textures, animations idle
   duck/none: from "duck" (S), size 1.19, 4 textures, animations idle, fly
   efreeti/fire: from "ifrit" (M), size 2.38, 4 textures, animations idle
+  electric_eel/storm: from "electriceel" (S), size 1.23, 4 textures, animations idle, attack
   elemental/arcane: from "elemental" (L), size 5.25, 4 textures, animations idle
   elemental/darkness: from "elemental" (L), size 5.35, 4 textures, animations idle
   elemental/earth: from "elemental" (L), size 5.27, 4 textures, animations idle
@@ -129,6 +133,7 @@
   grick/void: from "grick" (M), size 2.04, 4 textures, animations idle
   griffon/none: from "griffin" (L), size 4.83, 4 textures, animations idle, fly
   hag/void: from "hag" (M), size 2.51, 4 textures, animations idle
+  helebrog/frost: from "helebrog" (L), size 5.71, 4 textures, animations idle, attack
   hell_hound/fire: from "hellhound" (M), size 2.27, 4 textures, animations idle
   homunculus/arcane: from "homunculus" (S), size 1.22, 4 textures, animations idle, fly
   horse/none: from "horse" (M), size 2.37, 4 textures, animations idle
@@ -152,6 +157,7 @@
   leshy/nature: from "leshy" (M), size 3.11, 4 textures, animations idle
   leviathan/water: from "leviathan" (XL), size 11.83, 4 textures, animations idle
   lich/darkness: from "lich" (M), size 2.39, 4 textures, animations idle
+  lightning/storm: from "lightning" (M), size 2.38, 4 textures, animations idle, attack
   lion/none: from "lion" (M), size 2.17, 4 textures, animations idle
   living_spellbook/arcane: from "spellbook" (S), size 1.21, 4 textures, animations idle
   living_statue/arcane: from "livingstatue" (M), size 2.63, 4 textures, animations idle
@@ -199,6 +205,7 @@
   omukade/fire: from "omukade" (M), size 2.02, 4 textures, animations idle
   oni/fire: from "oni" (L), size 5.25, 4 textures, animations idle
   ooze/void: from "ooze" (M), size 2.37, 4 textures, animations idle
+  orb_of_light/radiant: from "orboflight" (S), size 1.19, 4 textures, animations idle, attack
   orc/none: from "orc" (M), size 2.59, 4 textures, animations idle
   orca/water: from "orca" (L), size 4.64, 4 textures, animations idle
   owlbear/none: from "owlbear" (L), size 5.25, 4 textures, animations idle
@@ -214,7 +221,9 @@
   pig/none: from "pig" (S), size 1.19, 4 textures, animations idle
   pixie/fae: from "pixie" (S), size 1.51, 4 textures, animations idle, fly
   poisonous_frog/nature: from "poisonfrog" (S), size 1.19, 4 textures, animations idle, attack
+  polar_bear_folk/frost: from "polarbearfolk" (L), size 7.37, 4 textures, animations idle, attack
   poltergeist/storm: from "poltergeist" (M), size 2.37, 4 textures, animations idle
+  psychic_vampire/void: from "psychicvampire" (M), size 2.63, 4 textures, animations idle, attack
   purified_spirit/radiant: from "purifiedspirit" (M), size 2.38, 4 textures, animations idle
   quickling/storm: from "quickling" (S), size 1.23, 4 textures, animations idle
   rabbit/none: from "rabbit" (S), size 1.19, 4 textures, animations idle
@@ -234,6 +243,8 @@
   saber_toothed_cat/frost: from "sabertooth" (M), size 2.4, 4 textures, animations idle
   sahuagin/water: from "sahuagin" (M), size 2.56, 4 textures, animations idle
   salamander/fire: from "salamander" (L), size 4.81, 4 textures, animations idle
+  sand_spider/earth: from "sandspider" (S), size 1.14, 4 textures, animations idle, attack
+  sand_spirit/earth: from "sandspirit" (M), size 2.38, 4 textures, animations idle, attack
   sasquatch/none: from "sasquatch" (L), size 5.3, 4 textures, animations idle
   satyr/fae: from "satyr" (M), size 2.85, 4 textures, animations idle
   scylla/water: from "scylla" (M), size 2.91, 4 textures, animations idle
@@ -253,8 +264,10 @@
   squid/water: from "squid" (L), size 5.25, 4 textures, animations idle
   stirge/radiant: from "stirge" (S), size 1.19, 4 textures, animations idle, fly
   stirge/storm: from "stirge" (S), size 1.19, 4 textures, animations idle, fly
+  swirling_psychosis/void: from "swirlingpsychosis" (L), size 4.65, 4 textures, animations idle, attack
   t_rex/none: from "dinosaur" (XL), size 10.0, 4 textures, animations idle
   terrasque/earth: from "tarasque" (XL), size 11.85, 4 textures, animations idle
+  three_headed_cobra/earth: from "threeheadedcobra" (M), size 2.31, 4 textures, animations idle, attack
   thunderstripe/storm: from "thunderstripe" (M), size 2.78, 4 textures, animations idle
   tortoise/none: from "tortoise" (S), size 1.19, 4 textures, animations idle
   treant/fae: from "treant" (L), size 5.81, 4 textures, animations idle

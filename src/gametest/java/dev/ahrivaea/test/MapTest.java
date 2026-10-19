@@ -35,6 +35,14 @@ public class MapTest implements FabricClientGameTest {
 			server.runCommand("time set noon");
 			server.runCommand("gamerule advance_time false");
 			server.runCommand("gamerule spawn_mobs false");
+			// something to see: a pond, a road, a sand patch and a house
+			var at = context.computeOnClient(c -> c.player.blockPosition());
+			int gx = at.getX(), gy = at.getY() - 1, gz = at.getZ();
+			server.runCommand("fill %d %d %d %d %d %d minecraft:water".formatted(gx - 30, gy - 2, gz - 20, gx - 14, gy, gz - 6));
+			server.runCommand("fill %d %d %d %d %d %d minecraft:stone_bricks".formatted(gx - 60, gy, gz + 3, gx + 60, gy, gz + 5));
+			server.runCommand("fill %d %d %d %d %d %d minecraft:sand".formatted(gx + 14, gy, gz - 24, gx + 30, gy, gz - 12));
+			server.runCommand("fill %d %d %d %d %d %d minecraft:oak_planks".formatted(gx - 12, gy + 1, gz + 10, gx - 4, gy + 4, gz + 18));
+			server.runCommand("fill %d %d %d %d %d %d minecraft:red_terracotta".formatted(gx - 12, gy + 5, gz + 10, gx - 4, gy + 5, gz + 18));
 			context.waitTicks(100);
 			int explored = context.computeOnClient(c -> MapTiles.explored());
 			LOG.info("MapTest: {} columns explored", explored);
@@ -71,7 +79,10 @@ public class MapTest implements FabricClientGameTest {
 			context.runOnClient(c -> ((MapScreen) c.gui.screen()).scale = 0.5f);
 			context.waitTicks(5);
 			context.takeScreenshot(TestScreenshotOptions.of("map_2_zoomed_out").withSize(1600, 900));
-			context.runOnClient(c -> c.gui.setScreen(null));
+			context.runOnClient(c -> {
+				c.gui.setScreen(null);
+				if (c.gui.hud.isHidden()) c.gui.hud.toggle();
+			});
 			context.waitTicks(10);
 			context.takeScreenshot(TestScreenshotOptions.of("map_3_minimap").withSize(1600, 900));
 

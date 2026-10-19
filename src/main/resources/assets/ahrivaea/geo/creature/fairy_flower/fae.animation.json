@@ -7,45 +7,226 @@
    "bones": {
     "body": {
      "rotation": [
-      "3*math.sin(query.life_time*1*100+0)",
       "0",
-      "4*math.sin(query.life_time*1*80+0)"
+      "0",
+      "-(4*math.sin(query.life_time*1.35*162+0))"
      ]
     },
     "head": {
      "rotation": [
-      "6*math.sin(query.life_time*1*120+0)",
-      "10*math.sin(query.life_time*1*70+0)",
-      "5*math.sin(query.life_time*1*90+0)"
-     ]
-    },
-    "arm_left": {
-     "rotation": [
-      "0",
-      "0",
-      "12*math.sin(query.life_time*1*160+0)"
-     ]
-    },
-    "arm_right": {
-     "rotation": [
-      "0",
-      "0",
-      "12*math.sin(query.life_time*1*160+180)"
-     ]
-    },
-    "leg_left": {
-     "rotation": [
-      "14*math.sin(query.life_time*1*240+0)",
+      "6*math.sin(query.life_time*1.35*216+0)",
       "0",
       "0"
      ]
     },
-    "leg_right": {
+    "wing_left": {
      "rotation": [
-      "14*math.sin(query.life_time*1*240+180)",
+      "0",
+      "-(-35*math.sin(query.life_time*1.35*792+0))",
+      "0"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "-(35*math.sin(query.life_time*1.35*792+57.296))",
+      "0"
+     ]
+    },
+    "antenna": {
+     "rotation": [
+      "7*math.sin(query.life_time*1.35*288+-40.107)",
       "0",
       "0"
      ]
+    },
+    "antenna_tip": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*396+-57.296))"
+     ]
+    },
+    "antenna_2": {
+     "rotation": [
+      "7*math.sin(query.life_time*1.35*288+40.107)",
+      "0",
+      "0"
+     ]
+    },
+    "antenna_tip_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*396+57.296))"
+     ]
+    }
+   }
+  },
+  "fly": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "0",
+      "-(4*math.sin(query.life_time*1.35*162+0))"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "6*math.sin(query.life_time*1.35*216+0)+-37.704",
+      "0",
+      "0"
+     ]
+    },
+    "wing_left": {
+     "rotation": [
+      "0",
+      "-(-80.5*math.sin(query.life_time*1.35*1346.4+0))",
+      "0"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "-(80.5*math.sin(query.life_time*1.35*1346.4+57.296))",
+      "0"
+     ]
+    },
+    "antenna": {
+     "rotation": [
+      "7*math.sin(query.life_time*1.35*288+-40.107)",
+      "0",
+      "0"
+     ]
+    },
+    "antenna_tip": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*396+-57.296))"
+     ]
+    },
+    "antenna_2": {
+     "rotation": [
+      "7*math.sin(query.life_time*1.35*288+40.107)",
+      "0",
+      "0"
+     ]
+    },
+    "antenna_tip_2": {
+     "rotation": [
+      "0",
+      "0",
+      "-(10*math.sin(query.life_time*1.35*396+57.296))"
+     ]
+    },
+    "fly_root": {
+     "rotation": [
+      "36.193+1.7*math.sin(query.life_time*1.35*100+57)",
+      "0",
+      "0"
+     ],
+     "position": [
+      "0",
+      "24+1.92*math.sin(query.life_time*1.35*100)",
+      "0"
+     ]
+    }
+   }
+  },
+  "attack": {
+   "loop": false,
+   "animation_length": 0.813,
+   "bones": {
+    "body": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.244": [
+       "-10.724",
+       "0",
+       "0"
+      ],
+      "0.386": [
+       "15.014",
+       "1.282",
+       "0"
+      ],
+      "0.528": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.813": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "head": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.244": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.386": [
+       "0",
+       "0",
+       "1.556"
+      ],
+      "0.528": [
+       "0",
+       "0",
+       "0.622"
+      ],
+      "0.813": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "fly_root": {
+     "position": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.244": [
+       "0",
+       "-0.183",
+       "0.35"
+      ],
+      "0.386": [
+       "0",
+       "0.548",
+       "-1.401"
+      ],
+      "0.528": [
+       "0",
+       "0",
+       "-0.467"
+      ],
+      "0.813": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
     }
    }
   }

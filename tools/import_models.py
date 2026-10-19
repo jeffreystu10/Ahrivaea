@@ -55,6 +55,7 @@ ALIASES = {
     'serpentdemon': 'six_armed_serpent_demon',
     'angler': 'giant_angler_fish',
     'lung': 'long',
+    'poisonfrog': 'poisonous_frog',
 }
 # the base hitbox of a creature at size 1, in blocks
 BASE_W, BASE_H = 0.7, 0.8

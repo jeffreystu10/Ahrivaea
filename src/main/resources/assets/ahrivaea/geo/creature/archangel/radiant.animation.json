@@ -5,59 +5,38 @@
    "loop": true,
    "animation_length": 1,
    "bones": {
-    "body": {
-     "rotation": [
-      "1.5*math.sin(query.life_time*1*144+0)",
-      "0",
-      "0"
-     ]
-    },
-    "head": {
-     "rotation": [
-      "0",
-      "9*math.sin(query.life_time*1*90+57)",
-      "0"
-     ]
-    },
-    "arm_left": {
-     "rotation": [
-      "8*math.sin(query.life_time*1*288+180)",
-      "0",
-      "0"
-     ]
-    },
-    "arm_right": {
-     "rotation": [
-      "8*math.sin(query.life_time*1*288+0)",
-      "0",
-      "0"
-     ]
-    },
     "leg_left": {
      "rotation": [
-      "6*math.sin(query.life_time*1*288+0)",
+      "24*math.sin(query.life_time*1*288+0)",
       "0",
       "0"
      ]
     },
     "leg_right": {
      "rotation": [
-      "6*math.sin(query.life_time*1*288+180)",
+      "24*math.sin(query.life_time*1*288+180)",
       "0",
       "0"
      ]
     },
-    "halo": {
+    "body": {
      "rotation": [
+      "2.5*math.sin(query.life_time*1*144+0)",
       "0",
-      "query.life_time*1*-100",
       "0"
      ]
     },
-    "fly_root": {
-     "position": [
+    "arm_left": {
+     "rotation": [
+      "20*math.sin(query.life_time*1*288+180)",
       "0",
-      "1*math.sin(query.life_time*1*100+0)",
+      "0"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "7*math.sin(query.life_time*1*288+0)",
+      "0",
       "0"
      ]
     },
@@ -65,42 +44,56 @@
      "rotation": [
       "0",
       "0",
-      "-(-16*math.sin(query.life_time*1*150+0))"
-     ]
-    },
-    "wing_right": {
-     "rotation": [
-      "0",
-      "0",
-      "-(16*math.sin(query.life_time*1*150+0))"
+      "-(-26*math.sin(query.life_time*1*216+0))"
      ]
     },
     "wingtip_left": {
      "rotation": [
       "0",
       "0",
-      "-(-11.2*math.sin(query.life_time*1*150+-40))"
+      "-(-18.2*math.sin(query.life_time*1*216+-40.107))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(26*math.sin(query.life_time*1*216+0))"
      ]
     },
     "wingtip_right": {
      "rotation": [
       "0",
       "0",
-      "-(11.2*math.sin(query.life_time*1*150+-40))"
+      "-(18.2*math.sin(query.life_time*1*216+-40.107))"
      ]
     },
-    "lower_wing_left": {
+    "head": {
+     "rotation": [
+      "0",
+      "-(10*math.sin(query.life_time*1*90+57.296))",
+      "0"
+     ]
+    },
+    "wing2_left": {
      "rotation": [
       "0",
       "0",
-      "10*math.sin(query.life_time*1*150+60)"
+      "-(-8*math.sin(query.life_time*1*216+0))"
      ]
     },
-    "lower_wing_right": {
+    "wing2_right": {
      "rotation": [
       "0",
       "0",
-      "-10*math.sin(query.life_time*1*150+60)"
+      "-(8*math.sin(query.life_time*1*216+180))"
+     ]
+    },
+    "crown_halo": {
+     "rotation": [
+      "0",
+      "-query.life_time*1*90",
+      "0"
      ]
     }
    }
@@ -109,58 +102,37 @@
    "loop": true,
    "animation_length": 1,
    "bones": {
-    "body": {
-     "rotation": [
-      "1.5*math.sin(query.life_time*1*144+0)",
-      "0",
-      "0"
-     ]
-    },
-    "head": {
-     "rotation": [
-      "-50",
-      "0",
-      "0"
-     ]
-    },
-    "arm_left": {
-     "rotation": [
-      "8*math.sin(query.life_time*1*288+180)",
-      "0",
-      "0"
-     ]
-    },
-    "arm_right": {
-     "rotation": [
-      "8*math.sin(query.life_time*1*288+0)",
-      "0",
-      "0"
-     ]
-    },
     "leg_left": {
      "rotation": [
-      "10",
+      "8.25",
       "0",
       "0"
      ]
     },
     "leg_right": {
      "rotation": [
-      "10",
+      "8.25",
       "0",
       "0"
      ]
     },
-    "halo": {
+    "body": {
      "rotation": [
+      "2.5*math.sin(query.life_time*1*144+0)",
       "0",
-      "query.life_time*1*-100",
       "0"
      ]
     },
-    "fly_root": {
+    "arm_left": {
      "rotation": [
-      "60+1.7*math.sin(query.life_time*1*180+0)",
+      "20*math.sin(query.life_time*1*288+180)",
+      "0",
+      "0"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "7*math.sin(query.life_time*1*288+0)",
       "0",
       "0"
      ]
@@ -169,43 +141,220 @@
      "rotation": [
       "0",
       "0",
-      "-(-50*math.sin(query.life_time*1*300+0))"
-     ]
-    },
-    "wing_right": {
-     "rotation": [
-      "0",
-      "0",
-      "-(50*math.sin(query.life_time*1*300+0))"
+      "-(-59.8*math.sin(query.life_time*1*367.2+0))"
      ]
     },
     "wingtip_left": {
      "rotation": [
       "0",
       "0",
-      "-(-35.0*math.sin(query.life_time*1*300+-40))"
+      "-(-41.86*math.sin(query.life_time*1*367.2+-40.107))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(59.8*math.sin(query.life_time*1*367.2+0))"
      ]
     },
     "wingtip_right": {
      "rotation": [
       "0",
       "0",
-      "-(35.0*math.sin(query.life_time*1*300+-40))"
+      "-(41.86*math.sin(query.life_time*1*367.2+-40.107))"
      ]
     },
-    "lower_wing_left": {
+    "head": {
+     "rotation": [
+      "-73.8",
+      "-(10*math.sin(query.life_time*1*90+57.296))",
+      "0"
+     ]
+    },
+    "wing2_left": {
      "rotation": [
       "0",
       "0",
-      "10*math.sin(query.life_time*1*150+60)"
+      "-(-8*math.sin(query.life_time*1*216+0))"
      ]
     },
-    "lower_wing_right": {
+    "wing2_right": {
      "rotation": [
       "0",
       "0",
-      "-10*math.sin(query.life_time*1*150+60)"
+      "-(8*math.sin(query.life_time*1*216+180))"
      ]
+    },
+    "crown_halo": {
+     "rotation": [
+      "0",
+      "-query.life_time*1*90",
+      "0"
+     ]
+    },
+    "fly_root": {
+     "rotation": [
+      "76.3+1.7*math.sin(query.life_time*1*100+57)",
+      "0",
+      "0"
+     ],
+     "position": [
+      "0",
+      "32.208+2.577*math.sin(query.life_time*1*100)",
+      "0"
+     ]
+    }
+   }
+  },
+  "attack": {
+   "loop": false,
+   "animation_length": 0.784,
+   "bones": {
+    "arm_right": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "-141.232",
+       "0",
+       "0"
+      ],
+      "0.355": [
+       "31.636",
+       "0",
+       "0"
+      ],
+      "0.523": [
+       "-6.779",
+       "0",
+       "0"
+      ],
+      "0.784": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "arm_left": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "-39.545",
+       "0",
+       "0"
+      ],
+      "0.355": [
+       "15.818",
+       "0",
+       "0"
+      ],
+      "0.523": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.784": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "body": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "-9.039",
+       "-11.299",
+       "0"
+      ],
+      "0.355": [
+       "14.688",
+       "6.198",
+       "0"
+      ],
+      "0.523": [
+       "4.519",
+       "0",
+       "0"
+      ],
+      "0.784": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "head": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.355": [
+       "0",
+       "0",
+       "2.944"
+      ],
+      "0.523": [
+       "0",
+       "0",
+       "1.178"
+      ],
+      "0.784": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
+    },
+    "fly_root": {
+     "position": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.209": [
+       "0",
+       "0",
+       "2.263"
+      ],
+      "0.355": [
+       "0",
+       "0",
+       "-7.542"
+      ],
+      "0.523": [
+       "0",
+       "0",
+       "-3.771"
+      ],
+      "0.784": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
     }
    }
   }

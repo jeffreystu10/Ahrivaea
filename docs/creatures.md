@@ -125,10 +125,12 @@ model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 
 get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
-Wave 2's 33 creatures, the Iron Golem and the Whale have models built by `tools/build_models.py` from the
+Wave 2's library models are arriving in batches (20 so far, imported like the rest). Until theirs arrive, the other
+13 wave 2 creatures, the Iron Golem and the Whale have stand-in models built by `tools/build_models.py` from the
 descriptions in `tools/model_defs.py`, in the library's style (blocky parts, a 64x16 palette texture, idle and fly
 animations, Enraged and Mutated textures made by recolouring the palette). Run `python3 tools/build_models.py
-[species ...]` after changing one; a real library model imported later simply replaces its files.
+[species ...]` after changing one; a real library model imported later replaces its files (then take
+that creature out of `model_defs.py` so a rebuild doesn't put the stand-in back).
 
 Models so far: 310 of the 312 forms. A form without its own model borrows its species' None model, or else any model
 the species has: the None Orca uses the Water Orca's and the Arcane Dragon the None Dragon's.

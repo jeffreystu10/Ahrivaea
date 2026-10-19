@@ -5,54 +5,88 @@
    "loop": true,
    "animation_length": 1,
    "bones": {
-    "fly_root": {
-     "position": [
-      "0",
-      "1.5*math.sin(query.life_time*1*90+0)",
-      "0"
-     ]
-    },
     "body": {
+     "scale": [
+      "1",
+      "1+0.05*math.sin(query.life_time*1.35*144+0)",
+      "1"
+     ]
+    },
+    "bolt": {
+     "scale": [
+      "1",
+      "1+0.6*math.sin(query.life_time*1.35*648+0)",
+      "1"
+     ]
+    },
+    "wisps": {
      "rotation": [
-      "3*math.sin(query.life_time*1*70+0)",
-      "6*math.sin(query.life_time*1*50+0)",
+      "0",
+      "-query.life_time*1.35*72",
       "0"
      ]
-    },
-    "tendril_1": {
-     "rotation": [
-      "16*math.sin(query.life_time*1*200+0)",
-      "0",
-      "10*math.sin(query.life_time*1*160+0)"
-     ]
-    },
-    "tendril_2": {
-     "rotation": [
-      "16*math.sin(query.life_time*1*200+70)",
-      "0",
-      "10*math.sin(query.life_time*1*160+40)"
-     ]
-    },
-    "tendril_3": {
-     "rotation": [
-      "16*math.sin(query.life_time*1*200+140)",
-      "0",
-      "10*math.sin(query.life_time*1*160+80)"
-     ]
-    },
-    "tendril_4": {
-     "rotation": [
-      "16*math.sin(query.life_time*1*200+210)",
-      "0",
-      "10*math.sin(query.life_time*1*160+120)"
-     ]
-    },
-    "tendril_5": {
-     "rotation": [
-      "16*math.sin(query.life_time*1*200+280)",
-      "0",
-      "10*math.sin(query.life_time*1*160+160)"
-     ]
+    }
+   }
+  },
+  "attack": {
+   "loop": false,
+   "animation_length": 0.832,
+   "bones": {
+    "body": {
+     "rotation": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.25": [
+       "-8.971",
+       "0",
+       "0"
+      ],
+      "0.395": [
+       "12.559",
+       "-4.386",
+       "0"
+      ],
+      "0.541": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.832": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     "position": {
+      "0": [
+       "0",
+       "0",
+       "0"
+      ],
+      "0.25": [
+       "0",
+       "-0.39",
+       "0.596"
+      ],
+      "0.395": [
+       "0",
+       "1.17",
+       "-2.383"
+      ],
+      "0.541": [
+       "0",
+       "0",
+       "-0.794"
+      ],
+      "0.832": [
+       "0",
+       "0",
+       "0"
+      ]
+     }
     }
    }
   }

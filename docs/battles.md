@@ -39,10 +39,10 @@ selected or hovered unit's card is at the bottom left; the last three things tha
 
 **Enemy phase.** The wild creatures move and attack one at a time. The log at the top left says what happened.
 
-**After.** Win and you get XP for yourself (`/character`: 5 for the win plus about 5 per creature beaten, up to
-double for ones above your level and as little as 1 for ones far below) and the same amount for your creatures
-(`/party xp`). Creatures and your character level on the same curve (100 + 25 x level XP to the next level), so
-your creatures grow at your pace. Lose or flee and you get nothing; your creatures keep their damage either way
+**After.** Win and XP goes into your pool: 5 for the win plus about 5 per creature beaten, up to double for ones
+above your level and as little as 1 for ones far below. You spend the pool on levels, for your creatures or for
+yourself (party screen; `/party xp`, `/character levelup`). Creatures and your character level on the same curve
+(100 + 25 x level XP to the next level). Lose or flee and you get nothing; your creatures keep their damage either way
 (fainted ones come back at 1 HP).
 
 **Recruiting** (`dev.ahrivaea.party.RecruitRules`). You can recruit any defeated creature if you have the creature
@@ -57,7 +57,11 @@ level range reaches that band, at a level inside it (so high-level creatures don
 their level, and an area where nothing fits stays empty for you).
 Vanilla mobs that turn into creatures near a player follow the same band.
 
-**Your character.** `/character` shows your level, stats and points; `/character spend <stat> <points>` spends them.
+**Your character.** You have the same seven stats as a creature, starting at 30 each (max 100). Level yourself up
+like a party creature, with XP from the pool (the **You** tab of the party screen, or `/character levelup`); each
+level gives 6 stat points to spend with the **+** buttons there (shift-click for 5) or `/character spend <stat>
+<points>`. Your stats are yours in battle (armor adds Defense), and **Speed** also makes you faster outside battles:
+2% per point above 30 (walking, sprinting, swimming), up to 140% faster at 100. `/character` shows it all.
 
 Operator commands for testing: `/battle start` (with the nearest wild creature), `/battle end`, `/battle arena <theme>`
 (build an arena and look at it; `/battle home` to go back),

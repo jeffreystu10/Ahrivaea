@@ -708,7 +708,7 @@ public class BattleScreen extends Screen {
 		g.centeredText(font, title, 0, 0, won ? 0xFFFFE070 : 0xFFFFFFFF);
 		g.pose().popMatrix();
 		if (won) {
-			g.centeredText(font, "+" + r.get("xp").getAsInt() + " XP for your creatures   +" + r.get("charXp").getAsInt() + " XP for you", width / 2, y + 38, 0xFFFFFFFF);
+			g.centeredText(font, "+" + r.get("xp").getAsInt() + " XP to spend on your creatures or yourself", width / 2, y + 38, 0xFFFFFFFF);
 			StringBuilder drops = new StringBuilder();
 			JsonArray loot = r.has("loot") ? r.getAsJsonArray("loot") : new JsonArray();
 			for (int i = 0; i < loot.size(); i++) drops.append(i > 0 ? ", " : "").append(loot.get(i).getAsString());

@@ -106,7 +106,7 @@ Which biome and time of day gives which influence: list to come (a draft is in
 ## Your character (MMO-style levels)
 - Levels 1–50. XP for now comes from battles: 15 per enemy knocked out, +25 for winning. XP to the next
   level = 100 + 25 × level.
-- Start with 30 in each stat. **Each level gives 6 points to spend on any stat** (`/character spend <stat> <n>`),
+- Levels are bought with XP from the pool, like a party creature's (party screen, You tab). Start with 30 in each stat. **Each level gives 6 points to spend on any stat** (`/character spend <stat> <n>`),
   up to 100 each. (At level 50 that is about 500, like a creature.)
 - Speed sets your squares per turn the same way as for creatures. Armor adds 1.5 Defense per armor point.
 - Classes or skill trees (e.g. the Seven Schools of the Dread Circle) can come later.

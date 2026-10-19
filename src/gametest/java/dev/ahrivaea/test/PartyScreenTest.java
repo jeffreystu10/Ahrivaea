@@ -19,6 +19,8 @@ import java.util.List;
  * party key opens the screen, sending one out moves it to the Out tab, and calling it back brings it home.
  */
 public class PartyScreenTest implements FabricClientGameTest {
+	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("ahrivaea");
+
 	@Override
 	public void runTest(ClientGameTestContext context) {
 		List<String> failures = new ArrayList<>();
@@ -101,6 +103,28 @@ public class PartyScreenTest implements FabricClientGameTest {
 				c.gui.setScreen(null);
 				c.debugEntries.setOverlayVisible(false);
 			});
+			context.waitTicks(3);
+
+			// you: level up with pool XP, put 5 points into Speed, and walk 10% faster
+			server.runOnServer(s -> dev.ahrivaea.party.Party.addXp(s.getPlayerList().getPlayers().getFirst(), 1000));
+			context.runOnClient(c -> c.player.connection.sendCommand("character levelup"));
+			context.runOnClient(c -> c.player.connection.sendCommand("character spend speed 5"));
+			context.waitTicks(30);
+			String you = server.computeOnServer(s -> {
+				var p = s.getPlayerList().getPlayers().getFirst();
+				var ch = dev.ahrivaea.character.PlayerCharacter.get(p);
+				var m = p.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(dev.ahrivaea.Ahrivaea.id("character_speed"));
+				return "level " + ch.level() + ", speed " + ch.stats().speed() + ", points " + ch.points() + ", bonus " + (m == null ? "none" : Math.round(m.amount() * 100) + "%");
+			});
+			LOG.info("PartyScreenTest: you: {}", you);
+			if (!you.equals("level 2, speed 35, points 1, bonus 10%")) throw new AssertionError("levelling up and spending 5 on Speed should make you 10% faster: " + you);
+			context.runOnClient(c -> {
+				PartyScreen.showYou();
+				c.gui.setScreen(new PartyScreen());
+			});
+			context.waitTicks(10);
+			context.takeScreenshot(TestScreenshotOptions.of("party_7_you").withSize(1600, 900));
+			context.runOnClient(c -> c.gui.setScreen(null));
 			context.waitTicks(3);
 
 			// the dex (J): what's in the party is caught, a wild Cow nearby is seen, the rest unknown with a clue

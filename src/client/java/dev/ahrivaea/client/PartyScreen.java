@@ -18,7 +18,7 @@ public class PartyScreen extends Screen {
 	/** Everything sits this much lower, clear of the F3 debug text. */
 	static final int TOP = 14;
 	enum Tab {
-		PARTY("Party"), OUT("Out"), BOX("Box");
+		PARTY("Party"), OUT("Out"), BOX("Box"), YOU("You");
 
 		final String title;
 
@@ -44,13 +44,25 @@ public class PartyScreen extends Screen {
 		super(Component.literal("Party"));
 	}
 
+	/** Opens on the You tab (for the tests). */
+	public static void showYou() {
+		tab = Tab.YOU;
+	}
+
 	void refresh() {
 		rebuildWidgets();
 	}
 
 	private JsonArray list() {
-		return PartyClient.state.getAsJsonArray(tab.key());
+		return tab == Tab.YOU || !PartyClient.state.has(tab.key()) ? new JsonArray() : PartyClient.state.getAsJsonArray(tab.key());
 	}
+
+	/** You (your level and stats), or null if the server didn't send them. */
+	private static JsonObject me() {
+		return PartyClient.state.has("character") ? PartyClient.state.getAsJsonObject("character") : null;
+	}
+
+	private static final String[] STAT_KEYS = {"hp", "attack", "defense", "speed", "magic", "luck", "charisma"};
 
 	private JsonObject chosen() {
 		JsonArray l = list();
@@ -87,15 +99,36 @@ public class PartyScreen extends Screen {
 		// tabs
 		for (int i = 0; i < Tab.values().length; i++) {
 			Tab t = Tab.values()[i];
-			int n = PartyClient.state.getAsJsonArray(t.key()).size();
-			Button b = addRenderableWidget(Button.builder(Component.literal(t.title + " (" + n + ")"), btn -> {
+			String label = t == Tab.YOU ? "You" : t.title + " " + PartyClient.state.getAsJsonArray(t.key()).size();
+			Button b = addRenderableWidget(Button.builder(Component.literal(label), btn -> {
 				tab = t;
 				selected = 0;
 				scroll = 0;
 				confirmRelease = false;
 				rebuildWidgets();
-			}).bounds(x + i * 51, 20 + TOP, 49, 18).build());
+			}).bounds(x + i * 39, 20 + TOP, 38, 18).build());
 			b.active = tab != t;
+		}
+		// you: level up with your XP, and points into stats
+		if (tab == Tab.YOU) {
+			JsonObject me = me();
+			if (me != null) {
+				int rx = right(), need = me.get("xpNext").getAsInt() - me.get("xp").getAsInt();
+				int pool = PartyClient.state.get("xp").getAsInt();
+				Button up = addRenderableWidget(Button.builder(Component.literal(need <= 0 ? "Max level" : "Level up (" + need + " XP)"), b -> command("character levelup"))
+						.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Spend " + need + " of your XP to go up a level: 6 more stat points")))
+						.bounds(rx, height - 50, 120, 20).build());
+				up.active = need > 0 && pool >= need;
+				int points = me.get("points").getAsInt();
+				JsonArray base = me.getAsJsonArray("base");
+				for (int i = 0; i < STAT_KEYS.length; i++) {
+					final String key = STAT_KEYS[i];
+					Button plus = addRenderableWidget(Button.builder(Component.literal("+"), b -> command("character spend " + key + " " + (Minecraft.getInstance().hasShiftDown() ? 5 : 1)))
+							.tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Put a point into " + STAT_NAMES[i] + " (shift: 5)")))
+							.bounds(rx + 150, 22 + TOP + 55 + i * 14, 14, 12).build());
+					plus.active = points > 0 && base.get(i).getAsInt() < 100;
+				}
+			}
 		}
 		// the creatures in this tab, as cards to click
 		JsonArray l = list();
@@ -196,10 +229,20 @@ public class PartyScreen extends Screen {
 			PartyClient.bar(g, x + 4, y + 14, 80, 4, max <= 0 ? 0 : hp / (float) max, PartyClient.hpColor(hp, max));
 			g.text(font, hp + "/" + max, x + 88, y + 12, 0xFFDDDDDD);
 		}
+		if (tab == Tab.YOU) {
+			JsonObject me = me();
+			if (me != null) {
+				youDetails(g, me, rx, 22 + TOP);
+				g.text(font, "Your level and stats.", x, 48 + TOP, 0xFFAAAAAA);
+				wrapped(g, "Battles fill your XP pool. Spend it on your creatures' levels or your own: each level gives you 6 stat points. Your stats are yours in battle, and Speed makes you faster everywhere.", x, 62 + TOP, 150, 0xFF888888);
+			}
+			return;
+		}
 		if (l.isEmpty()) g.text(font, switch (tab) {
 			case PARTY -> "Empty. Catch creatures with a Vessel.";
 			case OUT -> "None out. Send one from your party.";
 			case BOX -> "Empty. Extras go here.";
+			case YOU -> "";
 		}, x, 48 + TOP, 0xFFAAAAAA);
 		else if (l.size() > rows()) g.text(font, "(scroll for more)", x, 44 + TOP + rows() * CARD_H, 0xFF888888);
 		details(g, chosen(), rx, 22 + TOP);
@@ -253,6 +296,36 @@ public class PartyScreen extends Screen {
 			String where = c.get("riding").getAsBoolean() ? "You're riding it." : c.get("sitting").getAsBoolean() ? "Out with you, waiting where you left it." : "Out with you, following you.";
 			g.text(font, where, x, y, 0xFF9FE09F);
 		} else if (tab == Tab.PARTY) g.text(font, "Party slot " + (selected + 1) + (selected < 4 ? " (goes into battles)" : ""), x, y, 0xFF9FE09F);
+	}
+
+	/** You: level, XP, points, and the seven stats (with + buttons beside them). */
+	private void youDetails(GuiGraphicsExtractor g, JsonObject me, int x, int y) {
+		int w = 244;
+		g.fill(x - 4, y - 4, x + w + 4, height - 54, 0x80000000);
+		g.text(font, me.get("name").getAsString(), x, y, 0xFFFFD040);
+		String lv = "Lv." + me.get("level").getAsInt();
+		g.text(font, lv, x + w - font.width(lv), y, 0xFFFFFFFF);
+		y += 14;
+		int next = me.get("xpNext").getAsInt(), xp = me.get("xp").getAsInt();
+		g.text(font, "XP", x, y, 0xFFFFFFFF);
+		PartyClient.bar(g, x + 24, y + 2, 120, 5, next <= 0 ? 1 : xp / (float) next, 0xFF60A0FF);
+		g.text(font, next <= 0 ? "max" : xp + "/" + next, x + 150, y, 0xFFDDDDDD);
+		y += 12;
+		g.text(font, "Battle HP " + me.get("maxHp").getAsInt() + ", " + me.get("squares").getAsInt() + " squares a turn", x, y, 0xFFDDDDDD);
+		y += 12;
+		int points = me.get("points").getAsInt();
+		g.text(font, points > 0 ? points + " stat points to spend" : "No stat points (level up for 6 more)", x, y, points > 0 ? 0xFF9FE09F : 0xFFAAAAAA);
+		y += 16;
+		JsonArray stats = me.getAsJsonArray("stats"), base = me.getAsJsonArray("base");
+		for (int i = 0; i < stats.size(); i++) {
+			int sy = y + i * 14;
+			g.text(font, STAT_NAMES[i], x, sy + 2, 0xFFFFFFFF);
+			int v = stats.get(i).getAsInt(), b = base.get(i).getAsInt();
+			PartyClient.bar(g, x + 56, sy + 4, 60, 4, v / 100f, 0xFFFFD27F);
+			g.text(font, v + (v != b ? " (" + b + " + armor)" : ""), x + 120, sy + 2, 0xFFFFD27F);
+		}
+		y += 7 * 14 + 6;
+		g.text(font, "Outside battles you're " + me.get("speedBonus").getAsInt() + "% faster (2% per Speed point over 30)", x, y, 0xFF9FC8FF);
 	}
 
 	private int wrapped(GuiGraphicsExtractor g, String text, int x, int y, int w, int color) {

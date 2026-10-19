@@ -426,7 +426,7 @@ public final class Battle {
 			characterXp = 5;
 			for (Defeated d : defeated) characterXp += (int) Math.max(1, Math.round(5 * Math.clamp(1 + 0.1 * (d.level() - me), 0.2, 2.0)));
 			poolXp = characterXp;
-			say("Victory! +" + poolXp + " XP for your creatures, +" + characterXp + " XP for you.");
+			say("Victory! +" + poolXp + " XP (spend it on your creatures or yourself on the party screen).");
 			// what the defeated creatures drop; anything that doesn't fit in your inventory waits until you're home
 			for (Defeated d : defeated) {
 				var sp = dev.ahrivaea.creature.Species.get(d.species());
@@ -446,7 +446,6 @@ public final class Battle {
 					if (p.getInventory().add(stack) && stack.isEmpty()) it.remove();
 				}
 				Party.addXp(p, poolXp);
-				PlayerCharacter.addXp(p, characterXp);
 			}
 		} else if (o == Outcome.LOST) {
 			say("You were defeated and retreat.");

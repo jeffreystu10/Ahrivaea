@@ -303,11 +303,6 @@ public class BattleTest implements FabricClientGameTest {
 			int partyAfter = server.computeOnServer(s -> Party.get(s.getPlayerList().getPlayers().getFirst()).size());
 			if (poolBefore < 10) failures.add("winning should give XP, pool is " + poolBefore);
 			if (partyAfter != partyBefore + 1) failures.add("recruiting should add a party member (" + partyBefore + " -> " + partyAfter + ")");
-			int charLevelXp = server.computeOnServer(s -> {
-				var c = dev.ahrivaea.character.PlayerCharacter.get(s.getPlayerList().getPlayers().getFirst());
-				return c.level() * 1000 + c.xp();
-			});
-			if (charLevelXp <= 1000) failures.add("the player character should have gained XP");
 			context.runOnClient(c -> ((BattleScreen) c.gui.screen()).leave());
 			for (int t = 0; t < 400 && !context.computeOnClient(c -> c.level != null && !(c.gui.screen() instanceof BattleScreen) && !c.level.dimension().equals(Arena.DIMENSION)); t++) context.waitTick();
 			String where = context.computeOnClient(c -> "dimension " + (c.level == null ? "none" : c.level.dimension().identifier()) + ", screen " + (c.gui.screen() == null ? "none" : c.gui.screen().getClass().getSimpleName()) + ", battle state " + BattleClient.active());

@@ -69,6 +69,25 @@ public final class PartySync {
 	public static JsonObject view(ServerPlayer p) {
 		JsonObject o = new JsonObject();
 		o.addProperty("xp", Party.xp(p));
+		// you, for the party screen's You tab
+		var ch = dev.ahrivaea.character.PlayerCharacter.get(p);
+		var cs = ch.battleStats(p);
+		JsonObject me = new JsonObject();
+		me.addProperty("name", p.getPlainTextName());
+		me.addProperty("level", ch.level());
+		me.addProperty("xp", ch.xp());
+		me.addProperty("xpNext", ch.level() >= dev.ahrivaea.character.PlayerCharacter.MAX_LEVEL ? 0 : dev.ahrivaea.character.PlayerCharacter.xpToNext(ch.level()));
+		me.addProperty("points", ch.points());
+		JsonArray mine = new JsonArray(), base = new JsonArray();
+		for (int v : new int[]{cs.hp(), cs.attack(), cs.defense(), cs.speed(), cs.magic(), cs.luck(), cs.charisma()}) mine.add(v);
+		var raw = ch.stats();
+		for (int v : new int[]{raw.hp(), raw.attack(), raw.defense(), raw.speed(), raw.magic(), raw.luck(), raw.charisma()}) base.add(v);
+		me.add("stats", mine);
+		me.add("base", base);
+		me.addProperty("maxHp", ch.maxHealth());
+		me.addProperty("squares", cs.squaresPerTurn());
+		me.addProperty("speedBonus", (int) Math.round(ch.speedBonus() * 100));
+		o.add("character", me);
 		JsonArray party = new JsonArray();
 		for (CaughtCreature c : Party.get(p)) party.add(describe(c));
 		o.add("party", party);

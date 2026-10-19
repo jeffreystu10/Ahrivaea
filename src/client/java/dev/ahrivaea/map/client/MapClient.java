@@ -56,7 +56,9 @@ public class MapClient implements ClientModInitializer {
 			while (OPEN.consumeClick()) if (on && mc.gui.screen() == null) mc.gui.setScreen(new MapScreen());
 			while (MINIMAP.consumeClick()) if (on) setMinimap(!minimap);
 			ticks++;
-			if (on && ticks % 40 == 0) MapTiles.queueAround(mc, 1);
+			// the chunks right around you every second; everything in view every 5 seconds (so changes get drawn)
+			if (on && ticks % 20 == 0) MapTiles.queueAround(mc, 1);
+			if (on && ticks % 100 == 0 && MapTiles.queueEmpty()) MapTiles.queueAround(mc, mc.options.getEffectiveRenderDistance());
 			MapTiles.tick(mc, on && mc.level != null);
 			if (ticks % 600 == 0) MapTiles.saveAll();
 		});

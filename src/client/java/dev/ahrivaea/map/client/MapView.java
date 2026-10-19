@@ -40,6 +40,8 @@ public final class MapView {
 		g.enableScissor(x0, y0, x0 + w, y0 + h);
 		g.fill(x0, y0, x0 + w, y0 + h, BACKGROUND);
 		float midX = x0 + w / 2f, midY = y0 + h / 2f;
+		// where block 0,0 is on screen, on a whole pixel (so tiles meet without a seam)
+		float originX = (float) Math.floor(midX - cx * scale), originY = (float) Math.floor(midY - cz * scale);
 		double bx0 = cx - w / 2.0 / scale, bx1 = cx + w / 2.0 / scale, bz0 = cz - h / 2.0 / scale, bz1 = cz + h / 2.0 / scale;
 		int s = MapTiles.SIZE;
 		for (int tx = Math.floorDiv((int) Math.floor(bx0), s); tx <= Math.floorDiv((int) Math.floor(bx1), s); tx++)
@@ -48,7 +50,7 @@ public final class MapView {
 				if (t == null) continue;
 				MapTiles.ready(t);
 				g.pose().pushMatrix();
-				g.pose().translate(midX + (float) ((tx * s - cx) * scale), midY + (float) ((tz * s - cz) * scale));
+				g.pose().translate(originX + tx * s * scale, originY + tz * s * scale);
 				g.pose().scale(scale, scale);
 				g.blit(RenderPipelines.GUI_TEXTURED, t.id, 0, 0, 0f, 0f, s, s, s, s);
 				g.pose().popMatrix();

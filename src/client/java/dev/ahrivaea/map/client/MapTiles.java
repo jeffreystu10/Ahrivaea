@@ -106,6 +106,10 @@ public final class MapTiles {
 		}
 	}
 
+	static boolean queueEmpty() {
+		return QUEUE.isEmpty();
+	}
+
 	static void queue(int cx, int cz) {
 		QUEUE.add(ChunkPos.pack(cx, cz));
 	}
@@ -114,7 +118,9 @@ public final class MapTiles {
 	static void queueAround(Minecraft mc, int radius) {
 		if (mc.player == null) return;
 		int px = mc.player.getBlockX() >> 4, pz = mc.player.getBlockZ() >> 4;
-		for (int dx = -radius; dx <= radius; dx++) for (int dz = -radius; dz <= radius; dz++) queue(px + dx, pz + dz);
+		// nearest first
+		for (int r = 0; r <= radius; r++)
+			for (int dx = -r; dx <= r; dx++) for (int dz = -r; dz <= r; dz++) if (Math.max(Math.abs(dx), Math.abs(dz)) == r) queue(px + dx, pz + dz);
 	}
 
 	/** Colours a chunk's 16x16 columns into its tile. */

@@ -5,8 +5,8 @@ server. Players and the server both need the mod; on a server without it the map
 
 - **Explored map:** everything your game loads around you is drawn, coloured like a vanilla map (shaded by slope,
   water darker the deeper it is). Places you haven't been stay dark. Each dimension has its own map; in the Nether
-  it's the ground under the roof. Where you build or dig is redrawn as you go (the chunks around you are checked
-  every 2 seconds).
+  it's the ground under the roof. Changes are redrawn as you go: the chunks around you every second, everything in view
+  every 5 seconds.
 - **Saved on your computer:** the map is kept in `ahrivaea_map/` in your game folder, as 256x256-block PNG tiles, one
   folder per single-player world or server and per dimension. It's saved every 30 seconds and when you leave.
 - **Minimap:** top right, one pixel per block (100 blocks across), north up, your coordinates underneath. It moves down

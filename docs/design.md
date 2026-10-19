@@ -108,7 +108,8 @@ Which biome and time of day gives which influence: list to come (a draft is in
   level = 100 + 25 × level.
 - Levels are bought with XP from the pool, like a party creature's (party screen, You tab). Start with 30 in each stat. **Each level gives 6 points to spend on any stat** (`/character spend <stat> <n>`),
   up to 100 each. (At level 50 that is about 500, like a creature.)
-- Speed sets your squares per turn the same way as for creatures. Armor adds 1.5 Defense per armor point.
+- Speed sets your squares per turn the same way as for creatures. Armor adds 1.5 Defense per armor point. Outside battles, Speed
+  makes you 2% faster per point above 30 and HP gives a heart per 5 points above 30.
 - Classes or skill trees (e.g. the Seven Schools of the Dread Circle) can come later.
 
 ## The creature list

@@ -420,11 +420,11 @@ public final class Battle {
 			if (where == net.minecraft.world.level.Level.END) dev.ahrivaea.villager.Villagers.award(p, dev.ahrivaea.villager.Villagers.END_BATTLES_WON);
 		}
 		if (o == Outcome.WON) {
-			// your own XP: 5 for the win, and about 5 per creature beaten, more for ones above your level, less below;
-			// your creatures' XP pool gets the same, so they level at your pace
+			// XP for the pool: 10 for the win, and about 10 per creature beaten, more for ones above your level, less
+			// below (double what it was when you and your creatures each got this much separately)
 			int me = p == null ? 1 : PlayerCharacter.get(p).level();
-			characterXp = 5;
-			for (Defeated d : defeated) characterXp += (int) Math.max(1, Math.round(5 * Math.clamp(1 + 0.1 * (d.level() - me), 0.2, 2.0)));
+			characterXp = 10;
+			for (Defeated d : defeated) characterXp += (int) Math.max(2, Math.round(10 * Math.clamp(1 + 0.1 * (d.level() - me), 0.2, 2.0)));
 			poolXp = characterXp;
 			say("Victory! +" + poolXp + " XP (spend it on your creatures or yourself on the party screen).");
 			// what the defeated creatures drop; anything that doesn't fit in your inventory waits until you're home

@@ -328,7 +328,9 @@ public class PartyScreen extends Screen {
 			g.text(font, v + (v != b ? " (" + b + " + armor)" : ""), x + 120, sy + 2, 0xFFFFD27F);
 		}
 		y += 7 * 14 + 6;
-		wrapped(g, "Outside battles: " + me.get("speedBonus").getAsInt() + "% faster (2% per Speed point over 30)", x, y, w, 0xFF9FC8FF);
+		int hearts = me.has("hearts") ? me.get("hearts").getAsInt() : 0;
+		wrapped(g, "Outside battles: " + me.get("speedBonus").getAsInt() + "% faster (2% per Speed point over 30), "
+				+ (hearts == 0 ? "no extra hearts" : "+" + hearts + (hearts == 1 ? " heart" : " hearts")) + " (one per 5 HP points over 30)", x, y, w, 0xFF9FC8FF);
 	}
 
 	private int wrapped(GuiGraphicsExtractor g, String text, int x, int y, int w, int color) {

@@ -24,7 +24,8 @@ import java.util.List;
  * The player's own character: levels 1–50 with points to spend on the same seven stats creatures have. You level
  * yourself up like a party creature, by spending XP from the pool battles fill (the same XP to the next level as a
  * creature, 100 + 25 × level). Starts at 30 in each stat; each level gives 6 points (max 100 per stat). The stats
- * are yours in battle, and Speed also makes you faster outside battles: 2% per point above 30.
+ * are yours in battle; outside battles Speed makes you faster (2% per point above 30) and HP gives you more hearts
+ * (one per 5 points above 30).
  */
 public record PlayerCharacter(int level, int xp, int points, Stats stats) {
 	public static final int MAX_LEVEL = 50, START_STAT = 30, POINTS_PER_LEVEL = 6;
@@ -50,13 +51,35 @@ public record PlayerCharacter(int level, int xp, int points, Stats stats) {
 		// Speed outside battles: kept up to date on every player once a second
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
 			if (server.getTickCount() % 20 != 11) return;
-			for (ServerPlayer p : server.getPlayerList().getPlayers()) applySpeed(p);
+			for (ServerPlayer p : server.getPlayerList().getPlayers()) {
+				applySpeed(p);
+				applyHealth(p);
+			}
 		});
 	}
 
 	/** The bonus to movement speed from the Speed stat (0.02 per point above 30). */
 	public double speedBonus() {
 		return SPEED_PER_POINT * Math.max(0, stats.speed() - START_STAT);
+	}
+
+	/** Extra health outside battles: a heart (2 health) per 5 points of HP above 30, up to 14 more hearts at 100. */
+	public int extraHealth() {
+		return 2 * (Math.max(0, stats.hp() - START_STAT) / 5);
+	}
+
+	private static final net.minecraft.resources.Identifier HEALTH_ID = Ahrivaea.id("character_health");
+
+	public static void applyHealth(ServerPlayer p) {
+		var attr = p.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH);
+		if (attr == null) return;
+		double extra = get(p).extraHealth();
+		var now = attr.getModifier(HEALTH_ID);
+		if (now != null && now.amount() == extra) return;
+		attr.removeModifier(HEALTH_ID);
+		if (extra > 0) attr.addPermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(HEALTH_ID, extra,
+				net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+		if (p.getHealth() > p.getMaxHealth()) p.setHealth(p.getMaxHealth());
 	}
 
 	public static void applySpeed(ServerPlayer p) {
@@ -97,6 +120,7 @@ public record PlayerCharacter(int level, int xp, int points, Stats stats) {
 		if (spend <= 0) return c.points == 0 ? "You have no points to spend." : stat + " is already 100.";
 		p.setAttached(ATTACHMENT, new PlayerCharacter(c.level, c.xp, c.points - spend, with(c.stats, stat, now + spend)));
 		if (stat.equals("speed")) applySpeed(p);
+		if (stat.equals("hp")) applyHealth(p);
 		return null;
 	}
 
@@ -166,7 +190,7 @@ public record PlayerCharacter(int level, int xp, int points, Stats stats) {
 							+ "\n HP " + b.hp() + "  Attack " + b.attack() + "  Defense " + b.defense() + (b.defense() != c.stats.defense() ? " (with armor)" : "")
 							+ "  Speed " + b.speed() + "  Magic " + b.magic() + "  Luck " + b.luck() + "  Charisma " + b.charisma()
 							+ "\n Moves " + b.squaresPerTurn() + " squares per turn in battle, " + c.maxHealth() + " battle HP, "
-							+ Math.round(c.speedBonus() * 100) + "% faster outside battles"
+							+ Math.round(c.speedBonus() * 100) + "% faster and " + c.extraHealth() / 2 + " extra hearts outside battles"
 							+ "\n Level up with XP from your pool: /character levelup (" + c.toNext() + " XP), or on the party screen";
 					ctx.getSource().sendSuccess(() -> Component.literal(text), false);
 					return c.level;

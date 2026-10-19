@@ -87,6 +87,7 @@ public final class PartySync {
 		me.addProperty("maxHp", ch.maxHealth());
 		me.addProperty("squares", cs.squaresPerTurn());
 		me.addProperty("speedBonus", (int) Math.round(ch.speedBonus() * 100));
+		me.addProperty("hearts", ch.extraHealth() / 2);
 		o.add("character", me);
 		JsonArray party = new JsonArray();
 		for (CaughtCreature c : Party.get(p)) party.add(describe(c));

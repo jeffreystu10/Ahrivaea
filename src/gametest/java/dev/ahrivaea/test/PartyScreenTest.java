@@ -118,6 +118,17 @@ public class PartyScreenTest implements FabricClientGameTest {
 			});
 			LOG.info("PartyScreenTest: you: {}", you);
 			if (!you.equals("level 2, speed 35, points 1, bonus 10%")) throw new AssertionError("levelling up and spending 5 on Speed should make you 10% faster: " + you);
+			// and 10 points into HP: two more hearts
+			context.runOnClient(c -> c.player.connection.sendCommand("character levelup"));
+			context.runOnClient(c -> c.player.connection.sendCommand("character levelup"));
+			context.runOnClient(c -> c.player.connection.sendCommand("character spend hp 10"));
+			context.waitTicks(30);
+			String hearts = server.computeOnServer(s -> {
+				var p = s.getPlayerList().getPlayers().getFirst();
+				return "hp " + dev.ahrivaea.character.PlayerCharacter.get(p).stats().hp() + ", max health " + Math.round(p.getMaxHealth());
+			});
+			LOG.info("PartyScreenTest: hearts: {}", hearts);
+			if (!hearts.equals("hp 40, max health 24")) throw new AssertionError("10 points of HP should give two more hearts: " + hearts);
 			context.runOnClient(c -> {
 				PartyScreen.showYou();
 				c.gui.setScreen(new PartyScreen());

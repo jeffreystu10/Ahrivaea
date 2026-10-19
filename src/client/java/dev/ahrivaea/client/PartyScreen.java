@@ -62,6 +62,9 @@ public class PartyScreen extends Screen {
 		return PartyClient.state.has("character") ? PartyClient.state.getAsJsonObject("character") : null;
 	}
 
+	/** The tabs' places and widths (Party needs a little more room). */
+	private static final int[] TAB_X = {0, 46, 84, 122}, TAB_W = {45, 37, 37, 30};
+
 	private static final String[] STAT_KEYS = {"hp", "attack", "defense", "speed", "magic", "luck", "charisma"};
 
 	private JsonObject chosen() {
@@ -106,7 +109,7 @@ public class PartyScreen extends Screen {
 				scroll = 0;
 				confirmRelease = false;
 				rebuildWidgets();
-			}).bounds(x + i * 39, 20 + TOP, 38, 18).build());
+			}).bounds(x + TAB_X[i], 20 + TOP, TAB_W[i], 18).build());
 			b.active = tab != t;
 		}
 		// you: level up with your XP, and points into stats
@@ -314,7 +317,7 @@ public class PartyScreen extends Screen {
 		g.text(font, "Battle HP " + me.get("maxHp").getAsInt() + ", " + me.get("squares").getAsInt() + " squares a turn", x, y, 0xFFDDDDDD);
 		y += 12;
 		int points = me.get("points").getAsInt();
-		g.text(font, points > 0 ? points + " stat points to spend" : "No stat points (level up for 6 more)", x, y, points > 0 ? 0xFF9FE09F : 0xFFAAAAAA);
+		g.text(font, points > 0 ? points + (points == 1 ? " stat point" : " stat points") + " to spend" : "No stat points (level up for 6 more)", x, y, points > 0 ? 0xFF9FE09F : 0xFFAAAAAA);
 		y += 16;
 		JsonArray stats = me.getAsJsonArray("stats"), base = me.getAsJsonArray("base");
 		for (int i = 0; i < stats.size(); i++) {
@@ -325,7 +328,7 @@ public class PartyScreen extends Screen {
 			g.text(font, v + (v != b ? " (" + b + " + armor)" : ""), x + 120, sy + 2, 0xFFFFD27F);
 		}
 		y += 7 * 14 + 6;
-		g.text(font, "Outside battles you're " + me.get("speedBonus").getAsInt() + "% faster (2% per Speed point over 30)", x, y, 0xFF9FC8FF);
+		wrapped(g, "Outside battles: " + me.get("speedBonus").getAsInt() + "% faster (2% per Speed point over 30)", x, y, w, 0xFF9FC8FF);
 	}
 
 	private int wrapped(GuiGraphicsExtractor g, String text, int x, int y, int w, int color) {

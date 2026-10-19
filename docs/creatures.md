@@ -1,11 +1,15 @@
 # Creature files
 
-The 205 species (278 forms) from the creature list are made by `tools/creatures_from_sheet.py` from
-`tools/data/Monster_List_v.1.xlsx`. To change the list, edit the spreadsheet and run
+The 239 species (312 forms) from the creature list are made by `tools/creatures_from_sheet.py` from
+`tools/data/Monster_List_v.1.xlsx`. The list comes in waves, each on two tabs: "MOB LIST n" (biomes, rarity, drops)
+and "MOB RECEIPT n" (work); each form records its `wave` (1: 205 species, 2: 33 more, plus the Iron Golem, which took
+the second Arcane Djinni's place in wave 1). To change the list, edit the spreadsheet and run
 `python3 tools/creatures_from_sheet.py` again; it keeps each form's existing name, stats, size and movement and
 rewrites its spawn, drops and jobs. `tools/data/creature_import_report.txt` lists anything it couldn't read.
 
-Typos in the list are fixed on import (`NAME_FIXES` in the tool): the Fae "Ghome" is the Gnome's Fae form. "Namean Lion" keeps its id
+Typos in the list are fixed on import (`NAME_FIXES`, `INFLUENCE_FIXES` and `BIOMES` in the tool): the Fae "Ghome" is the Gnome's Fae form,
+"Helebrog (Saber-toothed brown bear)" is the Helebrog, "Nater" is Nature and "Bich Forest" the Birch Forest. The Iron Golem has no
+row on the work tab, so it gets Base defense and Item transport (`WORK_FALLBACK`). "Namean Lion" keeps its id
 (`namean_lion`) but is shown as Nemean Lion, and "Zmey Gorymych" (`zmey_gorymych`) as Zmey Gorynych.
 
 Each creature species is one JSON file in `src/main/resources/data/ahrivaea/creature/`. The file name is
@@ -121,9 +125,16 @@ model's height so the hitbox matches, up to 4× the standard hitbox (2.8 × 3.2 
 get around; the model is always drawn full size. Base workers and raiders get a hitbox under a block wide (1.25×)
 so they fit through doors and between farm rows. In a battle every creature is shrunk to fit its square.
 
-Models so far: 275 of the 278 forms, every creature on the list except the Whale. A form without its own model
-borrows its species' None model, or else any model the species has: the None Orca uses the Water Orca's and the Arcane
-Dragon the None Dragon's.
+Wave 2's 33 creatures, the Iron Golem and the Whale have models built by `tools/build_models.py` from the
+descriptions in `tools/model_defs.py`, in the library's style (blocky parts, a 64x16 palette texture, idle and fly
+animations, Enraged and Mutated textures made by recolouring the palette). Run `python3 tools/build_models.py
+[species ...]` after changing one; a real library model imported later simply replaces its files.
+
+Models so far: 310 of the 312 forms. A form without its own model borrows its species' None model, or else any model
+the species has: the None Orca uses the Water Orca's and the Arcane Dragon the None Dragon's.
+
+`python3 tools/audit_creatures.py` checks every form (stats, biomes, drop items, jobs, model and textures) and writes
+`tools/data/creature_audit.txt`.
 
 ## Where influences come from
 
@@ -147,7 +158,7 @@ or `any`) to an influence. `draft.json` is a placeholder until the real list is 
 ## Riding
 
 Every creature of medium size or bigger can be ridden (form size 1.9 and up: everything human-sized and larger,
-220 of the 278 forms). The rules are Swift Horses' (`docs/horses.md`), which stays the mod for vanilla horses.
+239 of the 312 forms). The rules are Swift Horses' (`docs/horses.md`), which stays the mod for vanilla horses.
 
 - **Saddle**: right-click your own creature (sent out with `/party send`, not a base worker) with a vanilla saddle.
   Right-click it with an empty hand to get on; sneak to get off. Shears take the saddle off. Small creatures and

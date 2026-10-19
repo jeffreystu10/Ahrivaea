@@ -1,0 +1,58 @@
+{
+  "name": "Orb of Light",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 63,
+        "attack": 92,
+        "defense": 72,
+        "speed": 90,
+        "magic": 94,
+        "luck": 80,
+        "charisma": 48
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 120
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop Growth Support"
+        }
+      ],
+      "size": 0.85
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 63,
+    "attack": 92,
+    "defense": 72,
+    "speed": 90,
+    "magic": 94,
+    "luck": 80,
+    "charisma": 48
+  },
+  "size": 1.0
+}

@@ -42,7 +42,7 @@
       ],
       "jobs": [
         {
-          "job": "mining",
+          "job": "transport",
           "text": "Ore sorting"
         },
         {
@@ -50,7 +50,8 @@
           "text": "Mining stone and ores"
         }
       ],
-      "size": 5.05
+      "size": 5.05,
+      "wave": 1
     }
   },
   "stats": {

@@ -1,0 +1,53 @@
+{
+  "name": "Cloud of Darkness",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 62,
+        "attack": 94,
+        "defense": 99,
+        "speed": 75,
+        "magic": 100,
+        "luck": 72,
+        "charisma": 92
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:dark_forest",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base defense"
+        }
+      ],
+      "size": 1.64
+    }
+  },
+  "stats": {
+    "hp": 62,
+    "attack": 94,
+    "defense": 99,
+    "speed": 75,
+    "magic": 100,
+    "luck": 72,
+    "charisma": 92
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

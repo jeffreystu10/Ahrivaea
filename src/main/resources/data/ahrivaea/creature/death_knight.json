@@ -52,7 +52,8 @@
           "text": "Hostile-mob drop collection"
         }
       ],
-      "size": 3.55
+      "size": 3.55,
+      "wave": 1
     },
     "darkness": {
       "stats": {
@@ -97,7 +98,8 @@
           "text": "Hostile-mob farming and drop collection"
         }
       ],
-      "size": 3.72
+      "size": 3.72,
+      "wave": 1
     }
   },
   "stats": {

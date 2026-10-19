@@ -1,0 +1,58 @@
+{
+  "name": "Three Headed Cobra",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 96,
+        "attack": 74,
+        "defense": 60,
+        "speed": 61,
+        "magic": 77,
+        "luck": 90,
+        "charisma": 85
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.7,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:poisonous_potato",
+          "chance": 0.2,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "Tunneling"
+        }
+      ],
+      "size": 2.19
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 96,
+    "attack": 74,
+    "defense": 60,
+    "speed": 61,
+    "magic": 77,
+    "luck": 90,
+    "charisma": 85
+  },
+  "size": 1.0
+}

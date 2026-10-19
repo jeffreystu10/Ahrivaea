@@ -1,0 +1,53 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "fly_root": {
+     "position": [
+      "0",
+      "1.5*math.sin(query.life_time*1*200+0)",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "0",
+      "10*math.sin(query.life_time*1*300+0)",
+      "3*math.sin(query.life_time*1*500+0)"
+     ]
+    },
+    "arm_left": {
+     "rotation": [
+      "0",
+      "0",
+      "20*math.sin(query.life_time*1*400+0)"
+     ]
+    },
+    "arm_right": {
+     "rotation": [
+      "0",
+      "0",
+      "20*math.sin(query.life_time*1*400+120)"
+     ]
+    },
+    "cloud": {
+     "rotation": [
+      "0",
+      "query.life_time*1*40",
+      "0"
+     ]
+    },
+    "sparks": {
+     "rotation": [
+      "0",
+      "query.life_time*1*-260",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

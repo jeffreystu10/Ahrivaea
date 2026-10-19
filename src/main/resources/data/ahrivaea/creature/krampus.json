@@ -50,7 +50,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 3.23
+      "size": 3.23,
+      "wave": 1
     }
   },
   "stats": {

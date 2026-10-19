@@ -56,7 +56,8 @@
           "text": "Cave resource gathering"
         }
       ],
-      "size": 5.92
+      "size": 5.92,
+      "wave": 1
     }
   },
   "stats": {

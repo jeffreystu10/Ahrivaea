@@ -46,11 +46,12 @@
           "text": "Stonecutting"
         },
         {
-          "job": "mining",
+          "job": "transport",
           "text": "Ore sorting"
         }
       ],
-      "size": 3.14
+      "size": 3.14,
+      "wave": 1
     }
   },
   "stats": {

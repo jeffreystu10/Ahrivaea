@@ -54,7 +54,8 @@
           "text": "Redstone device operation"
         }
       ],
-      "size": 2.08
+      "size": 2.08,
+      "wave": 1
     }
   },
   "stats": {

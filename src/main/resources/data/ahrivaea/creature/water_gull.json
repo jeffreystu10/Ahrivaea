@@ -1,0 +1,65 @@
+{
+  "name": "Water Gull",
+  "forms": {
+    "water": {
+      "stats": {
+        "hp": 52,
+        "attack": 82,
+        "defense": 77,
+        "speed": 82,
+        "magic": 53,
+        "luck": 96,
+        "charisma": 98
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:ocean",
+          "minecraft:deep_ocean",
+          "minecraft:warm_ocean",
+          "minecraft:lukewarm_ocean",
+          "minecraft:river",
+          "minecraft:swamp",
+          "minecraft:mangrove_swamp",
+          "minecraft:frozen_ocean"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:prismarine_crystals",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:feather",
+          "chance": 0.6,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop irrigation"
+        }
+      ],
+      "size": 1.84
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 52,
+    "attack": 82,
+    "defense": 77,
+    "speed": 82,
+    "magic": 53,
+    "luck": 96,
+    "charisma": 98
+  },
+  "size": 1.0
+}

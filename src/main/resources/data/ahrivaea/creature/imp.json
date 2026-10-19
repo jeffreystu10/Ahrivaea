@@ -56,7 +56,8 @@
           "text": "Smelting ores"
         }
       ],
-      "size": 1.2
+      "size": 1.2,
+      "wave": 1
     }
   },
   "stats": {

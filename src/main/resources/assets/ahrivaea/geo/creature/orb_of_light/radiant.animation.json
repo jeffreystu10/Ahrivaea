@@ -1,0 +1,39 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "fly_root": {
+     "position": [
+      "0",
+      "1.2*math.sin(query.life_time*1*130+0)",
+      "0"
+     ]
+    },
+    "rays": {
+     "rotation": [
+      "0",
+      "query.life_time*1*120",
+      "0"
+     ]
+    },
+    "ring": {
+     "rotation": [
+      "0",
+      "query.life_time*1*-80",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "0",
+      "10*math.sin(query.life_time*1*90+0)",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

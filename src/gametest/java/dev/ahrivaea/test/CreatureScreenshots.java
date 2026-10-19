@@ -73,7 +73,20 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			{"water", "x", "dragon", "charybdis", "kraken", "leviathan"},
 			// forms without their own model yet borrow another form's (Orca), or the None form's (Arcane Dragon)
 			{"none", "l", "orca"},
-			{"arcane", "x", "dragon"}};
+			{"arcane", "x", "dragon"},
+			// wave 2 of the creature list, the Iron Golem and the Whale: models built by tools/build_models.py ("w": screenshots wave2_<influence>)
+			{"fire", "w", "embering_flame", "magma_viper", "magma_dryad"},
+			{"frost", "w", "polar_bear_folk", "helebrog", "crystalline_construct"},
+			{"water", "w", "water_gull", "nautiloper", "coral_crawler"},
+			{"nature", "w", "poisonous_frog", "oxe_turtle", "leaf_web_spider"},
+			{"storm", "w", "lightning", "electric_eel", "cloud_rider"},
+			{"earth", "w", "sand_spider", "three_headed_cobra", "sand_spirit"},
+			{"void", "w", "brain_dog", "swirling_psychosis", "psychic_vampire"},
+			{"fae", "w", "garden_fairy", "glistening_gator", "fairy_flower"},
+			{"darkness", "w", "shadow_stepper", "cloud_of_darkness", "dracolich"},
+			{"arcane", "w", "enchanted_furnace", "clockwork_horse", "enchanted_bell", "iron_golem"},
+			{"radiant", "w", "orb_of_light", "golden_owl", "archangel"},
+			{"none", "w", "whale"}};
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -96,8 +109,9 @@ public class CreatureScreenshots implements FabricClientGameTest {
 			for (int g = 0; g < GROUPS.length; g++) {
 				String influence = GROUPS[g][0], size = GROUPS[g][1];
 				int gx = x + 60 + g * 60, n = GROUPS[g].length - 2;
-				int spacing = size.equals("x") ? 20 : size.equals("l") ? 7 : 3;
-				float[] cam = size.equals("x") ? new float[]{14, 14, 40} : size.equals("l") ? new float[]{10, 6, 20} : new float[]{8, 3, 12};
+				int spacing = size.equals("x") ? 20 : size.equals("l") || size.equals("w") ? 7 : 3;
+				float[] cam = size.equals("x") ? new float[]{14, 14, 40} : size.equals("l") ? new float[]{10, 6, 20} : size.equals("w") ? new float[]{10, 5, 17}
+						: new float[]{8, 3, 12};
 				// from the south looking north; they face south, towards us (go there first so the chunks are loaded)
 				view(context, server, gx + 0.5, y + cam[1], z + 10 + cam[2], 180, cam[0]);
 				sp.getConnection().waitForChunksRender();
@@ -107,8 +121,9 @@ public class CreatureScreenshots implements FabricClientGameTest {
 				}
 				server.runCommand("execute as @e[type=ahrivaea:creature] run data merge entity @s {NoAI:1b,Rotation:[0f,0f]}");
 				context.waitTicks(40);
-				int k = shots.merge(influence, 1, Integer::sum) - 1;
-				context.takeScreenshot(TestScreenshotOptions.of(influence + "_" + k).withSize(1600, 900));
+				String label = size.equals("w") ? "wave2_" + influence : influence;
+				int k = shots.merge(label, 1, Integer::sum) - 1;
+				context.takeScreenshot(TestScreenshotOptions.of(size.equals("w") ? label : influence + "_" + k).withSize(1600, 900));
 				if (influence.equals("nature") && k == 0) {
 					// the Assassin Vine (in the middle of this row) close up: its tentacles are thin
 					view(context, server, gx + 0.5, y + 1.2, z + 10 + 4.5, 180, 5);

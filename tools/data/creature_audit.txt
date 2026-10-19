@@ -1,0 +1,13 @@
+240 species, 313 forms, 311 with their own model; 8 problems
+
+PROBLEM Dragon (arcane): no spawn
+PROBLEM Dragon (arcane): no drops
+PROBLEM Dragon (arcane): no jobs
+PROBLEM Villager (none): stats out of range (total 410)
+PROBLEM Villager (none): no base texture
+PROBLEM Villager (none): no _enraged texture
+PROBLEM Villager (none): no _mutated texture
+PROBLEM Villager (none): no _enraged_mutated texture
+
+Dragon (arcane): borrows the none model
+Orca (none): borrows the water model

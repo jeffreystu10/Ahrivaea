@@ -56,7 +56,8 @@
           "text": "Stone mining"
         }
       ],
-      "size": 7.17
+      "size": 7.17,
+      "wave": 1
     }
   },
   "stats": {

@@ -51,7 +51,8 @@
           "text": "Stone and ore gathering"
         }
       ],
-      "size": 2.0
+      "size": 2.0,
+      "wave": 1
     },
     "fae": {
       "stats": {
@@ -102,7 +103,8 @@
           "text": "Crop harvesting"
         }
       ],
-      "size": 2.0
+      "size": 2.0,
+      "wave": 1
     }
   },
   "stats": {

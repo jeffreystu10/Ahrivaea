@@ -1,0 +1,57 @@
+{
+  "name": "Shadow Stepper",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 76,
+        "attack": 75,
+        "defense": 100,
+        "speed": 88,
+        "magic": 79,
+        "luck": 76,
+        "charisma": 93
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark",
+          "minecraft:dark_forest",
+          "minecraft:soul_sand_valley",
+          "minecraft:dripstone_caves",
+          "minecraft:nether_wastes",
+          "minecraft:old_growth_pine_taiga"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:soul_sand",
+          "chance": 0.6,
+          "min": 1,
+          "max": 4
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Night patrol"
+        }
+      ],
+      "size": 3.21
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 76,
+    "attack": 75,
+    "defense": 100,
+    "speed": 88,
+    "magic": 79,
+    "luck": 76,
+    "charisma": 93
+  },
+  "size": 1.0
+}

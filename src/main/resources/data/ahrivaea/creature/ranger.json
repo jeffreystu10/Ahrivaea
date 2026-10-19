@@ -52,7 +52,8 @@
           "text": "Crop harvesting"
         }
       ],
-      "size": 2.37
+      "size": 2.37,
+      "wave": 1
     },
     "fire": {
       "stats": {
@@ -109,7 +110,8 @@
           "text": "Arrow and bone collection"
         }
       ],
-      "size": 2.37
+      "size": 2.37,
+      "wave": 1
     },
     "frost": {
       "stats": {
@@ -166,7 +168,8 @@
           "text": "Snow and ice harvesting"
         }
       ],
-      "size": 3.14
+      "size": 3.14,
+      "wave": 1
     },
     "storm": {
       "stats": {
@@ -221,7 +224,8 @@
           "text": "Redstone device operation"
         }
       ],
-      "size": 2.39
+      "size": 2.39,
+      "wave": 1
     },
     "earth": {
       "stats": {
@@ -278,7 +282,8 @@
           "text": "Cave resource gathering"
         }
       ],
-      "size": 2.43
+      "size": 2.43,
+      "wave": 1
     },
     "nature": {
       "stats": {
@@ -337,7 +342,8 @@
           "text": "Crop harvesting"
         }
       ],
-      "size": 2.41
+      "size": 2.41,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -392,7 +398,8 @@
           "text": "Hostile-mob drop collection"
         }
       ],
-      "size": 2.4
+      "size": 2.4,
+      "wave": 1
     },
     "darkness": {
       "stats": {
@@ -448,7 +455,8 @@
           "text": "Night patrol"
         }
       ],
-      "size": 2.41
+      "size": 2.41,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -499,7 +507,8 @@
           "text": "Hostile-mob drop collection"
         }
       ],
-      "size": 2.39
+      "size": 2.39,
+      "wave": 1
     }
   },
   "stats": {

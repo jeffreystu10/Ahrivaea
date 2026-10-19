@@ -1,2 +1,2 @@
-205 species, 278 forms, 278 rows; drop items: 144
-Djinni is listed twice under arcane; kept the first
+239 species, 312 forms, 311 rows; drop items: 144
+String is listed twice in one drop list; kept the first

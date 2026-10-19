@@ -50,7 +50,8 @@
           "text": "Mining stone"
         }
       ],
-      "size": 2.64
+      "size": 2.64,
+      "wave": 1
     }
   },
   "stats": {

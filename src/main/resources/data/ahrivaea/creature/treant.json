@@ -52,7 +52,8 @@
           "text": "Sapling replanting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "fae": {
       "stats": {
@@ -108,7 +109,8 @@
           "text": "Sapling replanting"
         }
       ],
-      "size": 5.81
+      "size": 5.81,
+      "wave": 1
     }
   },
   "stats": {

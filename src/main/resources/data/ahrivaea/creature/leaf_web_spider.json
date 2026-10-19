@@ -1,0 +1,63 @@
+{
+  "name": "Leaf Web Spider",
+  "forms": {
+    "nature": {
+      "stats": {
+        "hp": 57,
+        "attack": 87,
+        "defense": 45,
+        "speed": 96,
+        "magic": 58,
+        "luck": 96,
+        "charisma": 96
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:forest",
+          "minecraft:dark_forest",
+          "minecraft:jungle",
+          "minecraft:old_growth_spruce_taiga",
+          "minecraft:old_growth_pine_taiga",
+          "minecraft:dappled_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:string",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:stick",
+          "chance": 0.6,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Planting Seeds"
+        }
+      ],
+      "size": 1.64
+    }
+  },
+  "stats": {
+    "hp": 57,
+    "attack": 87,
+    "defense": 45,
+    "speed": 96,
+    "magic": 58,
+    "luck": 96,
+    "charisma": 96
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

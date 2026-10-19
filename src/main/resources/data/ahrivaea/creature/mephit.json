@@ -56,7 +56,8 @@
           "text": "Smelting ores"
         }
       ],
-      "size": 1.19
+      "size": 1.19,
+      "wave": 1
     },
     "frost": {
       "stats": {
@@ -113,7 +114,8 @@
           "text": "Cold-biome resource gathering"
         }
       ],
-      "size": 1.82
+      "size": 1.82,
+      "wave": 1
     },
     "storm": {
       "stats": {
@@ -168,7 +170,8 @@
           "text": "Item pickup and routing"
         }
       ],
-      "size": 1.37
+      "size": 1.37,
+      "wave": 1
     },
     "earth": {
       "stats": {
@@ -225,7 +228,8 @@
           "text": "Glass and brick production"
         }
       ],
-      "size": 1.38
+      "size": 1.38,
+      "wave": 1
     },
     "water": {
       "stats": {
@@ -283,7 +287,8 @@
           "text": "Fishing"
         }
       ],
-      "size": 1.19
+      "size": 1.19,
+      "wave": 1
     },
     "nature": {
       "stats": {
@@ -342,7 +347,8 @@
           "text": "Crop harvesting"
         }
       ],
-      "size": 1.37
+      "size": 1.37,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -397,7 +403,8 @@
           "text": "End resource gathering"
         }
       ],
-      "size": 1.39
+      "size": 1.39,
+      "wave": 1
     },
     "darkness": {
       "stats": {
@@ -453,7 +460,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 1.42
+      "size": 1.42,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -504,7 +512,8 @@
           "text": "Furnace operation"
         }
       ],
-      "size": 1.52
+      "size": 1.52,
+      "wave": 1
     }
   },
   "stats": {

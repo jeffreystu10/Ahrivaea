@@ -1,0 +1,64 @@
+{
+  "name": "Clockwork Horse",
+  "forms": {
+    "arcane": {
+      "stats": {
+        "hp": 71,
+        "attack": 68,
+        "defense": 98,
+        "speed": 81,
+        "magic": 70,
+        "luck": 54,
+        "charisma": 59
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:grove"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:iron_ingot",
+          "chance": 0.7,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:redstone",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ],
+      "size": 2.58
+    }
+  },
+  "stats": {
+    "hp": 71,
+    "attack": 68,
+    "defense": 98,
+    "speed": 81,
+    "magic": 70,
+    "luck": 54,
+    "charisma": 59
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,63 @@
+{
+  "name": "Embering Flame",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 77,
+        "attack": 89,
+        "defense": 40,
+        "speed": 90,
+        "magic": 76,
+        "luck": 73,
+        "charisma": 68
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest",
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:desert"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:flint",
+          "chance": 0.65,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Furnace and blast-furnace operation"
+        }
+      ],
+      "size": 1.29
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 77,
+    "attack": 89,
+    "defense": 40,
+    "speed": 90,
+    "magic": 76,
+    "luck": 73,
+    "charisma": 68
+  },
+  "size": 1.0
+}

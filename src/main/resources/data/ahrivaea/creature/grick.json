@@ -54,7 +54,8 @@
           "text": "Item pickup"
         }
       ],
-      "size": 2.04
+      "size": 2.04,
+      "wave": 1
     }
   },
   "stats": {

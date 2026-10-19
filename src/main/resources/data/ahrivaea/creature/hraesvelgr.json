@@ -44,7 +44,8 @@
           "text": "Hostile-mob patrol"
         }
       ],
-      "size": 1.3
+      "size": 1.3,
+      "wave": 1
     }
   },
   "stats": {

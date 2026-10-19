@@ -57,7 +57,8 @@
           "text": "Crop and carrot harvesting"
         }
       ],
-      "size": 1.19
+      "size": 1.19,
+      "wave": 1
     }
   },
   "stats": {

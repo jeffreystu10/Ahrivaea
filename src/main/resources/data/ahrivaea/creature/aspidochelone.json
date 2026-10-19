@@ -54,7 +54,8 @@
           "text": "Aquatic item collection"
         }
       ],
-      "size": 2.24
+      "size": 2.24,
+      "wave": 1
     }
   },
   "stats": {

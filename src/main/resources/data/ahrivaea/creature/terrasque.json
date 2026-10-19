@@ -50,7 +50,8 @@
           "text": "Ore gathering"
         }
       ],
-      "size": 11.85
+      "size": 11.85,
+      "wave": 1
     }
   },
   "stats": {

@@ -50,7 +50,8 @@
           "text": "Stone and ore mining"
         }
       ],
-      "size": 13.21
+      "size": 13.21,
+      "wave": 1
     }
   },
   "stats": {

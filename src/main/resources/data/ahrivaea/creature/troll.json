@@ -56,7 +56,8 @@
           "text": "Clay and gravel gathering"
         }
       ],
-      "size": 2.77
+      "size": 2.77,
+      "wave": 1
     },
     "nature": {
       "stats": {
@@ -109,7 +110,8 @@
           "text": "Stone gathering"
         }
       ],
-      "size": 6.07
+      "size": 6.07,
+      "wave": 1
     }
   },
   "stats": {

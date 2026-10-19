@@ -60,7 +60,8 @@
           "text": "Aquatic mob-farm support"
         }
       ],
-      "size": 11.68
+      "size": 11.68,
+      "wave": 1
     }
   },
   "stats": {

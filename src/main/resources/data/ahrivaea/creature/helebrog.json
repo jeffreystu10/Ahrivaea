@@ -1,0 +1,70 @@
+{
+  "name": "Helebrog",
+  "forms": {
+    "frost": {
+      "stats": {
+        "hp": 82,
+        "attack": 78,
+        "defense": 95,
+        "speed": 77,
+        "magic": 57,
+        "luck": 79,
+        "charisma": 58
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:snowy_plains",
+          "minecraft:snowy_taiga",
+          "minecraft:ice_spikes",
+          "minecraft:frozen_peaks",
+          "minecraft:grove",
+          "minecraft:snowy_slopes",
+          "minecraft:frozen_river"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:leather",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:goat_horn",
+          "chance": 0.15,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:beef",
+          "chance": 0.45,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Snowy crop support"
+        }
+      ],
+      "size": 2.81
+    }
+  },
+  "stats": {
+    "hp": 82,
+    "attack": 78,
+    "defense": 95,
+    "speed": 77,
+    "magic": 57,
+    "luck": 79,
+    "charisma": 58
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

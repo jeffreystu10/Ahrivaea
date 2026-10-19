@@ -55,7 +55,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 4.77
+      "size": 4.77,
+      "wave": 1
     }
   },
   "stats": {

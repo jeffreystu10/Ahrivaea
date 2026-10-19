@@ -1,0 +1,58 @@
+{
+  "name": "Sand Spider",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 77,
+        "attack": 96,
+        "defense": 95,
+        "speed": 93,
+        "magic": 45,
+        "luck": 85,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:spider_eye",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:string",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Ore sorting"
+        }
+      ],
+      "size": 1.36
+    }
+  },
+  "stats": {
+    "hp": 77,
+    "attack": 96,
+    "defense": 95,
+    "speed": 93,
+    "magic": 45,
+    "luck": 85,
+    "charisma": 100
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Fairy Flower",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 82,
+        "attack": 98,
+        "defense": 73,
+        "speed": 69,
+        "magic": 56,
+        "luck": 52,
+        "charisma": 79
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 1.0,
+          "min": 2,
+          "max": 5
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Nighttime crop growth support"
+        }
+      ],
+      "size": 2.0
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 82,
+    "attack": 98,
+    "defense": 73,
+    "speed": 69,
+    "magic": 56,
+    "luck": 52,
+    "charisma": 79
+  },
+  "size": 0.7
+}

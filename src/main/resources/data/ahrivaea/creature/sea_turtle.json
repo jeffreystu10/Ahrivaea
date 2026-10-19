@@ -54,7 +54,8 @@
           "text": "Beach resource gathering"
         }
       ],
-      "size": 1.16
+      "size": 1.16,
+      "wave": 1
     }
   },
   "stats": {

@@ -50,7 +50,8 @@
           "text": "Item courier"
         }
       ],
-      "size": 5.09
+      "size": 5.09,
+      "wave": 1
     }
   },
   "stats": {

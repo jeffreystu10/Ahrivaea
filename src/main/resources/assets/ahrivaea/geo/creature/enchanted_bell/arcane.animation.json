@@ -1,0 +1,36 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "0",
+      "0",
+      "6*math.sin(query.life_time*1*260+0)"
+     ],
+     "position": [
+      "0",
+      "1+1*math.sin(query.life_time*1*260+90)"
+     ]
+    },
+    "clapper": {
+     "rotation": [
+      "0",
+      "0",
+      "14*math.sin(query.life_time*1*260+60)"
+     ]
+    },
+    "runes": {
+     "rotation": [
+      "0",
+      "query.life_time*1*90",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

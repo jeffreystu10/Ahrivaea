@@ -54,7 +54,8 @@
           "text": "Fishing"
         }
       ],
-      "size": 2.56
+      "size": 2.56,
+      "wave": 1
     }
   },
   "stats": {

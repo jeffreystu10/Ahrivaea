@@ -50,7 +50,8 @@
           "text": "Cave resource gathering"
         }
       ],
-      "size": 11.51
+      "size": 11.51,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -104,7 +105,8 @@
           "text": "Dimensional item routing"
         }
       ],
-      "size": 4.72
+      "size": 4.72,
+      "wave": 1
     }
   },
   "stats": {

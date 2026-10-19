@@ -59,7 +59,8 @@
           "text": "Cooking food"
         }
       ],
-      "size": 5.36
+      "size": 5.36,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -110,7 +111,8 @@
           "text": "Crop growth support"
         }
       ],
-      "size": 5.36
+      "size": 5.36,
+      "wave": 1
     }
   },
   "stats": {

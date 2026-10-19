@@ -1,0 +1,58 @@
+{
+  "name": "Sand Spirit",
+  "forms": {
+    "earth": {
+      "stats": {
+        "hp": 76,
+        "attack": 86,
+        "defense": 93,
+        "speed": 80,
+        "magic": 78,
+        "luck": 53,
+        "charisma": 41
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:desert"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:cobblestone",
+          "chance": 0.65,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:clay_ball",
+          "chance": 0.5,
+          "min": 1,
+          "max": 4
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Collecting items"
+        }
+      ],
+      "size": 2.38
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 76,
+    "attack": 86,
+    "defense": 93,
+    "speed": 80,
+    "magic": 78,
+    "luck": 53,
+    "charisma": 41
+  },
+  "size": 1.0
+}

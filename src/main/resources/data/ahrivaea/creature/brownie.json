@@ -55,7 +55,8 @@
           "text": "Chest sorting"
         }
       ],
-      "size": 1.57
+      "size": 1.57,
+      "wave": 1
     }
   },
   "stats": {

@@ -48,7 +48,8 @@
           "text": "Aquatic item collection"
         }
       ],
-      "size": 2.37
+      "size": 2.37,
+      "wave": 1
     },
     "water": {
       "stats": {
@@ -97,7 +98,8 @@
           "text": "Aquatic harvesting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     }
   },
   "stats": {

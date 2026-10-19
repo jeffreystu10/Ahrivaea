@@ -55,7 +55,8 @@
           "text": "Hostile-mob drop collection"
         }
       ],
-      "size": 2.02
+      "size": 2.02,
+      "wave": 1
     }
   },
   "stats": {

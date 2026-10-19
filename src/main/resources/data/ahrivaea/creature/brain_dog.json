@@ -1,0 +1,56 @@
+{
+  "name": "Brain Dog",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 70,
+        "attack": 77,
+        "defense": 75,
+        "speed": 80,
+        "magic": 76,
+        "luck": 95,
+        "charisma": 100
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:the_end",
+          "minecraft:end_highlands",
+          "minecraft:end_midlands",
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "mining",
+          "text": "End resource gathering"
+        }
+      ],
+      "size": 1.81
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 70,
+    "attack": 77,
+    "defense": 75,
+    "speed": 80,
+    "magic": 76,
+    "luck": 95,
+    "charisma": 100
+  },
+  "size": 1.0
+}

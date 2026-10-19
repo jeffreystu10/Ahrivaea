@@ -1,0 +1,66 @@
+{
+  "name": "Magma Dryad",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 78,
+        "attack": 90,
+        "defense": 72,
+        "speed": 100,
+        "magic": 55,
+        "luck": 96,
+        "charisma": 87
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 80
+      },
+      "drops": [
+        {
+          "item": "minecraft:magma_cream",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:copper_ingot",
+          "chance": 0.3,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "item": "minecraft:fire_charge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "smelting",
+          "text": "Smelting and cooking"
+        }
+      ],
+      "size": 3.2
+    }
+  },
+  "stats": {
+    "hp": 78,
+    "attack": 90,
+    "defense": 72,
+    "speed": 100,
+    "magic": 55,
+    "luck": 96,
+    "charisma": 87
+  },
+  "size": 1.0,
+  "movement": "walk"
+}

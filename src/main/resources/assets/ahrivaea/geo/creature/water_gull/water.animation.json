@@ -1,0 +1,136 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "2*math.sin(query.life_time*1*150+0)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "6*math.sin(query.life_time*1*220+0)",
+      "10*math.sin(query.life_time*1*90+0)",
+      "0"
+     ]
+    },
+    "leg_left": {
+     "rotation": [
+      "18*math.sin(query.life_time*1*300+0)",
+      "0",
+      "0"
+     ]
+    },
+    "leg_right": {
+     "rotation": [
+      "18*math.sin(query.life_time*1*300+180)",
+      "0",
+      "0"
+     ]
+    },
+    "wing_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-14*math.sin(query.life_time*1*200+0))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(14*math.sin(query.life_time*1*200+0))"
+     ]
+    },
+    "wingtip_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-9.8*math.sin(query.life_time*1*200+-40))"
+     ]
+    },
+    "wingtip_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(9.8*math.sin(query.life_time*1*200+-40))"
+     ]
+    }
+   }
+  },
+  "fly": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "body": {
+     "rotation": [
+      "2*math.sin(query.life_time*1*150+0)",
+      "0",
+      "0"
+     ]
+    },
+    "head": {
+     "rotation": [
+      "6*math.sin(query.life_time*1*220+0)",
+      "10*math.sin(query.life_time*1*90+0)",
+      "0"
+     ]
+    },
+    "leg_left": {
+     "rotation": [
+      "10",
+      "0",
+      "0"
+     ]
+    },
+    "leg_right": {
+     "rotation": [
+      "10",
+      "0",
+      "0"
+     ]
+    },
+    "wing_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-50*math.sin(query.life_time*1*380+0))"
+     ]
+    },
+    "wing_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(50*math.sin(query.life_time*1*380+0))"
+     ]
+    },
+    "wingtip_left": {
+     "rotation": [
+      "0",
+      "0",
+      "-(-35.0*math.sin(query.life_time*1*380+-40))"
+     ]
+    },
+    "wingtip_right": {
+     "rotation": [
+      "0",
+      "0",
+      "-(35.0*math.sin(query.life_time*1*380+-40))"
+     ]
+    },
+    "fly_root": {
+     "rotation": [
+      "12+1.7*math.sin(query.life_time*1*180+0)",
+      "0",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

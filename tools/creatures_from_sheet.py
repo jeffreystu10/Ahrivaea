@@ -2,8 +2,8 @@
 
     python3 tools/creatures_from_sheet.py [path/to/Monster_List.xlsx] [items dir to check ids against]
 
-Sheet1 has a table per influence (rarity, name, biomes, drops); Sheet2 has each creature's primary and secondary
-work. Creatures with the same name under several influences become one species with a form per influence. Each form
+Each wave has two tabs: "MOB LIST n" has a table per influence (rarity, name, biomes, drops) and "MOB RECEIPT n" each
+creature's primary and secondary work (older copies of the list call them Sheet1 and Sheet2). Creatures with the same name under several influences become one species with a form per influence. Each form
 gets its own spawn (biomes, rarity weight, levels), drops and jobs. Stats come from the existing creature file, else
 out/roster.json, else are rolled (seeded by name, so they stay the same between runs): 0-100 each, 500-600 in total.
 Writes src/main/resources/data/ahrivaea/creature/<id>.json and tools/data/creature_import_report.txt.
@@ -34,6 +34,8 @@ BIOMES = {
     'Small end Islands': ['minecraft:small_end_islands'],
     'Swamp Mangrove Swamp': ['minecraft:swamp', 'minecraft:mangrove_swamp'],
     'Wooded Bandlands': ['minecraft:wooded_badlands'],
+    'Bich Forest': ['minecraft:birch_forest'],
+    'Dark Oak Forest': ['minecraft:dark_forest'],
 }
 
 # drop names that aren't just the item id spelled out
@@ -47,11 +49,12 @@ ITEM_NAMES = {
 
 # work text -> job, first match wins (see docs/creatures.md for what each job does)
 JOBS = [
-    ('defense', r'defen|patrol|protect|security|guard|deterr|detection|hunting|mob-farm control|storage-room|valuable-item'),
+    ('transport', r'^ore sorting'),
+    ('defense', r'defen|patrol|protect|security|guard|deterr|detection|hunting|mob-farm control|storage-room|valuable-item|scaring'),
     ('ranching', r'hostile-mob|mob drop|mob-farm|egg|milk|wool|shearing|feather|leather|livestock|ranch|husbandry|breeding|slimeball|ink-sac|string and|arrow and bone|rabbit hide'),
     ('fishing', r'fish|aquatic|kelp|seagrass|ocean|underwater|water-channel|beach'),
     ('logging', r'tree|logging|sapling|wood processing|spruce and birch'),
-    ('growth', r'growth|irrigation|pollination|compost|healing and farm|crop and animal-area'),
+    ('growth', r'crop support|growth|irrigation|pollination|compost|healing and farm|crop and animal-area'),
     ('farming', r'crop|seed|berry|berries|mushroom|carrot|truffle|plant collection|floor-area'),
     ('smelting', r'smelt|furnace|cooking|fuel|glass and brick|machine operation'),
     ('brewing', r'brew|potion'),
@@ -60,8 +63,8 @@ JOBS = [
     ('ice', r'snow|ice'),
     ('lighting', r'light'),
     ('crafting', r'craft|stonecutting|block processing|stone and brick|cobblestone processing'),
-    ('mining', r'mining|quarry|ore|stone|cobblestone|sand|gravel|clay|cave|resource gathering|nether|end resource|glowstone|copper'),
-    ('transport', r'pickup|courier|transport|routing|sort|chest|teleport|item'),
+    ('mining', r'mining|tunnel|quarry|ore|stone|cobblestone|sand|gravel|clay|cave|resource gathering|nether|end resource|glowstone|copper'),
+    ('transport', r'pickup|courier|transport|routing|sort|chest|teleport|item|drops'),
     ('riding', r'mounted|travel'),
     ('ranching', r'collection|gathering|harvest'),
 ]
@@ -101,6 +104,9 @@ def drops(text):
             continue
         name, pct, lo, hi = m.group(1), int(m.group(2)), int(m.group(3)), int(m.group(4) or m.group(3))
         d = {'item': item_id(name), 'chance': pct / 100, 'min': lo, 'max': hi}
+        if any(o['item'] == d['item'] for o in out):
+            report.append(f'{name.strip()} is listed twice in one drop list; kept the first')
+            continue
         if name.strip() == 'Enchanted Book': d['enchant'] = True
         out.append(d)
     return out
@@ -123,10 +129,20 @@ def rolled_stats(seed):
 
 def main():
     wb = openpyxl.load_workbook(SRC, data_only=True)
-    # Sheet1: one table per influence on each side (columns A-D and E-H)
+    waves = [(f'MOB LIST {n}', f'MOB RECEIPT {n}', n) for n in range(1, 10) if f'MOB LIST {n}' in wb.sheetnames] or [('Sheet1', 'Sheet2', 1)]
     entries = []
+    work = {}
+    for lst, rcpt, wave in waves:
+        read_wave(wb, lst, rcpt, wave, entries, work)
+    for key, w in WORK_FALLBACK.items():
+        if key not in work: work[key] = w
+    finish(entries, work)
+
+
+def read_wave(wb, lst, rcpt, wave, entries, work):
+    # the list: one table per influence on each side (columns A-D and E-H)
     current = [None, None]
-    for row in wb['Sheet1'].iter_rows(values_only=True):
+    for row in wb[lst].iter_rows(values_only=True):
         for half, off in ((0, 0), (1, 4)):
             v = row[off] if off < len(row) else None
             m = TABLE.match(v) if isinstance(v, str) else None
@@ -138,14 +154,18 @@ def main():
             inf, overall = current[half]
             if inf not in INFLUENCES: report.append(f'unknown influence {inf}'); continue
             entries.append(dict(influence=inf, overall=overall, rarity=v.strip(), name=NAME_FIXES.get(name.strip(), name.strip()), sheet_name=name.strip(),
-                                biomes=biomes(row[off + 2]), drops=drops(row[off + 3])))
-    # Sheet2: work
-    work = {}
-    for row in list(wb['Sheet2'].iter_rows(values_only=True))[1:]:
+                                biomes=biomes(row[off + 2]), drops=drops(row[off + 3]), wave=wave))
+    # the receipt: work
+    for row in list(wb[rcpt].iter_rows(values_only=True))[1:]:
         if not row or not row[2]: continue
         inf = str(row[0]).strip().lower()
-        work[('none' if inf == 'normal' else inf, NAME_FIXES.get(row[2].strip(), row[2].strip()))] = [w for w in (row[4], row[5]) if w]
+        inf = INFLUENCE_FIXES.get(inf, inf)
+        key = ('none' if inf == 'normal' else inf, NAME_FIXES.get(row[2].strip(), row[2].strip()))
+        if key in work: continue  # listed twice (the Arcane Djinni): the first row counts
+        work[key] = [w.strip() for w in (row[4], row[5]) if w and w.strip()]
 
+
+def finish(entries, work):
     roster = {}
     if os.path.exists(ROSTER):
         for r in json.load(open(ROSTER)):
@@ -157,6 +177,7 @@ def main():
         path = f'{OUT}/{sid}.json'
         if sid not in species:
             species[sid] = json.load(open(path)) if os.path.exists(path) else {'name': e['name'], 'forms': {}}
+            if e['name'] in MOVEMENT: species[sid]['movement'] = MOVEMENT[e['name']]
             species[sid].setdefault('forms', {})
             species[sid]['_seen'] = set()
         s = species[sid]
@@ -169,6 +190,7 @@ def main():
             form['stats'] = roster.get((e['name'], e['influence'])) or roster.get((e['sheet_name'], e['influence'])) or rolled_stats(f"{e['name']}/{e['influence']}")
         weight, lo, hi = RARITY.get(e['rarity'], RARITY['Common'])
         form['rarity'] = e['rarity']
+        form['wave'] = e['wave']
         form['spawn'] = {'biomes': e['biomes'], 'min_level': lo, 'max_level': hi,
                          'weight': max(1, round(weight * 10 * OVERALL.get(e['overall'], 1.0)))}
         form['drops'] = e['drops']
@@ -202,7 +224,17 @@ def main():
 
 
 # typos in the creature list, fixed on the way in: the sheet's name -> the creature's real name
-NAME_FIXES = {'Ghome': 'Gnome'}
+NAME_FIXES = {'Ghome': 'Gnome', 'Helebrog (Saber-toothed brown bear)': 'Helebrog'}
+INFLUENCE_FIXES = {'nater': 'nature'}
+
+# creatures without a row on the work tab: (influence, name) -> work
+WORK_FALLBACK = {('arcane', 'Iron Golem'): ['Base defense', 'Item transport']}
+
+# how creatures get around, where the name doesn't say
+MOVEMENT = {'Embering Flame': 'fly', 'Lightning': 'fly', 'Orb of Light': 'fly', 'Swirling Psychosis': 'fly', 'Dracolich': 'fly',
+            'Water Gull': 'fly', 'Fairy Flower': 'walk', 'Garden Fairy': 'fly', 'Coral Crawler': 'walk', 'Glistening Gator': 'walk',
+            'Poisonous Frog': 'walk', 'Oxe Turtle': 'walk', 'Magma Viper': 'walk', 'Three Headed Cobra': 'walk', 'Sand Spirit': 'walk',
+            'Psychic Vampire': 'walk', 'Shadow Stepper': 'walk', 'Brain Dog': 'walk', 'Cloud Rider': 'fly', 'Golden Owl': 'fly'}
 
 FLYERS = r'dragon|phoenix|wyrm|wyvern|griff|harpy|roc\b|bat\b|stirge|pegasus|eagle|owl|hawk|raven|crow|sprite|pixie|fairy|faerie|wisp|angel|thunderbird|djinn|genie|bird|moth|bee\b|wasp|gargoyle|peryton|hippogriff|couatl|zephyr|cloud|wind|air elemental|imp\b|mephit|beholder|will|ghost|specter|spectre|wraith|banshee|eye'
 SWIMMERS = r'fish|shark|orca|squid|kraken|leviathan|isonade|scylla|charybdis|aspidochelone|eel|ray\b|jelly|crab|lobster|merrow|mermaid|selkie|kelpie|water weird|nereid|octo|whale|dolphin|turtle|serpent'

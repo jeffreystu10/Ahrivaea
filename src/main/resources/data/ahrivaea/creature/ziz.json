@@ -50,7 +50,8 @@
           "text": "Redstone power generation"
         }
       ],
-      "size": 2.81
+      "size": 2.81,
+      "wave": 1
     }
   },
   "stats": {

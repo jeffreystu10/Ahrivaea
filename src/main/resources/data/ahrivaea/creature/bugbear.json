@@ -53,7 +53,8 @@
           "text": "Crop harvesting"
         }
       ],
-      "size": 2.51
+      "size": 2.51,
+      "wave": 1
     }
   },
   "stats": {

@@ -54,7 +54,8 @@
           "text": "Seed and crop collection"
         }
       ],
-      "size": 2.54
+      "size": 2.54,
+      "wave": 1
     }
   },
   "stats": {

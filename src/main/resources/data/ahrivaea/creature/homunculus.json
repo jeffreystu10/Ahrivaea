@@ -50,7 +50,8 @@
           "text": "Redstone component assembly"
         }
       ],
-      "size": 1.22
+      "size": 1.22,
+      "wave": 1
     }
   },
   "stats": {

@@ -53,7 +53,8 @@
           "text": "Snow and ice harvesting"
         }
       ],
-      "size": 2.3
+      "size": 2.3,
+      "wave": 1
     }
   },
   "stats": {

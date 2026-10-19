@@ -50,7 +50,8 @@
           "text": "Hostile-mob detection"
         }
       ],
-      "size": 2.61
+      "size": 2.61,
+      "wave": 1
     }
   },
   "stats": {

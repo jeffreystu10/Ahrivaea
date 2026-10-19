@@ -51,7 +51,8 @@
           "text": "Livestock healing and ranching"
         }
       ],
-      "size": 3.25
+      "size": 3.25,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -102,7 +103,8 @@
           "text": "Animal husbandry"
         }
       ],
-      "size": 3.25
+      "size": 3.25,
+      "wave": 1
     }
   },
   "stats": {

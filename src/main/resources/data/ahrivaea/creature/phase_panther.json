@@ -50,7 +50,8 @@
           "text": "Redstone device operation"
         }
       ],
-      "size": 2.01
+      "size": 2.01,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -104,7 +105,8 @@
           "text": "Item pickup"
         }
       ],
-      "size": 2.12
+      "size": 2.12,
+      "wave": 1
     }
   },
   "stats": {

@@ -50,7 +50,8 @@
           "text": "Furnace and machine operation"
         }
       ],
-      "size": 2.6
+      "size": 2.6,
+      "wave": 1
     }
   },
   "stats": {

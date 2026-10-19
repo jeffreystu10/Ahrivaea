@@ -50,7 +50,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "frost": {
       "stats": {
@@ -107,7 +108,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.99
+      "size": 2.99,
+      "wave": 1
     },
     "storm": {
       "stats": {
@@ -162,7 +164,8 @@
           "text": "Furnace and machine operation"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "earth": {
       "stats": {
@@ -219,7 +222,8 @@
           "text": "Furnace operation"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "water": {
       "stats": {
@@ -272,7 +276,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.54
+      "size": 2.54,
+      "wave": 1
     },
     "nature": {
       "stats": {
@@ -331,7 +336,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -386,7 +392,8 @@
           "text": "Chest sorting"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "fae": {
       "stats": {
@@ -439,7 +446,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.73
+      "size": 2.73,
+      "wave": 1
     },
     "darkness": {
       "stats": {
@@ -495,7 +503,8 @@
           "text": "Hostile-mob farm support"
         }
       ],
-      "size": 2.43
+      "size": 2.43,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -546,7 +555,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     },
     "arcane": {
       "stats": {
@@ -597,7 +607,8 @@
           "text": "Brewing potions"
         }
       ],
-      "size": 2.44
+      "size": 2.44,
+      "wave": 1
     }
   },
   "stats": {

@@ -55,7 +55,8 @@
           "text": "Fueling furnaces"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "frost": {
       "stats": {
@@ -112,7 +113,8 @@
           "text": "Snow harvesting"
         }
       ],
-      "size": 5.29
+      "size": 5.29,
+      "wave": 1
     },
     "storm": {
       "stats": {
@@ -167,7 +169,8 @@
           "text": "Redstone device operation"
         }
       ],
-      "size": 5.29
+      "size": 5.29,
+      "wave": 1
     },
     "earth": {
       "stats": {
@@ -230,7 +233,8 @@
           "text": "Stonecutting and block processing"
         }
       ],
-      "size": 5.27
+      "size": 5.27,
+      "wave": 1
     },
     "water": {
       "stats": {
@@ -288,7 +292,8 @@
           "text": "Fishing and aquatic harvesting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "nature": {
       "stats": {
@@ -349,7 +354,8 @@
           "text": "Tree planting and harvesting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "void": {
       "stats": {
@@ -404,7 +410,8 @@
           "text": "Chest sorting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "fae": {
       "stats": {
@@ -460,7 +467,8 @@
           "text": "Tree planting and harvesting"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     },
     "darkness": {
       "stats": {
@@ -516,7 +524,8 @@
           "text": "Hostile-mob farm support"
         }
       ],
-      "size": 5.35
+      "size": 5.35,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -567,7 +576,8 @@
           "text": "Machine operation"
         }
       ],
-      "size": 5.58
+      "size": 5.58,
+      "wave": 1
     },
     "arcane": {
       "stats": {
@@ -618,7 +628,8 @@
           "text": "Machine operation"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     }
   },
   "stats": {

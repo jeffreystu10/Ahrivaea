@@ -1,0 +1,63 @@
+{
+  "name": "Magma Viper",
+  "forms": {
+    "fire": {
+      "stats": {
+        "hp": 89,
+        "attack": 84,
+        "defense": 63,
+        "speed": 77,
+        "magic": 78,
+        "luck": 80,
+        "charisma": 78
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:nether_wastes",
+          "minecraft:basalt_deltas",
+          "minecraft:crimson_forest",
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:desert"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 180
+      },
+      "drops": [
+        {
+          "item": "minecraft:chicken",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:fire_charge",
+          "chance": 0.08,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Hunting hostile mobs"
+        }
+      ],
+      "size": 2.22
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 89,
+    "attack": 84,
+    "defense": 63,
+    "speed": 77,
+    "magic": 78,
+    "luck": 80,
+    "charisma": 78
+  },
+  "size": 1.0
+}

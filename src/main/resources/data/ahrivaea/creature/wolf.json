@@ -54,7 +54,8 @@
           "text": "Hunting hostile mobs"
         }
       ],
-      "size": 2.19
+      "size": 2.19,
+      "wave": 1
     }
   },
   "stats": {

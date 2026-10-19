@@ -42,7 +42,7 @@
       ],
       "jobs": [
         {
-          "job": "farming",
+          "job": "growth",
           "text": "Snowy crop support"
         },
         {
@@ -50,7 +50,8 @@
           "text": "Sapling replanting"
         }
       ],
-      "size": 3.15
+      "size": 3.15,
+      "wave": 1
     }
   },
   "stats": {

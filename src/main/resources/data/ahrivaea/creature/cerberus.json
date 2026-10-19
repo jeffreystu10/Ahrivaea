@@ -44,7 +44,8 @@
           "text": "Hostile-mob farm support"
         }
       ],
-      "size": 10.7
+      "size": 10.7,
+      "wave": 1
     }
   },
   "stats": {

@@ -50,7 +50,8 @@
           "text": "Courier between farm and storage"
         }
       ],
-      "size": 2.14
+      "size": 2.14,
+      "wave": 1
     }
   },
   "stats": {

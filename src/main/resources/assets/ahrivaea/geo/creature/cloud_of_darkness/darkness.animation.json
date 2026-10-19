@@ -1,0 +1,60 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "fly_root": {
+     "position": [
+      "0",
+      "1.5*math.sin(query.life_time*1*90+0)",
+      "0"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "3*math.sin(query.life_time*1*70+0)",
+      "6*math.sin(query.life_time*1*50+0)",
+      "0"
+     ]
+    },
+    "tendril_1": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*200+0)",
+      "0",
+      "10*math.sin(query.life_time*1*160+0)"
+     ]
+    },
+    "tendril_2": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*200+70)",
+      "0",
+      "10*math.sin(query.life_time*1*160+40)"
+     ]
+    },
+    "tendril_3": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*200+140)",
+      "0",
+      "10*math.sin(query.life_time*1*160+80)"
+     ]
+    },
+    "tendril_4": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*200+210)",
+      "0",
+      "10*math.sin(query.life_time*1*160+120)"
+     ]
+    },
+    "tendril_5": {
+     "rotation": [
+      "16*math.sin(query.life_time*1*200+280)",
+      "0",
+      "10*math.sin(query.life_time*1*160+160)"
+     ]
+    }
+   }
+  }
+ }
+}

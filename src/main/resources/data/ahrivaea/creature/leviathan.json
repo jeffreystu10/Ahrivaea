@@ -54,7 +54,8 @@
           "text": "Underwater farm defense"
         }
       ],
-      "size": 11.83
+      "size": 11.83,
+      "wave": 1
     }
   },
   "stats": {

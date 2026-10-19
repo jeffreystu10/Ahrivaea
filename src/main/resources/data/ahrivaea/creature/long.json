@@ -57,7 +57,8 @@
           "text": "Kelp harvesting"
         }
       ],
-      "size": 5.03
+      "size": 5.03,
+      "wave": 1
     }
   },
   "stats": {

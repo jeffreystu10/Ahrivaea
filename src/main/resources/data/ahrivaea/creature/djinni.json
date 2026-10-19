@@ -11,33 +11,35 @@
         "luck": 97,
         "charisma": 61
       },
-      "rarity": "Rare",
+      "rarity": "Super Rare",
       "spawn": {
         "biomes": [
-          "minecraft:jungle"
+          "minecraft:end_highlands",
+          "minecraft:nether_wastes"
         ],
-        "min_level": 12,
-        "max_level": 26,
-        "weight": 24
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 9
       },
       "drops": [
         {
-          "item": "minecraft:gold_nugget",
-          "chance": 0.5,
-          "min": 2,
-          "max": 5
-        },
-        {
-          "item": "minecraft:glowstone_dust",
-          "chance": 0.35,
+          "item": "minecraft:gold_ingot",
+          "chance": 0.4,
           "min": 1,
           "max": 3
         },
         {
           "item": "minecraft:ender_pearl",
-          "chance": 0.12,
+          "chance": 0.3,
           "min": 1,
-          "max": 1
+          "max": 2
+        },
+        {
+          "item": "minecraft:enchanted_book",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1,
+          "enchant": true
         }
       ],
       "jobs": [
@@ -50,7 +52,8 @@
           "text": "Enchanting support"
         }
       ],
-      "size": 5.25
+      "size": 5.25,
+      "wave": 1
     }
   },
   "stats": {

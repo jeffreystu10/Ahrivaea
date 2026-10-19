@@ -51,7 +51,8 @@
           "text": "Mountain resource gathering"
         }
       ],
-      "size": 2.49
+      "size": 2.49,
+      "wave": 1
     }
   },
   "stats": {

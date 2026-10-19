@@ -1,0 +1,64 @@
+{
+  "name": "Archangel",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 40,
+        "attack": 69,
+        "defense": 92,
+        "speed": 47,
+        "magic": 97,
+        "luck": 88,
+        "charisma": 89
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 24
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:nether_star",
+          "chance": 0.02,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base Defense"
+        }
+      ],
+      "size": 3.58
+    }
+  },
+  "stats": {
+    "hp": 40,
+    "attack": 69,
+    "defense": 92,
+    "speed": 47,
+    "magic": 97,
+    "luck": 88,
+    "charisma": 89
+  },
+  "size": 1.0,
+  "movement": "fly"
+}

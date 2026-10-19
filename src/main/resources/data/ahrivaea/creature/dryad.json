@@ -55,7 +55,8 @@
           "text": "Crop growth support"
         }
       ],
-      "size": 2.41
+      "size": 2.41,
+      "wave": 1
     },
     "fae": {
       "stats": {
@@ -107,7 +108,8 @@
           "text": "Crop growth support"
         }
       ],
-      "size": 2.8
+      "size": 2.8,
+      "wave": 1
     }
   },
   "stats": {

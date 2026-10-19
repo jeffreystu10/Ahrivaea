@@ -1,0 +1,58 @@
+{
+  "name": "Garden Fairy",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 81,
+        "attack": 59,
+        "defense": 42,
+        "speed": 98,
+        "magic": 73,
+        "luck": 59,
+        "charisma": 92
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 240
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.7,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "item": "minecraft:diamond",
+          "chance": 0.05,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "farming",
+          "text": "Berry and mushroom gathering"
+        }
+      ],
+      "size": 1.18
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 81,
+    "attack": 59,
+    "defense": 42,
+    "speed": 98,
+    "magic": 73,
+    "luck": 59,
+    "charisma": 92
+  },
+  "size": 0.7
+}

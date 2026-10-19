@@ -1,0 +1,65 @@
+{
+  "name": "Psychic Vampire",
+  "forms": {
+    "void": {
+      "stats": {
+        "hp": 49,
+        "attack": 80,
+        "defense": 86,
+        "speed": 66,
+        "magic": 99,
+        "luck": 53,
+        "charisma": 100
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:end_barrens",
+          "minecraft:small_end_islands"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:ender_pearl",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:chorus_fruit",
+          "chance": 0.35,
+          "min": 1,
+          "max": 3
+        },
+        {
+          "item": "minecraft:end_crystal",
+          "chance": 0.03,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "brewing",
+          "text": "Enchanting and brewing"
+        }
+      ],
+      "size": 3.15
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 49,
+    "attack": 80,
+    "defense": 86,
+    "speed": 66,
+    "magic": 99,
+    "luck": 53,
+    "charisma": 100
+  },
+  "size": 1.0
+}

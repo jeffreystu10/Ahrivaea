@@ -1,0 +1,74 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "fly_root": {
+     "position": [
+      "0",
+      "1.4*math.sin(query.life_time*1*110+0)",
+      "0"
+     ]
+    },
+    "core": {
+     "rotation": [
+      "0",
+      "12*math.sin(query.life_time*1*90+0)",
+      "0"
+     ]
+    },
+    "ring_1": {
+     "rotation": [
+      "0",
+      "query.life_time*1*180",
+      "0"
+     ]
+    },
+    "ring_2": {
+     "rotation": [
+      "0",
+      "query.life_time*1*-120",
+      "0"
+     ]
+    },
+    "ring_3": {
+     "rotation": [
+      "0",
+      "query.life_time*1*260",
+      "0"
+     ]
+    },
+    "tendril_1": {
+     "rotation": [
+      "14*math.sin(query.life_time*1*220+0)",
+      "0",
+      "10*math.sin(query.life_time*1*180+0)"
+     ]
+    },
+    "tendril_2": {
+     "rotation": [
+      "14*math.sin(query.life_time*1*220+80)",
+      "0",
+      "10*math.sin(query.life_time*1*180+50)"
+     ]
+    },
+    "tendril_3": {
+     "rotation": [
+      "14*math.sin(query.life_time*1*220+160)",
+      "0",
+      "10*math.sin(query.life_time*1*180+100)"
+     ]
+    },
+    "tendril_4": {
+     "rotation": [
+      "14*math.sin(query.life_time*1*220+240)",
+      "0",
+      "10*math.sin(query.life_time*1*180+150)"
+     ]
+    }
+   }
+  }
+ }
+}

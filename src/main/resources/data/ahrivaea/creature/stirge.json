@@ -48,7 +48,8 @@
           "text": "Item pickup and routing"
         }
       ],
-      "size": 1.19
+      "size": 1.19,
+      "wave": 1
     },
     "radiant": {
       "stats": {
@@ -99,7 +100,8 @@
           "text": "Hostile-mob detection"
         }
       ],
-      "size": 1.19
+      "size": 1.19,
+      "wave": 1
     }
   },
   "stats": {

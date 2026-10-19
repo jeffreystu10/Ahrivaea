@@ -62,7 +62,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 11.84
+      "size": 11.84,
+      "wave": 1
     },
     "fire": {
       "name": "Ashen Dragon",
@@ -126,7 +127,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 11.68
+      "size": 11.68,
+      "wave": 1
     },
     "frost": {
       "name": "Snowveil Dragon",
@@ -181,7 +183,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 11.89
+      "size": 11.89,
+      "wave": 1
     },
     "storm": {
       "name": "Squall Dragon",
@@ -233,7 +236,8 @@
           "text": "High-speed machine operation"
         }
       ],
-      "size": 11.93
+      "size": 11.93,
+      "wave": 1
     },
     "earth": {
       "name": "Mossback Dragon",
@@ -291,7 +295,8 @@
           "text": "Furnace operation"
         }
       ],
-      "size": 11.75
+      "size": 11.75,
+      "wave": 1
     },
     "water": {
       "name": "Coral Dragon",
@@ -350,7 +355,8 @@
           "text": "Crop irrigation"
         }
       ],
-      "size": 11.89
+      "size": 11.89,
+      "wave": 1
     },
     "nature": {
       "name": "Briar Dragon",
@@ -408,7 +414,8 @@
           "text": "Tree farming"
         }
       ],
-      "size": 11.84
+      "size": 11.84,
+      "wave": 1
     },
     "void": {
       "name": "Umbral Dragon",
@@ -464,7 +471,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 12.29
+      "size": 12.29,
+      "wave": 1
     },
     "fae": {
       "name": "Gossamer Dragon",
@@ -517,7 +525,8 @@
           "text": "Tree farming"
         }
       ],
-      "size": 11.91
+      "size": 11.91,
+      "wave": 1
     },
     "darkness": {
       "name": "Duskborn Dragon",
@@ -563,7 +572,8 @@
           "text": "Base defense"
         }
       ],
-      "size": 11.75
+      "size": 11.75,
+      "wave": 1
     },
     "radiant": {
       "name": "Hallowed Dragon",
@@ -615,7 +625,8 @@
           "text": "Resource transport"
         }
       ],
-      "size": 11.86
+      "size": 11.86,
+      "wave": 1
     },
     "arcane": {
       "name": "Arcane Dragon",

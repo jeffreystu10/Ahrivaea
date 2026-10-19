@@ -54,7 +54,8 @@
           "text": "Water-channel maintenance"
         }
       ],
-      "size": 2.5
+      "size": 2.5,
+      "wave": 1
     }
   },
   "stats": {

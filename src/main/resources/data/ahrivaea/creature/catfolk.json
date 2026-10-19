@@ -57,7 +57,8 @@
           "text": "Item pickup and chest sorting"
         }
       ],
-      "size": 2.55
+      "size": 2.55,
+      "wave": 1
     }
   },
   "stats": {

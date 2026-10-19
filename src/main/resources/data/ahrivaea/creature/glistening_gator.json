@@ -1,0 +1,69 @@
+{
+  "name": "Glistening Gator",
+  "forms": {
+    "fae": {
+      "stats": {
+        "hp": 74,
+        "attack": 80,
+        "defense": 96,
+        "speed": 88,
+        "magic": 75,
+        "luck": 92,
+        "charisma": 85
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:flower_forest",
+          "minecraft:cherry_grove",
+          "minecraft:meadow",
+          "minecraft:forest",
+          "minecraft:old_growth_birch_forest",
+          "minecraft:mushroom_fields"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 108
+      },
+      "drops": [
+        {
+          "item": "minecraft:slime_ball",
+          "chance": 0.4,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:leather",
+          "chance": 0.35,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glow_berries",
+          "chance": 0.15,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "growth",
+          "text": "Crop Support Growth"
+        }
+      ],
+      "size": 2.81
+    }
+  },
+  "movement": "walk",
+  "stats": {
+    "hp": 74,
+    "attack": 80,
+    "defense": 96,
+    "speed": 88,
+    "magic": 75,
+    "luck": 92,
+    "charisma": 85
+  },
+  "size": 1.0
+}

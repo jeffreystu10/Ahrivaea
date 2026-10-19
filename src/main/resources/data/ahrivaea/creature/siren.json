@@ -50,7 +50,8 @@
           "text": "Brewing ingredient collection"
         }
       ],
-      "size": 2.4
+      "size": 2.4,
+      "wave": 1
     }
   },
   "stats": {

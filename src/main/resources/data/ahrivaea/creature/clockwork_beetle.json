@@ -50,7 +50,8 @@
           "text": "Copper and stone gathering"
         }
       ],
-      "size": 1.14
+      "size": 1.14,
+      "wave": 1
     }
   },
   "stats": {

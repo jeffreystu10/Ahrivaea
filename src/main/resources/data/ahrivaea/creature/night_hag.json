@@ -50,7 +50,8 @@
           "text": "Night patrol"
         }
       ],
-      "size": 2.72
+      "size": 2.72,
+      "wave": 1
     }
   },
   "stats": {

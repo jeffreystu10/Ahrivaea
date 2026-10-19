@@ -1,0 +1,39 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 1,
+   "bones": {
+    "fly_root": {
+     "position": [
+      "0",
+      "1.2*math.sin(query.life_time*1*160+0)",
+      "0"
+     ]
+    },
+    "flames": {
+     "rotation": [
+      "6*math.sin(query.life_time*1*300+0)",
+      "0",
+      "8*math.sin(query.life_time*1*240+90)"
+     ]
+    },
+    "body": {
+     "rotation": [
+      "0",
+      "6*math.sin(query.life_time*1*120+0)",
+      "0"
+     ]
+    },
+    "embers": {
+     "rotation": [
+      "0",
+      "query.life_time*1*150",
+      "0"
+     ]
+    }
+   }
+  }
+ }
+}

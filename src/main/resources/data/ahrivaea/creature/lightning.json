@@ -1,0 +1,62 @@
+{
+  "name": "Lightning",
+  "forms": {
+    "storm": {
+      "stats": {
+        "hp": 70,
+        "attack": 66,
+        "defense": 53,
+        "speed": 70,
+        "magic": 94,
+        "luck": 89,
+        "charisma": 91
+      },
+      "rarity": "Common",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:windswept_hills",
+          "minecraft:windswept_savanna",
+          "minecraft:stony_peaks",
+          "minecraft:jagged_peaks",
+          "minecraft:savanna"
+        ],
+        "min_level": 2,
+        "max_level": 12,
+        "weight": 400
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:glow_ink_sac",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "jobs": [
+        {
+          "job": "redstone",
+          "text": "Redstone device operation"
+        }
+      ],
+      "size": 1.45
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 70,
+    "attack": 66,
+    "defense": 53,
+    "speed": 70,
+    "magic": 94,
+    "luck": 89,
+    "charisma": 91
+  },
+  "size": 1.0
+}

@@ -57,7 +57,8 @@
           "text": "Aquatic item collection"
         }
       ],
-      "size": 1.14
+      "size": 1.14,
+      "wave": 1
     },
     "water": {
       "stats": {
@@ -115,7 +116,8 @@
           "text": "Aquatic item collection"
         }
       ],
-      "size": 1.18
+      "size": 1.18,
+      "wave": 1
     }
   },
   "stats": {

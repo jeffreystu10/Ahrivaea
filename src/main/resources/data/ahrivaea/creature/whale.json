@@ -53,7 +53,9 @@
           "job": "fishing",
           "text": "Ocean resource gathering"
         }
-      ]
+      ],
+      "wave": 1,
+      "size": 3.64
     }
   },
   "stats": {

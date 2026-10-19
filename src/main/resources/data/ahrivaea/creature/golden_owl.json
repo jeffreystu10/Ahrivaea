@@ -1,0 +1,64 @@
+{
+  "name": "Golden Owl",
+  "forms": {
+    "radiant": {
+      "stats": {
+        "hp": 90,
+        "attack": 90,
+        "defense": 90,
+        "speed": 86,
+        "magic": 61,
+        "luck": 76,
+        "charisma": 53
+      },
+      "rarity": "Uncommon",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "#minecraft:is_overworld"
+        ],
+        "min_level": 6,
+        "max_level": 18,
+        "weight": 54
+      },
+      "drops": [
+        {
+          "item": "minecraft:glowstone_dust",
+          "chance": 0.45,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "chance": 0.25,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:feather",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "jobs": [
+        {
+          "job": "transport",
+          "text": "Item transport"
+        }
+      ],
+      "size": 1.79
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 90,
+    "attack": 90,
+    "defense": 90,
+    "speed": 86,
+    "magic": 61,
+    "luck": 76,
+    "charisma": 53
+  },
+  "size": 1.0
+}

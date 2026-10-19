@@ -1,0 +1,58 @@
+{
+  "name": "Dracolich",
+  "forms": {
+    "darkness": {
+      "stats": {
+        "hp": 74,
+        "attack": 92,
+        "defense": 100,
+        "speed": 79,
+        "magic": 86,
+        "luck": 43,
+        "charisma": 81
+      },
+      "rarity": "Rare",
+      "wave": 2,
+      "spawn": {
+        "biomes": [
+          "minecraft:deep_dark"
+        ],
+        "min_level": 12,
+        "max_level": 26,
+        "weight": 48
+      },
+      "drops": [
+        {
+          "item": "minecraft:dragon_breath",
+          "chance": 0.3,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "item": "minecraft:bone",
+          "chance": 0.95,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "jobs": [
+        {
+          "job": "defense",
+          "text": "Base Defense"
+        }
+      ],
+      "size": 5.0
+    }
+  },
+  "movement": "fly",
+  "stats": {
+    "hp": 74,
+    "attack": 92,
+    "defense": 100,
+    "speed": 79,
+    "magic": 86,
+    "luck": 43,
+    "charisma": 81
+  },
+  "size": 1.0
+}

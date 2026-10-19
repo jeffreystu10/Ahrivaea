@@ -43,15 +43,12 @@
       ],
       "jobs": [
         {
-          "job": "ranching",
-          "text": "Slimeball collection"
-        },
-        {
           "job": "growth",
           "text": "Crop irrigation"
         }
       ],
-      "size": 2.37
+      "size": 2.37,
+      "wave": 1
     }
   },
   "stats": {
